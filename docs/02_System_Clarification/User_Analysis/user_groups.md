@@ -127,7 +127,7 @@ graph TD
 ✅ **Quản Lý Bài Báo**
 - Thêm bài báo mới (form đơn giản, 5-10 phút)
 - Sửa/Xóa bài báo (chỉ khi ở trạng thái DRAFT)
-- Upload file PDF (\u003c 10MB)
+- Upload file PDF (< 10MB)
 - Gắn tag từ khóa, lĩnh vực nghiên cứu
 - Liên kết đồng tác giả (giảng viên khác trong trường)
 
