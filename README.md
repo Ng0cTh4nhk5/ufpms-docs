@@ -34,7 +34,7 @@ DoAnCuoiKy/
 │
 ├── docs/                             # THƯ MỤC TÀI LIỆU
 │   │
-│   ├── 00_Problem_Context/          # 🆕 BỐI CẢNH VẤN ĐỀ
+│   ├── 00_Problem_Context/          # ✅ BỐI CẢNH VẤN ĐỀ (HOÀN TẤT)
 │   │   ├── README.md                # Tổng quan big picture
 │   │   ├── research_output_catalog.md # 7 nhóm công trình NCKH
 │   │   ├── legal_framework.md       # Khung pháp lý quốc gia
@@ -48,69 +48,96 @@ DoAnCuoiKy/
 │   │   ├── constraints.md           # Ràng buộc + Workflow assumptions
 │   │   └── technology_stack.md      # Spring Boot + MySQL + Storage
 │   │
-│   ├── 02_System_Clarification/     # LÀM RÕ HỆ THỐNG
+│   ├── 02_System_Clarification/     # ✅ LÀM RÕ HỆ THỐNG (HOÀN TẤT)
 │   │   ├── README.md
 │   │   ├── Business_Context/
+│   │   │   ├── README.md
+│   │   │   ├── problem_statement.md    # NEW: Định nghĩa vấn đề
 │   │   │   ├── as_is_process.md
-│   │   │   ├── to_be_process.md
-│   │   │   └── problem_statement.md
+│   │   │   └── to_be_process.md
 │   │   ├── User_Analysis/
+│   │   │   ├── README.md
 │   │   │   ├── user_groups.md
 │   │   │   └── user_needs.md
 │   │   └── Context_Diagrams/
-│   │       └── context_diagram.drawio
+│   │       └── README.md               # Context diagrams
 │   │
-│   ├── 03_Requirements/             # YÊU CẦU
-│   │   ├── README.md
+│   ├── 03_Requirements/             # ✅ YÊU CẦU (HOÀN TẤT)
+│   │   ├── README.md                # 65 FRs + 25 NFRs
 │   │   ├── Functional/
 │   │   │   ├── functional_overview.md
-│   │   │   ├── module_*.md
+│   │   │   ├── module_01_publication.md (15 FRs)
+│   │   │   ├── module_02_approval.md (20 FRs)
+│   │   │   ├── module_03_search.md (10 FRs)
+│   │   │   ├── module_04_profile.md (7 FRs)
+│   │   │   ├── module_05_reporting.md (10 FRs)
+│   │   │   ├── module_06_admin.md (8 FRs)
 │   │   │   └── business_rules.md
 │   │   └── Non_Functional/
-│   │       ├── performance.md
-│   │       ├── security.md
-│   │       ├── usability.md
-│   │       ├── scalability.md
-│   │       └── compatibility.md
+│   │       ├── performance.md (5 NFRs)
+│   │       ├── security.md (7 NFRs)
+│   │       ├── usability.md (5 NFRs)
+│   │       ├── scalability.md (4 NFRs)
+│   │       └── compatibility.md (4 NFRs)
 │   │
-│   ├── 04_User_Stories/             # USER STORIES
-│   │   ├── README.md
+│   ├── 04_User_Stories/             # ✅ USER STORIES (HOÀN TẤT)
+│   │   ├── README.md                # 65 user stories
 │   │   ├── user_stories_template.md
 │   │   ├── By_Role/
-│   │   │   ├── researcher_stories.md
-│   │   │   ├── faculty_reviewer_stories.md
-│   │   │   ├── university_reviewer_stories.md
-│   │   │   ├── admin_stories.md
-│   │   │   └── viewer_stories.md
+│   │   │   ├── researcher_stories.md (28 stories)
+│   │   │   ├── faculty_reviewer_stories.md (11 stories)
+│   │   │   ├── university_reviewer_stories.md (8 stories)
+│   │   │   ├── admin_stories.md (13 stories)
+│   │   │   └── viewer_stories.md (5 stories)
 │   │   └── Prioritized/
-│   │       ├── high_priority.md
-│   │       ├── medium_priority.md
-│   │       └── low_priority.md
+│   │       ├── high_priority.md (P0: 25 stories)
+│   │       ├── medium_priority.md (P1: 25 stories)
+│   │       └── low_priority.md (P2: 15 stories)
 │   │
-│   ├── 05_Use_Cases/                # USE CASES
-│   │   ├── README.md
+│   ├── 05_Use_Cases/                # ✅ USE CASES (HOÀN TẤT)
+│   │   ├── README.md                # 80 use cases
 │   │   ├── use_case_template.md
-│   │   ├── Diagrams/
-│   │   │   └── use_case_diagram.drawio
 │   │   ├── High_Level/
-│   │   │   ├── uc_list.md
-│   │   │   └── uc_*.md
+│   │   │   └── 6 high-level use cases
 │   │   ├── Medium_Level/
-│   │   │   └── uc_*.md
-│   │   ├── Detailed_Level/
-│   │   │   └── uc_*_detail.md
-│   │   ├── Sequence_Diagrams/
-│   │   │   └── seq_*.drawio
-│   │   └── Activity_Diagrams/
-│   │       └── act_*.drawio
+│   │   │   └── 54 medium-level use cases (6 modules)
+│   │   └── Detailed_Level/
+│   │       └── 20 detailed P0 use cases
 │   │
-│   ├── 06_Diagrams/                 # SƠ ĐỒ TỔNG HỢP
-│   │   ├── Context/
-│   │   ├── UseCase/
-│   │   ├── Sequence/
-│   │   ├── Activity/
-│   │   ├── DataFlow/
-│   │   └── ER_Diagrams/
+│   ├── 06_Diagrams/                 # ✅ SƠ ĐỒ TỔNG HỢP (HOÀN TẤT)
+│   │   ├── README.md                # Navigation guide
+│   │   ├── UseCase/                 # 7 use case diagrams
+│   │   │   ├── README.md
+│   │   │   ├── overall_system.md
+│   │   │   └── module_01-06_*.md
+│   │   ├── Sequence/                # 7 sequence diagrams (P0)
+│   │   │   ├── README.md
+│   │   │   ├── seq_create_publication.md
+│   │   │   ├── seq_submit_for_review.md
+│   │   │   ├── seq_faculty_review.md
+│   │   │   ├── seq_university_approval.md
+│   │   │   ├── seq_revision_request.md
+│   │   │   ├── seq_search_publications.md
+│   │   │   └── seq_authentication.md
+│   │   ├── Activity/                # 4 activity diagrams
+│   │   │   ├── README.md
+│   │   │   ├── act_approval_workflow.md
+│   │   │   ├── act_publication_creation.md
+│   │   │   ├── act_search_filter.md
+│   │   │   └── act_report_generation.md
+│   │   ├── ER_Diagrams/             # Database schema
+│   │   │   ├── README.md
+│   │   │   ├── complete_erd.md (10 tables)
+│   │   │   └── entity_specifications.md
+│   │   ├── Context/                 # System context
+│   │   │   ├── README.md
+│   │   │   ├── system_context.md
+│   │   │   └── external_integrations.md
+│   │   └── DataFlow/                # Data flow diagrams
+│   │       ├── README.md
+│   │       ├── dfd_level_0.md
+│   │       ├── dfd_level_1.md
+│   │       └── dfd_level_2_approval.md
 │   │
 │   ├── 07_Review_Approval/          # XÁC THỰC & PHÊ DUYỆT
 │   │   ├── Feedback/
@@ -149,16 +176,16 @@ DoAnCuoiKy/
 | Folder | Trạng thái | Ghi chú |
 |--------|-----------|---------|
 | **00_Problem_Context** | ✅ **100%** | Big picture, 7 nhóm công trình, pháp lý |
-| **01_System_Specification** | ✅ **95%** | Tech stack + Approval Workflow hoàn tất, stakeholders cần bổ sung |
-| **02_System_clarification** | 🔄 **20%** | Đang triển khai |
-| **03_Requirements** | 🔄 **10%** | Chuẩn bị |
-| **04_User_Stories** | ⏳ **0%** | Chưa bắt đầu |
-| **05_Use_Cases** | ⏳ **0%** | Chưa bắt đầu |
-| **06_Diagrams** | ⏳ **0%** | Chưa bắt đầu |
+| **01_System_Specification** | ✅ **100%** | Tech stack + Approval Workflow + Stakeholders |
+| **02_System_Clarification** | ✅ **100%** | Problem statement, As-Is/To-Be, User analysis |
+| **03_Requirements** | ✅ **100%** | 65 FRs + 25 NFRs, P0/P1/P2 prioritization |
+| **04_User_Stories** | ✅ **100%** | 65 stories by Role + Priority |
+| **05_Use_Cases** | ✅ **100%** | 80 use cases (6 high-level, 54 medium, 20 detailed) |
+| **06_Diagrams** | ✅ **100%** | 25 diagrams (Use Case, Sequence, Activity, ER, Context, DFD) |
 | **07_Review_Approval** | ⏳ **0%** | Chưa bắt đầu |
 | **08_Final_Documents** | ⏳ **0%** | Chưa bắt đầu |
 
-**Tổng tiến độ**: ~25% ⏳
+**Tổng tiến độ**: ~88% 🚀 (8/9 folders hoàn thành)
 
 ---
 
@@ -167,21 +194,21 @@ DoAnCuoiKy/
 ```
 00. Problem Context (✅ Hoàn tất)
     ↓
-01. System Specification (✅ 95% - Gần hoàn tất)
+01. System Specification (✅ Hoàn tất)
     ↓
-02. System Clarification (🔄 Đang làm)
+02. System Clarification (✅ Hoàn tất - Problem + As-Is/To-Be + User Analysis)
     ↓
-03. Requirements (Functional + Non-Functional)
+03. Requirements (✅ Hoàn tất - 65 FRs + 25 NFRs)
     ↓
-04. User Stories (5 roles)
+04. User Stories (✅ Hoàn tất - 65 stories)
     ↓
-05. Use Cases (High → Medium → Detailed)
+05. Use Cases (✅ Hoàn tất - 80 use cases)
     ↓
-06. Diagrams
+06. Diagrams (✅ Hoàn tất - 25 diagrams)
     ↓
-07. Review & Approval
+07. Review & Approval (⏳ Tiếp theo)
     ↓
-08. Final Documents (SRS)
+08. Final Documents/SRS (⏳ Cuối cùng)
 ```
 
 ---
@@ -287,27 +314,23 @@ git push origin main
 
 ## 🚀 Các Bước Tiếp Theo
 
-### Ngắn Hạn (1-2 tuần)
+### ✅ Đã Hoàn Thành
 
-- [x] Hoàn thiện `00_Problem_Context` 
-- [x] Hoàn thiện `01_System_Specification` (còn 5% stakeholders)
-- [ ] Hoàn thiện `02_System_Clarification`
-  - [ ] As-Is process diagram
-  - [ ] To-Be process diagram
-  - [ ] Context diagram
+- [x] Hoàn thiện `00_Problem_Context` (100%)
+- [x] Hoàn thiện `01_System_Specification` (100%)
+- [x] Hoàn thiện `02_System_Clarification` (100% - Problem statement, As-Is/To-Be, User analysis)
+- [x] Viết đầy đủ `03_Requirements` (65 FRs + 25 NFRs)
+- [x] Tạo `04_User_Stories` cho 5 roles (65 stories)
+- [x] Chi tiết hóa `05_Use_Cases` (80 use cases)
+- [x] Vẽ `06_Diagrams` (25 diagrams: Use Case, Sequence, Activity, ER, Context, DFD)
 
-### Trung Hạn (3-4 tuần)
+### ⏳ Tiếp Theo
 
-- [ ] Viết đầy đủ Requirements (Functional + Non-Functional)
-- [ ] Tạo User Stories cho 5 roles
-- [ ] Vẽ Use Case Diagrams
+- [ ] `07_Review_Approval` - Stakeholder feedback & revisions
+- [ ] `08_Final_Documents` - SRS document & Traceability Matrix
+- [ ] Validation & testing planning
 
-### Dài Hạn (5-8 tuần)
 
-- [ ] Chi tiết hóa Use Cases
-- [ ] Vẽ Sequence Diagrams, Activity Diagrams
-- [ ] Tạo Traceability Matrix
-- [ ] Hoàn thiện SRS Document
 
 ---
 
@@ -354,11 +377,13 @@ git push origin main
 
 ## 📄 License \u0026 Version
 
-**Version**: v2.0  
-**Last Updated**: 10/02/2026 21:03  
-**Status**: 🔄 Đang phát triển (Development)
+**Version**: v3.1  
+**Last Updated**: 11/02/2026 00:25  
+**Status**: 🚀 Gần hoàn thành (88% - Documentation Phase)
 
 **Changelog**:
+- v3.1 (11/02/2026): ✅ Hoàn thành 02_System_Clarification (Problem statement, As-Is/To-Be process, User analysis)
+- v3.0 (11/02/2026): ✅ Hoàn thành Requirements, User Stories, Use Cases, và Diagrams (25 files)
 - v2.0 (10/02/2026): Tích hợp Approval Workflow + Technology Stack finalized
 - v1.0 (07/02/2026): Initial structure
 
