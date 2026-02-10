@@ -26,8 +26,8 @@
 
 | Nhu cầu | Yêu cầu cụ thể |
 |---------|----------------|
-| **Dễ sử dụng** | Form nhập liệu \u003c 5 phút/bài báo |
-| **Thời gian phản hồi** | Tải trang \u003c 2 giây |
+| **Dễ sử dụng** | Form nhập liệu < 5 phút/bài báo |
+| **Thời gian phản hồi** | Tải trang < 2 giây |
 | **Khả dụng** | Truy cập 24/7, uptime \u003e 99% |
 | **Mobile-friendly** | Xem được trên điện thoại |
 | **Ngôn ngữ** | Tiếng Việt (UI + thông báo) |
@@ -148,7 +148,7 @@
 | **Không cần đăng nhập** | Public access |
 | **SEO tốt** | Xuất hiện trên Google |
 | **Mobile-friendly** | Responsive design |
-| **Tốc độ** | Tìm kiếm \u003c 1 giây |
+| **Tốc độ** | Tìm kiếm < 1 giây |
 
 ---
 
@@ -184,7 +184,7 @@
 |---------|----------------|
 | **Dễ vận hành** | Documentation đầy đủ |
 | **Monitoring** | Alert khi có lỗi |
-| **Recovery** | RTO \u003c 4 giờ |
+| **Recovery** | RTO < 4 giờ |
 
 ---
 
@@ -195,7 +195,7 @@
 | Nhu cầu | Yêu cầu |
 |---------|---------|
 | **Bảo mật** | HTTPS, LDAP/AD, phân quyền rõ ràng |
-| **Hiệu năng** | Tải trang \u003c 2 giây |
+| **Hiệu năng** | Tải trang < 2 giây |
 | **Khả dụng** | Uptime \u003e 99% |
 | **Hỗ trợ** | Help docs, FAQ |
 
@@ -261,7 +261,7 @@
 ### 8.1. Câu Hỏi Kiểm Tra
 
 ✅ **Researcher có dùng không?**
-- Có dễ nhập bài báo không? → Form \u003c 5 phút
+- Có dễ nhập bài báo không? → Form < 5 phút
 - Có theo dõi được trạng thái không? → Timeline rõ ràng
 - Có nhận được feedback không? → Email tự động
 
@@ -294,8 +294,8 @@
 
 | Chỉ số | Baseline (As-Is) | Target (To-Be) |
 |--------|------------------|----------------|
-| **Thời gian nhập 1 bài báo** | 15-30 phút | \u003c 5 phút |
-| **Thời gian tạo báo cáo** | 2-3 ngày | \u003c 5 phút |
+| **Thời gian nhập 1 bài báo** | 15-30 phút | < 5 phút |
+| **Thời gian tạo báo cáo** | 2-3 ngày | < 5 phút |
 | **Tỉ lệ giảng viên sử dụng** | ~60% (bị động) | \u003e 80% (chủ động) |
 | **Độ hài lòng người dùng** | N/A | \u003e 85% |
 
