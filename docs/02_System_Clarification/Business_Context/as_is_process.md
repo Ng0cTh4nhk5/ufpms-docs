@@ -1,7 +1,7 @@
 # Quy Trình Hiện Tại (As-Is Process) - Quản Lý Bài Báo Khoa Học
 
 > 📅 **Cập nhật**: 10/02/2026  
-> 🎯 **M ục đích**: Phân tích quy trình quản lý bài báo khoa học **TRƯỚC KHI** triển khai hệ thống UFPMS
+> 🎯 **Mục đích**: Phân tích quy trình quản lý bài báo khoa học **TRƯỚC KHI** triển khai hệ thống UFPMS
 
 ---
 
