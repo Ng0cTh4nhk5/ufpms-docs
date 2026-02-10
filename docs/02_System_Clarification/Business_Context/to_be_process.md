@@ -445,10 +445,10 @@ sequenceDiagram
 
 | Rủi ro | Mức độ | Biện pháp |
 |--------|--------|-----------|
-| **Giảng viên không sử dụng** | CAO | - Training kỹ\u003cbr\u003e- Khuyến khích early adopters\u003cbr\u003e- Làm rõ lợi ích |
-| **Dữ liệu cũ khó nhập** | TRUNG BÌNH | - Import từ Excel\u003cbr\u003e- Cho phép nhập dần |
-| **Phòng IT không hỗ trợ** | TRUNG BÌNH | - Tham vấn từ đầu\u003cbr\u003e- Hệ thống dễ vận hành |
-| **Lãnh đạo mất quan tâm** | THẤP | - Demo thường xuyên\u003cbr\u003e- Báo cáo ROI |
+| **Giảng viên không sử dụng** | CAO | - Training kỹ - Khuyến khích early adopters\u003cbr\u003e- Làm rõ lợi ích |
+| **Dữ liệu cũ khó nhập** | TRUNG BÌNH | - Import từ Excel - Cho phép nhập dần |
+| **Phòng IT không hỗ trợ** | TRUNG BÌNH | - Tham vấn từ đầu - Hệ thống dễ vận hành |
+| **Lãnh đạo mất quan tâm** | THẤP | - Demo thường xuyên - Báo cáo ROI |
 
 ---
 
