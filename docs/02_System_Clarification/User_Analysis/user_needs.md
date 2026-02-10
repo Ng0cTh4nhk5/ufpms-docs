@@ -28,7 +28,7 @@
 |---------|----------------|
 | **Dễ sử dụng** | Form nhập liệu < 5 phút/bài báo |
 | **Thời gian phản hồi** | Tải trang < 2 giây |
-| **Khả dụng** | Truy cập 24/7, uptime \u003e 99% |
+| **Khả dụng** | Truy cập 24/7, uptime > 99% |
 | **Mobile-friendly** | Xem được trên điện thoại |
 | **Ngôn ngữ** | Tiếng Việt (UI + thông báo) |
 | **Thông báo** | Email tự động khi có phản hồi |
@@ -196,7 +196,7 @@
 |---------|---------|
 | **Bảo mật** | HTTPS, LDAP/AD, phân quyền rõ ràng |
 | **Hiệu năng** | Tải trang < 2 giây |
-| **Khả dụng** | Uptime \u003e 99% |
+| **Khả dụng** | Uptime > 99% |
 | **Hỗ trợ** | Help docs, FAQ |
 
 ---
@@ -296,8 +296,8 @@
 |--------|------------------|----------------|
 | **Thời gian nhập 1 bài báo** | 15-30 phút | < 5 phút |
 | **Thời gian tạo báo cáo** | 2-3 ngày | < 5 phút |
-| **Tỉ lệ giảng viên sử dụng** | ~60% (bị động) | \u003e 80% (chủ động) |
-| **Độ hài lòng người dùng** | N/A | \u003e 85% |
+| **Tỉ lệ giảng viên sử dụng** | ~60% (bị động) | > 80% (chủ động) |
+| **Độ hài lòng người dùng** | N/A | > 85% |
 
 ---
 
