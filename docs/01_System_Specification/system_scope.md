@@ -1,289 +1,409 @@
-# Phạm Vi và Ranh Giới Hệ Thống
+# Phạm Vi và Ranh Giới Module Bài Báo Khoa Học
 
-## 1. Phạm Vi Chức Năng
+## 1. Tổng Quan
 
-### 1.1. Các Chức Năng Nằm TRONG Phạm Vi
-
-#### A. Quản lý Công trình Nghiên cứu (Core)
-
-**1. Quản lý 7 Nhóm Công trình**
-
-✅ **Nhóm 1: Công bố và Ấn phẩm**
-   - Sách chuyên khảo (Monograph)
-   - Giáo trình (Textbook)
-   - Sách tham khảo
-   - Kỷ yếu hội thảo (Conference Proceedings)
-   - Bài báo tạp chí (Journal Articles)
-   - Báo cáo kiến nghị (Policy Brief)
-   - Báo cáo tổng kết đề tài
-
-✅ **Nhóm 2: Tài sản Trí tuệ**
-   - Bằng độc quyền sáng chế (Patent)
-   - Bằng giải pháp hữu ích (Utility Solution)
-   - Bằng bảo hộ giống cây trồng
-   - Bằng bảo hộ kiểu dáng công nghiệp
-   - Giấy chứng nhận quyền tác giả
-
-✅ **Nhóm 3: Sản phẩm Kỹ thuật & Công nghệ**
-   - Vật liệu mới (bê tông, hợp kim, composite...)
-   - Mẫu vật/Chế phẩm (vắc-xin, thuốc, thực phẩm chức năng)
-   - Thiết bị, máy móc (robot, máy CNC, phương tiện...)
-   - Dây chuyền công nghệ
-   - Mô hình vật lý (thí nghiệm, pilot)
-
-✅ **Nhóm 4: Tiêu chuẩn & Quy phạm**
-   - Tiêu chuẩn Quốc gia (TCVN)
-   - Quy chuẩn Kỹ thuật Quốc gia (QCVN)
-   - Tiêu chuẩn cơ sở (TCCS)
-
-✅ **Nhóm 5: Thiết kế & Quy hoạch**
-   - Bản vẽ thiết kế thi công (cấp I, đặc biệt)
-   - Đồ án quy hoạch (vùng, đô thị)
-   - Tác phẩm kiến trúc (công trình thực tế)
-
-✅ **Nhóm 6: Dữ liệu & Số hóa**
-   - Phần mềm máy tính (Software/Application)
-   - Cơ sở dữ liệu (Database, Big Data)
-   - Bản đồ chuyên đề (địa chất, khí tượng, thủy văn)
-
-✅ **Nhóm 7: Văn hóa - Nghệ thuật**
-   - Tác phẩm nghệ thuật (âm nhạc, hội họa, điêu khắc)
-   - Chương trình biểu diễn
-
-**2. Thông tin Công trình**
-   - Thông tin cơ bản (tên, mô tả, năm hoàn thành)
-   - Phân loại (nhóm, loại, lĩnh vực)
-   - Tác giả/Nhóm tác giả (chủ nhiệm, đồng tác giả)
-   - Đơn vị thực hiện
-   - Đề tài gốc (nếu có)
-   - Trạng thái (đang nghiên cứu, hoàn thành, công bố, ứng dụng)
-   - Thông tin công bố (tạp chí, hội thảo, ISBN/ISSN, DOI)
-   - Thông tin bảo hộ (số bằng, ngày cấp, thời hạn)
-   - File đính kèm (PDF, bản vẽ, ảnh minh chứng)
-
-**3. Tra cứu & Tìm kiếm**
-   - Tìm kiếm nâng cao (theo tên, tác giả, năm, lĩnh vực, loại)
-   - Lọc theo nhóm công trình
-   - Sắp xếp kết quả
-   - Xem chi tiết công trình
-   - Tải file đính kèm (theo phân quyền)
-
-**4. Thống kê & Báo cáo**
-   - Số lượng công trình theo loại
-   - Số lượng theo đơn vị
-   - Số lượng theo năm
-   - Số lượng theo lĩnh vực
-   - Thống kê tác giả năng suất
-   - Xuất báo cáo (Excel, PDF)
-
-#### B. Quản lý Người dùng
-
-✅ **Xác thực & Phân quyền**
-   - Đăng nhập/Đăng xuất
-   - Quản lý tài khoản cá nhân
-   - Phân quyền theo vai trò (Admin, Quản lý, Nghiên cứu viên, Độc giả)
-
-✅ **Hồ sơ Nhà nghiên cứu**
-   - Thông tin cá nhân
-   - Danh sách công trình của cá nhân
-   - Lịch sử hoạt động
-
-#### C. Quản trị Hệ thống (Admin)
-
-✅ **Cấu hình**
-   - Cấu hình danh mục (lĩnh vực, loại công trình)
-   - Cấu hình quy trình phê duyệt
-   - Cấu hình thông báo
-
-✅ **Quản lý Dữ liệu**
-   - Nhập liệu hàng loạt (Import CSV/Excel)
-   - Xuất dữ liệu (Export)
-   - Sao lưu/Phục hồi
+Tài liệu này định nghĩa rõ ràng **phạm vi IN/OUT** của module quản lý bài báo khoa học, để tránh hiểu nhầm và scope creep.
 
 ---
 
-### 1.2. Các Chức Năng Nằm NGOÀI Phạm Vi
+## 2. Vị Trí trong Hệ Sinh Thái Lớn Hơn
 
-❌ **Quản lý Quy trình Nghiên cứu**
-   - Lập kế hoạch nghiên cứu
-   - Theo dõi tiến độ đề tài
-   - Quản lý milestone
-
-❌ **Quản lý Tài chính**
-   - Quản lý ngân sách đề tài
-   - Thanh toán, quyết toán
-   - Quản lý hợp đồng
-
-❌ **Quản lý Nhân sự Đề tài**
-   - Phân công nhiệm vụ chi tiết
-   - Chấm công
-   - Đánh giá hiệu suất từng thành viên
-
-❌ **Hệ thống Peer Review Chi tiết**
-   - Quy trình review nội bộ
-   - Gửi phản hồi, sửa bản thảo
-   - Quản lý vòng review
-
-❌ **Nền tảng Xuất bản Trực tuyến**
-   - Xuất bản bài báo online
-   - Open Access Publishing
-   - Digital Object Identifier (DOI) minting
-
-❌ **Quản lý Phòng thí nghiệm**
-   - Quản lý thiết bị, dụng cụ
-   - Đặt lịch sử dụng phòng lab
-   - Theo dõi bảo trì thiết bị
-
-❌ **Quản lý Đào tạo**
-   - Quản lý NCS, học viên cao học
-   - Quản lý luận văn, luận án
-   - Hướng dẫn nghiên cứu
-
-❌ **Mạng xã hội Nghiên cứu**
-   - Diễn đàn thảo luận
-   - Nhắn tin giữa các nhà nghiên cứu
-   - Nhóm nghiên cứu ảo
+```
+┌──────────────────────────────────────────────────────────┐
+│ Hệ thống Toàn Diện: Quản lý TOÀN BỘ Công trình NCKH    │
+│ (7 nhóm, 28 loại - Xem folder 00_Problem_Context)       │
+│                                                          │
+│  ┌────────────────────────────────────────────────┐    │
+│  │ ✅ MODULE ĐỒ ÁN: Bài báo Khoa học              │    │
+│  │    - Chỉ 1 loại trong nhóm Publications        │    │
+│  │    - Phạm vi: 1 trường Đại học                 │    │
+│  └────────────────────────────────────────────────┘    │
+│                                                          │
+│  ❌ Các module KHÔNG làm (giai đoạn này):              │
+│     - Sách, Giáo trình                                  │
+│     - Bằng sáng chế, SHTT                              │
+│     - Phần mềm, Sản phẩm kỹ thuật                      │
+│     - Tiêu chuẩn, Quy chuẩn                            │
+│     - Bản vẽ thiết kế                                   │
+│     - ...                                               │
+└──────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 2. Ranh Giới Dữ Liệu
+## 3. Phạm Vi Chức Năng (Functional Scope)
 
-### 2.1. Dữ liệu Được Quản lý
+### 3.1. ✅ TRONG PHẠM VI
 
-✅ **Dữ liệu Nội bộ**
-   - Công trình NCKH
-   - Thông tin tác giả (nhà nghiên cứu nội bộ)
-   - Đơn vị trực thuộc
-   - File đính kèm
+#### **Quản lý Bài báo Khoa học**
 
-✅ **Metadata**
-   - Danh mục lĩnh vực
-   - Danh mục loại công trình
-   - Danh sách tạp chí, hội thảo
+**Loại bài báo được quản lý:**
+- Bài báo tạp chí quốc tế (ISI/Scopus/Web of Science)
+- Bài báo tạp chí trong nước (có ISSN)
+- Bài báo hội thảo quốc tế (conference paper có ISBN)
 
-### 2.2. Dữ liệu Tích hợp (Tùy chọn)
+**Metadata bắt buộc:**
+- Tiêu đề (Tiếng Việt + Tiếng Anh)
+- Danh sách tác giả (có thứ tự)
+- Tạp chí/Hội nghị
+- ISSN/ISBN
+- DOI (nếu có)
+- Năm xuất bản, số, trang
+- Loại tạp chí (Q1/Q2/Q3/Q4 hoặc ISI/Scopus/Other)
+- Impact Factor (nếu có)
+- Số lượng trích dẫn (nếu có)
+- File PDF toàn văn
+- Từ khóa (keywords)
+- Tóm tắt (abstract)
 
-🔗 **Có thể tích hợp**
-   - Hệ thống quản lý đề tài (lấy thông tin đề tài gốc)
-   - ORCID (nhận diện tác giả)
-   - Google Scholar (tự động lấy số lượng trích dẫn)
-   - Crossref (xác minh DOI)
-
-❌ **Không quản lý**
-   - Dữ liệu tài chính
-   - Dữ liệu nhân sự chi tiết
-   - Dữ liệu hợp đồng, pháp lý
-
----
-
-## 3. Ranh Giới Tích Hợp
-
-### 3.1. Hệ thống Bên Ngoài (Có thể tích hợp)
-
-| Hệ thống | Mục đích | Mức độ |
-|----------|----------|--------|
-| LDAP/Active Directory | Xác thực SSO | Khuyến nghị |
-| Hệ thống Quản lý Đề tài | Liên kết đề tài ↔ công trình | Tùy chọn |
-| Document Management System | Lưu trữ file lớn | Tùy chọn |
-| ORCID API | Xác thực tác giả quốc tế | Tùy chọn |
-| Email Server | Gửi thông báo | Bắt buộc |
-
-### 3.2. Không Tích Hợp
-
-❌ Hệ thống ERP (tài chính, nhân sự)  
-❌ Hệ thống LMS (Learning Management)  
-❌ Hệ thống quản lý khách hàng (CRM)  
+**Chức năng CRUD:**
+- ✅ Thêm bài báo mới (Create)
+- ✅ Xem chi tiết (Read)
+- ✅ Sửa thông tin (Update)
+- ✅ Xóa bài báo (Delete - soft delete)
+- ✅ Upload/Download file PDF
+- ✅ Liên kết đồng tác giả (trong cùng trường)
 
 ---
 
-## 4. Ranh Giới Người Dùng
+#### **Tìm kiếm & Lọc**
 
-### 4.1. Người Dùng Chính (Primary Users)
+✅ **Tìm kiếm theo:**
+- Tiêu đề (full-text search)
+- Tác giả
+- Từ khóa
+- Tạp chí/Hội nghị
+- DOI/ISSN
 
-✅ **Nhà nghiên cứu**
-   - Đăng ký công trình
-   - Cập nhật thông tin
-   - Tra cứu công trình
+✅ **Lọc theo:**
+- Năm xuất bản (từ - đến)
+- Loại tạp chí (Q1/Q2/Q3/Q4)
+- Đơn vị (Khoa/Viện)
+- Tác giả chính/Đồng tác giả
 
-✅ **Cán bộ Phòng QLKH**
-   - Quản lý toàn bộ công trình
-   - Phê duyệt công trình
-   - Xuất báo cáo
-
-✅ **Lãnh đạo**
-   - Xem báo cáo tổng hợp
-   - Thống kê tổng quan
-
-### 4.2. Người Dùng Phụ (Secondary Users)
-
-🔹 **Sinh viên, NCS**
-   - Tra cứu tài liệu tham khảo (chế độ chỉ đọc)
-
-🔹 **Đối tác bên ngoài**
-   - Xem công bố công khai (nếu được cấu hình)
-
-### 4.3. Ngoài Phạm Vi
-
-❌ Công chúng rộng rãi (trừ khi có cổng thông tin công khai)  
-❌ Doanh nghiệp (trừ khi có tính năng chuyển giao công nghệ - ngoài scope)
+✅ **Sắp xếp:**
+- Mới nhất → cũ nhất
+- Impact Factor cao → thấp
+- Số trích dẫn nhiều → ít
+- A-Z theo tiêu đề
 
 ---
 
-## 5. Ranh Giới Thời Gian
+#### **Profile Giảng viên**
 
-### 5.1. Trong Phạm Vi
+✅ **Trang cá nhân công khai:**
+- Thông tin cơ bản (Tên, đơn vị, email, ORCID)
+- Danh sách tất cả bài báo
+- Biểu đồ số lượng bài báo theo năm
+- Biểu đồ phân bố theo loại tạp chí
+- Word cloud từ keywords (lĩnh vực nghiên cứu)
+- Tổng số trích dẫn, h-index (nếu có nguồn)
 
-✅ **Giai đoạn 1**: Xây dựng MVP (3-6 tháng)
-   - Quản lý cơ bản 7 nhóm công trình
-   - Tìm kiếm, thống kê cơ bản
-   - Phân quyền cơ bản
-
-✅ **Giai đoạn 2**: Mở rộng (6-12 tháng)
-   - Tích hợp hệ thống bên ngoài
-   - Báo cáo nâng cao
-   - Mobile responsive
-
-### 5.2. Ngoài Phạm Vi (Tương lai)
-
-🔮 **Giai đoạn 3+**: (Sau 12 tháng)
-   - AI/ML cho gợi ý tài liệu tham khảo
-   - Phát hiện đạo văn
-   - Blockchain cho chứng thực
+✅ **URL thân thiện:**
+- `domain.edu.vn/profile/nguyen-van-a`
 
 ---
 
-## 6. Ranh Giới Công Nghệ
+#### **Báo cáo & Thống kê**
 
-### 6.1. Nền Tảng Hỗ Trợ
+✅ **Báo cáo admin:**
+- Số lượng bài báo theo đơn vị (Khoa/Viện)
+- Số lượng theo loại tạp chí (Q1/Q2/Q3/Q4)
+- Xu hướng xuất bản theo năm (line chart)
+- Top 10 giảng viên năng suất cao nhất
+- Top 10 bài báo được trích dẫn nhiều nhất
+- So sánh giữa các Khoa/Viện (bar chart)
 
-✅ **Web Application**
-   - Desktop browsers (Chrome, Firefox, Edge, Safari)
-   - Tablet browsers
-   - Mobile browsers (responsive)
-
-✅ **Operating Systems**
-   - Windows 10+
-   - macOS
-   - Linux
-
-### 6.2. Không Hỗ Trợ
-
-❌ Native Mobile Apps (iOS/Android)  
-❌ Desktop Applications  
-❌ Offline mode  
+✅ **Export:**
+- Excel (.xlsx)
+- PDF
+- CSV (cho phân tích thêm)
 
 ---
 
-## 7. Tóm Tắt Ranh Giới
+#### **Quản lý Người dùng & Phân quyền**
 
-| Khía cạnh | Trong phạm vi | Ngoài phạm vi |
-|-----------|---------------|---------------|
-| **Chức năng** | Quản lý, tra cứu, thống kê công trình NCKH | Quản lý tài chính, nhân sự, peer review |
-| **Dữ liệu** | Công trình, tác giả, file đính kèm | Dữ liệu tài chính, hợp đồng |
-| **Người dùng** | Nghiên cứu viên, QLKH, lãnh đạo | Công chúng rộng rãi |
-| **Công nghệ** | Web application, responsive | Native mobile apps |
-| **Tích hợp** | LDAP, Email, ORCID (tùy chọn) | ERP, LMS |
+✅ **5 vai trò:**
+
+| Vai trò | Quyền hạn |
+|---------|-----------|
+| **SuperAdmin** | - Quản trị hệ thống<br>- Cấu hình, quản lý người dùng<br>- Xem toàn bộ báo cáo |
+| **Researcher** (Giảng viên) | - Tạo/sửa/nộp công trình<br>- Xem phản hồi xét duyệt<br>- Chỉnh sửa theo yêu cầu<br>- Xem profile của mình |
+| **Faculty Reviewer** (CB Khoa) | - Xét duyệt công trình cấp Khoa<br>- Phê duyệt/Yêu cầu bổ sung/Từ chối<br>- Nhập nhận xét |
+| **University Reviewer** (CB Trường) | - Phê duyệt cuối cấp Trường<br>- Approve/Reject<br>- Xem ý kiến cấp Khoa |
+| **Viewer** (Công chúng) | - Tìm kiếm, xem công trình ĐÃ CÔNG BỐ<br>- Xem profile giảng viên<br>- Tải file PDF (nếu công khai) |
+
+✅ **Xác thực:**
+- LDAP/Active Directory (Single Sign-On)
+- JWT token cho API
 
 ---
 
-*Mọi thay đổi về phạm vi cần được phê duyệt bởi Product Owner và cập nhật vào tài liệu này.*
+#### **Quy Trình Phê Duyệt (Approval Workflow)** 🆕
+
+✅ **Quản lý trạng thái công trình:**
+- DRAFT → SUBMITTED → FACULTY_REVIEWING → FACULTY_APPROVED → UNIVERSITY_REVIEWING → PUBLISHED
+- Hỗ trợ REVISION_REQUIRED (yêu cầu bổ sung), REJECTED (từ chối)
+
+✅ **Workflow 2 cấp:**
+- **Cấp 1 - Khoa**: Xét duyệt sơ bộ, yêu cầu chỉnh sửa, từ chối
+- **Cấp 2 - Trường**: Phê duyệt chính thức để công bố
+
+✅ **Feedback và Revision:**
+- CB Khoa/Trường nhập nhận xét, phản hồi
+- Giảng viên xem feedback, chỉnh sửa theo yêu cầu
+- Nộp lại sau khi chỉnh sửa
+
+✅ **Lịch sử xét duyệt (Audit Trail):**
+- Lưu người duyệt, thời gian, nhận xét
+- Theo dõi mọi thay đổi trạng thái
+- Không thể xóa/sửa lịch sử
+
+✅ **Dashboard theo vai trò:**
+- **Giảng viên**: Danh sách công trình của mình + trạng thái hiện tại
+- **CB Khoa**: Danh sách công trình chờ duyệt cấp Khoa (của Khoa mình)
+- **CB Trường**: Danh sách công trình đã Khoa duyệt, chờ Trường phê duyệt
+
+✅ **Notification System:**
+- Email/In-app notification khi có phản hồi
+- Thông báo khi trạng thái thay đổi
+- Nhắc nhở khi công trình chờ duyệt quá lâu
+
+> 💡 **Dual-Mode System (Hệ thống 2 chế độ):**
+> - **Private Mode (Internal)**: Workflow phê duyệt nội bộ - Chỉ người liên quan thấy
+> - **Public Mode (Portfolio)**: CHỈ công trình ở trạng thái **PUBLISHED** mới xuất hiện trong Module 2, 3, 4 (tìm kiếm công khai, profile, báo cáo)
+
+---
+
+### 3.2. ❌ NGOÀI PHẠM VI
+
+#### **Các loại công trình KHÁC:**
+
+❌ Sách chuyên khảo, giáo trình, sách tham khảo  
+❌ Bằng sáng chế, giải pháp hữu ích  
+❌ Phần mềm, cơ sở dữ liệu  
+❌ Thiết bị, máy móc kỹ thuật  
+❌ Tiêu chuẩn quốc gia, quy chuẩn  
+❌ Bản vẽ thiết kế, quy hoạch  
+❌ Tác phẩm nghệ thuật  
+
+→ **Lý do**: Mỗi loại có metadata và quy trình quản lý khác nhau đáng kể
+
+---
+
+#### **Quản lý Đề tài NCKH:**
+
+❌ Đăng ký đề tài mới  
+❌ Theo dõi tiến độ thực hiện  
+❌ Quản lý kinh phí  
+❌ Nghiệm thu đề tài  
+❌ Thanh lý hợp đồng  
+
+→ **Lý do**: Đây là hệ thống riêng biệt với quy trình phức tạp (xem pháp lý tại folder 00)
+
+---
+
+#### **Quản lý Dạy học:**
+
+❌ Thời khóa biểu, lịch giảng  
+❌ Quản lý điểm số sinh viên  
+❌ Đánh giá giảng viên bởi sinh viên  
+
+→ **Lý do**: Đã có hệ thống LMS/ERP riêng
+
+---
+
+#### **Peer Review System:**
+
+❌ Hệ thống phản biện bài báo  
+❌ Quản lý vòng review  
+❌ Quyết định chấp nhận/từ chối  
+
+→ **Lý do**: Module này chỉ quản lý bài báo ĐÃ XUẤT BẢN
+
+---
+
+#### **Thanh toán:**
+
+❌ Xử lý phí xuất bản (APC - Article Processing Charge)  
+❌ Thanh toán online  
+❌ Quản lý hóa đơn  
+
+→ **Lý do**: Nằm ngoài phạm vi quản lý công trình
+
+---
+
+#### **Chức năng Nâng cao (giai đoạn sau):**
+
+❌ Tích hợp tự động với ORCID, Google Scholar API  
+❌ AI đề xuất reviewer  
+❌ Plagiarism check  
+❌ Tự động trích xuất metadata từ PDF  
+❌ Recommendation engine (đề xuất bài báo liên quan)  
+❌ Collaboration network visualization  
+
+→ **Lý do**: MVP cần tập trung vào core features trước
+
+---
+
+## 4. Ranh Giới Dữ Liệu (Data Boundary)
+
+### 4.1. ✅ Dữ liệu NỘI BỘ (Owned by System)
+
+**Hệ thống sở hữu và quản lý:**
+- Thông tin bài báo (metadata)
+- File PDF toàn văn
+- Lịch sử chỉnh sửa (audit log)
+- Thống kê truy cập
+- Đơn vị (Khoa/Viện/Bộ môn)
+
+---
+
+### 4.2. 🔗 Dữ liệu TÍCH HỢP (External Source)
+
+**Lấy từ hệ thống khác (read-only):**
+- Thông tin giảng viên (Tên, email, đơn vị) → từ HR system
+- LDAP/AD accounts → từ IT system
+
+**Tích hợp tùy chọn (giai đoạn sau):**
+- ORCID profile
+- Google Scholar metrics
+- Crossref (xác minh DOI)
+
+---
+
+### 4.3. ❌ Dữ liệu KHÔNG QUẢN LÝ
+
+- Dữ liệu tài chính, lương
+- Dữ liệu sinh viên (điểm, học phí)
+- Dữ liệu đề tài (kinh phí, tiến độ)
+- Dữ liệu tài sản, thiết bị
+
+---
+
+## 5. Ranh Giới Người Dùng (User Boundary)
+
+### 5.1. ✅ Primary Users (Người dùng chính)
+
+- **Giảng viên** - Người tạo và quản lý bài báo
+- **Cán bộ QLKH** - Admin, phê duyệt, báo cáo
+- **Lãnh đạo** - Xem dashboard, báo cáo
+
+---
+
+### 5.2. ✅ Secondary Users (Người dùng phụ)
+
+- **Sinh viên** - Tìm kiếm, xem profile giảng viên
+- **Cộng đồng** - Xem bài báo công khai (read-only)
+
+---
+
+### 5.3. ❌ Non-Users (KHÔNG phải người dùng)
+
+- Cán bộ tài chính (họ chỉ quan tâm kinh phí đề tài)
+- Cán bộ đào tạo (họ dùng hệ thống LMS)
+- Sinh viên quản lý điểm (họ dùng hệ thống ERP)
+
+---
+
+## 6. Ranh Giới Tích Hợp (Integration Boundary)
+
+### 6.1. ✅ Tích hợp BẮT BUỘC
+
+- **LDAP/Active Directory** - Xác thực người dùng
+- **HR System** - Lấy thông tin giảng viên (nếu có API)
+
+---
+
+### 6.2. 🔗 Tích hợp TÙY CHỌN (Nice-to-have)
+
+- **ORCID API** - Import bài báo tự động
+- **Google Scholar API** - Lấy citation count
+- **Crossref API** - Xác minh DOI
+- **Email Server (SMTP)** - Gửi thông báo
+
+---
+
+### 6.3. ❌ KHÔNG tích hợp
+
+- ❌ Hệ thống quản lý tài chính
+- ❌ Hệ thống quản lý đào tạo (LMS)
+- ❌ Hệ thống quản lý đề tài (nếu có)
+- ❌ CSDL quốc gia KH&CN (nằm ngoài phạm vi trường ĐH)
+
+---
+
+## 7. Ranh Giới Thời Gian (Time Boundary)
+
+### 7.1. ✅ Giai đoạn 1 (MVP - 3 tháng)
+
+- CRUD bài báo
+- Tìm kiếm cơ bản
+- Profile giảng viên
+- Báo cáo đơn giản
+- Quản lý người dùng
+
+---
+
+### 7.2. 🔜 Giai đoạn 2 (6 tháng sau MVP)
+
+- Tích hợp ORCID, Google Scholar
+- Báo cáo nâng cao
+- Dashboard interactice
+- Mobile responsive cải tiến
+
+---
+
+### 7.3. 🔮 Giai đoạn 3 (Tương lai xa)
+
+- AI recommendation
+- Collaboration network
+- Mobile app (iOS/Android)
+- Thêm loại công trình khác (Sách, Sáng chế...)
+
+---
+
+## 8. Ranh Giới Công Nghệ (Technology Boundary)
+
+### 8.1. ✅ Nền tảng
+
+- **Web Application** (Browser-based)
+- Responsive design (PC, tablet, mobile browser)
+
+---
+
+### 8.2. ❌ KHÔNG phát triển
+
+- ❌ Native mobile app (iOS/Android) - giai đoạn đầu
+- ❌ Desktop app (Windows/macOS)
+- ❌ Plugin cho Word/Excel
+
+---
+
+## 9. Ma Trận Scope Summary
+
+| Khía cạnh | Trong scope ✅ | Ngoài scope ❌ |
+|-----------|---------------|----------------|
+| **Loại công trình** | Bài báo khoa học | 6 nhóm công trình còn lại |
+| **Chức năng** | CRUD, Tìm kiếm, Báo cáo | Quản lý đề tài, Peer review |
+| **Người dùng** | Giảng viên, Admin, Viewer | Cán bộ tài chính, Sinh viên quản lý điểm |
+| **Dữ liệu** | Metadata bài báo, PDF | Dữ liệu tài chính, điểm số |
+| **Tích hợp** | LDAP/AD | ERP tài chính, LMS |
+| **Nền tảng** | Web app | Native mobile app |
+| **Thời gian** | MVP 3 tháng | AI features (giai đoạn 3) |
+
+---
+
+## 10. Change Request Process
+
+Nếu có yêu cầu **nằm ngoài scope** này:
+
+1. ✅ Ghi nhận vào backlog
+2. ✅ Đánh giá mức độ ưu tiên
+3. ✅ Ước lượng effort
+4. ✅ Quyết định: MVP / Phase 2 / Phase 3 / Reject
+5. ✅ Cập nhật tài liệu scope
+
+---
+
+*Tài liệu này là "hợp đồng" giữa đội phát triển và stakeholders về những gì sẽ/không làm.*

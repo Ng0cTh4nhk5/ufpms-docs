@@ -1,223 +1,490 @@
-# Tổng Quan Hệ Thống Quản Lý Công Trình Nghiên Cứu Khoa Học
+# Đặc Tả Hệ Thống: Module Quản Lý Bài Báo Khoa Học
 
 ## 1. Tên Hệ Thống
 
-**Hệ thống Quản lý Công trình Nghiên cứu Khoa học (Scientific Research Output Management System - SROMS)**
+**Hệ thống Quản lý Bài báo Khoa học cho Giảng viên Đại học**  
+*(University Faculty Publication Management System - UFPMS)*
 
 ---
 
-## 2. Ngữ Cảnh Bài Toán
+## 2. Bối Cảnh và Mục Đích
 
-### 2.1. Bối Cảnh
-Trong hoạt động nghiên cứu khoa học, **công trình nghiên cứu khoa học** là sản phẩm hình thành từ việc thực hiện các **đề tài nghiên cứu khoa học (NCKH)**.
+### 2.1. Bối Cảnh Đồ Án
 
-Hiện nay, các công trình NCKH tồn tại dưới nhiều dạng thức khác nhau, từ ấn phẩm văn bản, tài sản trí tuệ, sản phẩm kỹ thuật, đến các tiêu chuẩn và dữ liệu số hóa. Việc quản lý toàn diện các công trình này đặt ra nhiều thách thức:
+> ⚠️ **Lưu ý về phạm vi**: Đây là module CON trong hệ thống quản lý công trình NCKH tổng thể. Xem [folder 00_Problem_Context](../00_Problem_Context/README.md) để hiểu toàn cảnh bài toán.
 
-- **Đa dạng về loại hình**: 7 nhóm chính với hơn 25 dạng thức khác nhau
-- **Phức tạp về quản lý**: Mỗi loại có quy trình, tiêu chuẩn riêng
-- **Yêu cầu truy xuất**: Cần tra cứu nhanh, thống kê chính xác
-- **Tuân thủ quy định**: Phải đáp ứng các tiêu chuẩn quản lý nhà nước
+**Vấn đề cụ thể đồ án giải quyết:**
 
-### 2.2. Vấn Đề Cần Giải Quyết
+Tại các trường đại học Việt Nam, việc quản lý **bài báo khoa học** của giảng viên đang gặp nhiều vấn đề:
 
-**Vấn đề chính**: Thiếu một hệ thống tập trung để quản lý toàn diện các công trình NCKH với đầy đủ thông tin về:
-- Danh mục công trình theo các dạng thức
-- Thông tin tác giả và đơn vị thực hiện
-- Tình trạng công bố, bảo hộ, ứng dụng
-- Liên kết với đề tài nguồn gốc
-- Thống kê, báo cáo theo nhiều tiêu chí
+❌ **Phân tán dữ liệu:**
+- Mỗi giảng viên tự quản lý CV riêng (file Word/PDF)
+- Phòng/(Trung tâm) QLKH lưu riêng trong Excel
+- Khó tổng hợp, thống kê
 
-**Hậu quả**:
-- Khó khăn trong tra cứu, thống kê
-- Trùng lặp dữ liệu, thiếu đồng bộ
-- Mất thời gian trong quản lý hành chính
-- Không tận dụng được giá trị của các công trình
+❌ **Thiếu tính minh bạch:**
+- Sinh viên không biết giảng viên đang nghiên cứu gì
+- Khó tìm người hướng dẫn phù hợp với hướng nghiên cứu
 
----
+❌ **Báo cáo thủ công:**
+- Mỗi kỳ phải thu thập lại từ giảng viên
+- Nhập liệu nhiều lần cho các báo cáo khác nhau
+- Dễ sai sót, trùng lặp
 
-## 3. Mục Đích Của Hệ Thống
-
-### 3.1. Mục Tiêu Chính
-Xây dựng hệ thống quản lý tập trung, toàn diện các công trình nghiên cứu khoa học, hỗ trợ:
-- **Lưu trữ**: Số hóa và bảo quản thông tin công trình
-- **Quản lý**: Phân loại, cập nhật theo dạng thức và trạng thái
-- **Tra cứu**: Tìm kiếm nhanh theo nhiều tiêu chí
-- **Báo cáo**: Thống kê, phân tích theo yêu cầu quản lý
-- **Khai thác**: Tận dụng giá trị công trình cho nghiên cứu và ứng dụng
-
-### 3.2. Lợi Ích Mong Đợi
-
-#### Đối với Cơ quan Quản lý:
-- Nắm bắt toàn diện tình hình NCKH
-- Đánh giá năng suất, chất lượng nghiên cứu
-- Hỗ trợ ra quyết định đầu tư, khen thưởng
-- Báo cáo định kỳ cho cấp trên
-
-#### Đối với Nhà nghiên cứu:
-- Quản lý hồ sơ công trình cá nhân
-- Đăng ký, cập nhật công trình dễ dàng
-- Tra cứu công trình của đồng nghiệp
-- Chứng minh năng lực nghiên cứu
-
-#### Đối với Tổ chức:
-- Quản lý tài sản trí tuệ
-- Thúc đẩy chuyển giao công nghệ
-- Nâng cao uy tín học thuật
-- Tối ưu hóa quy trình hành chính
+❌ **Khó đánh giá:**
+- Không có công cụ phân tích nhanh năng suất nghiên cứu
+- Không theo dõi được chỉ số citation, impact factor
+- Khó so sánh giữa các khoa/viện
 
 ---
 
-## 4. Phạm Vi Hệ Thống
+### 2.2. Mục Đích Hệ Thống
 
-### 4.1. Trong Phạm Vi
+Xây dựng **module phần mềm quản lý bài báo khoa học** giúp:
 
-#### 4.1.1. Quản lý Công trình NCKH
-Hệ thống quản lý đầy đủ **7 nhóm công trình** chính:
+✅ **Cho giảng viên:**
+- Dễ dàng đăng ký, cập nhật bài báo
+- Có profile nghiên cứu cá nhân trực tuyến
+- Tự động tích hợp từ ORCID, Google Scholar (nếu có)
 
-**1. Công bố và Ấn phẩm**
-- Sách chuyên khảo, giáo trình, sách tham khảo
-- Bài báo khoa học (tạp chí, hội thảo)
-- Báo cáo tổng kết đề tài
-- Báo cáo kiến nghị chính sách
+✅ **Cho phòng QLKH:**
+- Quản lý tập trung tất cả bài báo của trường
+- Tạo báo cáo nhanh theo yêu cầu
+- Phân tích thống kê đa chiều
 
-**2. Tài sản Trí tuệ**
-- Bằng sáng chế, giải pháp hữu ích
-- Bảo hộ giống cây trồng, kiểu dáng công nghiệp
-- Đăng ký quyền tác giả
+✅ **Cho lãnh đạo:**
+- Giám sát năng suất nghiên cứu theo thời gian thực
+- Đánh giá hiệu quả chính sách khuyến khích
+- Hỗ trợ ra quyết định chiến lược
 
-**3. Sản phẩm Kỹ thuật & Công nghệ**
-- Vật liệu mới, chế phẩm
-- Thiết bị, máy móc
-- Dây chuyền công nghệ
-- Mô hình vật lý
-
-**4. Tiêu chuẩn & Quy phạm**
-- Tiêu chuẩn Quốc gia (TCVN)
-- Quy chuẩn Kỹ thuật (QCVN)
-- Tiêu chuẩn cơ sở
-
-**5. Thiết kế & Quy hoạch**
-- Bản vẽ thiết kế thi công
-- Đồ án quy hoạch
-- Tác phẩm kiến trúc
-
-**6. Dữ liệu & Số hóa**
-- Phần mềm máy tính
-- Cơ sở dữ liệu (Big Data)
-- Bản đồ chuyên đề
-
-**7. Văn hóa - Nghệ thuật**
-- Tác phẩm nghệ thuật
-- Chương trình biểu diễn
-
-#### 4.1.2. Chức năng Quản lý
-- ✅ Đăng ký/Nhập công trình mới
-- ✅ Cập nhật thông tin công trình
-- ✅ Phân loại theo dạng thức
-- ✅ Quản lý tác giả và đơn vị
-- ✅ Liên kết với đề tài gốc
-- ✅ Theo dõi trạng thái (đang thực hiện, đã công bố, đã ứng dụng)
-- ✅ Đính kèm file minh chứng
-- ✅ Tra cứu, tìm kiếm
-- ✅ Thống kê, báo cáo
-- ✅ Xuất dữ liệu
-
-### 4.2. Ngoài Phạm Vi
-
-- ❌ Quản lý chi tiết quy trình thực hiện đề tài NCKH
-- ❌ Quản lý tài chính, kinh phí đề tài
-- ❌ Quản lý hợp đồng, thanh toán
-- ❌ Hệ thống peer review chi tiết
-- ❌ Nền tảng xuất bản trực tuyến
-- ❌ Quản lý thiết bị phòng thí nghiệm
+✅ **Cho sinh viên:**
+- Tìm hiểu hướng nghiên cứu của giảng viên
+- Chọn người hướng dẫn phù hợp
+- Khám phá kiến thức khoa học
 
 ---
 
-## 5. Môi Trường Triển Khai
+## 3. Phạm Vi Hệ Thống
 
-### 5.1. Đối Tượng Triển Khai
-- **Ưu tiên**: Trường đại học, Viện nghiên cứu, Trung tâm R&D
-- **Mở rộng**: Sở KH&CN, Bộ Giáo dục, Bộ KH&CN
+### 3.1. Trong Phạm Vi (In Scope)
 
-### 5.2. Kiến Trúc Hệ Thống
-- **Deployment**: Cloud-based hoặc On-premise
-- **Access**: Web Application (responsive)
-- **Platform**: Cross-platform (Windows, macOS, Linux)
+#### A. Loại Công Trình
 
-### 5.3. Quy Mô Dự Kiến
-- **Users**: 100 - 10,000+ người dùng đồng thời
-- **Data**: Hàng chục nghìn công trình
-- **Growth**: Tăng 20-30% mỗi năm
+✅ **CHỈ quản lý Bài báo khoa học** (Journal Articles), bao gồm:
+- Bài báo trên tạp chí quốc tế (ISI/Scopus)
+- Bài báo trên tạp chí trong nước (có ISSN)
+- Bài báo hội thảo quốc tế (có ISBN)
 
----
-
-## 6. Công Nghệ và Nền Tảng
-
-### 6.1. Công Nghệ Đề Xuất (Sơ Bộ)
-
-**Frontend:**
-- HTML5, CSS3, JavaScript
-- Framework: React/Vue.js/Angular
-
-**Backend:**
-- Language: C# (.NET Core), Java (Spring Boot), hoặc Node.js
-- API: RESTful API
-
-**Database:**
-- Relational: PostgreSQL, MySQL, hoặc SQL Server
-- Document storage: cho file đính kèm
-
-**Authentication:**
-- OAuth 2.0, JWT
-- Tích hợp LDAP/Active Directory (nếu cần)
-
-### 6.2. Tích Hợp
-- Hệ thống quản lý tài liệu (DMS)
-- Hệ thống quản lý đề tài (nếu có)
-- Cơ sở dữ liệu bên ngoài (ORCID, Google Scholar)
+❌ **KHÔNG bao gồm**:
+- Sách, giáo trình
+- Bằng sáng chế
+- Phần mềm, sản phẩm kỹ thuật
+- ... (xem đầy đủ 7 nhóm tại [folder 00](../00_Problem_Context/README.md))
 
 ---
 
-## 7. Các Bên Liên Quan (Stakeholders)
+#### B. Chức Năng Chính
 
-### 7.1. Stakeholders Chính
+**Module 1: Quản lý Bài báo**
+- ✅ Thêm/Sửa/Xóa bài báo
+- ✅ Upload file PDF bài báo
+- ✅ Phân loại theo: Q1/Q2/Q3/Q4 (Scopus), Impact Factor
+- ✅ Gắn tag từ khóa, lĩnh vực nghiên cứu
+- ✅ Liên kết đồng tác giả (giảng viên khác trong trường)
 
-| Nhóm | Vai trò | Lợi ích |
-|------|---------|---------|
-| **Lãnh đạo cơ quan** | Quyết định, phê duyệt | Báo cáo tổng hợp, đánh giá hiệu quả |
-| **Phòng QLKH** | Quản trị hệ thống, quản lý dữ liệu | Tối ưu công việc, chính xác dữ liệu |
-| **Nhà nghiên cứu** | Đăng ký, cập nhật công trình | Đơn giản hóa thủ tục, lưu trữ hồ sơ |
-| **Sinh viên/NCS** | Tra cứu tài liệu | Tiếp cận nguồn tài liệu phong phú |
+**Module 2: Tìm kiếm & Tra cứu**
+- ✅ Tìm theo tiêu đề, tác giả, từ khóa
+- ✅ Lọc theo loại tạp chí, năm xuất bản, đơn vị
+- ✅ Sắp xếp theo Impact Factor, số lượng trích dẫn
+- ✅ Xem chi tiết bài báo + tải PDF
 
-### 7.2. Stakeholders Phụ
-- **Bộ KH&CN, Bộ GD&ĐT**: Nhận báo cáo, thống kê
-- **Doanh nghiệp**: Tìm kiếm công nghệ để chuyển giao
-- **Cộng đồng nghiên cứu**: Chia sẻ tri thức
+**Module 3: Profile Giảng viên**
+- ✅ Trang cá nhân công khai
+- ✅ Danh sách bài báo đã xuất bản
+- ✅ Biểu đồ năng suất nghiên cứu theo năm
+- ✅ Lĩnh vực chuyên môn (word cloud từ keywords)
+
+**Module 4: Báo cáo & Thống kê**
+- ✅ Báo cáo số lượng bài báo theo đơn vị (Khoa/Viện)
+- ✅ Báo cáo theo loại tạp chí (Q1/Q2/Q3/Q4)
+- ✅ Xu hướng xuất bản theo năm
+- ✅ Top giảng viên có năng suất cao nhất
+
+**Module 5: Quản lý Người dùng**
+- ✅ Phân quyền: SuperAdmin, Giảng viên, Cán bộ Khoa, Cán bộ Trường, Viewer
+- ✅ Xác thực qua LDAP/AD (Single Sign-On)
+- ✅ Quản lý đơn vị (Khoa/Viện/Bộ môn)
+
+**Module 6: Quy Trình Phê Duyệt (Approval Workflow)** 🆕
+- ✅ **Nộp công trình xét duyệt**: Giảng viên chuyển từ Draft → Submitted
+- ✅ **Xét duyệt cấp Khoa**:
+  - Xem danh sách công trình chờ duyệt của Khoa mình
+  - Phê duyệt (Approve) / Yêu cầu bổ sung (Revision) / Từ chối (Reject)
+  - Nhập nhận xét, phản hồi
+- ✅ **Phê duyệt cấp Trường**:
+  - Xem công trình đã được Khoa duyệt
+  - Phê duyệt cuối cùng hoặc từ chối
+- ✅ **Lịch sử xét duyệt**:
+  - Lưu người duyệt, thời gian, nhận xét
+  - Audit trail đầy đủ
+- ✅ **Thông báo (Notification)**:
+  - Email/In-app khi có phản hồi
+  - Thông báo chuyển trạng thái
+- ✅ **Dashboard theo vai trò**:
+  - Giảng viên: Xem trạng thái công trình của mình
+  - CB Khoa: Danh sách chờ duyệt cấp Khoa
+  - CB Trường: Danh sách chờ duyệt cấp Trường
+
+> 💡 **Lưu ý**: CHỈ công trình đã được **cấp Trường phê duyệt** mới xuất hiện trong Module 2, 3, 4 (tìm kiếm, profile, báo cáo công khai).
 
 ---
 
-## 8. Ràng Buộc và Giả Định
+#### C. Đối Tượng Sử Dụng
 
-### 8.1. Ràng Buộc
-
-**Pháp lý:**
-- Tuân thủ Luật Sở hữu trí tuệ
-- Tuân thủ Nghị định về quản lý NCKH
-
-**Kỹ thuật:**
-- Phải tương thích với hệ thống hiện có
-- Bảo mật dữ liệu cấp độ cao
-
-**Tài nguyên:**
-- Ngân sách giới hạn
-- Đội ngũ kỹ thuật nội bộ hạn chế
-
-### 8.2. Giả Định
-- Người dùng có kết nối Internet ổn định
-- Người dùng có kỹ năng sử dụng máy tính cơ bản
-- Dữ liệu đầu vào được cung cấp chính xác
-- Có sự hợp tác của các đơn vị liên quan
+| Vai trò | Quyền hạn | Số lượng ước tính |
+|---------|-----------|-------------------|
+| **SuperAdmin** | Quản trị hệ thống, cấu hình, quản lý người dùng | 2-5 người |
+| **Giảng viên** (Researcher) | Tạo/sửa/nộp công trình; Xem phản hồi; Chỉnh sửa theo yêu cầu | 300-500 người |
+| **Cán bộ Khoa** (Faculty Reviewer) | Xét duyệt công trình cấp Khoa (Approve/Revision/Reject) | 10-20 người |
+| **Cán bộ Trường** (University Reviewer) | Phê duyệt cuối cùng cấp Trường (Approve/Reject) | 2-5 người |
+| **Viewer** (Sinh viên, công chúng) | Xem công trình đã công bố, tìm kiếm | Không giới hạn |
 
 ---
 
-*Tài liệu này là bản tổng quan và sẽ được chi tiết hóa trong các phần tiếp theo.*
+### 3.2. Ngoài Phạm Vi (Out of Scope)
+
+❌ **Quản lý đề tài nghiên cứu:**
+- Đăng ký, thực hiện, nghiệm thu đề tài
+- Quản lý kinh phí
+- → Đây là hệ thống riêng
+
+❌ **Quản lý giảng dạy:**
+- Thời khóa biểu, điểm số
+- → Đã có hệ thống LMS/ERP
+
+❌ **Quản lý các loại công trình khác:**
+- Sách, sáng chế, phần mềm...
+- → Có thể mở rộng trong tương lai
+
+❌ **Peer review system:**
+- Không phải hệ thống phản biện bài báo
+- Chỉ quản lý bài báo ĐÃ xuất bản
+
+❌ **Tích hợp thanh toán:**
+- Không xử lý phí xuất bản (APC)
+
+---
+
+### 3.3. Ranh Giới Dữ Liệu
+
+**Dữ liệu nội bộ (quản lý bởi hệ thống):**
+- Thông tin bài báo
+- File PDF
+- Thống kê truy cập
+- Lịch sử chỉnh sửa
+
+**Dữ liệu tích hợp (từ hệ thống khác):**
+- Thông tin giảng viên (từ HR system)
+- Đơn vị (Khoa/Viện) (từ hệ thống tổ chức)
+- ORCID, DOI, Google Scholar (từ internet)
+
+---
+
+### 3.4. Quản Lý Trạng Thái Công Trình (Publication State Machine)
+
+Mỗi công trình khoa học trong hệ thống sẽ trải qua các trạng thái sau:
+
+#### Sơ Đồ Luồng Trạng Thái
+
+```
+DRAFT → SUBMITTED → FACULTY_REVIEWING → [REVISION_REQUIRED hoặc FACULTY_APPROVED]
+                                              ↓                         ↓
+                                           DRAFT (chỉnh sửa)    UNIVERSITY_REVIEWING
+                                                                        ↓
+                                                         [UNIVERSITY_APPROVED hoặc UNIVERSITY_REJECTED]
+                                                                        ↓
+                                                                   PUBLISHED
+```
+
+#### Chi Tiết Các Trạng Thái
+
+| Trạng thái | Mô tả | Ai thấy được | Ai được thao tác |
+|------------|-------|--------------|------------------|
+| **DRAFT** | Nháp, giảng viên đang soạn | Chỉ giảng viên | Giảng viên (Edit, Submit) |
+| **SUBMITTED** | Đã nộp, chờ Khoa xét | GV, CB Khoa, Admin | CB Khoa (Review) |
+| **FACULTY_REVIEWING** | Khoa đang xem xét | GV, CB Khoa, Admin | CB Khoa (Approve/Revision/Reject) |
+| **REVISION_REQUIRED** | Khoa yêu cầu bổ sung | GV, CB Khoa, Admin | Giảng viên (Edit, Resubmit) |
+| **FACULTY_REJECTED** | Khoa từ chối | GV, CB Khoa, Admin | Giảng viên (View only) |
+| **FACULTY_APPROVED** | Khoa đã duyệt, chờ Trường | GV, CB Khoa, CB Trường, Admin | CB Trường (Review) |
+| **UNIVERSITY_REVIEWING** | Trường đang xem xét | GV, CB Khoa, CB Trường, Admin | CB Trường (Approve/Reject) |
+| **UNIVERSITY_APPROVED** = **PUBLISHED** | Đã công bố chính thức | **Mọi người** (Public) | Không thể sửa |
+| **UNIVERSITY_REJECTED** | Trường từ chối | GV, CB Khoa, CB Trường, Admin | Giảng viên (View only) |
+
+#### Quy Tắc Chuyển Trạng Thái
+
+**Từ DRAFT:**
+- → SUBMITTED (khi giảng viên nhấn "Nộp xét duyệt")
+
+**Từ SUBMITTED:**
+- → FACULTY_REVIEWING (tự động hoặc khi CB Khoa bắt đầu xem)
+- → FACULTY_APPROVED (CB Khoa phê duyệt)
+- → REVISION_REQUIRED (CB Khoa yêu cầu chỉnh sửa)
+- → FACULTY_REJECTED (CB Khoa từ chối)
+
+**Từ REVISION_REQUIRED:**
+- → DRAFT (giảng viên chỉnh sửa)
+- → SUBMITTED (giảng viên nộp lại)
+
+**Từ FACULTY_APPROVED:**
+- → UNIVERSITY_REVIEWING (tự động hoặc khi CB Trường bắt đầu xem)
+- → PUBLISHED (CB Trường phê duyệt)
+- → UNIVERSITY_REJECTED (CB Trường từ chối)
+
+> ⚠️ **Lưu ý quan trọng**:
+> - CHỈ công trình ở trạng thái **PUBLISHED** mới xuất hiện trong:
+>   - Module 2: Tìm kiếm công khai
+>   - Module 3: Profile giảng viên (phần công khai)
+>   - Module 4: Báo cáo thống kê công khai
+> - Các trạng thái khác CHỈ hiển thị trong **Dashboard nội bộ** (Module 6)
+
+---
+
+## 4. Các Bên Liên Quan (Stakeholders)
+
+### 4.1. Stakeholders Chính
+
+| Vai trò | Mô tả | Mong đợi chính |
+|---------|-------|----------------|
+| **Giảng viên** | Người tạo ra bài báo | Dễ nhập, nộp duyệt đơn giản, nhận phản hồi kịp thời, có profile đẹp |
+| **Cán bộ Khoa** | Xét duyệt công trình cấp Khoa | Dashboard rõ ràng, dễ duyệt hàng loạt, nhập nhận xét nhanh |
+| **Cán bộ Trường** (Phòng QLKH) | Phê duyệt cuối toàn trường | Xem ý kiến Khoa, lọc theo đơn vị, quyết định nhanh |
+| **Lãnh đạo trường** | Ra quyết định chiến lược | Dashboard tổng quan, thống kê năng suất, insight xu hướng |
+| **Sinh viên/NCS** | Tìm người hướng dẫn | Tìm kiếm dễ dàng, thông tin đầy đủ về công trình đã công bố |
+
+### 4.2. Stakeholders Phụ
+
+- **Phòng Tổ chức - Hành chính**: Cung cấp dữ liệu giảng viên
+- **Phòng IT**: Hỗ trợ hạ tầng, bảo mật
+- **Bộ GD&ĐT**: Có thể yêu cầu báo cáo định kỳ
+- **Cơ quan kiểm định (AUN-QA, ...)**: Đánh giá chất lượng đào tạo
+
+---
+
+## 5. Yêu Cầu Phi Chức Năng
+
+### 5.1. Hiệu Năng
+
+- Thời gian tải trang: < 2 giây
+- Tìm kiếm trả về kết quả: < 1 giây (với DB < 10,000 bài báo)
+- Hỗ trợ: 100 người dùng đồng thời
+
+### 5.2. Khả Dụng
+
+- Uptime: > 99% (cho phép bảo trì 1 giờ/tuần)
+- Backup tự động hàng ngày
+- Recovery time: < 4 giờ
+
+### 5.3. Bảo Mật
+
+- HTTPS bắt buộc
+- Xác thực qua LDAP/AD (SSO)
+- Phân quyền rõ ràng (RBAC)
+- Audit log cho mọi thao tác quan trọng
+
+### 5.4. Khả Năng Sử Dụng
+
+- Giao diện tiếng Việt
+- Responsive (PC, tablet, mobile)
+- Tuân thủ WCAG 2.1 (AA) - Accessibility cơ bản
+
+### 5.5. Khả Năng Bảo Trì
+
+- Code rõ ràng, có documentation
+- Unit test coverage > 70%
+- Dễ dàng thêm loại công trình mới (mở rộng sau)
+
+---
+
+## 6. Công Nghệ Đề Xuất
+
+> Chi tiết đầy đủ: [technology_stack.md](./technology_stack.md)
+
+**Tóm tắt:**
+- Frontend: React + TypeScript + Material-UI
+- Backend: Java Spring Boot 3.x
+- Database: MySQL 8.0+
+- Storage: Hệ thống file cục bộ (Local File System) cho file PDF
+- Xác thực: LDAP/AD + JWT
+
+### 6.1. Giải Thích về Storage (Lưu Trữ File)
+
+**Storage** là nơi lưu trữ các file PDF của bài báo khoa học mà giảng viên upload lên hệ thống.
+
+**Các phương án lưu trữ:**
+
+**1. Local File System (Khuyến nghị cho MVP)**
+- Lưu file trực tiếp trên server
+- Path lưu trong database, file thực tế trong folder `/uploads/publications/`
+- **Ưu điểm**: Đơn giản, không phí phát sinh, dễ triển khai
+- **Nhược điểm**: Khó scale khi file nhiều, cần backup thủ công
+
+**2. Cloud Storage (Giai đoạn 2)**
+- AWS S3, Azure Blob Storage, Google Cloud Storage
+- **Ưu điểm**: Tự động backup, dễ mở rộng, có CDN
+- **Nhược điểm**: Phí hàng tháng, phụ thuộc Internet
+
+**3. MinIO (S3-compatible, Self-hosted)**
+- Giải pháp trung gian: tự host nhưng API giống S3
+- **Ưu điểm**: Dễ migration lên AWS S3 sau, không phí cloud
+- **Nhược điểm**: Cần server riêng cho storage
+
+**Quyết định cho đồ án:**
+- MVP: Sử dụng **Local File System** (đơn giản, đủ dùng)
+- Tương lai: Có thể chuyển sang Cloud Storage khi cần scale
+
+---
+
+## 9. Tuân Thủ Chuẩn Quốc Tế (Future-Proofing)
+
+> Xem chi tiết: [Chuẩn mực quốc tế](../00_Problem_Context/international_standards.md)
+
+### 9.1. Metadata và Persistent Identifiers
+
+**Khuyến nghị áp dụng:**
+
+✅ **DOI (Digital Object Identifier)**
+- Lưu trữ DOI cho mỗi bài báo (nếu có)
+- Validation format: `10.xxxx/xxxxx`
+- Tích hợp CrossRef API để tự động lấy metadata
+
+✅ **ORCID (Researcher ID)**
+- Lưu ORCID của giảng viên (nếu có)
+- Format: `0000-0002-1825-0097`
+- Giai đoạn 2: Import publication list từ ORCID tự động
+
+✅ **ISSN (Journal ID)**
+- Lưu ISSN của tạp chí
+- Format: `0028-0836`
+
+✅ **UUID cho Bài báo**
+- Mỗi bài báo có UUID duy nhất
+- Đảm bảo tính vĩnh viễn khi hệ thống thay đổi
+
+---
+
+### 9.2. Tuân Thủ FAIR Principles
+
+**FAIR = Findable + Accessible + Interoperable + Reusable**
+
+**Findable (Dễ tìm):**
+- ✅ Metadata đầy đủ (tiêu đề, tác giả, từ khóa, tóm tắt)
+- ✅ Có search engine optimization (SEO)
+
+**Accessible (Dễ truy cập):**
+- ✅ API công khai (cho phép tìm kiếm, xem metadata)
+- ✅ Authentication rõ ràng (JWT)
+
+**Interoperable (Tương tác được):
+- ✅ RESTful API tuân thủ OpenAPI 3.0
+- ✅ Export dạng chuẩn: BibTeX, RIS, JSON
+
+**Reusable (Tái sử dụng được):**
+- ✅ License bài báo rõ ràng (CC BY, All Rights Reserved...)
+- ✅ Audit trail (lịch sử thay đổi)
+
+---
+
+### 9.3. Khả Năng Mở Rộng (Extensibility)
+
+**Thiết kế database linh hoạt:**
+
+Module hiện tại chỉ quản lý **bài báo**, nhưng structure cần cho phép thêm:
+- 🔸 Dataset (dữ liệu nghiên cứu)
+- 🔸 Software (phần mềm)
+- 🔸 Conference proceedings (kỷ yếu)
+
+**Tham khảo:**
+- CERIF ResultPublication structure
+- COAR Resource Types vocabulary
+
+```sql
+-- Thiết kế mẫu cho tương lai
+TABLE research_outputs (
+  id UUID PRIMARY KEY,
+  type VARCHAR(50), -- 'journal_article', 'dataset', 'software'...
+  metadata JSONB,    -- Linh hoạt cho từng loại
+  ...
+)
+```
+
+---
+
+### 9.4. CRediT (Contributor Roles Taxonomy)
+
+**Ghi nhận đóng góp chi tiết:**
+
+Thay vì chỉ "Tác giả chính" và "Đồng tác giả", có thể mở rộng:
+- Conceptualization (Hình thành ý tưởng)
+- Data curation (Quản lý dữ liệu)
+- Formal analysis (Phân tích)
+- Writing - original draft (Viết bản thảo)
+- Writing - review & editing (Biên tập)
+
+→ Hữu ích cho đánh giá KPI chi tiết
+
+---
+
+## 10. Ràng Buộc và Giả Định
+
+### 10.1. Ràng Buộc Kỹ Thuật
+
+- Phải tương thích với hạ tầng hiện tại của trường (Windows Server, Active Directory)
+- Sử dụng công nghệ phổ biến, dễ tìm nhân lực bảo trì
+
+### 10.2. Thời Gian
+
+- MVP trong vòng 3 tháng
+- Go-live trước năm học mới
+
+### 7.3. Ngân Sách
+
+- Ưu tiên giải pháp mã nguồn mở
+- Chi phí vận hành < 50 triệu/năm
+
+---
+
+## 8. Giả Định
+
+- ✅ Giảng viên có kỹ năng máy tính cơ bản
+- ✅ Có kết nối internet ổn định
+- ✅ Dữ liệu bài báo do giảng viên tự khai báo (honor system)
+- ✅ Phòng QLKH sẽ kiểm tra, phê duyệt định kỳ
+
+---
+
+## 9. Tiêu Chí Thành Công
+
+Sau 6 tháng triển khai:
+
+- ✅ 80% giảng viên đã đăng ký ít nhất 1 bài báo
+- ✅ Thời gian tạo báo cáo giảm từ 3 ngày → 30 phút
+- ✅ 90% người dùng hài lòng (khảo sát)
+- ✅ Không có sự cố bảo mật nghiêm trọng
+
+---
+
+## 10. Kế Hoạch Mở Rộng (Future Scope)
+
+**Giai đoạn 2:**
+- ✅ Tích hợp tự động với ORCID, Google Scholar API
+- ✅ AI đề xuất đồng nghiệp hợp tác (based on keywords)
+- ✅ Thêm loại công trình: Sách, Giáo trình
+
+**Giai đoạn 3:**
+- ✅ Mobile app (iOS/Android)
+- ✅ Blockchain cho xác thực công trình
+- ✅ Kết nối liên trường (University Alliance)
+
+---
+
+*Chi tiết yêu cầu chức năng, user stories, use cases: xem các folder 03-05*
