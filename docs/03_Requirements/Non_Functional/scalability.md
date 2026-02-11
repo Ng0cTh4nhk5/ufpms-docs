@@ -1,186 +1,186 @@
 # Yêu Cầu Khả Năng Mở Rộng - Scalability Requirements
 
 > 📅 **Cập nhật**: 10/02/2026  
-> 🎯 **Danh mục**: Non-Functional Requirements
+> 🎯 **Danh mục**: Yêu cầu Phi Chức Năng
 
 ---
 
-## 1. Data Scalability
+## 1. Khả năng Mở rộng Dữ liệu (Data Scalability)
 
-### NFR-SCA-001: Publication Volume
-**Capacity**:
-- MVP: 10,000 publications
-- 3 years: 20,000 publications
-- 5 years: 50,000 publications
+### NFR-SCA-001: Khối lượng Bài báo
+**Dung lượng**:
+- MVP: 10,000 bài báo
+- 3 năm: 20,000 bài báo
+- 5 năm: 50,000 bài báo
 
-**Growth rate**: ~2,000-3,000/year
-
----
-
-### NFR-SCA-002: User Base
-**Capacity**:
-- MVP: 500 users
-- 3 years: 1,000 users
-- 5 years: 2,000 users
+**Tốc độ tăng trưởng**: ~2,000-3,000/năm
 
 ---
 
-### NFR-SCA-003: File Storage
-**Capacity**:
-- MVP: 50GB PDF files
-- 3 years: 150GB
-- 5 years: 300GB
-
-**Strategy**: Start local FS, migrate to object storage (S3) nếu cần
+### NFR-SCA-002: Lượng Người dùng
+**Dung lượng**:
+- MVP: 500 người dùng
+- 3 năm: 1,000 người dùng
+- 5 năm: 2,000 người dùng
 
 ---
 
-## 2. Vertical Scalability
+### NFR-SCA-003: Lưu trữ Tệp tin
+**Dung lượng**:
+- MVP: 50GB tệp PDF
+- 3 năm: 150GB
+- 5 năm: 300GB
 
-### NFR-SCA-010: Server Specs Scaling
-**Minimum** (MVP):
+**Chiến lược**: Bắt đầu với File System cục bộ, chuyển sang object storage (S3) nếu cần
+
+---
+
+## 2. Mở rộng theo Chiều dọc (Vertical Scalability)
+
+### NFR-SCA-010: Mở rộng Cấu hình Máy chủ
+**Tối thiểu** (MVP):
 - CPU: 4 cores
 - RAM: 8GB
-- Disk: 100GB
+- Ổ cứng: 100GB
 
-**Recommended** (Production):
+**Khuyến nghị** (Production):
 - CPU: 8 cores
 - RAM: 16GB
-- Disk: 500GB SSD
+- Ổ cứng: 500GB SSD
 
-**Max vertical scale**:
+**Mở rộng tối đa**:
 - CPU: 16 cores
 - RAM: 32GB
 
 ---
 
-## 3. Horizontal Scalability
+## 3. Mở rộng theo Chiều ngang (Horizontal Scalability)
 
-### NFR-SCA-020: Stateless Application
-**Requirement**: Backend PHẢI stateless
+### NFR-SCA-020: Ứng dụng Phi trạng thái (Stateless Application)
+**Yêu cầu**: Backend PHẢI stateless
 
-**Implementation**:
-- Session trong Redis (không trong memory)
-- JWT tokens (không session affinity)
-- Load balancer ready
-
----
-
-### NFR-SCA-021: Database Replication
-**Strategy** (Phase 2):
-- Master-Slave replication
-- Read từ slaves
-- Write vào master
-
-**Max scale**: 1 master + 2-3 read replicas
+**Triển khai**:
+- Session lưu trong Redis (không lưu trong bộ nhớ ứng dụng)
+- JWT tokens (không phụ thuộc session server)
+- Sẵn sàng cho Load balancer
 
 ---
 
-### NFR-SCA-022: Load Balancing
-**Support** (Phase 2):
+### NFR-SCA-021: Sao chép Cơ sở dữ liệu (Database Replication)
+**Chiến lược** (Giai đoạn 2):
+- Sao chép Master-Slave
+- Đọc từ slaves
+- Ghi vào master
+
+**Mở rộng tối đa**: 1 master + 2-3 read replicas
+
+---
+
+### NFR-SCA-022: Cân bằng tải (Load Balancing)
+**Hỗ trợ** (Giai đoạn 2):
 - Nginx hoặc HAProxy
 - Round-robin hoặc least-connections
-- Health checks
+- Kiểm tra sức khỏe (Health checks)
 
 ---
 
-## 4. Modular Architecture
+## 4. Kiến trúc Mô-đun (Modular Architecture)
 
-### NFR-SCA-030: Microservices Ready
-**Design**: Monolith hiện tại, nhưng sẵn sàng tách ra
+### NFR-SCA-030: Sẵn sàng cho Microservices
+**Thiết kế**: Monolith hiện tại, nhưng sẵn sàng tách ra
 
-**Potential modules**:
-- Publication Service
-- Approval Workflow Service
-- Search Service
-- Reporting Service
-- User Management Service
-
----
-
-## 5. Database Scalability
-
-### NFR-SCA-040: Indexing Strategy
-**Indexes**:
-- Primary keys (id)
-- Foreign keys
-- DOI, ISSN (unique)
-- publicationYear, status
-- Full-text index (title, abstract)
+**Các mô-đun tiềm năng**:
+- Dịch vụ Bài báo (Publication Service)
+- Dịch vụ Quy trình Phê duyệt (Approval Workflow Service)
+- Dịch vụ Tìm kiếm (Search Service)
+- Dịch vụ Báo cáo (Reporting Service)
+- Dịch vụ Quản lý Người dùng (User Management Service)
 
 ---
 
-### NFR-SCA-041: Partitioning (Future)
-**Strategy nếu > 100,000 publications**:
-- Partition by year
-- Archive old data (> 10 years)
+## 5. Khả năng Mở rộng Cơ sở Dữ liệu
+
+### NFR-SCA-040: Chiến lược Đánh chỉ mục (Indexing Strategy)
+**Các chỉ mục**:
+- Khóa chính (id)
+- Khóa ngoại
+- DOI, ISSN (duy nhất)
+- Năm xuất bản (publicationYear), trạng thái (status)
+- Chỉ mục toàn văn (tiêu đề, tóm tắt)
 
 ---
 
-## 6. Caching Strategy
-
-### NFR-SCA-050: Multi-Level Caching
-**Layers**:
-1. Browser cache (static assets)
-2. CDN/Reverse proxy (public pages)
-3. Application cache (Redis)
-4. Database query cache
-
-**Hit ratio target**: > 70%
+### NFR-SCA-041: Phân vùng (Partitioning - Tương lai)
+**Chiến lược nếu > 100,000 bài báo**:
+- Phân vùng theo năm
+- Lưu trữ dữ liệu cũ (> 10 năm) ra archive
 
 ---
 
-## 7. Migration Path
+## 6. Chiến lược Lưu trữ đệm (Caching Strategy)
 
-### NFR-SCA-060: Cloud Migration Ready
-**From**: On-premise servers  
-**To**: Cloud (AWS, Azure, GCP)
+### NFR-SCA-050: Caching Đa cấp (Multi-Level Caching)
+**Các lớp**:
+1. Cache trình duyệt (tài nguyên tĩnh)
+2. CDN/Reverse proxy (trang công khai)
+3. Cache ứng dụng (Redis)
+4. Cache truy vấn CSDL
 
-**Components to migrate**:
-- Database: MySQL → RDS/Cloud SQL
-- Files: Local FS → S3/Blob Storage
-- App: VMs → Containers (Docker)
+**Mục tiêu tỷ lệ hit**: > 70%
 
 ---
 
-## 8. API Scalability
+## 7. Lộ trình Di chuyển (Migration Path)
 
-### NFR-SCA-070: API Versioning
-**Support**: API v1, v2... (backward compatible)
+### NFR-SCA-060: Sẵn sàng Di chuyển lên Cloud
+**Từ**: Máy chủ tại chỗ (On-premise)  
+**Sang**: Đám mây (AWS, Azure, GCP)
+
+**Các thành phần di chuyển**:
+- CSDL: MySQL → RDS/Cloud SQL
+- Tệp tin: Local FS → S3/Blob Storage
+- Ứng dụng: VMs → Containers (Docker)
+
+---
+
+## 8. Khả năng Mở rộng API
+
+### NFR-SCA-070: Phiên bản API
+**Hỗ trợ**: API v1, v2... (tương thích ngược)
 
 **URL**: `/api/v1/publications`
 
 ---
 
-### NFR-SCA-071: Rate Limiting
-**Prevents abuse**:
-- Public API: 100 req/hour
-- Authenticated: 1000 req/hour
+### NFR-SCA-071: Giới hạn Tốc độ (Rate Limiting)
+**Ngăn chặn lạm dụng**:
+- Public API: 100 req/giờ
+- Authenticated: 1000 req/giờ
 
 ---
 
-## 9. Monitoring & Auto-scaling
+## 9. Giám sát & Tự động Mở rộng
 
-### NFR-SCA-080: Metrics Collection
-**Track**:
-- Request count
-- Response time
-- Error rate
-- Resource utilization
+### NFR-SCA-080: Thu thập Chỉ số (Metrics Collection)
+**Theo dõi**:
+- Số lượng yêu cầu
+- Thời gian phản hồi
+- Tỷ lệ lỗi
+- Sử dụng tài nguyên
 
-**Tools**: Prometheus + Grafana
+**Công cụ**: Prometheus + Grafana
 
 ---
 
-### NFR-SCA-081: Auto-scaling (Phase 3)
-**Triggers**:
-- CPU > 80% for 5 min: Scale up
-- CPU < 30% for 10 min: Scale down
+### NFR-SCA-081: Tự động Mở rộng (Giai đoạn 3)
+**Kích hoạt**:
+- CPU > 80% trong 5 phút: Tăng quy mô (Scale up)
+- CPU < 30% trong 10 phút: Giảm quy mô (Scale down)
 
-**Platform**: Kubernetes, Docker Swarm
+**Nền tảng**: Kubernetes, Docker Swarm
 
 ---
 
 **Tài liệu liên quan**:
-- [Performance Requirements](./performance.md)
+- [Yêu Cầu Hiệu Năng](./performance.md)
 - [Technology Stack](../../01_System_Specification/technology_stack.md)

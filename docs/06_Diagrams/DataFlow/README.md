@@ -1,21 +1,21 @@
-# Data Flow Diagrams - README
+# Biểu đồ Luồng Dữ Liệu - README
 
-> 📁 **Folder**: `06_Diagrams/DataFlow`  
-> 🎯 **Mục đích**: Data flows qua system processes
+> 📁 **Thư mục**: `06_Diagrams/DataFlow`  
+> 🎯 **Mục đích**: Luồng dữ liệu qua các quy trình hệ thống
 
 ---
 
-## 📁 Documents
+## 📁 Tài liệu
 
 ### [dfd_level_0.md](./dfd_level_0.md)
-Level 0: UFPMS as single process
+Cấp 0: UFPMS như một quy trình duy nhất
 
 ### [dfd_level_1.md](./dfd_level_1.md)
-Level 1: 6 modules decomposition
+Cấp 1: Phân rã thành 6 mô-đun
 
 ### [dfd_level_2_approval.md](./dfd_level_2_approval.md)
-Level 2: Detailed approval workflow
+Cấp 2: Quy trình phê duyệt chi tiết
 
 ---
 
-**Created**: 10/02/2026
+**Ngày tạo**: 10/02/2026

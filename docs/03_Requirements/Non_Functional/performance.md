@@ -1,235 +1,235 @@
 # Yêu Cầu Hiệu Năng - Performance Requirements
 
 > 📅 **Cập nhật**: 10/02/2026  
-> 🎯 **Danh mục**: Non-Functional Requirements
+> 🎯 **Danh mục**: Yêu cầu Phi Chức Năng
 
 ---
 
-## 1. Response Time Requirements
+## 1. Yêu cầu Thời gian Phản hồi (Response Time Requirements)
 
-### NFR-PERF-001: Page Load Time
-**Metric**: Time to interactive (TTI)
+### NFR-PERF-001: Thời gian Tải trang (Page Load Time)
+**Chỉ số**: Thời gian tương tác (Time to interactive - TTI)
 
-| Page Type | Target | Maximum |
+| Loại Trang | Mục tiêu | Tối đa |
 |-----------|--------|---------|
-| Homepage | < 1.5s | < 3s |
-| Search results | < 1s | < 2s |
-| Publication details | < 2s | < 3s |
-| Dashboard | < 2s | < 4s |
-| Admin pages | < 2.5s | < 5s |
+| Trang chủ | < 1.5s | < 3s |
+| Kết quả tìm kiếm | < 1s | < 2s |
+| Chi tiết bài báo | < 2s | < 3s |
+| Bảng điều khiển (Dashboard) | < 2s | < 4s |
+| Trang quản trị | < 2.5s | < 5s |
 
-**Conditions**: 10,000 publications, 500 users
+**Điều kiện**: 10,000 bài báo, 500 người dùng
 
 ---
 
-### NFR-PERF-002: API Response Time
-**Metric**: Time from request to response (p95)
+### NFR-PERF-002: Thời gian Phản hồi API
+**Chỉ số**: Thời gian từ khi gửi yêu cầu đến khi nhận phản hồi (p95)
 
-| Endpoint Type | Target | Maximum |
+| Loại Endpoint | Mục tiêu | Tối đa |
 |---------------|--------|---------|
-| GET (simple) | < 200ms | < 500ms |
-| GET (complex query) | < 500ms | < 1s |
+| GET (đơn giản) | < 200ms | < 500ms |
+| GET (truy vấn phức tạp) | < 500ms | < 1s |
 | POST/PUT | < 300ms | < 1s |
-| Search API | < 500ms | < 1.5s |
-| Report generation | < 5s | < 30s |
+| API Tìm kiếm | < 500ms | < 1.5s |
+| Tạo báo cáo | < 5s | < 30s |
 
 ---
 
-### NFR-PERF-003: Database Query Performance
-**Metric**: Query execution time (p95)
+### NFR-PERF-003: Hiệu suất Truy vấn CSDL
+**Chỉ số**: Thời gian thực thi truy vấn (p95)
 
-| Query Type | Target |
+| Loại Truy vấn | Mục tiêu |
 |-----------|--------|
-| Simple SELECT | < 50ms |
-| JOIN (2-3 tables) | < 200ms |
-| Complex aggregation | < 500ms |
-| Full-text search | < 300ms |
+| SELECT đơn giản | < 50ms |
+| JOIN (2-3 bảng) | < 200ms |
+| Tổng hợp phức tạp | < 500ms |
+| Tìm kiếm toàn văn | < 300ms |
 
-**Optimization**:
-- Proper indexing (DOI, ISSN, publicationYear, status)
-- Query optimization
-- Connection pooling
+**Tối ưu hóa**:
+- Đánh chỉ mục hợp lý (DOI, ISSN, năm xuất bản, trạng thái)
+- Tối ưu hóa truy vấn
+- Connection pooling (Gộp kết nối)
 
 ---
 
-## 2. Throughput Requirements
+## 2. Yêu cầu Thông lượng (Throughput Requirements)
 
-### NFR-PERF-010: Concurrent Users
-**Metric**: số người dùng đồng thời
+### NFR-PERF-010: Người dùng Đồng thời
+**Chỉ số**: Số lượng người dùng hoạt động cùng lúc
 
-| User Type | Target | Peak |
+| Loại Người dùng | Mục tiêu | Đỉnh điểm |
 |-----------|--------|------|
-| Total concurrent | 100 | 200 |
-| Internal (Researcher + Admin) | 50 | 100 |
-| External (Viewer) | 50 | 150 |
+| Tổng số đồng thời | 100 | 200 |
+| Nội bộ (Nhà nghiên cứu + Admin) | 50 | 100 |
+| Bên ngoài (Người xem) | 50 | 150 |
 
-**Load Profile**:
-- Normal: 30-50 users
-- Peak hours (9-11 AM, 2-4 PM): 80-100 users
-
----
-
-### NFR-PERF-011: Transactions Per Second (TPS)
-**Metric**: HTTP requests/second
-
-- Normal load: 50 TPS  
-- Peak load: 100 TPS
-- Max capacity: 200 TPS
+**Hồ sơ Tải**:
+- Bình thường: 30-50 người dùng
+- Giờ cao điểm (9-11 AM, 2-4 PM): 80-100 người dùng
 
 ---
 
-## 3. Scalability Requirements
+### NFR-PERF-011: Giao dịch Mỗi Giây (TPS)
+**Chỉ số**: Số yêu cầu HTTP/giây
 
-### NFR-PERF-020: Data Volume
-**Support up to**:
-- 20,000 publications
-- 1,000 users
-- 10,000 PDF files (total 50GB)
-
-**Growth rate**: ~2,000 publications/year
+- Tải bình thường: 50 TPS  
+- Tải cao điểm: 100 TPS
+- Sức chứa tối đa: 200 TPS
 
 ---
 
-### NFR-PERF-021: Vertical Scaling
-**Server specs** (recommended):
-- CPU: 4 cores minimum
-- RAM: 8GB minimum, 16GB recommended
-- Disk: 100GB minimum
-- Network: 100 Mbps
+## 3. Yêu cầu Khả năng Mở rộng (Scalability Requirements)
+
+### NFR-PERF-020: Khối lượng Dữ liệu
+**Hỗ trợ lên đến**:
+- 20,000 bài báo
+- 1,000 người dùng
+- 10,000 tệp PDF (tổng cộng 50GB)
+
+**Tốc độ tăng trưởng**: ~2,000 bài báo/năm
 
 ---
 
-## 4. Resource Utilization
-
-### NFR-PERF-030: CPU Usage
-- Normal: < 50%
-- Peak: < 80%
-- Alert threshold: > 90% for > 5 min
+### NFR-PERF-021: Mở rộng theo Chiều dọc (Vertical Scaling)
+**Cấu hình máy chủ** (khuyến nghị):
+- CPU: tối thiểu 4 cores
+- RAM: tối thiểu 8GB, khuyến nghị 16GB
+- Ổ cứng: tối thiểu 100GB
+- Mạng: 100 Mbps
 
 ---
 
-### NFR-PERF-031: Memory Usage
-- Normal: < 60% of total RAM
-- Peak: < 80%
-- Alert: > 85% for > 3 min
+## 4. Sử dụng Tài nguyên (Resource Utilization)
+
+### NFR-PERF-030: Sử dụng CPU
+- Bình thường: < 50%
+- Cao điểm: < 80%
+- Ngưỡng cảnh báo: > 90% trong > 5 phút
+
+---
+
+### NFR-PERF-031: Sử dụng Bộ nhớ (RAM)
+- Bình thường: < 60% tổng RAM
+- Cao điểm: < 80%
+- Cảnh báo: > 85% trong > 3 phút
 
 ---
 
 ### NFR-PERF-032: Disk I/O
-- Read/Write: < 50 MB/s (normal)
-- Alert: Disk full > 85%
+- Đọc/Ghi: < 50 MB/s (bình thường)
+- Cảnh báo: Ổ cứng đầy > 85%
 
 ---
 
-## 5. File Upload/Download Performance
+## 5. Hiệu năng Tải lên/Tải xuống Tệp
 
-### NFR-PERF-040: PDF Upload
-- Max file size: 10MB
-- Upload time: < 10s for 10MB file
-- Concurrent uploads: Support 10 simultaneous
-
----
-
-### NFR-PERF-041: PDF Download
-- Download time: ~1-2s for 5MB file
-- Concurrent downloads: Support 20 simultaneous
+### NFR-PERF-040: Tải lên PDF
+- Kích thước tệp tối đa: 10MB
+- Thời gian tải lên: < 10s cho tệp 10MB
+- Tải lên đồng thời: Hỗ trợ 10 luồng cùng lúc
 
 ---
 
-## 6. Caching Strategy
-
-### NFR-PERF-050: Cache Hit Ratio
-**Target**: > 70% for repeated requests
-
-**Cache layers**:
-1. **Browser cache**: Static assets (JS, CSS, images)
-2. **CDN/Reverse proxy**: Public pages
-3. **Application cache**: Published publications, user profiles
-4. **Database query cache**: Frequently accessed queries
-
-**TTL**:
-- Static assets: 1 năm
-- Public pages: 1 giờ
-- Publication details: 24 giờ
-- Search results: 10 phút
+### NFR-PERF-041: Tải xuống PDF
+- Thời gian tải xuống: ~1-2s cho tệp 5MB
+- Tải xuống đồng thời: Hỗ trợ 20 luồng cùng lúc
 
 ---
 
-## 7. Benchmark Scenarios
+## 6. Chiến lược Lưu trữ đệm (Caching Strategy)
 
-### Scenario 1: Peak Hour Load
-**Conditions**:
-- 100 concurrent users
-- 30% browsing, 40% searching, 20% reviewing, 10% admin
+### NFR-PERF-050: Tỷ lệ Cache Hit
+**Mục tiêu**: > 70% cho các yêu cầu lặp lại
 
-**Expected**:
-- Page load < 3s (95th percentile)
-- Server CPU < 70%
-- No errors
+**Các lớp Cache**:
+1. **Cache trình duyệt**: Tài nguyên tĩnh (JS, CSS, hình ảnh)
+2. **CDN/Reverse proxy**: Trang công khai
+3. **Cache ứng dụng**: Bài báo đã xuất bản, hồ sơ người dùng
+4. **Cache truy vấn CSDL**: Các truy vấn thường xuyên truy cập
 
----
-
-### Scenario 2: Report Generation
-**Conditions**:
-- University-wide report (10,000 publications)
-- Excel export
-
-**Expected**:
-- Generation time < 30s
-- Download immediate
-- Server remains responsive
+**TTL (Thời gian tồn tại)**:
+- Tài nguyên tĩnh: 1 năm
+- Trang công khai: 1 giờ
+- Chi tiết bài báo: 24 giờ
+- Kết quả tìm kiếm: 10 phút
 
 ---
 
-## 8. Performance Testing Requirements
+## 7. Kịch bản Đo điểm chuẩn (Benchmark Scenarios)
 
-### NFR-PERF-080: Load Testing
-**Tools**: JMeter, Apache Bench, k6
+### Kịch bản 1: Tải Giờ Cao Điểm
+**Điều kiện**:
+- 100 người dùng đồng thời
+- 30% duyệt, 40% tìm kiếm, 20% xét duyệt, 10% quản trị
 
-**Test scenarios**:
-1. Baseline (10 users)
-2. Normal load (50 users)
-3. Peak load (100 users)
-4. Stress test (200 users)
-5. Spike test (0 → 150 users in 1 min)
+**Kỳ vọng**:
+- Tải trang < 3s (phân vị thứ 95)
+- CPU máy chủ < 70%
+- Không có lỗi
 
 ---
 
-### NFR-PERF-081: Performance Monitoring
-**Metrics to track**:
-- Response time (avg, p50, p95, p99)
-- Throughput (requests/sec)
-- Error rate (%)
-- Resource utilization (CPU, RAM, Disk)
+### Kịch bản 2: Tạo Báo Cáo
+**Điều kiện**:
+- Báo cáo toàn trường (10,000 bài báo)
+- Xuất Excel
 
-**Tools**:
+**Kỳ vọng**:
+- Thời gian tạo < 30s
+- Tải xuống ngay lập tức
+- Máy chủ vẫn phản hồi tốt
+
+---
+
+## 8. Yêu cầu Kiểm thử Hiệu năng
+
+### NFR-PERF-080: Kiểm thử Tải (Load Testing)
+**Công cụ**: JMeter, Apache Bench, k6
+
+**Kịch bản kiểm thử**:
+1. Cơ sở (10 người dùng)
+2. Tải bình thường (50 người dùng)
+3. Tải cao điểm (100 người dùng)
+4. Stress test (200 người dùng)
+5. Spike test (0 → 150 người dùng trong 1 phút)
+
+---
+
+### NFR-PERF-081: Giám sát Hiệu năng
+**Chỉ số cần theo dõi**:
+- Thời gian phản hồi (trung bình, p50, p95, p99)
+- Thông lượng (yêu cầu/giây)
+- Tỷ lệ lỗi (%)
+- Sử dụng tài nguyên (CPU, RAM, Disk)
+
+**Công cụ**:
 - APM: Prometheus + Grafana
-- Logs: ELK Stack (optional)
-- Real User Monitoring (RUM)
+- Logs: ELK Stack (tùy chọn)
+- Giám sát người dùng thực (Real User Monitoring - RUM)
 
 ---
 
-## 9. Optimization Techniques
+## 9. Kỹ thuật Tối ưu hóa
 
-**Frontend không được xóa**:
-- Code splitting
-- Lazy loading
-- Image optimization
-- Minification
+**Frontend**:
+- Code splitting (Chia nhỏ mã)
+- Lazy loading (Tải chậm)
+- Tối ưu hóa hình ảnh
+- Minification (Nén mã nguồn)
 
 **Backend**:
-- Database indexing
-- Query optimization
+- Đánh chỉ mục CSDL (Indexing)
+- Tối ưu hóa truy vấn
 - Connection pooling
-- Async operations for notifications
+- Xử lý bất đồng bộ cho thông báo
 
-**Infrastructure**:
-- Load balancer (if scaled horizontally)
+**Hạ tầng**:
+- Cân bằng tải (nếu mở rộng theo chiều ngang)
 - Reverse proxy (Nginx)
-- Database replication (read replicas)
+- Sao chép CSDL (Read replicas)
 
 ---
 
 **Tài liệu liên quan**:
-- [Scalability Requirements](./scalability.md)
+- [Yêu Cầu Khả Năng Mở Rộng](./scalability.md)
 - [Technology Stack](../../01_System_Specification/technology_stack.md)

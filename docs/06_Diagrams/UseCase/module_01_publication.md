@@ -1,45 +1,45 @@
-# Module 1: Publication Management - Use Case Diagram
+# Module 1: Quản lý Ấn phẩm - Biểu đồ Ca Sử dụng
 
-> 📊 **Diagram ID**: UCD-01  
-> 📦 **Module**: Publication Management  
-> 👥 **Actors**: Researcher, SuperAdmin  
-> 📋 **Use Cases**: 9
-
----
-
-## 🎯 Module Overview
-
-Module này handle tất cả CRUD operations cho publications (bài báo khoa học).
-
-**Key Features**:
-- Create, Read, Update, Delete publications
-- Upload PDF files
-- Manage metadata (authors, keywords, etc.)
-- View publication history
+> 📊 **ID Biểu đồ**: UCD-01  
+> 📦 **Module**: Quản lý Ấn phẩm  
+> 👥 **Tác nhân**: Nhà nghiên cứu, Quản trị viên Cấp cao  
+> 📋 **Ca Sử dụng**: 9
 
 ---
 
-## 📊 Use Case Diagram
+## 🎯 Tổng quan Module
+
+Module này xử lý tất cả các hoạt động CRUD cho ấn phẩm (bài báo khoa học).
+
+**Tính năng Chính**:
+- Tạo, Đọc, Cập nhật, Xóa ấn phẩm
+- Tải lên tệp PDF
+- Quản lý siêu dữ liệu (tác giả, từ khóa, v.v.)
+- Xem lịch sử ấn phẩm
+
+---
+
+## 📊 Biểu đồ Ca Sử dụng
 
 ```mermaid
 graph TB
-    subgraph Actors["👥 Actors"]
-        RES[👨‍🔬 Researcher]
-        ADM[👨‍💻 SuperAdmin]
+    subgraph Actors["👥 Tác nhân"]
+        RES[👨‍🔬 Nhà nghiên cứu]
+        ADM[👨‍💻 Quản trị viên Cấp cao]
     end
     
-    subgraph PUB["📚 Publication Management Module"]
+    subgraph PUB["📚 Module Quản lý Ấn phẩm"]
         direction TB
         
-        UC1[UC-M1-001<br/>Create Publication<br/>P0]
-        UC2[UC-M1-002<br/>Edit Publication<br/>P0]
-        UC3[UC-M1-003<br/>Delete Publication<br/>P0]
-        UC4[UC-M1-004<br/>View Publication<br/>P0]
-        UC5[UC-M1-005<br/>Upload PDF<br/>P0]
-        UC6[UC-M1-006<br/>Manage Authors<br/>P0]
-        UC7[UC-M1-007<br/>View History<br/>P1]
-        UC8[UC-M1-008<br/>Duplicate Publication<br/>P1]
-        UC9[UC-M1-009<br/>Bulk Import<br/>P2]
+        UC1[UC-M1-001<br/>Tạo Ấn phẩm<br/>P0]
+        UC2[UC-M1-002<br/>Sửa Ấn phẩm<br/>P0]
+        UC3[UC-M1-003<br/>Xóa Ấn phẩm<br/>P0]
+        UC4[UC-M1-004<br/>Xem Ấn phẩm<br/>P0]
+        UC5[UC-M1-005<br/>Tải lên PDF<br/>P0]
+        UC6[UC-M1-006<br/>Quản lý Tác giả<br/>P0]
+        UC7[UC-M1-007<br/>Xem Lịch sử<br/>P1]
+        UC8[UC-M1-008<br/>Sao chép Ấn phẩm<br/>P1]
+        UC9[UC-M1-009<br/>Nhập Hàng loạt<br/>P2]
         
         %% Include relationships
         UC1 -.->|include| UC6
@@ -49,23 +49,23 @@ graph TB
     end
     
     %% Researcher connections
-    RES -->|create| UC1
-    RES -->|edit own| UC2
-    RES -->|delete own DRAFT| UC3
-    RES -->|view| UC4
-    RES -->|upload| UC5
-    RES -->|manage| UC6
-    RES -->|view| UC7
-    RES -->|duplicate| UC8
-    RES -->|import| UC9
+    RES -->|tạo| UC1
+    RES -->|sửa của mình| UC2
+    RES -->|xóa của mình DRAFT| UC3
+    RES -->|xem| UC4
+    RES -->|tải lên| UC5
+    RES -->|quản lý| UC6
+    RES -->|xem| UC7
+    RES -->|sao chép| UC8
+    RES -->|nhập| UC9
     
     %% SuperAdmin connections
-    ADM -->|edit any| UC2
-    ADM -->|delete any| UC3
-    ADM -->|view all| UC4
-    ADM -->|manage| UC6
-    ADM -->|view all| UC7
-    ADM -->|bulk import| UC9
+    ADM -->|sửa bất kỳ| UC2
+    ADM -->|xóa bất kỳ| UC3
+    ADM -->|xem tất cả| UC4
+    ADM -->|quản lý| UC6
+    ADM -->|xem tất cả| UC7
+    ADM -->|nhập hàng loạt| UC9
     
     %% Styling
     style UC1 fill:#6bcf7f,stroke:#333,stroke-width:2px
@@ -84,211 +84,211 @@ graph TB
 
 ---
 
-## 📋 Use Cases
+## 📋 Ca Sử dụng
 
-### UC-M1-001: Create Publication
-**Priority**: P0  
-**Actor**: Researcher  
-**Description**: Tạo mới một bài báo với metadata cơ bản  
-**Preconditions**: User đã đăng nhập  
-**Postconditions**: Publication được tạo với status = DRAFT
+### UC-M1-001: Tạo Ấn phẩm
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Tạo mới một bài báo với metadata cơ bản  
+**Điều kiện tiên quyết**: Người dùng đã đăng nhập  
+**Điều kiện hậu**: Ấn phẩm được tạo với trạng thái = DRAFT
 
-**Main Flow**:
-1. Researcher click "Create Publication"
-2. System hiển thị form với các trường bắt buộc
-3. Researcher nhập metadata (title, journal, year, DOI, etc.)
-4. Researcher thêm authors (include relationship)
-5. Researcher upload PDF (include relationship)
-6. System validate dữ liệu
-7. System lưu publication với status = DRAFT
+**Luồng chính**:
+1. Nhà nghiên cứu nhấn "Tạo Ấn phẩm"
+2. Hệ thống hiển thị biểu mẫu với các trường bắt buộc
+3. Nhà nghiên cứu nhập metadata (tiêu đề, tạp chí, năm, DOI, v.v.)
+4. Nhà nghiên cứu thêm tác giả (bao gồm mối quan hệ)
+5. Nhà nghiên cứu tải lên PDF (bao gồm mối quan hệ)
+6. Hệ thống xác thực dữ liệu
+7. Hệ thống lưu ấn phẩm với trạng thái = DRAFT
 
-**Related**:
+**Liên quan**:
 - FR-PUB-001, FR-PUB-002
 - US-RES-001
 
 ---
 
-### UC-M1-002: Edit Publication
-**Priority**: P0  
-**Actor**: Researcher, SuperAdmin  
-**Description**: Chỉnh sửa metadata của publication  
-**Preconditions**: 
-- Publication tồn tại
-- **Researcher**: CHỈ edit được own publications ở status DRAFT
-- **SuperAdmin**: Edit được tất cả
+### UC-M1-002: Sửa Ấn phẩm
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu, Quản trị viên Cấp cao  
+**Mô tả**: Chỉnh sửa metadata của ấn phẩm  
+**Điều kiện tiên quyết**: 
+- Ấn phẩm tồn tại
+- **Nhà nghiên cứu**: CHỈ sửa được ấn phẩm của chính mình ở trạng thái DRAFT
+- **Quản trị viên Cấp cao**: Sửa được tất cả
 
-**Business Rules**:
-- Researcher KHÔNG thể edit nếu status khác DRAFT
-- Co-authors chỉ view, không edit được
-- Mọi thay đổi được log vào history
+**Quy tắc Nghiệp vụ**:
+- Nhà nghiên cứu KHÔNG thể sửa nếu trạng thái khác DRAFT
+- Đồng tác giả chỉ xem, không sửa được
+- Mọi thay đổi được ghi vào lịch sử
 
-**Related**:
+**Liên quan**:
 - FR-PUB-004
 - US-RES-003
 
 ---
 
-### UC-M1-003: Delete Publication
-**Priority**: P0  
-**Actor**: Researcher, SuperAdmin  
-**Description**: Xóa publication  
-**Preconditions**: 
-- **Researcher**: CHỈ xóa được own publications ở status DRAFT
-- **SuperAdmin**: Xóa được tất cả (soft delete)
+### UC-M1-003: Xóa Ấn phẩm
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu, Quản trị viên Cấp cao  
+**Mô tả**: Xóa ấn phẩm  
+**Điều kiện tiên quyết**: 
+- **Nhà nghiên cứu**: CHỈ xóa được ấn phẩm của chính mình ở trạng thái DRAFT
+- **Quản trị viên Cấp cao**: Xóa được tất cả (xóa mềm)
 
-**Business Rules**:
-- Soft delete (set deleted_at timestamp)
-- Không thể xóa nếu đã PUBLISHED (chỉ SuperAdmin mới xóa được)
+**Quy tắc Nghiệp vụ**:
+- Xóa mềm (đặt dấu thời gian deleted_at)
+- Không thể xóa nếu đã XUẤT BẢN (chỉ Quản trị viên Cấp cao mới xóa được)
 
-**Related**:
+**Liên quan**:
 - FR-PUB-005
 - US-RES-004
 
 ---
 
-### UC-M1-004: View Publication
-**Priority**: P0  
-**Actor**: Researcher, SuperAdmin  
-**Description**: Xem chi tiết publication  
-**Visibility Rules**:
-- **Researcher**: Xem own + co-authored + PUBLISHED
-- **SuperAdmin**: Xem tất cả
+### UC-M1-004: Xem Ấn phẩm
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu, Quản trị viên Cấp cao  
+**Mô tả**: Xem chi tiết ấn phẩm  
+**Quy tắc Hiển thị**:
+- **Nhà nghiên cứu**: Xem của chính mình + đồng tác giả + ĐÃ XUẤT BẢN
+- **Quản trị viên Cấp cao**: Xem tất cả
 
-**Related**:
+**Liên quan**:
 - FR-PUB-003
 - US-RES-002
 
 ---
 
-### UC-M1-005: Upload PDF
-**Priority**: P0  
-**Actor**: Researcher  
-**Description**: Upload file PDF của bài báo  
-**Constraints**:
-- File size < 10MB
-- Format: PDF only
-- Tự động extract metadata nếu có (P2 feature)
+### UC-M1-005: Tải lên PDF
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Tải lên tệp PDF của bài báo  
+**Ràng buộc**:
+- Kích thước tệp < 10MB
+- Định dạng: Chỉ PDF
+- Tự động trích xuất metadata nếu có (tính năng P2)
 
-**Related**:
+**Liên quan**:
 - FR-PUB-006
 - US-RES-005
 
 ---
 
-### UC-M1-006: Manage Authors
-**Priority**: P0  
-**Actor**: Researcher  
-**Description**: Thêm/xóa/sắp xếp authors  
-**Features**:
-- Thêm internal authors (từ user database)
-- Thêm external authors (nhập tay)
-- Sắp xếp thứ tự (first author, corresponding author)
-- Assign roles (author, co-author, corresponding)
+### UC-M1-006: Quản lý Tác giả
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Thêm/xóa/sắp xếp tác giả  
+**Tính năng**:
+- Thêm tác giả nội bộ (từ cơ sở dữ liệu người dùng)
+- Thêm tác giả bên ngoài (nhập tay)
+- Sắp xếp thứ tự (tác giả đầu tiên, tác giả liên hệ)
+- Gán vai trò (tác giả, đồng tác giả, liên hệ)
 
-**Business Rules**:
-- Researcher tự động được add làm author
-- Ít nhất 1 author
+**Quy tắc Nghiệp vụ**:
+- Nhà nghiên cứu tự động được thêm làm tác giả
+- Ít nhất 1 tác giả
 
-**Related**:
+**Liên quan**:
 - FR-PUB-007, FR-PUB-008
 - US-RES-006
 
 ---
 
-### UC-M1-007: View History
-**Priority**: P1  
-**Actor**: Researcher, SuperAdmin  
-**Description**: Xem lịch sử thay đổi của publication  
-**Information**:
-- Who changed what, when
-- State transitions
-- Review comments
+### UC-M1-007: Xem Lịch sử
+**Độ ưu tiên**: P1  
+**Tác nhân**: Nhà nghiên cứu, Quản trị viên Cấp cao  
+**Mô tả**: Xem lịch sử thay đổi của ấn phẩm  
+**Thông tin**:
+- Ai đã thay đổi cái gì, khi nào
+- Chuyển đổi trạng thái
+- Bình luận đánh giá
 
-**Related**:
+**Liên quan**:
 - FR-PUB-009
 - US-RES-007
 
 ---
 
-### UC-M1-008: Duplicate Publication
-**Priority**: P1  
-**Actor**: Researcher  
-**Description**: Copy một publication để tạo entry mới  
-**Use Case**: Tiện khi publish cùng 1 conference series
+### UC-M1-008: Sao chép Ấn phẩm
+**Độ ưu tiên**: P1  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Sao chép một ấn phẩm để tạo mục mới  
+**Ca sử dụng**: Tiện khi xuất bản cùng 1 chuỗi hội nghị
 
-**Related**:
+**Liên quan**:
 - FR-PUB-010
 
 ---
 
-### UC-M1-009: Bulk Import
-**Priority**: P2  
-**Actor**: Researcher, SuperAdmin  
-**Description**: Import nhiều publications từ Excel/CSV  
-**Features**:
-- Upload Excel template
-- Validate format
-- Preview before import
-- Error reporting
+### UC-M1-009: Nhập Hàng loạt
+**Độ ưu tiên**: P2  
+**Tác nhân**: Nhà nghiên cứu, Quản trị viên Cấp cao  
+**Mô tả**: Nhập nhiều ấn phẩm từ Excel/CSV  
+**Tính năng**:
+- Tải lên mẫu Excel
+- Xác thực định dạng
+- Xem trước khi nhập
+- Báo cáo lỗi
 
-**Related**:
+**Liên quan**:
 - FR-PUB-015
 - US-ADM-008
 
 ---
 
-## 📊 Statistics
+## 📊 Thống kê
 
-| Priority | Use Cases | % |
+| Độ ưu tiên | Ca Sử dụng | % |
 |----------|-----------|---|
-| P0 - Must Have | 6 | 67% |
-| P1 - Should Have | 2 | 22% |
-| P2 - Nice to Have | 1 | 11% |
+| P0 - Phải Có | 6 | 67% |
+| P1 - Nên Có | 2 | 22% |
+| P2 - Có Thì Tốt | 1 | 11% |
 
 ---
 
-## 🔗 Traceability
+## 🔗 Truy xuất nguồn gốc
 
-### Functional Requirements
+### Yêu cầu Chức năng
 
-| Use Case | FRs | Description |
+| Ca Sử dụng | YCCN | Mô tả |
 |----------|-----|-------------|
-| UC-M1-001 | FR-PUB-001, 002 | Create publication |
-| UC-M1-002 | FR-PUB-004 | Edit metadata |
-| UC-M1-003 | FR-PUB-005 | Delete publication |
-| UC-M1-004 | FR-PUB-003 | View details |
-| UC-M1-005 | FR-PUB-006 | Upload PDF |
-| UC-M1-006 | FR-PUB-007, 008 | Manage authors |
-| UC-M1-007 | FR-PUB-009 | View history |
-| UC-M1-008 | FR-PUB-010 | Duplicate |
-| UC-M1-009 | FR-PUB-015 | Bulk import |
+| UC-M1-001 | FR-PUB-001, 002 | Tạo ấn phẩm |
+| UC-M1-002 | FR-PUB-004 | Sửa metadata |
+| UC-M1-003 | FR-PUB-005 | Xóa ấn phẩm |
+| UC-M1-004 | FR-PUB-003 | Xem chi tiết |
+| UC-M1-005 | FR-PUB-006 | Tải lên PDF |
+| UC-M1-006 | FR-PUB-007, 008 | Quản lý tác giả |
+| UC-M1-007 | FR-PUB-009 | Xem lịch sử |
+| UC-M1-008 | FR-PUB-010 | Sao chép |
+| UC-M1-009 | FR-PUB-015 | Nhập hàng loạt |
 
 ---
 
-### User Stories
+### Câu chuyện Người dùng
 
-**Researcher Stories**:
-- US-RES-001: Create publication
-- US-RES-002: View own publications
-- US-RES-003: Edit publication
-- US-RES-004: Delete publication
-- US-RES-005: Upload PDF
-- US-RES-006: Manage authors
-- US-RES-007: View history
+**Câu chuyện Nhà nghiên cứu**:
+- US-RES-001: Tạo ấn phẩm
+- US-RES-002: Xem ấn phẩm của mình
+- US-RES-003: Sửa ấn phẩm
+- US-RES-004: Xóa ấn phẩm
+- US-RES-005: Tải lên PDF
+- US-RES-006: Quản lý tác giả
+- US-RES-007: Xem lịch sử
 
-**Admin Stories**:
-- US-ADM-006: Override publication data
-- US-ADM-008: Bulk import
-
----
-
-## 📚 Related Documentation
-
-- **Use Cases**: [05_Use_Cases/Medium_Level/module_01_publication_management.md](../../05_Use_Cases/Medium_Level/module_01_publication_management.md)
-- **Requirements**: [03_Requirements/Functional/module_publication_management.md](../../03_Requirements/Functional/module_publication_management.md)
-- **Sequence Diagrams**: [../Sequence/seq_create_publication.md](../Sequence/seq_create_publication.md)
+**Câu chuyện Quản trị viên**:
+- US-ADM-006: Ghi đè dữ liệu ấn phẩm
+- US-ADM-008: Nhập hàng loạt
 
 ---
 
-**Created**: 10/02/2026  
-**Version**: 1.0
+## 📚 Tài liệu Liên quan
+
+- **Ca Sử dụng**: [05_Use_Cases/Medium_Level/module_01_publication_management.md](../../05_Use_Cases/Medium_Level/module_01_publication_management.md)
+- **Yêu cầu**: [03_Requirements/Functional/module_publication_management.md](../../03_Requirements/Functional/module_publication_management.md)
+- **Biểu đồ Tuần tự**: [../Sequence/seq_create_publication.md](../Sequence/seq_create_publication.md)
+
+---
+
+**Ngày tạo**: 10/02/2026  
+**Phiên bản**: 1.0

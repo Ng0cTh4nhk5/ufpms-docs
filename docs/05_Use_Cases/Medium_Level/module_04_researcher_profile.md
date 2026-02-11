@@ -1,123 +1,124 @@
-# Module 4: Researcher Profile - Medium-Level Use Cases
+# Module 4: Hồ Sơ Nhà Nghiên Cứu - Use Cases Cấp Trung
 
-> **Module**: 4 - Researcher Profile  
-> **High-Level UC**: [UC-HL-004](../High_Level/uc_hl_04_researcher_profile.md)
-
----
-
-## UC-M4-001: View Public Profile
-**ID**: UC-M4-001 | **Priority**: 🟡 P1 | **Actor**: Public Visitor, All Users  
-**Related**: US-RES-014, US-VIW-008, FR-PRO-001
-
-**Goal**: View researcher's public profile  
-**Preconditions**: None (public access)  
-**Main Flow**:
-1. User accesses `/profile/[username]`
-2. System fetches researcher data
-3. System displays profile page:
-   - Header: Photo, name, title, faculty
-   - Bio: Research interests, contact info
-   - External links: ORCID, Google Scholar
-   - Publications: PUBLISHED only, sorted by year
-   - Analytics charts (if enabled)
-4. User can click publications for details
-
-**Postconditions**: Profile displayed  
-**Business Rules**: BR-PRO-001 (PUBLISHED only), BR-PRO-005 (SEO)
+> **Module**: 4 - Hồ Sơ Nhà Nghiên Cứu  
+> **Use Case Cấp Cao**: [UC-HL-004](../High_Level/uc_hl_04_researcher_profile.md)
 
 ---
 
-## UC-M4-002: Edit Profile
-**ID**: UC-M4-002 | **Priority**: 🟡 P1 | **Actor**: Researcher  
-**Related**: US-RES-015, FR-PRO-002
+## UC-M4-001: Xem Hồ Sơ Công Khai (View Public Profile)
+**ID**: UC-M4-001 | **Độ Ưu Tiên**: 🟡 P1 | **Tác Nhân**: Public Visitor, Tất Cả Người Dùng  
+**Liên Quan**: US-RES-014, US-VIW-008, FR-PRO-001
 
-**Goal**: Edit public profile information  
-**Preconditions**: User is authenticated, viewing own profile  
-**Main Flow**:
-1. Researcher clicks "Edit Profile"
-2. System displays editable form:
-   - Bio (max 500 chars)
-   - Research interests
+**Mục Tiêu**: Xem hồ sơ công khai của nhà nghiên cứu  
+**Điều Kiện Tiên Quyết**: Không (truy cập công khai)  
+**Luồng Chính**:
+1. Người dùng truy cập `/profile/[tên_người_dùng]`
+2. Hệ thống lấy dữ liệu nhà nghiên cứu
+3. Hệ thống hiển thị trang hồ sơ:
+   - Header: Ảnh, tên, chức danh, khoa
+   - Tiểu sử: Lĩnh vực nghiên cứu, thông tin liên hệ
+   - Liên kết ngoài: ORCID, Google Scholar
+   - Bài báo: CHỈ các bài PUBLISHED, sắp xếp theo năm
+   - Biểu đồ phân tích (nếu được bật)
+4. Người dùng có thể nhấn vào bài báo để xem chi tiết
+
+**Điều Kiện Hậu Quyết**: Hồ sơ được hiển thị  
+**Quy Tắc Nghiệp Vụ**: BR-PRO-001 (chỉ PUBLISHED), BR-PRO-005 (SEO)
+
+---
+
+## UC-M4-002: Chỉnh Sửa Hồ Sơ (Edit Profile)
+**ID**: UC-M4-002 | **Độ Ưu Tiên**: 🟡 P1 | **Tác Nhân**: Researcher  
+**Liên Quan**: US-RES-015, FR-PRO-002
+
+**Mục Tiêu**: Chỉnh sửa thông tin hồ sơ công khai  
+**Điều Kiện Tiên Quyết**: Người dùng đã đăng nhập, đang xem hồ sơ của mình  
+**Luồng Chính**:
+1. Researcher nhấn "Chỉnh Sửa Hồ Sơ"
+2. Hệ thống hiển thị biểu mẫu chỉnh sửa:
+   - Tiểu sử (tối đa 500 ký tự)
+   - Lĩnh vực nghiên cứu
    - ORCID
-   - Google Scholar link
-   - Personal website
-3. Researcher makes changes
-4. Researcher clicks "Save"
-5. System validates input
-6. System updates database
-7. System shows "Saved successfully"
+   - Liên kết Google Scholar
+   - Website cá nhân
+3. Researcher thực hiện thay đổi
+4. Researcher nhấn "Lưu"
+5. Hệ thống xác thực đầu vào
+6. Hệ thống cập nhật cơ sở dữ liệu
+7. Hệ thống hiển thị "Lưu thành công"
 
-**Business Rules**: BR-PRO-002 (only owner can edit)
-
----
-
-## UC-M4-003: Update Profile Photo
-**ID**: UC-M4-003 | **Priority**: 🟡 P1 | **Actor**: Researcher  
-**Related**: FR-PRO-002
-
-**Goal**: Upload or change profile photo  
-**Main Flow**:
-1. Researcher clicks "Edit Profile"
-2. Researcher clicks "Change Photo"
-3. Researcher selects image file (JPG/PNG, < 2MB)
-4. System validates file
-5. System auto-resizes to 300x300px
-6. System saves photo
-7. System displays new photo
-
-**Business Rules**: BR-PRO-004 (formats, size,resize)
+**Quy Tắc Nghiệp Vụ**: BR-PRO-002 (chỉ chủ sở hữu mới được sửa)
 
 ---
 
-## UC-M4-004: Link ORCID
-**ID**: UC-M4-004 | **Priority**: 🟡 P1 | **Actor**: Researcher  
-**Related**: FR-PRO-002
+## UC-M4-003: Cập Nhật Ảnh Đại Diện (Update Profile Photo)
+**ID**: UC-M4-003 | **Độ Ưu Tiên**: 🟡 P1 | **Tác Nhân**: Researcher  
+**Liên Quan**: FR-PRO-002
 
-**Goal**: Link ORCID profile  
-**Main Flow**:
-1. Researcher enters ORCID ID in profile
-2. System validates format (0000-0000-0000-000X)
-3. System saves ORCID
-4. System displays ORCID badge on profile
-5. Badge links to `orcid.org/[ORCID]`
+**Mục Tiêu**: Tải lên hoặc thay đổi ảnh đại diện  
+**Luồng Chính**:
+1. Researcher nhấn "Chỉnh Sửa Hồ Sơ"
+2. Researcher nhấn "Đổi Ảnh"
+3. Researcher chọn file ảnh (JPG/PNG, < 2MB)
+4. Hệ thống xác thực file
+5. Hệ thống tự động thay đổi kích thước về 300x300px
+6. Hệ thống lưu ảnh
+7. Hệ thống hiển thị ảnh mới
 
-**Business Rules**: ORCID format validation
-
----
-
-## UC-M4-005: View Publication Analytics
-**ID**: UC-M4-005 | **Priority**: 🟢 P2 | **Actor**: Researcher, Public Visitor  
-**Related**: US-RES-022, FR-PRO-004
-
-**Goal**: View publication productivity charts  
-**Main Flow**:
-1. User views profile
-2. System generates charts:
-   - Bar chart: Publications per year
-   - Pie chart: Distribution by quartile
-3. Charts are interactive (hover for counts)
-4. Data updates when new publications published
-
-**Business Rules**: Based on PUBLISHED publications only
+**Quy Tắc Nghiệp Vụ**: BR-PRO-004 (định dạng, kích thước, resize)
 
 ---
 
-## UC-M4-006: Generate Word Cloud
-**ID**: UC-M4-006 | **Priority**: 🟢 P2 | **Actor**: Researcher, Public Visitor   **Related**: US-RES-023, FR-PRO-005
+## UC-M4-004: Liên Kết ORCID (Link ORCID)
+**ID**: UC-M4-004 | **Độ Ưu Tiên**: 🟡 P1 | **Tác Nhân**: Researcher  
+**Liên Quan**: FR-PRO-002
 
-**Goal**: Visualize research areas via word cloud  
-**Main Flow**:
-1. User views profile
-2. System extracts keywords from all publications
-3. System calculates frequency
-4. System generates word cloud (font size = frequency)
-5. System displays on profile
+**Mục Tiêu**: Liên kết hồ sơ ORCID  
+**Luồng Chính**:
+1. Researcher nhập ID ORCID trong hồ sơ
+2. Hệ thống xác thực định dạng (0000-0000-0000-000X)
+3. Hệ thống lưu ORCID
+4. Hệ thống hiển thị huy hiệu ORCID trên hồ sơ
+5. Huy hiệu liên kết đến `orcid.org/[ORCID]`
 
-**Business Rules**: Keywords from PUBLISHED publications
+**Quy Tắc Nghiệp Vụ**: Xác thực định dạng ORCID
+
+---
+
+## UC-M4-005: Xem Phân Tích Bài Báo (View Publication Analytics)
+**ID**: UC-M4-005 | **Độ Ưu Tiên**: 🟢 P2 | **Tác Nhân**: Researcher, Public Visitor  
+**Liên Quan**: US-RES-022, FR-PRO-004
+
+**Mục Tiêu**: Xem biểu đồ năng suất bài báo  
+**Luồng Chính**:
+1. Người dùng xem hồ sơ
+2. Hệ thống tạo biểu đồ:
+   - Biểu đồ cột: Bài báo theo năm
+   - Biểu đồ tròn: Phân bố theo xếp hạng (quartile)
+3. Biểu đồ có tính tương tác (di chuột để xem số lượng)
+4. Dữ liệu cập nhật khi có bài báo mới xuất bản
+
+**Quy Tắc Nghiệp Vụ**: Dựa trên CHỈ các bài báo PUBLISHED
+
+---
+
+## UC-M4-006: Tạo Word Cloud (Generate Word Cloud)
+**ID**: UC-M4-006 | **Độ Ưu Tiên**: 🟢 P2 | **Tác Nhân**: Researcher, Public Visitor  
+**Liên Quan**: US-RES-023, FR-PRO-005
+
+**Mục Tiêu**: Trực quan hóa lĩnh vực nghiên cứu qua đám mây từ khóa (word cloud)  
+**Luồng Chính**:
+1. Người dùng xem hồ sơ
+2. Hệ thống trích xuất từ khóa từ tất cả bài báo
+3. Hệ thống tính toán tần suất
+4. Hệ thống tạo word cloud (kích thước chữ = tần suất)
+5. Hệ thống hiển thị trên hồ sơ
+
+**Quy Tắc Nghiệp Vụ**: Từ khóa từ các bài báo PUBLISHED
 
 ---
 
 **Tài liệu liên quan**:
-- [High-Level UC-HL-004](../High_Level/uc_hl_04_researcher_profile.md)
+- [Use Case Cấp Cao UC-HL-004](../High_Level/uc_hl_04_researcher_profile.md)
 - [User Stories - Researcher](../../04_User_Stories/By_Role/researcher_stories.md)
-- [Requirements - Profile](../../03_Requirements/Functional/module_profile.md)
+- [Yêu Cầu - Hồ Sơ](../../03_Requirements/Functional/module_profile.md)

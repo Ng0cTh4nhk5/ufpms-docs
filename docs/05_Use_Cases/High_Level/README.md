@@ -1,6 +1,6 @@
 # High-Level Use Cases - README
 
-> 📁 **Level**: High-Level Use Cases  
+> 📁 **Cấp Độ**: High-Level Use Cases (Use Case Cấp Cao)  
 > 📅 **Cập nhật**: 10/02/2026  
 > 🎯 **Mục đích**: Tổng quan 6 modules chính của UFPMS
 
@@ -10,20 +10,20 @@
 
 High-level use cases cung cấp cái nhìn tổng quan về các chức năng chính của hệ thống, mỗi use case tương ứng với 1 module.
 
-### 6 High-Level Use Cases
+### 6 Use Cases Cấp Cao
 
-| UC ID | Tên Use Case | Actors | User Stories | Module |
+| ID UC | Tên Use Case | Tác Nhân | User Stories | Module |
 |-------|--------------|--------|--------------|--------|
-| UC-HL-001 | Manage Publications | Researcher, SuperAdmin | 9 stories | Module 1 |
-| UC-HL-002 | Approval Workflow | Researcher, FCR, UNR | 26 stories | Module 2 |
-| UC-HL-003 | Search & Browse Publications | Public Visitor, All | 8 stories | Module 3 |
-| UC-HL-004 | Researcher Profile Management | Researcher, Public Visitor | 6 stories | Module 4 |
-| UC-HL-005 | Reporting & Analytics | FCR, UNR, SuperAdmin | 7 stories | Module 5 |
-| UC-HL-006 | System Administration | SuperAdmin | 10 stories | Module 6 |
+| UC-HL-001 | Quản Lý Bài Báo | Researcher, SuperAdmin | 9 stories | Module 1 |
+| UC-HL-002 | Quy Trình Xét Duyệt | Researcher, FCR, UNR | 26 stories | Module 2 |
+| UC-HL-003 | Tìm Kiếm & Duyệt Bài Báo | Khách, Tất cả | 8 stories | Module 3 |
+| UC-HL-004 | Quản Lý Hồ Sơ Nhà Nghiên Cứu | Researcher, Khách | 6 stories | Module 4 |
+| UC-HL-005 | Báo Cáo & Phân Tích | FCR, UNR, SuperAdmin | 7 stories | Module 5 |
+| UC-HL-006 | Quản Trị Hệ Thống | SuperAdmin | 10 stories | Module 6 |
 
 ---
 
-## 🗺️ High-Level Use Case Diagram
+## 🗺️ Biểu Đồ Use Case Cấp Cao
 
 ```mermaid
 graph TB
@@ -35,28 +35,28 @@ graph TB
         VIW[👤 Public Visitor]
     end
     
-    subgraph "Module 1: Publication Management"
-        UC1[UC-HL-001<br/>Manage Publications]
+    subgraph "Module 1: Quản Lý Bài Báo"
+        UC1[UC-HL-001<br/>Quản Lý Bài Báo]
     end
     
-    subgraph "Module 2: Approval Workflow"
-        UC2[UC-HL-002<br/>Approval Workflow]
+    subgraph "Module 2: Quy Trình Xét Duyệt"
+        UC2[UC-HL-002<br/>Quy Trình Xét Duyệt]
     end
     
-    subgraph "Module 3: Search & Browse"
-        UC3[UC-HL-003<br/>Search & Browse]
+    subgraph "Module 3: Tìm Kiếm & Duyệt"
+        UC3[UC-HL-003<br/>Tìm Kiếm & Duyệt]
     end
     
-    subgraph "Module 4: Profile"
-        UC4[UC-HL-004<br/>Researcher Profile]
+    subgraph "Module 4: Hồ Sơ"
+        UC4[UC-HL-004<br/>Hồ Sơ Nhà Nghiên Cứu]
     end
     
-    subgraph "Module 5: Reporting"
-        UC5[UC-HL-005<br/>Reporting & Analytics]
+    subgraph "Module 5: Báo Cáo"
+        UC5[UC-HL-005<br/>Báo Cáo & Phân Tích]
     end
     
     subgraph "Module 6: Admin"
-        UC6[UC-HL-006<br/>System Administration]
+        UC6[UC-HL-006<br/>Quản Trị Hệ Thống]
     end
     
     RES --> UC1
@@ -87,43 +87,43 @@ graph TB
 
 ## 📖 Nội Dung
 
-### [UC-HL-001: Manage Publications](./uc_hl_01_manage_publications.md)
-**Actors**: Researcher, SuperAdmin  
+### [UC-HL-001: Quản Lý Bài Báo](./uc_hl_01_manage_publications.md)
+**Tác Nhân**: Researcher, SuperAdmin  
 **Mô tả**: Quản lý vòng đời bài báo từ tạo mới, chỉnh sửa, đến xóa. Bao gồm upload PDF và quản lý metadata.
 
 ---
 
-### [UC-HL-002: Approval Workflow](./uc_hl_02_approval_workflow.md)
-**Actors**: Researcher, Faculty Reviewer, University Reviewer  
-**Mô tả**: Quy trình phê duyệt 2 cấp (Faculty → University) với các hành động: submit, approve, reject, request revision.
+### [UC-HL-002: Quy Trình Xét Duyệt](./uc_hl_02_approval_workflow.md)
+**Tác Nhân**: Researcher, Faculty Reviewer, University Reviewer  
+**Mô tả**: Quy trình phê duyệt 2 cấp (Khoa → Trường) với các hành động: nộp, phê duyệt, từ chối, yêu cầu chỉnh sửa.
 
 ---
 
-### [UC-HL-003: Search & Browse Publications](./uc_hl_03_search_browse.md)
-**Actors**: Public Visitor, Researcher, SuperAdmin  
-**Mô tả**: Tìm kiếm và duyệt bài báo công khai với filtering, sorting, và pagination.
+### [UC-HL-003: Tìm Kiếm & Duyệt Bài Báo](./uc_hl_03_search_browse.md)
+**Tác Nhân**: Khách, Researcher, SuperAdmin  
+**Mô tả**: Tìm kiếm và duyệt bài báo công khai với bộ lọc (filtering), sắp xếp (sorting), và phân trang (pagination).
 
 ---
 
-### [UC-HL-004: Researcher Profile Management](./uc_hl_04_researcher_profile.md)
-**Actors**: Researcher, Public Visitor  
-**Mô tả**: Xem và chỉnh sửa profile giảng viên với danh sách công trình và analytics.
+### [UC-HL-004: Quản Lý Hồ Sơ Nhà Nghiên Cứu](./uc_hl_04_researcher_profile.md)
+**Tác Nhân**: Researcher, Khách  
+**Mô tả**: Xem và chỉnh sửa hồ sơ giảng viên với danh sách công trình và thông số phân tích.
 
 ---
 
-### [UC-HL-005: Reporting & Analytics](./uc_hl_05_reporting_analytics.md)
-**Actors**: Faculty Reviewer, University Reviewer, SuperAdmin  
-**Mô tả**: Tạo báo cáo và xem analytics về năng suất nghiên cứu cấp Khoa và Trường.
+### [UC-HL-005: Báo Cáo & Phân Tích](./uc_hl_05_reporting_analytics.md)
+**Tác Nhân**: Faculty Reviewer, University Reviewer, SuperAdmin  
+**Mô tả**: Tạo báo cáo và xem phân tích về năng suất nghiên cứu cấp Khoa và Trường.
 
 ---
 
-### [UC-HL-006: System Administration](./uc_hl_06_admin_management.md)
-**Actors**: SuperAdmin  
-**Mô tả**: Quản trị người dùng, cấu hình hệ thống, backup, và monitor audit logs.
+### [UC-HL-006: Quản Trị Hệ Thống](./uc_hl_06_admin_management.md)
+**Tác Nhân**: SuperAdmin  
+**Mô tả**: Quản trị người dùng, cấu hình hệ thống, sao lưu (backup), và giám sát nhật ký kiểm toán (audit logs).
 
 ---
 
 **Tài liệu liên quan**:
-- [Main README](../README.md)
-- [Medium-Level Use Cases](../Medium_Level/)
-- [Use Case Diagrams](../Diagrams/)
+- [README Chính](../README.md)
+- [Use Cases Cấp Trung (Medium-Level)](../Medium_Level/)
+- [Biểu Đồ Use Case](../Diagrams/)

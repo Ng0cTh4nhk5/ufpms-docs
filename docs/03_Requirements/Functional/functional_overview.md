@@ -8,22 +8,22 @@
 ## 1. Giới Thiệu
 
 Tài liệu này tổng hợp các yêu cầu chức năng (Functional Requirements) của hệ thống UFPMS, được trích xuất từ:
-- [User Needs](../../02_System_Clarification/User_Analysis/user_needs.md)
-- [System Specification](../../01_System_Specification/system_overview.md)
-- [To-Be Process](../../02_System_Clarification/Business_Context/to_be_process.md)
+- [Nhu cầu Người dùng](../../02_System_Clarification/User_Analysis/user_needs.md)
+- [Đặc tả Hệ thống](../../01_System_Specification/system_overview.md)
+- [Quy trình Tương lai](../../02_System_Clarification/Business_Context/to_be_process.md)
 
 ---
 
-## 2. Cấu Trúc 6 Modules
+## 2. Cấu Trúc 6 Phân hệ
 
 ```mermaid
 graph TD
-    A[UFPMS System] --> B[Module 1: Publication Management]
-    A --> C[Module 2: Approval Workflow]
-    A --> D[Module 3: Search & Browse]
-    A --> E[Module 4: Researcher Profile]
-    A --> F[Module 5: Reporting & Analytics]
-    A --> G[Module 6: Admin & User Management]
+    A[Hệ thống UFPMS] --> B[Phân hệ 1: Quản lý Bài báo]
+    A --> C[Phân hệ 2: Quy trình Phê duyệt]
+    A --> D[Phân hệ 3: Tìm kiếm & Duyệt]
+    A --> E[Phân hệ 4: Hồ sơ Nghiên cứu viên]
+    A --> F[Phân hệ 5: Báo cáo & Phân tích]
+    A --> G[Phân hệ 6: Quản trị & Quản lý Người dùng]
     
     style B fill:#4ecdc4
     style C fill:#ffe66d
@@ -35,230 +35,230 @@ graph TD
 
 ---
 
-## 3. Tổng Quan Modules
+## 3. Tổng Quan Phân hệ
 
-### Module 1: Publication Management
-**Mục đích**: Quản lý bài báo khoa học (CRUD)
+### Phân hệ 1: Quản lý Bài báo
+**Mục đích**: Quản lý bài báo khoa học (Thêm/Xóa/Sửa - CRUD)
 
 **Chức năng chính**:
 - Tạo/Sửa/Xóa bài báo
-- Upload file PDF
+- Tải lên (Upload) file PDF
 - Quản lý metadata (tiêu đề, tác giả, tạp chí, DOI...)
 - Liên kết đồng tác giả
 
-**Users**: Researcher, SuperAdmin
+**Người dùng**: Nhà nghiên cứu, Quản trị viên cấp cao
 
 ---
 
-### Module 2: Approval Workflow
+### Phân hệ 2: Quy trình Phê duyệt
 **Mục đích**: Quy trình phê duyệt 2 cấp
 
 **Chức năng chính**:
 - Nộp xét duyệt (Submit for Review)
 - Xét duyệt cấp Khoa (Faculty Review)
 - Phê duyệt cấp Trường (University Review)
-- State machine với 9 trạng thái
-- Audit trail đầy đủ
+- Máy trạng thái (State machine) với 9 trạng thái
+- Vết kiểm toán (Audit trail) đầy đủ
 
-**Users**: Researcher, Faculty Reviewer, University Reviewer, SuperAdmin
+**Người dùng**: Nhà nghiên cứu, Người duyệt cấp Khoa, Người duyệt cấp Trường, Quản trị viên cấp cao
 
 ---
 
-### Module 3: Search & Browse
+### Phân hệ 3: Tìm kiếm & Duyệt
 **Mục đích**: Tìm kiếm và tra cứu bài báo công bố
 
 **Chức năng chính**:
-- Full-text search
-- Advanced filters (năm, loại tạp chí, khoa, từ khóa)
-- Browse by category
-- Export search results
+- Tìm kiếm toàn văn (Full-text search)
+- Bộ lọc nâng cao (năm, loại tạp chí, khoa, từ khóa)
+- Duyệt theo danh mục
+- Xuất kết quả tìm kiếm
 
-**Users**: Tất cả (Public access)
+**Người dùng**: Tất cả (Truy cập công khai)
 
 ---
 
-### Module 4: Researcher Profile
-**Mục đích**: Profile công khai cho giảng viên
+### Phân hệ 4: Hồ sơ Nghiên cứu viên
+**Mục đích**: Hồ sơ công khai cho giảng viên
 
 **Chức năng chính**:
 - Trang cá nhân công khai
 - Danh sách bài báo đã công bố
 - Biểu đồ năng suất nghiên cứu
-- Word cloud lĩnh vực chuyên môn
+- Đám mây từ khóa (Word cloud) lĩnh vực chuyên môn
 
-**Users**: Researcher (edit), Tất cả (view)
+**Người dùng**: Nhà nghiên cứu (sửa), Tất cả (xem)
 
 ---
 
-### Module 5: Reporting & Analytics
+### Phân hệ 5: Báo cáo & Phân tích
 **Mục đích**: Báo cáo và thống kê
 
 **Chức năng chính**:
-- Dashboard analytics
+- Bảng điều khiển phân tích (Dashboard analytics)
 - Báo cáo theo đơn vị, loại tạp chí, năm
-- Export Excel/PDF
-- Trend analysis
+- Xuất Excel/PDF
+- Phân tích xu hướng (Trend analysis)
 
-**Users**: University Reviewer, Faculty Reviewer, SuperAdmin, Lãnh đạo
+**Người dùng**: Người duyệt cấp Trường, Người duyệt cấp Khoa, Quản trị viên cấp cao, Lãnh đạo
 
 ---
 
-### Module 6: Admin & User Management
+### Phân hệ 6: Quản trị & Quản lý Người dùng
 **Mục đích**: Quản trị hệ thống
 
 **Chức năng chính**:
-- User management (CRUD)
-- Role assignment
-- System configuration
-- Audit logs
-- Backup/Restore
+- Quản lý người dùng (Thêm/Xóa/Sửa)
+- Phân quyền vai trò
+- Cấu hình hệ thống
+- Nhật ký kiểm toán (Audit logs)
+- Sao lưu/Khôi phục (Backup/Restore)
 
-**Users**: SuperAdmin
+**Người dùng**: Quản trị viên cấp cao
 
 ---
 
-## 4. Phân Loại Requirements
+## 4. Phân Loại Yêu Cầu
 
 ### 4.1. Theo Độ Ưu Tiên
 
-| Priority | Mô tả | Modules |
+| Mức độ ưu tiên | Mô tả | Phân hệ (Modules) |
 |----------|-------|---------|
-| **P0 - Must Have** | Bắt buộc cho MVP | 1, 2, 6 (core features) |
-| **P1 - Should Have** | Quan trọng, nên có trong MVP | 3, 4, 5 (basic features) |
-| **P2 - Could Have** | Tốt nếu có, Phase 2 | 3, 4, 5 (advanced features) |
-| **P3 - Won't Have** | Không trong scope hiện tại | - |
+| **P0 - Phải Có (Must Have)** | Bắt buộc cho MVP | 1, 2, 6 (tính năng cốt lõi) |
+| **P1 - Nên Có (Should Have)** | Quan trọng, nên có trong MVP | 3, 4, 5 (tính năng cơ bản) |
+| **P2 - Có Thể Có (Could Have)** | Tốt nếu có, Giai đoạn 2 | 3, 4, 5 (tính năng nâng cao) |
+| **P3 - Sẽ Không Có (Won't Have)** | Không trong phạm vi hiện tại | - |
 
 ---
 
-### 4.2. Theo Loại User
+### 4.2. Theo Loại Người Dùng
 
-| User Group | Primary Modules | Secondary Modules |
+| Nhóm Người dùng | Phân hệ Chính | Phân hệ Phụ |
 |------------|----------------|-------------------|
-| **Researcher** | 1 (Publication Mgmt), 2 (Approval) | 3 (Search), 4 (Profile) |
-| **Faculty Reviewer** | 2 (Approval - Faculty) | 5 (Reporting - Khoa) |
-| **University Reviewer** | 2 (Approval - University), 5 (Reporting) | 3 (Search) |
-| **SuperAdmin** | 6 (Admin) | Tất cả |
-| **Viewer** | 3 (Search), 4 (Profile) | - |
+| **Nhà nghiên cứu** | 1 (Quản lý Bài báo), 2 (Phê duyệt) | 3 (Tìm kiếm), 4 (Hồ sơ) |
+| **Người duyệt cấp Khoa** | 2 (Phê duyệt - Khoa) | 5 (Báo cáo - Khoa) |
+| **Người duyệt cấp Trường** | 2 (Phê duyệt - Trường), 5 (Báo cáo) | 3 (Tìm kiếm) |
+| **Quản trị viên cấp cao** | 6 (Quản trị) | Tất cả |
+| **Người xem (Viewer)** | 3 (Tìm kiếm), 4 (Hồ sơ) | - |
 
 ---
 
-## 5. Tổng Số Requirements
+## 5. Tổng Số Yêu Cầu
 
-| Module | Số FR | Độ ưu tiên P0 | Độ ưu tiên P1 | Độ ưu tiên P2 |
+| Phân hệ | Số lượng FR | Độ ưu tiên P0 | Độ ưu tiên P1 | Độ ưu tiên P2 |
 |--------|-------|---------------|---------------|---------------|
-| **1. Publication Management** | ~15 | 12 | 2 | 1 |
-| **2. Approval Workflow** | ~20 | 18 | 2 | 0 |
-| **3. Search & Browse** | ~12 | 5 | 4 | 3 |
-| **4. Researcher Profile** | ~10 | 3 | 5 | 2 |
-| **5. Reporting & Analytics** | ~15 | 5 | 7 | 3 |
-| **6. Admin & User Management** | ~18 | 15 | 3 | 0 |
+| **1. Quản lý Bài báo** | ~15 | 12 | 2 | 1 |
+| **2. Quy trình Phê duyệt** | ~20 | 18 | 2 | 0 |
+| **3. Tìm kiếm & Duyệt** | ~12 | 5 | 4 | 3 |
+| **4. Hồ sơ Nghiên cứu viên** | ~10 | 3 | 5 | 2 |
+| **5. Báo cáo & Phân tích** | ~15 | 5 | 7 | 3 |
+| **6. Quản trị & Quản lý Người dùng** | ~18 | 15 | 3 | 0 |
 | **TỔNG** | **~90** | **58** | **23** | **9** |
 
 ---
 
-## 6. Traceability Matrix (Sample)
+## 6. Ma trận Truy xuất (Mẫu)
 
-| Req ID | User Need | Module | Priority | User Story |
+| ID Yêu cầu | Nhu cầu Người dùng | Phân hệ | Độ ưu tiên | User Story |
 |--------|-----------|--------|----------|------------|
 | FR-PUB-001 | Thêm bài báo nhanh | 1 | P0 | US-RES-001 |
-| FR-PUB-002 | Upload PDF | 1 | P0 | US-RES-002 |
+| FR-PUB-002 | Link file PDF | 1 | P0 | US-RES-002 |
 | FR-APR-001 | Nộp xét duyệt | 2 | P0 | US-RES-010 |
 | FR-APR-005 | Xét duyệt cấp Khoa | 2 | P0 | US-FCR-001 |
 | FR-APR-010 | Phê duyệt cấp Trường | 2 | P0 | US-UNR-001 |
 | FR-SEA-001 | Tìm kiếm full-text | 3 | P1 | US-VIW-001 |
 | FR-PRO-001 | Profile công khai | 4 | P1 | US-RES-020 |
 | FR-REP-001 | Dashboard analytics | 5 | P1 | US-UNR-010 |
-| FR-ADM-001 | User management | 6 | P0 | US-ADM-001 |
+| FR-ADM-001 | Quản lý người dùng | 6 | P0 | US-ADM-001 |
 
 > Chi tiết đầy đủ: Xem từng file module_*.md
 
 ---
 
-## 7. Business Rules Overview
+## 7. Tổng quan Quy tắc Nghiệp vụ
 
-**Core Business Rules**:
+**Quy tắc Nghiệp vụ Cốt lõi**:
 
-1. **State Transition Rules**
-   - CHỈ Researcher có thể nộp bài báo (DRAFT → SUBMITTED)
-   - CHỈ Faculty Reviewer có thể duyệt cấp Khoa
-   - CHỈ University Reviewer có thể duyệt cấp Trường
+1. **Quy tắc Chuyển đổi Trạng thái**
+   - CHỈ Nhà nghiên cứu có thể nộp bài báo (NHÁP → ĐÃ NỘP)
+   - CHỈ Người duyệt cấp Khoa có thể duyệt văn bản cấp Khoa
+   - CHỈ Người duyệt cấp Trường có thể duyệt văn bản cấp Trường
 
-2. **Visibility Rules**
-   - CHỈ công trình **PUBLISHED** mới hiển thị công khai
-   - Công trình DRAFT chỉ chủ sở hữu + Admin nhìn thấy
-   - Công trình đang xét duyệt: Reviewer của cấp đó nhìn thấy
+2. **Quy tắc Hiển thị**
+   - CHỈ công trình **ĐÃ XUẤT BẢN** mới hiển thị công khai
+   - Công trình NHÁP chỉ chủ sở hữu + Quản trị viên nhìn thấy
+   - Công trình đang xét duyệt: Người duyệt của cấp đó nhìn thấy
 
-3. **Data Validation Rules**
-   - DOI format: `10.xxxx/xxxxx`
-   - ISSN format: `xxxx-xxxx`
-   - ORCID format: `0000-0002-xxxx-xxxx`
-   - File PDF size: < 10MB
+3. **Quy tắc Kiểm tra Dữ liệu**
+   - Định dạng DOI: `10.xxxx/xxxxx`
+   - Định dạng ISSN: `xxxx-xxxx`
+   - Định dạng ORCID: `0000-0002-xxxx-xxxx`
+   - Kích thước file PDF: < 10MB
 
-4. **Co-author Rules**
+4. **Quy tắc Đồng tác giả**
    - Mỗi bài báo có thể có nhiều tác giả
-   - CHỈ corresponding author (chủ sở hữu) có thể sửa/xóa
+   - CHỈ tác giả liên hệ (chủ sở hữu) có thể sửa/xóa
    - Đồng tác giả không thể sửa, chỉ xem
 
 > Chi tiết: [business_rules.md](./business_rules.md)
 
 ---
 
-## 8. Dependencies & Constraints
+## 8. Sự Phụ Thuộc & Ràng Buộc
 
-### 8.1. External Dependencies
+### 8.1. Sự Phụ Thuộc Bên Ngoài
 
-**Must Have (P0)**:
-- LDAP/AD for authentication
-- Email server for notifications
-- MySQL for database
+**Phải Có (P0)**:
+- LDAP/AD để xác thực
+- Máy chủ Email để thông báo
+- MySQL cho cơ sở dữ liệu
 
-**Should Have (P1)**:
-- HR System for user sync
+**Nên Có (P1)**:
+- Hệ thống Nhân sự (HR System) để đồng bộ người dùng
 
-**Nice to Have (P2)**:
-- DOI Resolver for auto-fetch
-- ORCID API for import
+**Có Thể Có (P2)**:
+- Bộ giải quyết DOI để tự động lấy dữ liệu
+- API ORCID để nhập dữ liệu
 
 ---
 
-### 8.2. Technical Constraints
+### 8.2. Ràng Buộc Kỹ Thuật
 
 - Backend: Java Spring Boot 3.x
 - Frontend: React 18 + TypeScript
-- Database: MySQL 8.0+
-- Storage: Local File System (MVP)
-- Auth: LDAP/AD + JWT
+- Cơ sở dữ liệu: MySQL 8.0+
+- Lưu trữ: Hệ thống tệp cục bộ (MVP)
+- Xác thực: LDAP/AD + JWT
 
 ---
 
-## 9. Acceptance Criteria Template
+## 9. Mẫu Tiêu chí Chấp nhận
 
-Mỗi requirement phải có:
+Mỗi yêu cầu phải có:
 
-✅ **Given-When-Then format**
+✅ **Định dạng Given-When-Then**
 ```
-GIVEN [precondition]
-WHEN [action]
-THEN [expected outcome]
+GIVEN (KHI) [điều kiện tiên quyết]
+WHEN (LÚC) [hành động]
+THEN (THÌ) [kết quả mong đợi]
 ```
 
-✅ **Measurable criteria**
+✅ **Tiêu chí có thể đo lường**
 - Định lượng (số, thời gian, %)
-- Có thể test được
+- Có thể kiểm thử (testable)
 
-✅ **Testable**
-- Unit test, Integration test, hoặc Manual test
+✅ **Có thể kiểm thử**
+- Unit test, Integration test, hoặc Kiểm thử thủ công (Manual test)
 
 ---
 
-## 10. Next Steps
+## 10. Các Bước Tiếp Theo
 
-Sau khi đọc overview này, đọc chi tiết:
+Sau khi đọc tổng quan này, đọc chi tiết:
 
-1. **[module_publication_management.md](./module_publication_management.md)** - CRUD bài báo
+1. **[module_publication_management.md](./module_publication_management.md)** - Quản lý bài báo
 2. **[module_approval_workflow.md](./module_approval_workflow.md)** - Quy trình phê duyệt
 3. **[module_search.md](./module_search.md)** - Tìm kiếm và tra cứu
-4. **[module_profile.md](./module_profile.md)** - Profile giảng viên
+4. **[module_profile.md](./module_profile.md)** - Hồ sơ giảng viên
 5. **[module_reporting.md](./module_reporting.md)** - Báo cáo và thống kê
 6. **[module_admin.md](./module_admin.md)** - Quản trị hệ thống
 7. **[business_rules.md](./business_rules.md)** - Quy tắc nghiệp vụ
@@ -266,6 +266,6 @@ Sau khi đọc overview này, đọc chi tiết:
 ---
 
 **Tài liệu liên quan**:
-- [User Needs](../../02_System_Clarification/User_Analysis/user_needs.md)
-- [Non-Functional Requirements](../Non_Functional/)
+- [Nhu cầu Người dùng](../../02_System_Clarification/User_Analysis/user_needs.md)
+- [Yêu cầu Phi Chức năng](../Non_Functional/)
 - [User Stories](../../04_User_Stories/)

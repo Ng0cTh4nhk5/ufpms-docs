@@ -1,43 +1,43 @@
-# Module 5: Reporting & Analytics - Use Case Diagram
+# Module 5: Báo cáo & Phân tích - Biểu đồ Ca Sử dụng
 
-> 📊 **Diagram ID**: UCD-05  
-> 📦 **Module**: Reporting & Analytics  
-> 👥 **Actors**: Faculty Reviewer, University Reviewer, SuperAdmin  
-> 📋 **Use Cases**: 7
-
----
-
-## 🎯 Module Overview
-
-Module này provide reporting và analytics capabilities theo hierarchy và permissions.
-
-**Access Levels**:
-- **Faculty Reviewer**: Faculty-level reports
-- **University Reviewer**: University-wide reports
-- **SuperAdmin**: All reports + system analytics
+> 📊 **ID Biểu đồ**: UCD-05  
+> 📦 **Module**: Báo cáo & Phân tích  
+> 👥 **Tác nhân**: Người đánh giá Khoa, Người đánh giá Trường, Quản trị viên Cấp cao  
+> 📋 **Ca Sử dụng**: 7
 
 ---
 
-## 📊 Use Case Diagram
+## 🎯 Tổng quan Module
+
+Module này cung cấp các khả năng báo cáo và phân tích theo phân cấp và quyền hạn.
+
+**Cấp độ Truy cập**:
+- **Người đánh giá Khoa**: Báo cáo cấp Khoa
+- **Người đánh giá Trường**: Báo cáo toàn trường
+- **Quản trị viên Cấp cao**: Tất cả báo cáo + phân tích hệ thống
+
+---
+
+## 📊 Biểu đồ Ca Sử dụng
 
 ```mermaid
 graph TB
-    subgraph Actors["👥 Actors"]
-        FCR[👨‍💼 Faculty<br/>Reviewer]
-        UNR[👨‍💼 University<br/>Reviewer]
-        ADM[👨‍💻 SuperAdmin]
+    subgraph Actors["👥 Tác nhân"]
+        FCR[👨‍💼 Người đánh giá<br/>Khoa]
+        UNR[👨‍💼 Người đánh giá<br/>Trường]
+        ADM[👨‍💻 Quản trị viên Cấp cao]
     end
     
-    subgraph REPORT["📊 Reporting & Analytics Module"]
+    subgraph REPORT["📊 Module Báo cáo & Phân tích"]
         direction TB
         
-        UC1[UC-M5-001<br/>Generate Basic Report<br/>P0]
-        UC2[UC-M5-002<br/>View Faculty Statistics<br/>P1]
-        UC3[UC-M5-003<br/>View University Statistics<br/>P1]
-        UC4[UC-M5-004<br/>Export Report<br/>P1]
-        UC5[UC-M5-005<br/>Schedule Automated Report<br/>P2]
-        UC6[UC-M5-006<br/>View Approval Analytics<br/>P1]
-        UC7[UC-M5-007<br/>View System Analytics<br/>P1]
+        UC1[UC-M5-001<br/>Tạo Báo cáo Cơ bản<br/>P0]
+        UC2[UC-M5-002<br/>Xem Thống kê Khoa<br/>P1]
+        UC3[UC-M5-003<br/>Xem Thống kê Trường<br/>P1]
+        UC4[UC-M5-004<br/>Xuất Báo cáo<br/>P1]
+        UC5[UC-M5-005<br/>Lên lịch Báo cáo Tự động<br/>P2]
+        UC6[UC-M5-006<br/>Xem Phân tích Phê duyệt<br/>P1]
+        UC7[UC-M5-007<br/>Xem Phân tích Hệ thống<br/>P1]
         
         %% Include relationships
         UC1 -.->|include| UC4
@@ -46,26 +46,26 @@ graph TB
     end
     
     %% Faculty Reviewer connections
-    FCR -->|generate| UC1
-    FCR -->|view faculty| UC2
-    FCR -->|export| UC4
-    FCR -->|view approval| UC6
+    FCR -->|tạo| UC1
+    FCR -->|xem khoa| UC2
+    FCR -->|xuất| UC4
+    FCR -->|xem phê duyệt| UC6
     
     %% University Reviewer connections
-    UNR -->|generate| UC1
-    UNR -->|view university| UC3
-    UNR -->|export| UC4
-    UNR -->|schedule| UC5
-    UNR -->|view approval| UC6
+    UNR -->|tạo| UC1
+    UNR -->|xem trường| UC3
+    UNR -->|xuất| UC4
+    UNR -->|lên lịch| UC5
+    UNR -->|xem phê duyệt| UC6
     
     %% SuperAdmin connections
-    ADM -->|generate any| UC1
-    ADM -->|view all faculty| UC2
-    ADM -->|view all university| UC3
-    ADM -->|export| UC4
-    ADM -->|schedule| UC5
-    ADM -->|view all approval| UC6
-    ADM -->|view system| UC7
+    ADM -->|tạo bất kỳ| UC1
+    ADM -->|xem tất cả khoa| UC2
+    ADM -->|xem tất cả trường| UC3
+    ADM -->|xuất| UC4
+    ADM -->|lên lịch| UC5
+    ADM -->|xem tất cả phê duyệt| UC6
+    ADM -->|xem hệ thống| UC7
     
     %% Styling
     style UC1 fill:#c8b6ff,stroke:#333,stroke-width:2px,color:#000
@@ -83,227 +83,227 @@ graph TB
 
 ---
 
-## 📋 Use Cases
+## 📋 Ca Sử dụng
 
-### UC-M5-001: Generate Basic Report
-**Priority**: P0  
-**Actor**: Faculty Reviewer, University Reviewer, SuperAdmin  
-**Description**: Tạo báo cáo publications theo parameters
+### UC-M5-001: Tạo Báo cáo Cơ bản
+**Độ ưu tiên**: P0  
+**Tác nhân**: Người đánh giá Khoa, Người đánh giá Trường, Quản trị viên Cấp cao  
+**Mô tả**: Tạo báo cáo ấn phẩm theo tham số
 
-**Report Types**:
-- Publications by year
-- Publications by researcher
-- Publications by department/faculty
-- Publications by status
+**Loại Báo cáo**:
+- Ấn phẩm theo năm
+- Ấn phẩm theo nhà nghiên cứu
+- Ấn phẩm theo bộ môn/khoa
+- Ấn phẩm theo trạng thái
 
-**Parameters**:
-- Date range
-- Faculty/Department filter
-- Publication type filter
-- Status filter
+**Tham số**:
+- Khoảng thời gian
+- Bộ lọc Khoa/Bộ môn
+- Bộ lọc loại ấn phẩm
+- Bộ lọc trạng thái
 
-**Access Control**:
-- Faculty Reviewer: Own faculty only
-- University Reviewer: All faculties
-- SuperAdmin: All + system-wide
+**Kiểm soát Truy cập**:
+- Người đánh giá Khoa: Chỉ khoa của mình
+- Người đánh giá Trường: Tất cả các khoa
+- Quản trị viên Cấp cao: Tất cả + toàn hệ thống
 
-**Output**: HTML view + Export option
+**Đầu ra**: Chế độ xem HTML + Tùy chọn xuất
 
-**Related**: FR-REP-001, US-FCR-007, US-UNR-007
-
----
-
-### UC-M5-002: View Faculty Statistics
-**Priority**: P1  
-**Actor**: Faculty Reviewer, SuperAdmin  
-**Description**: Thống kê cấp Faculty
-
-**Metrics**:
-- Total publications (by status)
-- Publications per year trend
-- Top researchers (by publication count)
-- Approval workflow stats
-  - Average approval time
-  - Rejection rate
-  - Revision request rate
-
-**Visualization**: Charts and graphs
-
-**Related**: FR-REP-002, US-FCR-008
+**Liên quan**: FR-REP-001, US-FCR-007, US-UNR-007
 
 ---
 
-### UC-M5-003: View University Statistics
-**Priority**: P1  
-**Actor**: University Reviewer, SuperAdmin  
-**Description**: Thống kê toàn trường
+### UC-M5-002: Xem Thống kê Khoa
+**Độ ưu tiên**: P1  
+**Tác nhân**: Người đánh giá Khoa, Quản trị viên Cấp cao  
+**Mô tả**: Thống kê cấp Khoa
 
-**Metrics**:
-- Total publications university-wide
-- By faculty comparison
-- Year-over-year growth
-- Publication quality metrics (Quartile distribution)
-- Approval workflow efficiency
+**Chỉ số**:
+- Tổng ấn phẩm (theo trạng thái)
+- Xu hướng ấn phẩm mỗi năm
+- Nhà nghiên cứu hàng đầu (theo số lượng ấn phẩm)
+- Thống kê quy trình phê duyệt
+  - Thời gian phê duyệt trung bình
+  - Tỷ lệ từ chối
+  - Tỷ lệ yêu cầu chỉnh sửa
 
-**Visualization**:
-- Bar charts (faculty comparison)
-- Line charts (trends)
-- Pie charts (distribution)
+**Trực quan hóa**: Biểu đồ và đồ thị
 
-**Related**: FR-REP-003, US-UNR-008
+**Liên quan**: FR-REP-002, US-FCR-008
 
 ---
 
-### UC-M5-004: Export Report
-**Priority**: P1  
-**Actor**: All actors  
-**Description**: Export report data
+### UC-M5-003: Xem Thống kê Trường
+**Độ ưu tiên**: P1  
+**Tác nhân**: Người đánh giá Trường, Quản trị viên Cấp cao  
+**Mô tả**: Thống kê toàn trường
 
-**Formats**:
-- PDF (formatted report)
+**Chỉ số**:
+- Tổng ấn phẩm toàn trường
+- So sánh theo khoa
+- Tăng trưởng theo năm
+- Chỉ số chất lượng ấn phẩm (Phân bố theo hạng - Quartile)
+- Hiệu quả quy trình phê duyệt
+
+**Trực quan hóa**:
+- Biểu đồ cột (so sánh khoa)
+- Biểu đồ đường (xu hướng)
+- Biểu đồ tròn (phân bố)
+
+**Liên quan**: FR-REP-003, US-UNR-008
+
+---
+
+### UC-M5-004: Xuất Báo cáo
+**Độ ưu tiên**: P1  
+**Tác nhân**: Tất cả tác nhân  
+**Mô tả**: Xuất dữ liệu báo cáo
+
+**Định dạng**:
+- PDF (báo cáo định dạng sẵn)
 - Excel (.xlsx)
 - CSV
 
-**Use Cases**:
-- Submit to leadership
-- Annual reports
-- External audits
+**Ca sử dụng**:
+- Gửi cho lãnh đạo
+- Báo cáo thường niên
+- Kiểm toán bên ngoài
 
-**Related**: FR-REP-004, US-FCR-009, US-UNR-009
-
----
-
-### UC-M5-005: Schedule Automated Report
-**Priority**: P2  
-**Actor**: University Reviewer, SuperAdmin  
-**Description**: Schedule recurring reports
-
-**Schedule Options**:
-- Weekly
-- Monthly
-- Quarterly
-- Custom
-
-**Delivery**:
-- Email to recipients
-- Save to shared folder
-
-**Related**: FR-REP-005
+**Liên quan**: FR-REP-004, US-FCR-009, US-UNR-009
 
 ---
 
-### UC-M5-006: View Approval Analytics
-**Priority**: P1  
-**Actor**: Faculty Reviewer, University Reviewer, SuperAdmin  
-**Description**: Analytics về approval workflow
+### UC-M5-005: Lên lịch Báo cáo Tự động
+**Độ ưu tiên**: P2  
+**Tác nhân**: Người đánh giá Trường, Quản trị viên Cấp cao  
+**Mô tả**: Lên lịch báo cáo định kỳ
 
-**Metrics**:
-- Average time at each stage
-- Bottlenecks identification
-- Reviewer workload distribution
-- Approval/rejection rates
-- Revision request patterns
+**Tùy chọn Lịch biểu**:
+- Hàng tuần
+- Hàng tháng
+- Hàng quý
+- Tùy chỉnh
 
-**Value**: Process improvement insights
+**Giao hàng**:
+- Email cho người nhận
+- Lưu vào thư mục chia sẻ
 
-**Related**: FR-REP-006
-
----
-
-### UC-M5-007: View System Analytics
-**Priority**: P1  
-**Actor**: SuperAdmin  
-**Description**: System-level analytics
-
-**Metrics**:
-- User activity (logins, actions)
-- Storage usage
-- Performance metrics
-- Error logs
-- Audit trail
-
-**Purpose**: System monitoring và maintenance
-
-**Related**: FR-REP-007, US-ADM-010
+**Liên quan**: FR-REP-005
 
 ---
 
-## 📊 Statistics
+### UC-M5-006: Xem Phân tích Phê duyệt
+**Độ ưu tiên**: P1  
+**Tác nhân**: Người đánh giá Khoa, Người đánh giá Trường, Quản trị viên Cấp cao  
+**Mô tả**: Phân tích về quy trình phê duyệt
 
-| Priority | Use Cases | % |
+**Chỉ số**:
+- Thời gian trung bình ở mỗi giai đoạn
+- Xác định điểm nghẽn
+- Phân bố khối lượng công việc của người đánh giá
+- Tỷ lệ phê duyệt/từ chối
+- Mẫu yêu cầu chỉnh sửa
+
+**Giá trị**: Thông tin chi tiết để cải tiến quy trình
+
+**Liên quan**: FR-REP-006
+
+---
+
+### UC-M5-007: Xem Phân tích Hệ thống
+**Độ ưu tiên**: P1  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Phân tích cấp hệ thống
+
+**Chỉ số**:
+- Hoạt động người dùng (đăng nhập, hành động)
+- Sử dụng dung lượng lưu trữ
+- Chỉ số hiệu suất
+- Nhật ký lỗi
+- Dấu vết kiểm toán
+
+**Mục đích**: Giám sát và bảo trì hệ thống
+
+**Liên quan**: FR-REP-007, US-ADM-010
+
+---
+
+## 📊 Thống kê
+
+| Độ ưu tiên | Ca Sử dụng | % |
 |----------|-----------|---|
-| P0 - Must Have | 1 | 14% |
-| P1 - Should Have | 5 | 71% |
-| P2 - Nice to Have | 1 | 14% |
+| P0 - Phải Có | 1 | 14% |
+| P1 - Nên Có | 5 | 71% |
+| P2 - Có Thì Tốt | 1 | 14% |
 
 ---
 
-## 🔒 Access Matrix
+## 🔒 Ma trận Truy cập
 
-| Report Type | Faculty Reviewer | University Reviewer | SuperAdmin |
+| Loại Báo cáo | Người đánh giá Khoa | Người đánh giá Trường | Quản trị viên Cấp cao |
 |-------------|------------------|---------------------|------------|
-| Own faculty statistics | ✅ | ✅ | ✅ |
-| Other faculty statistics | ❌ | ✅ | ✅ |
-| University-wide | ❌ | ✅ | ✅ |
-| Approval analytics | ✅ (own) | ✅ (all) | ✅ (all) |
-| System analytics | ❌ | ❌ | ✅ |
+| Thống kê khoa của mình | ✅ | ✅ | ✅ |
+| Thống kê khoa khác | ❌ | ✅ | ✅ |
+| Toàn trường | ❌ | ✅ | ✅ |
+| Phân tích phê duyệt | ✅ (của mình) | ✅ (tất cả) | ✅ (tất cả) |
+| Phân tích hệ thống | ❌ | ❌ | ✅ |
 
 ---
 
-## 📈 Sample Reports
+## 📈 Báo cáo Mẫu
 
-### Report 1: Faculty Annual Publication Report
-**Purpose**: Year-end summary  
-**Audience**: Faculty Dean  
-**Metrics**:
-- Total publications PUBLISHED this year
-- Breakdown by type
-- Top 10 researchers
-- Comparison với previous year
-
----
-
-### Report 2: Approval Workflow Efficiency
-**Purpose**: Process improvement  
-**Audience**: University leadership  
-**Metrics**:
-- Average time: Submit → Published
-- Bottlenecks (stages taking longest)
-- Reviewer performance
-- Recommendations
+### Báo cáo 1: Báo cáo Ấn phẩm Thường niên của Khoa
+**Mục đích**: Tóm tắt cuối năm  
+**Đối tượng**: Trưởng khoa  
+**Chỉ số**:
+- Tổng ấn phẩm ĐÃ XUẤT BẢN năm nay
+- Phân loại theo loại
+- Top 10 nhà nghiên cứu
+- So sánh với năm trước
 
 ---
 
-### Report 3: University Research Output
-**Purpose**: External reporting (Bộ GD&ĐT, AUN-QA)  
-**Audience**: Government agencies  
-**Metrics**:
-- Total scopus/ISI publications
-- International collaborations
-- High-impact publications (Q1/Q2)
-- Trends
+### Báo cáo 2: Hiệu quả Quy trình Phê duyệt
+**Mục đích**: Cải tiến quy trình  
+**Đối tượng**: Lãnh đạo trường  
+**Chỉ số**:
+- Thời gian trung bình: Gửi → Xuất bản
+- Điểm nghẽn (giai đoạn tốn nhiều thời gian nhất)
+- Hiệu suất người đánh giá
+- Khuyến nghị
 
 ---
 
-## 🔗 Traceability
-
-### Functional Requirements
-- FR-REP-001 to FR-REP-007 (7 FRs)
-
-### User Stories
-**Faculty Reviewer**: US-FCR-007, US-FCR-008, US-FCR-009  
-**University Reviewer**: US-UNR-007, US-UNR-008, US-UNR-009  
-**SuperAdmin**: US-ADM-009, US-ADM-010
-
----
-
-## 📚 Related Documentation
-
-- **Use Cases**: [05_Use_Cases/Medium_Level/module_05_reporting_analytics.md](../../05_Use_Cases/Medium_Level/module_05_reporting_analytics.md)
-- **Requirements**: [03_Requirements/Functional/module_reporting.md](../../03_Requirements/Functional/module_reporting.md)
-- **Activity Diagrams**: [act_report_generation.md](../Activity/act_report_generation.md)
+### Báo cáo 3: Đầu ra Nghiên cứu của Trường
+**Mục đích**: Báo cáo bên ngoài (Bộ GD&ĐT, AUN-QA)  
+**Đối tượng**: Cơ quan chính phủ  
+**Chỉ số**:
+- Tổng ấn phẩm Scopus/ISI
+- Hợp tác quốc tế
+- Ấn phẩm có tầm ảnh hưởng cao (Q1/Q2)
+- Xu hướng
 
 ---
 
-**Created**: 10/02/2026  
-**Version**: 1.0
+## 🔗 Truy xuất nguồn gốc
+
+### Yêu cầu Chức năng
+- FR-REP-001 đến FR-REP-007 (7 FRs)
+
+### Câu chuyện Người dùng
+**Người đánh giá Khoa**: US-FCR-007, US-FCR-008, US-FCR-009  
+**Người đánh giá Trường**: US-UNR-007, US-UNR-008, US-UNR-009  
+**Quản trị viên Cấp cao**: US-ADM-009, US-ADM-010
+
+---
+
+## 📚 Tài liệu Liên quan
+
+- **Ca Sử dụng**: [05_Use_Cases/Medium_Level/module_05_reporting_analytics.md](../../05_Use_Cases/Medium_Level/module_05_reporting_analytics.md)
+- **Yêu cầu**: [03_Requirements/Functional/module_reporting.md](../../03_Requirements/Functional/module_reporting.md)
+- **Biểu đồ Hoạt động**: [act_report_generation.md](../Activity/act_report_generation.md)
+
+---
+
+**Ngày tạo**: 10/02/2026  
+**Phiên bản**: 1.0

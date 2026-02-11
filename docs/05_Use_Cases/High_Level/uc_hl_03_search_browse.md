@@ -1,38 +1,38 @@
-# UC-HL-003: Search & Browse Publications
+# UC-HL-003: Tìm Kiếm & Duyệt Bài Báo (Search & Browse Publications)
 
-> **Module**: 3 - Search & Browse  
-> **Priority**: 🟡 P1 - Should Have  
-> **Actors**: Public Visitor, Researcher, SuperAdmin
+> **Module**: 3 - Tìm Kiếm & Duyệt  
+> **Độ Ưu Tiên**: 🟡 P1 - Nên Có  
+> **Tác Nhân**: Public Visitor, Researcher, SuperAdmin
 
 ---
 
-## 📋 Use Case Overview
+## 📋 Tổng Quan Use Case
 
 **ID**: UC-HL-003  
-**Name**: Search & Browse Publications  
-**Description**: Tìm kiếm và duyệt bài báo công khai (PUBLISHED only) với full-text search, filtering, sorting, và pagination. NO authentication required.
+**Tên**: Tìm Kiếm & Duyệt Bài Báo  
+**Mô Tả**: Tìm kiếm và duyệt bài báo công khai (chỉ PUBLISHED) với tìm kiếm toàn văn (full-text search), bộ lọc (filtering), sắp xếp (sorting), và phân trang (pagination). KHÔNG yêu cầu xác thực.
 
 ---
 
-## 👥 Actors
+## 👥 Tác Nhân
 
-### Primary Actors
+### Tác Nhân Chính
 - **Public Visitor**: Tìm kiếm bài báo không cần đăng nhập
 - **Researcher**: Tìm kiếm để tham khảo
 - **SuperAdmin**: Tìm kiếm để quản lý
 
 ---
 
-## 🎯 Goals
+## 🎯 Mục Tiêu
 
 - Công khai thông tin nghiên cứu của trường
 - Hỗ trợ cộng đồng học thuật tìm kiếm
-- Tăng visibility cho giảng viên
-- SEO-friendly để Google index được
+- Tăng độ hiển thị (visibility) cho giảng viên
+- Tối ưu SEO để Google lập chỉ mục (index) được
 
 ---
 
-## 🔗 Related Artifacts
+## 🔗 Tài Liệu Liên Quan
 
 **User Stories** (8 stories):
 - US-VIW-001: Tìm Kiếm Full-Text (P1)
@@ -44,31 +44,31 @@
 - US-VIW-007: Export Kết Quả (P2)
 - US-VIW-008: Xem Profile Giảng Viên (P2)
 
-**Functional Requirements**: FR-SEA-001 to FR-SEA-007
+**Yêu Cầu Chức Năng**: FR-SEA-001 đến FR-SEA-007
 
 ---
 
-## 🔍 Search Architecture
+## 🔍 Kiến Trúc Tìm Kiếm
 
 ```mermaid
 graph TB
-    A[User] --> B[Search Interface]
-    B --> C{Search Type}
+    A[User] --> B[Giao Diện Tìm Kiếm]
+    B --> C{Loại Tìm Kiếm}
     
-    C -->|Basic| D[Full-Text Search]
-    C -->|Browse| E[Category Browse]
+    C -->|Cơ Bản| D[Tìm Kiếm Full-Text]
+    C -->|Duyệt| E[Duyệt Theo Danh Mục]
     
-    D --> F[Search Engine<br/>ElasticSearch/MySQL]
+    D --> F[Công Cụ Tìm Kiếm<br/>ElasticSearch/MySQL]
     E --> F
     
-    F --> G[Filter Results]
-    G --> H[Sort Results]
-    H --> I[Paginate]
-    I --> J[Display]
+    F --> G[Lọc Kết Quả]
+    G --> H[Sắp Xếp Kết Quả]
+    H --> I[Phân Trang]
+    I --> J[Hiển Thị]
     
-    J --> K[Publication Details]
-    K --> L[Author Profile]
-    K --> M[PDF Download]
+    J --> K[Chi Tiết Bài Báo]
+    K --> L[Profile Tác Giả]
+    K --> M[Tải Xuống PDF]
     
     style A fill:#ffd93d
     style F fill:#4d96ff
@@ -77,174 +77,174 @@ graph TB
 
 ---
 
-## 🔄 Main Flows
+## 🔄 Luồng Chính (Main Flows)
 
-### Flow 1: Basic Search
+### Flow 1: Tìm Kiếm Cơ Bản
 
-1. User enters keywords in search box
-2. User clicks "Search" (no login required)
-3. System searches in:
-   - Title
-   - Abstract
-   - Keywords
-   - Author names
-4. System returns ONLY PUBLISHED publications
-5. System highlights matching keywords
-6. System sorts by relevance (default)
-7. System paginates (20 per page)
-
----
-
-### Flow 2: Advanced Filtering
-
-1. User performs basic search
-2. User applies filters:
-   - Year range (from-to)
-   - Faculty/Department
-   - Journal Quartile (Q1/Q2/Q3/Q4)
-   - Publication Type (Journal/Conference)
-   - Research Field
-3. System updates results dynamically (AJAX)
-4. System shows result count
-5. User can clear filters
+1. User nhập từ khó vào ô tìm kiếm
+2. User nhấn "Tìm Kiếm" (không cần đăng nhập)
+3. Hệ thống tìm kiếm trong:
+   - Tiêu đề
+   - Tóm tắt (Abstract)
+   - Từ khóa
+   - Tên tác giả
+4. Hệ thống trả về CHỈ các bài báo ĐÃ XUẤT BẢN (PUBLISHED)
+5. Hệ thống làm nổi bật từ khóa khớp
+6. Hệ thống sắp xếp theo độ liên quan (mặc định)
+7. Hệ thống phân trang (20 kết quả/trang)
 
 ---
 
-### Flow 3: Browse by Category
+### Flow 2: Lọc Nâng Cao
 
-1. User clicks "Browse" (no search keywords)
-2. System shows category options:
-   - By Faculty
-   - By Year
-   - By Research Field
-   - By Quartile
-3. User selects a category
-4. System shows publications in that category
-5. System allows drilling down (e.g., Faculty → Researcher)
-
----
-
-### Flow 4: Sort Results
-
-1. User has search results
-2. User selects sort option:
-   - Newest first (default)
-   - Oldest first
-   - Most cited (if available)
-   - Impact Factor (high to low)
-3. System re-sorts results
-4. Pagination resets to page 1
+1. User thực hiện tìm kiếm cơ bản
+2. User áp dụng bộ lọc:
+   - Khoảng năm (từ năm - đến năm)
+   - Khoa/Phòng
+   - Xếp hạng tạp chí (Q1/Q2/Q3/Q4)
+   - Loại bài báo (Tạp chí/Hội nghị)
+   - Lĩnh vực nghiên cứu
+3. Hệ thống cập nhật kết quả động (AJAX)
+4. Hệ thống hiển thị số lượng kết quả
+5. User có thể xóa bộ lọc
 
 ---
 
-### Flow 5: View Publication Details
+### Flow 3: Duyệt Theo Danh Mục
 
-1. User clicks on a publication from results
-2. System shows detail page with:
-   - Full metadata
-   - DOI link (external)
-   - Author profile links
-   - Download PDF button
-   - Citation info
-3. User can download PDF (if allowed)
-4. User can click author name → profile
+1. User nhấn "Duyệt" (không nhập từ khóa)
+2. Hệ thống hiển thị các tùy chọn danh mục:
+   - Theo Khoa
+   - Theo Năm
+   - Theo Lĩnh Vực Nghiên Cứu
+   - Theo Xếp Hạng (Quartile)
+3. User chọn một danh mục
+4. Hệ thống hiển thị các bài báo trong danh mục đó
+5. Hệ thống cho phép đi sâu vào chi tiết (VD: Khoa → Giảng viên)
 
 ---
 
-### Flow 6: Export Results (P2)
+### Flow 4: Sắp Xếp Kết Quả
 
-1. User has search results
-2. User clicks "Export"
-3. User selects format:
+1. User có kết quả tìm kiếm
+2. User chọn tùy chọn sắp xếp:
+   - Mới nhất (mặc định)
+   - Cũ nhất
+   - Được trích dẫn nhiều nhất (nếu có)
+   - Chỉ số ảnh hưởng (từ cao xuống thấp)
+3. Hệ thống sắp xếp lại kết quả
+4. Phân trang reset về trang 1
+
+---
+
+### Flow 5: Xem Chi Tiết Bài Báo
+
+1. User nhấn vào một bài báo từ kết quả
+2. Hệ thống hiển thị trang chi tiết với:
+   - Metadata đầy đủ
+   - Link DOI (bên ngoài)
+   - Link profile tác giả
+   - Nút tải xuống PDF
+   - Thông tin trích dẫn
+3. User có thể tải PDF (nếu được phép)
+4. User có thể nhấn tên tác giả → profile
+
+---
+
+### Flow 6: Xuất Kết Quả (P2)
+
+1. User có kết quả tìm kiếm
+2. User nhấn "Export"
+3. User chọn định dạng:
    - BibTeX  
    - RIS (EndNote/Mendeley/Zotero)
    - CSV
    - JSON
-4. System generates file
-5. System downloads to user's computer
+4. Hệ thống tạo file
+5. Hệ thống tải xuống máy người dùng
 
 ---
 
-## ✅ Preconditions
+## ✅ Điều Kiện Tiên Quyết
 
-- PUBLISHED publications exist in system
-- Search index is up-to-date
-- No authentication required
-
----
-
-## 📝 Postconditions
-
-**Success**:
-- User finds relevant publications
-- Results are accurate and current
-- User can access publication details
+- Bài báo PUBLISHED tồn tại trong hệ thống
+- Chỉ mục tìm kiếm (search index) được cập nhật
+- Không yêu cầu xác thực
 
 ---
 
-## 🔒 Business Rules
+## 📝 Điều Kiện Hậu Quyết
 
-### BR-SEA-001: Visibility
-- CHỈ hiển thị PUBLISHED publications
+**Thành Công**:
+- User tìm thấy bài báo liên quan
+- Kết quả chính xác và cập nhật
+- User có thể truy cập chi tiết bài báo
+
+---
+
+## 🔒 Quy Tắc Nghiệp Vụ
+
+### BR-SEA-001: Tính Hiển Thị
+- CHỈ hiển thị bài báo PUBLISHED
 - KHÔNG hiển thị: DRAFT, SUBMITTED, REVIEWING, REJECTED
 
-### BR-SEA-002: Anonymous Access
-- NO login required for search
-- PDF download: Depends on publication settings (P2 feature)
+### BR-SEA-002: Truy Cập Ẩn Danh
+- KHÔNG yêu cầu đăng nhập để tìm kiếm
+- Tải PDF: Phụ thuộc vào cài đặt của bài báo (tính năng P2)
 
-### BR-SEA-003: Search Scope
-- Full-text search: Title, Abstract, Keywords, Author names
-- Case-insensitive
-- Support Vietnamese characters
+### BR-SEA-003: Phạm Vi Tìm Kiếm
+- Tìm kiếm toàn văn: Tiêu đề, Tóm tắt, Từ khóa, Tên tác giả
+- Không phân biệt hoa thường
+- Hỗ trợ ký tự tiếng Việt có dấu
 
-### BR-SEA-004: Result Limits
-- Default: 20 results per page
-- Options: 10, 20, 50, 100 per page
-- Max: 1000 results per query (pagination)
+### BR-SEA-004: Giới Hạn Kết Quả
+- Mặc định: 20 kết quả/trang
+- Tùy chọn: 10, 20, 50, 100 kết quả/trang
+- Tối đa: 1000 kết quả mỗi truy vấn (phân trang)
 
-### BR-SEA-005: Performance
-- Search response < 1 second (90th percentile)
-- Support 100 concurrent searches
+### BR-SEA-005: Hiệu Năng
+- Phản hồi tìm kiếm < 1 giây (90th percentile)
+- Hỗ trợ 100 lượt tìm kiếm đồng thời
 
 ### BR-SEA-006: SEO
-- Each publication detail page has unique URL
-- Meta tags for title, description, keywords
-- Open Graph tags for social sharing
+- Mỗi trang chi tiết bài báo có URL duy nhất
+- Thẻ Meta cho tiêu đề, mô tả, từ khóa
+- Thẻ Open Graph để chia sẻ mạng xã hội
 
 ---
 
-## 📐 Sub Use Cases (Medium-Level)
+## 📐 Use Cases Con (Cấp Trung)
 
-- UC-M3-001: Basic Search
-- UC-M3-002: Advanced Search  
-- UC-M3-003: Filter Results
-- UC-M3-004: Sort Results
-- UC-M3-005: View Publication Details (Public)
-- UC-M3-006: Browse by Faculty
-- UC-M3-007: Browse by Year/Quartile
-
----
-
-## 📊 Key Metrics
-
-- **Performance**: < 1s search response (p90)
-- **Coverage**: Index 100% of PUBLISHED publications
-- **Usage**: Track top keywords, popular publications
-- **Conversion**: % users who view details after search
+- [UC-M3-001: Tìm Kiếm Cơ Bản](../Medium_Level/module_03_search_browse.md)
+- [UC-M3-002: Tìm Kiếm Nâng Cao](../Medium_Level/module_03_search_browse.md)
+- [UC-M3-003: Lọc Kết Quả](../Medium_Level/module_03_search_browse.md)
+- [UC-M3-004: Sắp Xếp Kết Quả](../Medium_Level/module_03_search_browse.md)
+- [UC-M3-005: Xem Chi Tiết Bài Báo (Public)](../Medium_Level/module_03_search_browse.md)
+- [UC-M3-006: Duyệt Theo Khoa](../Medium_Level/module_03_search_browse.md)
+- [UC-M3-007: Duyệt Theo Năm/Xếp Hạng](../Medium_Level/module_03_search_browse.md)
 
 ---
 
-## 🚨 Exceptions
+## 📊 Chỉ Số Chính
 
-| Error | Condition | System Response |
+- **Hiệu năng**: < 1s phản hồi tìm kiếm (p90)
+- **Độ bao phủ**: Index 100% bài báo PUBLISHED
+- **Sử dụng**: Theo dõi từ khóa top, bài báo phổ biến
+- **Chuyển đổi**: % người dùng xem chi tiết sau khi tìm kiếm
+
+---
+
+## 🚨 Ngoại Lệ
+
+| Lỗi | Điều Kiện | Phản Hồi Hệ Thống |
 |-------|-----------|-----------------|
-| No results | Query returns 0 matches | Show "No results, try different keywords" |
-| Invalid query | Special chars cause error | Sanitize input, retry |
-| Search timeout | Query takes > 5s | Show "Search taking too long, try simpler query" |
-| Index unavailable | Search service down | Fall back to database search (slower) |
+| Không có kết quả | Truy vấn trả về 0 kết quả | Hiển thị "Không tìm thấy kết quả, thử từ khóa khác" |
+| Truy vấn không hợp lệ | Ký tự đặc biệt gây lỗi | Làm sạch đầu vào (sanitize), thử lại |
+| Hết thời gian tìm kiếm | Truy vấn mất > 5s | Hiển thị "Tìm kiếm quá lâu, hãy thử truy vấn đơn giản hơn" |
+| Index không khả dụng | Dịch vụ tìm kiếm bị lỗi | Chuyển sang tìm kiếm cơ sở dữ liệu (chậm hơn) |
 
 ---
 
 **Tài liệu liên quan**:
 - [User Stories - Public Visitor](../../04_User_Stories/By_Role/public_visitor_stories.md)
-- [Requirements - Search & Browse](../../03_Requirements/Functional/module_search.md)
+- [Yêu Cầu - Tìm Kiếm & Duyệt](../../03_Requirements/Functional/module_search.md)

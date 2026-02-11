@@ -1,144 +1,144 @@
-# Sequence Diagram: Submit for Review
+# Biểu đồ Tuần tự: Gửi để Đánh giá
 
-> 📊 **Diagram ID**: SEQ-02  
-> 🎯 **Use Case**: UC-D2-01 - Submit for Review  
-> 👤 **Actor**: Researcher  
-> ⚙️ **Components**: UI, Controller, Workflow Service, Notification Service, Database
-
----
-
-## 🎯 Scenario
-
-Researcher submit publication từ DRAFT → SUBMITTED → FACULTY_REVIEWING và trigger notifications.
+> 📊 **ID Biểu đồ**: SEQ-02  
+> 🎯 **Ca Sử Dụng**: UC-D2-01 - Gửi để Đánh giá  
+> 👤 **Tác nhân**: Nhà nghiên cứu  
+> ⚙️ **Thành phần**: Giao diện, Bộ điều khiển, Dịch vụ Quy trình, Dịch vụ Thông báo, Cơ sở dữ liệu
 
 ---
 
-## 📊 Sequence Diagram
+## 🎯 Kịch bản
+
+Nhà nghiên cứu gửi ấn phẩm từ DRAFT → SUBMITTED → FACULTY_REVIEWING và kích hoạt thông báo.
+
+---
+
+## 📊 Biểu đồ Tuần tự
 
 ```mermaid
 sequenceDiagram
-    actor Researcher as 👨‍🔬 Researcher
-    participant UI as 🖥️ React UI
+    actor Researcher as 👨‍🔬 Nhà nghiên cứu
+    participant UI as 🖥️ Giao diện React
     participant API as 🔌 WorkflowController
     participant Service as ⚙️ WorkflowService
     participant Validator as ✅ CompletionValidator
     participant Repo as 💾 PublicationRepository
-    participant DB as 🗄️ MySQL Database
+    participant DB as 🗄️ CSDL MySQL
     participant Notif as 📧 NotificationService
-    participant Email as 📬 Email Server
+    participant Email as 📬 Máy chủ Email
     
-    %% View publication
-    Researcher->>UI: View DRAFT publication
+    %% Xem ấn phẩm
+    Researcher->>UI: Xem ấn phẩm DRAFT
     activate UI
     UI->>API: GET /api/publications/{id}
     API->>Repo: findById(id)
     Repo->>DB: SELECT * WHERE id = ?
-    DB-->>Repo: Publication data
-    Repo-->>API: Publication
-    API-->>UI: Publication data
-    UI-->>Researcher: Display with "Submit" button
+    DB-->>Repo: Dữ liệu ấn phẩm
+    Repo-->>API: Ấn phẩm
+    API-->>UI: Dữ liệu ấn phẩm
+    UI-->>Researcher: Hiển thị với nút "Gửi"
     deactivate UI
     
-    %% Submit action
-    Researcher->>UI: Click "Submit for Review"
+    %% Hành động gửi
+    Researcher->>UI: Nhấn "Gửi để Đánh giá"
     activate UI
-    UI->>UI: Show confirmation dialog
-    Researcher->>UI: Confirm
+    UI->>UI: Hiển thị hộp thoại xác nhận
+    Researcher->>UI: Xác nhận
     
     UI->>API: POST /api/publications/{id}/submit
     activate API
     Note over API: JWT: userId, roles
     
-    %% Authorization check
+    %% Kiểm tra quyền
     API->>Service: checkOwnership(pubId, userId)
     activate Service
     Service->>Repo: findById(pubId)
     Repo->>DB: SELECT owner_id, status
     DB-->>Repo: owner_id, status
-    Repo-->>Service: Publication
+    Repo-->>Service: Ấn phẩm
     
-    alt Not owner
+    alt Không phải chủ sở hữu
         Service-->>API: ForbiddenError
         API-->>UI: 403 Forbidden
-        UI-->>Researcher: "You don't own this publication"
-    else Not DRAFT
+        UI-->>Researcher: "Bạn không sở hữu ấn phẩm này"
+    else Không phải DRAFT
         Service-->>API: BadRequestError
         API-->>UI: 400 Bad Request
-        UI-->>Researcher: "Only DRAFT can be submitted"
-    else Valid
-        %% Validate completion
+        UI-->>Researcher: "Chỉ DRAFT mới có thể được gửi"
+    else Hợp lệ
+        %% Xác thực hoàn thành
         Service->>Validator: validateCompletion(publication)
         activate Validator
         
-        Note over Validator: Check:<br/>- All required fields<br/>- PDF uploaded<br/>- At least 1 author
+        Note over Validator: Kiểm tra:<br/>- Tất cả trường bắt buộc<br/>- PDF đã tải lên<br/>- Ít nhất 1 tác giả
         
-        alt Incomplete
+        alt Chưa hoàn thành
             Validator-->>Service: ValidationError(missing fields)
             Service-->>API: ValidationError
-            API-->>UI: 400 + Missing fields list
-            UI-->>Researcher: "Please complete: title, PDF, ..."
-        else Complete
-            Validator-->>Service: Valid
+            API-->>UI: 400 + Danh sách trường thiếu
+            UI-->>Researcher: "Vui lòng hoàn thành: tiêu đề, PDF, ..."
+        else Hoàn thành
+            Validator-->>Service: Hợp lệ
             deactivate Validator
             
-            %% Begin transaction
-            Note over Service,DB: START TRANSACTION
+            %% Bắt đầu giao dịch
+            Note over Service,DB: BẮT ĐẦU GIAO DỊCH
             
-            %% Update status
+            %% Cập nhật trạng thái
             Service->>Repo: updateStatus(pubId, "SUBMITTED")
             activate Repo
             Repo->>DB: UPDATE publications<br/>SET status = 'SUBMITTED'<br/>WHERE id = ?
-            DB-->>Repo: Success
+            DB-->>Repo: Thành công
             deactivate Repo
             
             Service->>Repo: updateStatus(pubId, "FACULTY_REVIEWING")
             activate Repo
             Repo->>DB: UPDATE publications<br/>SET status = 'FACULTY_REVIEWING'<br/>WHERE id = ?
-            DB-->>Repo: Success
+            DB-->>Repo: Thành công
             deactivate Repo
             
-            %% Log to review history
+            %% Ghi lịch sử đánh giá
             Service->>Repo: createReviewHistory(entry)
             activate Repo
-            Note over Repo: Entry: {<br/>  publication_id,<br/>  from_status: 'DRAFT',<br/>  to_status: 'FACULTY_REVIEWING',<br/>  actor_id: userId,<br/>  timestamp: now()<br/>}
+            Note over Repo: Mục nhập: {<br/>  publication_id,<br/>  from_status: 'DRAFT',<br/>  to_status: 'FACULTY_REVIEWING',<br/>  actor_id: userId,<br/>  timestamp: now()<br/>}
             Repo->>DB: INSERT INTO review_history
-            DB-->>Repo: History ID
+            DB-->>Repo: ID Lịch sử
             deactivate Repo
             
-            %% Audit log
+            %% Nhật ký kiểm toán
             Service->>Repo: logAudit(userId, "SUBMIT", pubId)
             Repo->>DB: INSERT INTO audit_logs
             
-            Note over Service,DB: COMMIT TRANSACTION
+            Note over Service,DB: CAM KẾT GIAO DỊCH
             
-            %% Get faculty reviewers
+            %% Lấy người đánh giá khoa
             Service->>Repo: getFacultyReviewers(facultyId)
             activate Repo
             Repo->>DB: SELECT users WHERE<br/>faculty_id = ? AND<br/>role = 'FACULTY_REVIEWER'
-            DB-->>Repo: Reviewer list
-            Repo-->>Service: Reviewers[]
+            DB-->>Repo: Danh sách người đánh giá
+            Repo-->>Service: Người đánh giá[]
             deactivate Repo
             
-            %% Send notifications (async)
+            %% Gửi thông báo (bất đồng bộ)
             Service->>Notif: notifySubmission(reviewers, publication)
             activate Notif
             
-            loop For each reviewer
-                Notif->>Email: Send email
-                Note over Email: Subject: New submission<br/>Body: Publication details<br/>Link to review page
-                Email-->>Notif: Sent
+            loop Cho mỗi người đánh giá
+                Notif->>Email: Gửi email
+                Note over Email: Chủ đề: Bài gửi mới<br/>Nội dung: Chi tiết ấn phẩm<br/>Liên kết đến trang đánh giá
+                Email-->>Notif: Đã gửi
             end
             
-            Notif-->>Service: Notifications sent
+            Notif-->>Service: Thông báo đã gửi
             deactivate Notif
             
-            Service-->>API: Success
+            Service-->>API: Thành công
             deactivate Service
             
-            API-->>UI: 200 OK + Updated publication
+            API-->>UI: 200 OK + Ấn phẩm đã cập nhật
             deactivate API
             
-            UI-->>Researcher: "Submitted successfully!"<br/>+ Show new status
+            UI-->>Researcher: "Đã gửi thành công!"<br/>+ Hiển thị trạng thái mới
             deactivate UI
         end
     end
@@ -146,109 +146,109 @@ sequenceDiagram
 
 ---
 
-## 📋 Flow Steps
+## 📋 Các Bước Luồng
 
-### 1. View Publication
-- Researcher navigates to DRAFT publication
-- System displays publication with "Submit for Review" button
-- Button only visible if status = DRAFT and user is owner
+### 1. Xem Ấn phẩm
+- Nhà nghiên cứu điều hướng đến ấn phẩm DRAFT
+- Hệ thống hiển thị ấn phẩm với nút "Gửi để Đánh giá"
+- Nút chỉ hiển thị nếu trạng thái = DRAFT và người dùng là chủ sở hữu
 
-### 2. Submit Action
-- User clicks "Submit for Review"
-- Confirmation dialog: "Are you sure? You cannot edit after submission."
-- User confirms
+### 2. Hành động Gửi
+- Người dùng nhấn "Gửi để Đánh giá"
+- Hộp thoại xác nhận: "Bạn có chắc chắn không? Bạn không thể chỉnh sửa sau khi gửi."
+- Người dùng xác nhận
 
-### 3. Authorization
-- Check user is owner: `publication.owner_id === userId`
-- Check status is DRAFT: `publication.status === 'DRAFT'`
+### 3. Ủy quyền
+- Kiểm tra người dùng là chủ sở hữu: `publication.owner_id === userId`
+- Kiểm tra trạng thái là DRAFT: `publication.status === 'DRAFT'`
 
-### 4. Completion Validation
-**Required**:
-- ✅ Title
-- ✅ Publication type
-- ✅ Year
-- ✅ Journal/Conference name
-- ✅ At least 1 author
-- ✅ PDF uploaded
+### 4. Xác thực Hoàn thành
+**Bắt buộc**:
+- ✅ Tiêu đề
+- ✅ Loại ấn phẩm
+- ✅ Năm
+- ✅ Tên Tạp chí/Hội nghị
+- ✅ Ít nhất 1 tác giả
+- ✅ PDF đã tải lên
 
-**Optional** (warning if missing):
+**Tùy chọn** (cảnh báo nếu thiếu):
 - DOI, ISSN
-- Abstract, Keywords
+- Tóm tắt, Từ khóa
 
-### 5. State Transition (Atomic)
+### 5. Chuyển đổi Trạng thái (Nguyên tử)
 ```
 DRAFT → SUBMITTED → FACULTY_REVIEWING
 ```
 
-**Why 2 steps?**
-- `SUBMITTED`: Acknowledged by system
-- `FACULTY_REVIEWING`: Immediately forwarded to reviewers
+**Tại sao 2 bước?**
+- `SUBMITTED`: Được hệ thống ghi nhận
+- `FACULTY_REVIEWING`: Chuyển ngay cho người đánh giá
 
-**Transaction ensures**:
-- Both status updates succeed together
-- Review history logged
-- Rollback if any step fails
+**Giao dịch đảm bảo**:
+- Cả hai cập nhật trạng thái đều thành công cùng nhau
+- Lịch sử đánh giá được ghi lại
+- Hoàn tác nếu bất kỳ bước nào thất bại
 
-### 6. Notification
-- Query all `FACULTY_REVIEWER` users in the same faculty
-- Send email to each reviewer:
-  - Subject: "New publication submission"
-  - Body: Publication title, researcher name
-  - Link: Direct link to review page
-- Async operation (doesn't block response)
-
----
-
-## ✅ Preconditions
-
-- User is authenticated
-- User owns the publication OR is SuperAdmin
-- Publication status = DRAFT
-- All required fields filled
-- PDF uploaded
+### 6. Thông báo
+- Truy vấn tất cả người dùng `FACULTY_REVIEWER` trong cùng khoa
+- Gửi email cho mỗi người đánh giá:
+  - Chủ đề: "Bài gửi ấn phẩm mới"
+  - Nội dung: Tiêu đề ấn phẩm, tên nhà nghiên cứu
+  - Liên kết: Liên kết trực tiếp đến trang đánh giá
+- Hoạt động bất đồng bộ (không chặn phản hồi)
 
 ---
 
-## 🚨 Error Scenarios
+## ✅ Điều kiện Tiên quyết
 
-### 400 Bad Request - Incomplete
+- Người dùng đã được xác thực
+- Người dùng sở hữu ấn phẩm HOẶC là Quản trị viên Cấp cao
+- Trạng thái ấn phẩm = DRAFT
+- Tất cả các trường bắt buộc đã điền
+- PDF đã tải lên
+
+---
+
+## 🚨 Các Kịch Bản Lỗi
+
+### 400 Bad Request - Chưa hoàn thành
 ```json
 {
-  "error": "Validation Error",
-  "message": "Publication incomplete",
+  "error": "Lỗi Xác thực",
+  "message": "Ấn phẩm chưa hoàn thành",
   "missing_fields": ["abstract", "pdf"]
 }
 ```
 
-### 400 Bad Request - Wrong State
+### 400 Bad Request - Sai Trạng thái
 ```json
 {
-  "error": "Bad Request",
-  "message": "Only DRAFT publications can be submitted. Current status: SUBMITTED"
+  "error": "Yêu cầu Không hợp lệ",
+  "message": "Chỉ ấn phẩm DRAFT mới có thể được gửi. Trạng thái hiện tại: SUBMITTED"
 }
 ```
 
-### 403 Forbidden - Not Owner
+### 403 Forbidden - Không phải Chủ sở hữu
 ```json
 {
-  "error": "Forbidden",
-  "message": "You are not the owner of this publication"
+  "error": "Bị cấm",
+  "message": "Bạn không phải là chủ sở hữu của ấn phẩm này"
 }
 ```
 
 ### 404 Not Found
 ```json
 {
-  "error": "Not Found",
-  "message": "Publication not found"
+  "error": "Không tìm thấy",
+  "message": "Không tìm thấy ấn phẩm"
 }
 ```
 
 ---
 
-## 🗄️ Database Changes
+## 🗄️ Thay Đổi Cơ Sở Dữ Liệu
 
-### publications table
+### Bảng publications
 ```sql
 UPDATE publications
 SET status = 'FACULTY_REVIEWING',
@@ -257,7 +257,7 @@ SET status = 'FACULTY_REVIEWING',
 WHERE id = ? AND status = 'DRAFT'
 ```
 
-### review_history table
+### Bảng review_history
 ```sql
 INSERT INTO review_history (
     publication_id, from_status, to_status,
@@ -268,7 +268,7 @@ INSERT INTO review_history (
 )
 ```
 
-### audit_logs table
+### Bảng audit_logs
 ```sql
 INSERT INTO audit_logs (
     user_id, action, entity_type, entity_id, timestamp
@@ -277,48 +277,48 @@ INSERT INTO audit_logs (
 
 ---
 
-## 📧 Email Notification
+## 📧 Thông báo Email
 
-**To**: All faculty reviewers  
-**Subject**: `New publication submission - {publication_title}`  
-**Body**:
+**Đến**: Tất cả người đánh giá khoa  
+**Chủ đề**: `Bài gửi ấn phẩm mới - {publication_title}`  
+**Nội dung**:
 ```
-Hello {reviewer_name},
+Xin chào {reviewer_name},
 
-A new publication has been submitted for review:
+Một ấn phẩm mới đã được gửi để đánh giá:
 
-Title: {publication_title}
-Author: {researcher_name}
-Submitted: {timestamp}
+Tiêu đề: {publication_title}
+Tác giả: {researcher_name}
+Đã gửi: {timestamp}
 
-Please review at: {review_url}
+Vui lòng đánh giá tại: {review_url}
 
-Best regards,
-UFPMS System
+Trân trọng,
+Hệ thống UFPMS
 ```
 
 ---
 
-## 🔄 State Diagram
+## 🔄 Biểu đồ Trạng thái
 
 ```mermaid
 stateDiagram-v2
-    DRAFT --> SUBMITTED: Submit<br/>(this sequence)
-    SUBMITTED --> FACULTY_REVIEWING: Auto
-    FACULTY_REVIEWING --> FACULTY_APPROVED: Approve
-    FACULTY_REVIEWING --> REVISION_REQUIRED: Request Revision
-    FACULTY_REVIEWING --> REJECTED: Reject
+    DRAFT --> SUBMITTED: Gửi<br/>(biểu đồ này)
+    SUBMITTED --> FACULTY_REVIEWING: Tự động
+    FACULTY_REVIEWING --> FACULTY_APPROVED: Phê duyệt
+    FACULTY_REVIEWING --> REVISION_REQUIRED: Yêu cầu Chỉnh sửa
+    FACULTY_REVIEWING --> REJECTED: Từ chối
 ```
 
 ---
 
-## 🔗 Related Diagrams
+## 🔗 Biểu đồ Liên Quan
 
-- **Previous**: [seq_create_publication.md](./seq_create_publication.md)
-- **Next**: [seq_faculty_review.md](./seq_faculty_review.md)
-- **Use Case Diagram**: [../UseCase/module_02_approval.md](../UseCase/module_02_approval.md#uc-m2-001-submit-for-review)
+- **Trước**: [seq_create_publication.md](./seq_create_publication.md)
+- **Tiếp theo**: [seq_faculty_review.md](./seq_faculty_review.md)
+- **Biểu đồ Ca Sử Dụng**: [../UseCase/module_02_approval.md](../UseCase/module_02_approval.md#uc-m2-001-submit-for-review)
 
 ---
 
-**Related**: FR-APR-001, US-RES-010  
-**Created**: 10/02/2026
+**Liên quan**: FR-APR-001, US-RES-010  
+**Ngày tạo**: 10/02/2026

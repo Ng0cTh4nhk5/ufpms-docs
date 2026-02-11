@@ -1,70 +1,70 @@
-# Publication Creation Workflow - Activity Diagram
+# Quy Trình Tạo Ấn Phẩm - Biểu đồ Hoạt động
 
-> 📊 **Diagram**: Publication Creation  
-> 🎯 **Scope**: Create và save publication  
-> 👤 **Actor**: Researcher
+> 📊 **Biểu đồ**: Tạo Ấn phẩm  
+> 🎯 **Phạm vi**: Tạo và lưu ấn phẩm  
+> 👤 **Tác nhân**: Nhà nghiên cứu
 
 ---
 
-## 📊 Activity Diagram
+## 📊 Biểu đồ Hoạt động
 
 ```mermaid
 flowchart TD
-    Start([Researcher clicks<br/>"Create Publication"]) --> LoadForm[Load creation form]
+    Start([Nhà nghiên cứu nhấn<br/>"Tạo Ấn phẩm"]) --> LoadForm[Tải biểu mẫu tạo mới]
     
-    LoadForm --> GetMetadata[Fetch metadata options<br/>from database]
-    GetMetadata --> DisplayForm[Display empty form]
+    LoadForm --> GetMetadata[Lấy tùy chọn siêu dữ liệu<br/>từ cơ sở dữ liệu]
+    GetMetadata --> DisplayForm[Hiển thị biểu mẫu trống]
     
-    DisplayForm --> FillBasic{Fill basic info?}
+    DisplayForm --> FillBasic{Điền thông tin cơ bản?}
     
-    FillBasic -->|Enter data| EnterTitle[Enter title]
-    EnterTitle --> EnterJournal[Enter journal/conference]
-    EnterJournal --> EnterYear[Enter year]
-    EnterYear --> SelectType[Select publication type]
-    SelectType --> EnterDOI[Enter DOI optional]
+    FillBasic -->|Nhập dữ liệu| EnterTitle[Nhập tiêu đề]
+    EnterTitle --> EnterJournal[Nhập tạp chí/hội nghị]
+    EnterJournal --> EnterYear[Nhập năm]
+    EnterYear --> SelectType[Chọn loại ấn phẩm]
+    SelectType --> EnterDOI[Nhập DOI (tùy chọn)]
     
-    EnterDOI --> FillAuthors{Add authors?}
+    EnterDOI --> FillAuthors{Thêm tác giả?}
     
-    FillAuthors -->|Yes| AddAuthor[Add author<br/>name, order, affiliation]
-    AddAuthor --> MoreAuthors{More authors?}
-    MoreAuthors -->|Yes| AddAuthor
-    MoreAuthors -->|No| FillAbstract
+    FillAuthors -->|Có| AddAuthor[Thêm tác giả<br/>tên, thứ tự, đơn vị]
+    AddAuthor --> MoreAuthors{Thêm tác giả khác?}
+    MoreAuthors -->|Có| AddAuthor
+    MoreAuthors -->|Không| FillAbstract
     
-    FillAuthors -->|Skip| FillAbstract[Enter abstract optional]
+    FillAuthors -->|Bỏ qua| FillAbstract[Nhập tóm tắt (tùy chọn)]
     
-    FillAbstract --> FillKeywords[Enter keywords optional]
+    FillAbstract --> FillKeywords[Nhập từ khóa (tùy chọn)]
     
-    FillKeywords --> UploadPDF{Upload PDF?}
+    FillKeywords --> UploadPDF{Tải lên PDF?}
     
-    UploadPDF -->|Yes| SelectFile[Select PDF file]
-    SelectFile --> ValidateFile{File valid?}
+    UploadPDF -->|Có| SelectFile[Chọn tệp PDF]
+    SelectFile --> ValidateFile{Tệp hợp lệ?}
     
-    ValidateFile -->|No: >10MB or not PDF| ShowError1[Show error message]
+    ValidateFile -->|Không: >10MB hoặc không phải PDF| ShowError1[Hiển thị thông báo lỗi]
     ShowError1 --> SelectFile
     
-    ValidateFile -->|Yes| UploadFile[Upload to server]
-    UploadFile --> SavePath[Save file path]
+    ValidateFile -->|Có| UploadFile[Tải lên máy chủ]
+    UploadFile --> SavePath[Lưu đường dẫn tệp]
     SavePath --> Decision
     
-    UploadPDF -->|No| Decision{Action?}
+    UploadPDF -->|Không| Decision{Hành động?}
     
-    Decision -->|Save as Draft| ValidateDraft{Required fields<br/>filled?}
+    Decision -->|Lưu nháp| ValidateDraft{Các trường bắt buộc<br/>đã điền?}
     
-    ValidateDraft -->|No: Title missing| ShowError2[Show validation errors]
+    ValidateDraft -->|Không: Thiếu tiêu đề| ShowError2[Hiển thị lỗi xác thực]
     ShowError2 --> EnterTitle
     
-    ValidateDraft -->|Yes| CheckDuplicate[Check duplicate DOI<br/>if provided]
+    ValidateDraft -->|Có| CheckDuplicate[Kiểm tra trùng lặp DOI<br/>nếu được cung cấp]
     
-    CheckDuplicate -->|Duplicate found| ShowError3[Show error:<br/>"DOI exists"]
+    CheckDuplicate -->|Tìm thấy trùng lặp| ShowError3[Hiển thị lỗi:<br/>"DOI đã tồn tại"]
     ShowError3 --> EnterDOI
     
-    CheckDuplicate -->|No duplicate| SaveDraft[Save to database<br/>Status: DRAFT]
-    SaveDraft --> Success1[Show success message]
-    Success1 --> End1([Redirect to<br/>My Publications])
+    CheckDuplicate -->|Không trùng lặp| SaveDraft[Lưu vào cơ sở dữ liệu<br/>Trạng thái: DRAFT (Nháp)]
+    SaveDraft --> Success1[Hiển thị thông báo thành công]
+    Success1 --> End1([Chuyển hướng đến<br/>Ấn phẩm của tôi])
     
-    Decision -->|Cancel| Confirm{Confirm discard?}
-    Confirm -->|Yes| End2([Return to dashboard])
-    Confirm -->|No| DisplayForm
+    Decision -->|Hủy| Confirm{Xác nhận hủy?}
+    Confirm -->|Có| End2([Quay lại bảng điều khiển])
+    Confirm -->|Không| DisplayForm
     
     style Start fill:#e3f2fd
     style End1 fill:#c8e6c9
@@ -77,89 +77,89 @@ flowchart TD
 
 ---
 
-## 📋 Steps Detail
+## 📋 Chi Tiết Các Bước
 
-### 1. Load Form
-- Fetch publication types (Journal, Conference, Book Chapter, etc.)
-- Fetch subject areas
-- Display empty form
+### 1. Tải Biểu Mẫu
+- Lấy danh sách loại ấn phẩm (Tạp chí, Hội nghị, Chương sách, v.v.)
+- Lấy danh sách lĩnh vực nghiên cứu
+- Hiển thị biểu mẫu trống
 
-### 2. Fill Basic Information
-**Required**:
-- Title (min 10 chars)
+### 2. Điền Thông Tin Cơ Bản
+**Bắt buộc**:
+- Tiêu đề (tối thiểu 10 ký tự)
 
-**Optional but important**:
-- Journal/Conference name
-- Year (1900-current year)
-- Publication type
+**Tùy chọn nhưng quan trọng**:
+- Tên Tạp chí/Hội nghị
+- Năm (1900-năm hiện tại)
+- Loại ấn phẩm
 - DOI
 - ISSN
 
-### 3. Add Authors
-- Researcher (owner) auto-added as first author
-- Can add co-authors:
-  - Name
-  - Order (1, 2, 3...)
-  - Affiliation
-  - Corresponding author checkbox
+### 3. Thêm Tác Giả
+- Nhà nghiên cứu (chủ sở hữu) tự động được thêm là tác giả đầu tiên
+- Có thể thêm đồng tác giả:
+  - Tên
+  - Thứ tự (1, 2, 3...)
+  - Đơn vị công tác
+  - Hộp kiểm tác giả liên hệ
 
-### 4. Additional Information
-- Abstract (recommended, min 100 chars)
-- Keywords (comma-separated)
-- URL (optional)
+### 4. Thông Tin Bổ Sung
+- Tóm tắt (khuyến nghị, tối thiểu 100 ký tự)
+- Từ khóa (phân tách bằng dấu phẩy)
+- URL (tùy chọn)
 
-### 5. Upload PDF
-- File size: max 10MB
-- Format: PDF only
-- Validation on client + server
+### 5. Tải Lên PDF
+- Kích thước tệp: tối đa 10MB
+- Định dạng: chỉ PDF
+- Xác thực trên máy khách + máy chủ
 
-### 6. Save as Draft
-**Validation**:
-- Title required
-- At least 1 author (owner)
-- DOI uniqueness check (if provided)
+### 6. Lưu Nháp
+**Xác thực**:
+- Yêu cầu tiêu đề
+- Ít nhất 1 tác giả (chủ sở hữu)
+- Kiểm tra tính duy nhất của DOI (nếu được cung cấp)
 
-**Database**:
-- INSERT into publications (status = DRAFT)
-- INSERT into publication_authors
-- Set created_at = now()
-
----
-
-## ⏱️ Average Time
-
-- Quick draft (title only): ~30 seconds
-- Complete info (no PDF): ~3-5 minutes
-- Full publication (with PDF): ~5-10 minutes
+**Cơ sở dữ liệu**:
+- INSERT vào publications (trạng thái = DRAFT)
+- INSERT vào publication_authors
+- Đặt created_at = now()
 
 ---
 
-## 🚨 Error Scenarios
+## ⏱️ Thời Gian Trung Bình
 
-### 1. Validation Errors
-- Title too short
-- Invalid year
-- Invalid URL format
-
-### 2. File Upload Errors
-- File too large (>10MB)
-- Not a PDF file
-- Upload failed (network issue)
-
-### 3. Duplicate DOI
-- DOI already exists in system
-- User must change DOI or contact admin
+- Nháp nhanh (chỉ tiêu đề): ~30 giây
+- Thông tin đầy đủ (không có PDF): ~3-5 phút
+- Ấn phẩm đầy đủ (có PDF): ~5-10 phút
 
 ---
 
-## 💡 Business Rules
+## 🚨 Các Tình Huống Lỗi
 
-1. **Auto-save** (P1): Draft auto-saved every 60 seconds
-2. **PDF later**: Can save draft without PDF, upload later
-3. **Edit anytime**: Can edit DRAFT publications
-4. **Required for submission**: PDF + complete info required before submit
+### 1. Lỗi Xác Thực
+- Tiêu đề quá ngắn
+- Năm không hợp lệ
+- Định dạng URL không hợp lệ
+
+### 2. Lỗi Tải Tệp
+- Tệp quá lớn (>10MB)
+- Không phải tệp PDF
+- Tải lên thất bại (lỗi mạng)
+
+### 3. Trùng Lặp DOI
+- DOI đã tồn tại trong hệ thống
+- Người dùng phải thay đổi DOI hoặc liên hệ quản trị viên
 
 ---
 
-**Related**: UC-D1-01, seq_create_publication.md  
-**Created**: 11/02/2026
+## 💡 Quy Tắc Nghiệp Vụ
+
+1. **Tự động lưu** (P1): Bản nháp tự động lưu mỗi 60 giây
+2. **PDF sau**: Có thể lưu nháp mà không cần PDF, tải lên sau
+3. **Chỉnh sửa bất cứ lúc nào**: Có thể chỉnh sửa ấn phẩm DRAFT (Nháp)
+4. **Yêu cầu khi gửi**: Cần có PDF + thông tin đầy đủ trước khi gửi
+
+---
+
+**Liên quan**: UC-D1-01, seq_create_publication.md  
+**Ngày tạo**: 11/02/2026

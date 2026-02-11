@@ -1,142 +1,142 @@
 # Module 6: Admin & User Management - Yêu Cầu Chức Năng
 
 > 📅 **Cập nhật**: 10/02/2026  
-> 🎯 **Module**: Quản trị Hệ thống  
-> 👥 **Users**: SuperAdmin
+> 🎯 **Phân hệ**: Quản trị Hệ thống  
+> 👥 **Người dùng**: Quản trị viên cấp cao (SuperAdmin)
 
 ---
 
-## 1. Functional Requirements
+## 1. Yêu Cầu Chức Năng (Functional Requirements)
 
-### FR-ADM-001: User Management (CRUD)
-**Priority**: 🔴 P0 - Must Have
+### FR-ADM-001: Quản lý Người dùng (Thêm/Xóa/Sửa)
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Actions**:
-- Create user (manual hoặc import từ Excel)
-- Edit user (name, email, faculty, role)
-- Delete user (soft delete)
-- Lock/Unlock account
-- Reset password
-
----
-
-### FR-ADM-002: Role Assignment
-**Priority**: 🔴 P0 - Must Have
-
-**Roles**:
-- SuperAdmin
-- Researcher
-- Faculty Reviewer
-- University Reviewer
-- Viewer (default)
-
-**Business Rules**:
-- 1 user có thể có nhiều roles
-- Researcher + Faculty Reviewer (common)
+**Hành động**:
+- Tạo người dùng (thủ công hoặc nhập từ Excel)
+- Sửa người dùng (tên, email, khoa, vai trò)
+- Xóa người dùng (xóa mềm)
+- Khóa/Mở khóa tài khoản
+- Đặt lại mật khẩu
 
 ---
 
-### FR-ADM-003: Faculty/Department Management
-**Priority**: 🔴 P0 - Must Have
+### FR-ADM-002: Phân quyền Vai trò
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**CRUD**:
-- Add/Edit/Delete Faculty
-- Assign Faculty Reviewer
-- List researchers by faculty
+**Vai trò**:
+- Quản trị viên cấp cao (SuperAdmin)
+- Nhà nghiên cứu (Researcher)
+- Người duyệt cấp Khoa (Faculty Reviewer)
+- Người duyệt cấp Trường (University Reviewer)
+- Người xem (Viewer) - mặc định
+
+**Quy tắc nghiệp vụ**:
+- 1 người dùng có thể có nhiều vai trò
+- Nhà nghiên cứu + Người duyệt cấp Khoa (phổ biến)
 
 ---
 
-### FR-ADM-004: LDAP/AD Configuration
-**Priority**: 🔴 P0 - Must Have
+### FR-ADM-003: Quản lý Khoa/Bộ môn
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Settings**:
-- LDAP server URL
+**Thao tác CRUD**:
+- Thêm/Sửa/Xóa Khoa
+- Phân công Người duyệt cấp Khoa
+- Danh sách nhà nghiên cứu theo khoa
+
+---
+
+### FR-ADM-004: Cấu hình LDAP/AD
+**Độ ưu tiên**: 🔴 P0 - Phải Có
+
+**Cài đặt**:
+- URL máy chủ LDAP
 - Base DN
-- Bind DN, password
-- Test connection
+- Bind DN, mật khẩu
+- Kiểm tra kết nối
 
 ---
 
-### FR-ADM-005: Email Configuration
-**Priority**: 🔴 P0 - Must Have
+### FR-ADM-005: Cấu hình Email
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**SMTP Settings**:
-- Host, Port
-- Username, Password
-- From address
-- Test email
-
----
-
-### FR-ADM-006: Audit Logs
-**Priority**: 🔴 P0 - Must Have
-
-**Log events**:
-- User login/logout
-- Publication state changes
-- User role changes
-- System config changes
-
-**View**:
-- Filter by user, action type, date range
-- Export to CSV
+**Cài đặt SMTP**:
+- Máy chủ (Host), Cổng (Port)
+- Tên đăng nhập, Mật khẩu
+- Địa chỉ gửi (From address)
+- Gửi email kiểm tra
 
 ---
 
-### FR-ADM-007: Backup & Restore
-**Priority**: 🔴 P0 - Must Have
+### FR-ADM-006: Nhật ký Kiểm toán (Audit Logs)
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Backup**:
-- Manual trigger
-- Scheduled (daily)
-- Database + Files
+**Sự kiện được ghi lại**:
+- Người dùng đăng nhập/đăng xuất
+- Thay đổi trạng thái bài báo
+- Thay đổi vai trò người dùng
+- Thay đổi cấu hình hệ thống
 
-**Restore**:
-- Select backup file
-- Restore with confirmation
-
----
-
-### FR-ADM-008: System Dashboard
-**Priority**: 🟡 P1 - Should Have
-
-**Metrics**:
-- Users online
-- Total users by role
-- Total publications by status
-- System health (CPU, Memory, Disk)
+**Xem**:
+- Lọc theo người dùng, loại hành động, khoảng thời gian
+- Xuất ra CSV
 
 ---
 
-### FR-ADM-009: Import Users từ Excel
-**Priority**: 🟡 P1 - Should Have
+### FR-ADM-007: Sao lưu & Khôi phục
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Format**: Name, Email, Faculty, Role
+**Sao lưu**:
+- Kích hoạt thủ công
+- Lên lịch (hàng ngày)
+- Cơ sở dữ liệu + Tệp tin
 
-**Validation**:
-- Email format
-- Faculty exists
-- Role valid
-
----
-
-### FR-ADM-010: Bulk Operations
-**Priority**: 🟡 P1 - Should Have
-
-**Actions**:
-- Assign role to multiple users
-- Move users to different faculty
-- Lock/Unlock multiple accounts
+**Khôi phục**:
+- Chọn tệp sao lưu
+- Khôi phục với xác nhận
 
 ---
 
-## 2. Permissions
+### FR-ADM-008: Bảng điều khiển Hệ thống
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-| Action | SuperAdmin | Others |
+**Các chỉ số**:
+- Người dùng trực tuyến
+- Tổng số người dùng theo vai trò
+- Tổng số bài báo theo trạng thái
+- Sức khỏe hệ thống (CPU, Bộ nhớ, Đĩa)
+
+---
+
+### FR-ADM-009: Nhập Người dùng từ Excel
+**Độ ưu tiên**: 🟡 P1 - Nên Có
+
+**Định dạng**: Tên, Email, Khoa, Vai trò
+
+**Kiểm tra hợp lệ**:
+- Định dạng Email
+- Khoa tồn tại
+- Vai trò hợp lệ
+
+---
+
+### FR-ADM-010: Thao tác Hàng loạt (Bulk Operations)
+**Độ ưu tiên**: 🟡 P1 - Nên Có
+
+**Hành động**:
+- Phân vai trò cho nhiều người dùng
+- Chuyển người dùng sang khoa khác
+- Khóa/Mở khóa nhiều tài khoản
+
+---
+
+## 2. Quyền hạn (Permissions)
+
+| Hành động | Quản trị viên cấp cao | Người khác |
 |--------|-----------|--------|
-| All admin functions | ✅ | ❌ |
+| Tất cả chức năng quản trị | ✅ | ❌ |
 
 ---
 
 **Tài liệu liên quan**:
-- [User Needs - SuperAdmin](../../02_System_Clarification/User_Analysis/user_needs.md#5-superadmin)
+- [Nhu cầu Người dùng - SuperAdmin](../../02_System_Clarification/User_Analysis/user_needs.md#5-superadmin)

@@ -1,43 +1,43 @@
-# Complete Approval Workflow - Activity Diagram
+# Quy Trình Phê Duyệt Hoàn Chỉnh - Biểu đồ Hoạt động
 
-> 📊 **Diagram**: Complete Approval Workflow  
-> ⚙️ **States**: 9 states với decision points  
-> 👥 **Swimlanes**: Researcher, Faculty Reviewer, University Reviewer
+> 📊 **Biểu đồ**: Quy trình Phê duyệt Hoàn chỉnh  
+> ⚙️ **Trạng thái**: 9 trạng thái với các điểm quyết định  
+> 👥 **Làn bơi (Swimlanes)**: Nhà nghiên cứu, Người đánh giá cấp Khoa, Người đánh giá cấp Trường
 
 ---
 
-## 📊 Activity Diagram
+## 📊 Biểu đồ Hoạt động
 
 ```mermaid
 flowchart TD
-    Start([Start: Create Publication]) --> Draft[Status: DRAFT]
+    Start([Bắt đầu: Tạo Ấn phẩm]) --> Draft[Trạng thái: DRAFT (Nháp)]
     
-    Draft --> EditLoop{Continue<br/>editing?}
-    EditLoop -->|Yes| Edit[Edit Publication]
+    Draft --> EditLoop{Tiếp tục<br/>chỉnh sửa?}
+    EditLoop -->|Có| Edit[Chỉnh sửa Ấn phẩm]
     Edit --> Draft
-    EditLoop -->|No| Submit[Submit for Review]
+    EditLoop -->|Không| Submit[Gửi đi Đánh giá]
     
-    Submit --> Submitted[Status: SUBMITTED]
-    Submitted --> FacReview[Status: FACULTY_REVIEWING]
+    Submit --> Submitted[Trạng thái: SUBMITTED (Đã gửi)]
+    Submitted --> FacReview[Trạng thái: FACULTY_REVIEWING (Khoa đang duyệt)]
     
-    FacReview --> FacDecision{Faculty<br/>Decision?}
+    FacReview --> FacDecision{Quyết định<br/>của Khoa?}
     
-    FacDecision -->|Approve| FacApproved[Status: FACULTY_APPROVED]
-    FacDecision -->|Request Revision| Revision[Status: REVISION_REQUIRED]
-    FacDecision -->|Reject| Rejected[Status: REJECTED]
+    FacDecision -->|Phê duyệt| FacApproved[Trạng thái: FACULTY_APPROVED (Khoa đã duyệt)]
+    FacDecision -->|Yêu cầu Chỉnh sửa| Revision[Trạng thái: REVISION_REQUIRED (Cần chỉnh sửa)]
+    FacDecision -->|Từ chối| Rejected[Trạng thái: REJECTED (Bị từ chối)]
     
-    Revision --> ResearcherFix[Researcher fixes issues]
+    Revision --> ResearcherFix[Nhà nghiên cứu sửa lỗi]
     ResearcherFix --> Draft
     
-    FacApproved --> UniReview[Status: UNIVERSITY_REVIEWING]
+    FacApproved --> UniReview[Trạng thái: UNIVERSITY_REVIEWING (Trường đang duyệt)]
     
-    UniReview --> UniDecision{University<br/>Decision?}
+    UniReview --> UniDecision{Quyết định<br/>của Trường?}
     
-    UniDecision -->|Approve| Published[Status: PUBLISHED]
-    UniDecision -->|Send Back| FacReview
+    UniDecision -->|Phê duyệt| Published[Trạng thái: PUBLISHED (Đã xuất bản)]
+    UniDecision -->|Gửi lại| FacReview
     
-    Published --> End([End: Public])
-    Rejected --> End2([End: Rejected])
+    Published --> End([Kết thúc: Công khai])
+    Rejected --> End2([Kết thúc: Bị từ chối])
     
     style Draft fill:#fff9c4
     style Submitted fill:#ffcc80
@@ -51,41 +51,41 @@ flowchart TD
 
 ---
 
-## 📋 Workflow States
+## 📋 Trạng Thái Quy Trình
 
-1. **DRAFT** - Researcher editing
-2. **SUBMITTED** - Acknowledged
-3. **FACULTY_REVIEWING** - At faculty level
-4. **FACULTY_APPROVED** - Faculty approved
-5. **UNIVERSITY_REVIEWING** - At university level
-6. **PUBLISHED** - Final, public
-7. **REVISION_REQUIRED** - Needs changes
-8. **REJECTED** - Final rejection
-9. **WITHDRAWN** - Researcher withdrew (not shown)
-
----
-
-## 🎯 Decision Points
-
-### Faculty Decision
-- ✅ **Approve** → UNIVERSITY_REVIEWING
-- 📝 **Request Revision** → REVISION_REQUIRED (Researcher can re-edit)
-- ❌ **Reject** → REJECTED (final, cannot resubmit)
-
-### University Decision
-- ✅ **Approve** → PUBLISHED (public!)
-- 🔄 **Send Back** → FACULTY_REVIEWING (re-review)
+1. **DRAFT** - Nhà nghiên cứu đang chỉnh sửa
+2. **SUBMITTED** - Đã ghi nhận
+3. **FACULTY_REVIEWING** - Đang ở cấp Khoa
+4. **FACULTY_APPROVED** - Khoa đã phê duyệt
+5. **UNIVERSITY_REVIEWING** - Đang ở cấp Trường
+6. **PUBLISHED** - Cuối cùng, công khai
+7. **REVISION_REQUIRED** - Cần thay đổi
+8. **REJECTED** - Từ chối cuối cùng
+9. **WITHDRAWN** - Nhà nghiên cứu đã rút (không hiển thị)
 
 ---
 
-## ⏱️ Average Timeline
+## 🎯 Các Điểm Quyết Định
 
-- DRAFT → SUBMITTED: Variable (researcher)
-- FACULTY_REVIEWING: 3-7 days
-- UNIVERSITY_REVIEWING: 3-7 days
-- **Total SLA**: 6-14 days (submit → publish)
+### Quyết định của Khoa
+- ✅ **Phê duyệt** → UNIVERSITY_REVIEWING (Trường đang duyệt)
+- 📝 **Yêu cầu Chỉnh sửa** → REVISION_REQUIRED (Nhà nghiên cứu có thể chỉnh sửa lại)
+- ❌ **Từ chối** → REJECTED (cuối cùng, không thể gửi lại)
+
+### Quyết định của Trường
+- ✅ **Phê duyệt** → PUBLISHED (công khai!)
+- 🔄 **Gửi lại** → FACULTY_REVIEWING (đánh giá lại)
 
 ---
 
-**Related**: UC-M2 (Approval Workflow), seq_faculty_review.md, seq_university_approval.md  
-**Created**: 10/02/2026
+## ⏱️ Thời Gian Trung Bình
+
+- DRAFT → SUBMITTED: Biến động (nhà nghiên cứu)
+- FACULTY_REVIEWING: 3-7 ngày
+- UNIVERSITY_REVIEWING: 3-7 ngày
+- **Tổng SLA**: 6-14 ngày (gửi → xuất bản)
+
+---
+
+**Liên quan**: UC-M2 (Quy trình Phê duyệt), seq_faculty_review.md, seq_university_approval.md  
+**Ngày tạo**: 10/02/2026

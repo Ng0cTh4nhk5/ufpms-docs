@@ -1,70 +1,70 @@
-# DFD Level 2 - Approval Workflow Detail
+# DFD Cấp 2 - Chi Tiết Quy Trình Phê Duyệt
 
-> 📊 **Level**: 2 (Detailed Process Decomposition)  
-> 🎯 **Scope**: Approval Workflow module decomposition  
-> 📅 **Created**: 11/02/2026
+> 📊 **Cấp**: 2 (Phân rã Quy trình Chi tiết)  
+> 🎯 **Phạm vi**: Phân rã mô-đun Quy trình Phê duyệt  
+> 📅 **Ngày tạo**: 11/02/2026
 
 ---
 
-## 📊 Data Flow Diagram Level 2
+## 📊 Biểu đồ Luồng Dữ Liệu Cấp 2
 
 ```mermaid
 flowchart TD
-    subgraph External["External Entities"]
-        RES[Researcher]
-        FCR[Faculty Reviewer]
-        UNR[University Reviewer]
+    subgraph External["Thực Thể Bên Ngoài"]
+        RES[Nhà Nghiên Cứu]
+        FCR[Người Đánh Giá Cấp Khoa]
+        UNR[Người Đánh Giá Cấp Trường]
     end
     
-    subgraph Level_2_Processes["2.0 Approval Workflow - Detailed Processes"]
-        P21["2.1<br/>Validate<br/>Submission"]
-        P22["2.2<br/>Assign<br/>Faculty Reviewer"]
-        P23["2.3<br/>Faculty<br/>Review"]
-        P24["2.4<br/>University<br/>Review"]
-        P25["2.5<br/>Update<br/>Publication Status"]
-        P26["2.6<br/>Send<br/>Notifications"]
-        P27["2.7<br/>Log<br/>History"]
+    subgraph Level_2_Processes["2.0 Quy Trình Phê Duyệt - Quy Trình Chi Tiết"]
+        P21["2.1<br/>Xác Thực<br/>Bài Gửi"]
+        P22["2.2<br/>Phân Công<br/>Người Đánh Giá Khoa"]
+        P23["2.3<br/>Đánh Giá<br/>Cấp Khoa"]
+        P24["2.4<br/>Đánh Giá<br/>Cấp Trường"]
+        P25["2.5<br/>Cập Nhật<br/>Trạng Thái Ấn Phẩm"]
+        P26["2.6<br/>Gửi<br/>Thông Báo"]
+        P27["2.7<br/>Ghi Nhật Ký<br/>Lịch Sử"]
     end
     
-    subgraph DataStores["Data Stores"]
-        D1[(D1: Publications)]
-        D2[(D2: Users)]
-        D3[(D3: Review History)]
-        D4[(D4: Review Comments)]
+    subgraph DataStores["Kho Dữ Liệu"]
+        D1[(D1: Ấn Phẩm)]
+        D2[(D2: Người Dùng)]
+        D3[(D3: Lịch Sử Đánh Giá)]
+        D4[(D4: Bình Luận Đánh Giá)]
     end
     
-    %% External to Process flows
-    RES -->|Submit request| P21
-    FCR -->|Review decision| P23
-    UNR -->|Approval decision| P24
+    %% Luồng từ Bên ngoài đến Quy trình
+    RES -->|Yêu cầu gửi| P21
+    FCR -->|Quyết định đánh giá| P23
+    UNR -->|Quyết định phê duyệt| P24
     
-    %% Process to External flows
-    P26 -->|Submission received email| RES
-    P26 -->|Review assignment email| FCR
-    P26 -->|Status update email| RES
-    P26 -->|Final approval email| RES
+    %% Luồng từ Quy trình đến Bên ngoài
+    P26 -->|Email đã nhận bài gửi| RES
+    P26 -->|Email phân công đánh giá| FCR
+    P26 -->|Email cập nhật trạng thái| RES
+    P26 -->|Email phê duyệt cuối cùng| RES
     
-    %% Process to Data Store flows
-    P21 <-->|Read publication| D1
-    P22 -->|Read reviewers by faculty| D2
-    P23 <-->|Read publication| D1
-    P24 <-->|Read publication| D1
-    P25 -->|Write status update| D1
-    P26 <-->|Read user emails| D2
-    P27 -->|Write history record| D3
-    P23 -->|Write comments| D4
-    P24 -->|Write comments| D4
+    %% Luồng từ Quy trình đến Kho Dữ liệu
+    P21 <-->|Đọc ấn phẩm| D1
+    P22 -->|Đọc người đánh giá theo khoa| D2
+    P23 <-->|Đọc ấn phẩm| D1
+    P24 <-->|Đọc ấn phẩm| D1
+    P25 -->|Ghi cập nhật trạng thái| D1
+    P26 <-->|Đọc email người dùng| D2
+    P27 -->|Ghi bản ghi lịch sử| D3
+    P23 -->|Ghi bình luận| D4
+    P24 -->|Ghi bình luận| D4
     
-    %% Inter-process flows
-    P21 -->|Valid submission| P22
-    P22 -->|Assigned reviewer| P23
-    P23 -->|Faculty approved| P24
-    P23 -->|Revision required| P25
-    P23 -->|Rejected| P25
-    P24 -->|University approved| P25
-    P24 -->|Send back| P22
-    P25 -->|Status changed| P26
-    P25 -->|Status changed| P27
+    %% Luồng giữa các Quy trình
+    P21 -->|Bài gửi hợp lệ| P22
+    P22 -->|Người đánh giá đã phân công| P23
+    P23 -->|Khoa đã phê duyệt| P24
+    P23 -->|Yêu cầu chỉnh sửa| P25
+    P23 -->|Đã từ chối| P25
+    P24 -->|Trường đã phê duyệt| P25
+    P24 -->|Gửi lại| P22
+    P25 -->|Trạng thái đã đổi| P26
+    P25 -->|Trạng thái đã đổi| P27
     
     style P21 fill:#ffccbc
     style P22 fill:#ffab91
@@ -77,196 +77,196 @@ flowchart TD
 
 ---
 
-## 📋 Detailed Process Specifications
+## 📋 Đặc Tả Quy Trình Chi Tiết
 
-### 2.1 Validate Submission
+### 2.1 Xác Thực Bài Gửi
 
-**Input**:
-- Submit request (from Researcher)
-- Publication data (from D1)
+**Đầu vào**:
+- Yêu cầu gửi (từ Nhà nghiên cứu)
+- Dữ liệu ấn phẩm (từ D1)
 
-**Process**:
-1. Check publication status = DRAFT
-2. Check ownership (submitter = owner)
-3. Validate required fields:
-   - Title filled
-   - At least 1 author
-   - PDF uploaded
-4. Check duplicate DOI (if provided)
+**Quy trình**:
+1. Kiểm tra trạng thái ấn phẩm = DRAFT
+2. Kiểm tra quyền sở hữu (người gửi = chủ sở hữu)
+3. Xác thực các trường bắt buộc:
+   - Tiêu đề đã điền
+   - Ít nhất 1 tác giả
+   - PDF đã tải lên
+4. Kiểm tra trùng lặp DOI (nếu được cung cấp)
 
-**Output**:
-- Valid submission → to 2.2
-- Invalid submission → error message to Researcher
+**Đầu ra**:
+- Bài gửi hợp lệ → đến 2.2
+- Bài gửi không hợp lệ → thông báo lỗi cho Nhà nghiên cứu
 
-**Data Store Access**:
-- READ: D1 (Publications)
-
----
-
-### 2.2 Assign Faculty Reviewer
-
-**Input**:
-- Valid submission (from 2.1)
-
-**Process**:
-1. Get researcher's faculty
-2. Query active faculty reviewers
-3. Select reviewer (round-robin P2, manual P0)
-4. Update publication with reviewer assignment
-
-**Output**:
-- Assigned reviewer info → to 2.3
-- Reviewer notification trigger → to 2.6
-
-**Data Store Access**:
-- READ: D2 (Users - get reviewers)
-- WRITE: D1 (Publications - assign reviewer)
-
-**Business Rule**:
-- Reviewer must be from same faculty
-- Reviewer cannot review own publications
+**Truy Cập Kho Dữ Liệu**:
+- ĐỌC: D1 (Ấn Phẩm)
 
 ---
 
-### 2.3 Faculty Review
+### 2.2 Phân Công Người Đánh Giá Cấp Khoa
 
-**Input**:
-- Review decision (from Faculty Reviewer)
-- Publication data (from D1)
+**Đầu vào**:
+- Bài gửi hợp lệ (từ 2.1)
 
-**Process**:
-1. Validate reviewer authorization
-2. Process decision:
-   - **Approve**: Set status = FACULTY_APPROVED → to 2.4
-   - **Request Revision**: Set status = REVISION_REQUIRED → to 2.5
-   - **Reject**: Set status = REJECTED → to 2.5
-3. Save comments (if provided)
+**Quy trình**:
+1. Lấy khoa của nhà nghiên cứu
+2. Truy vấn người đánh giá khoa đang hoạt động
+3. Chọn người đánh giá (quay vòng P2, thủ công P0)
+4. Cập nhật ấn phẩm với phân công người đánh giá
 
-**Output**:
-- Approved → to 2.4 (University Review)
-- Revision/Rejected → to 2.5 (Update Status)
+**Đầu ra**:
+- Thông tin người đánh giá được phân công → đến 2.3
+- Kích hoạt thông báo người đánh giá → đến 2.6
 
-**Data Store Access**:
-- READ: D1 (Publications)
-- WRITE: D4 (Review Comments)
+**Truy Cập Kho Dữ Liệu**:
+- ĐỌC: D2 (Người dùng - lấy người đánh giá)
+- GHI: D1 (Ấn phẩm - phân công người đánh giá)
 
----
-
-### 2.4 University Review
-
-**Input**:
-- Approval decision (from University Reviewer)
-- Publication data (from D1)
-
-**Process**:
-1. Validate reviewer authorization (University Reviewer role)
-2. Process decision:
-   - **Approve**: Set status = PUBLISHED → to 2.5
-   - **Send Back**: Set status = FACULTY_REVIEWING → to 2.2
-
-**Output**:
-- Approved/Sent Back → to 2.5 (Update Status)
-
-**Data Store Access**:
-- READ: D1 (Publications)
-- WRITE: D4 (Review Comments)
-
-**Business Rule**:
-- Only University Reviewers can publish
-- Published publications cannot be edited by researcher
+**Quy Tắc Nghiệp Vụ**:
+- Người đánh giá phải thuộc cùng khoa
+- Người đánh giá không thể đánh giá ấn phẩm của chính mình
 
 ---
 
-### 2.5 Update Publication Status
+### 2.3 Đánh Giá Cấp Khoa
 
-**Input**:
-- Status change (from 2.3 or 2.4)
-- New status value
-- Old status value
+**Đầu vào**:
+- Quyết định đánh giá (từ Người Đánh Giá Cấp Khoa)
+- Dữ liệu ấn phẩm (từ D1)
 
-**Process**:
-1. Update publications table (set status, timestamps)
-2. If PUBLISHED: set published_at = NOW()
+**Quy trình**:
+1. Xác thực ủy quyền người đánh giá
+2. Xử lý quyết định:
+   - **Phê duyệt**: Đặt trạng thái = FACULTY_APPROVED → đến 2.4
+   - **Yêu cầu Chỉnh sửa**: Đặt trạng thái = REVISION_REQUIRED → đến 2.5
+   - **Từ chối**: Đặt trạng thái = REJECTED → đến 2.5
+3. Lưu bình luận (nếu có)
 
-**Output**:
-- Status updated → trigger to 2.6, 2.7
+**Đầu ra**:
+- Đã phê duyệt → đến 2.4 (Đánh Giá Cấp Trường)
+- Chỉnh sửa/Từ chối → đến 2.5 (Cập Nhật Trạng Thái)
 
-**Data Store Access**:
-- WRITE: D1 (Publications)
-
-**Transaction**: Must be atomic
-
----
-
-### 2.6 Send Notifications
-
-**Input**:
-- Status change event (from 2.5)
-- User data (from D2)
-
-**Process**:
-1. Determine recipients based on event:
-   - SUBMITTED → Faculty reviewers
-   - FACULTY_APPROVED → Researcher (owner)
-   - REVISION_REQUIRED → Researcher
-   - REJECTED → Researcher
-   - PUBLISHED → Researcher + co-authors
-2. Compose email from template
-3. Send via Email Server (external)
-
-**Output**:
-- Emails sent to recipients
-
-**Data Store Access**:
-- READ: D2 (Users - get emails)
-
-**Async**: Email sending should be asynchronous (queue)
+**Truy Cập Kho Dữ Liệu**:
+- ĐỌC: D1 (Ấn Phẩm)
+- GHI: D4 (Bình Luận Đánh Giá)
 
 ---
 
-### 2.7 Log History
+### 2.4 Đánh Giá Cấp Trường
 
-**Input**:
-- Status change event (from 2.5)
-- Actor (reviewer/researcher)
-- Comments (if any)
+**Đầu vào**:
+- Quyết định phê duyệt (từ Người Đánh Giá Cấp Trường)
+- Dữ liệu ấn phẩm (từ D1)
 
-**Process**:
-1. Create history record:
-   - from_status
-   - to_status
-   - actor_id
-   - action
-   - timestamp
+**Quy trình**:
+1. Xác thực ủy quyền người đánh giá (vai trò Người Đánh Giá Cấp Trường)
+2. Xử lý quyết định:
+   - **Phê duyệt**: Đặt trạng thái = PUBLISHED → đến 2.5
+   - **Gửi Lại**: Đặt trạng thái = FACULTY_REVIEWING → đến 2.2
 
-**Output**:
-- History record saved
+**Đầu ra**:
+- Phê duyệt/Gửi Lại → đến 2.5 (Cập Nhật Trạng Thái)
 
-**Data Store Access**:
-- WRITE: D3 (Review History)
+**Truy Cập Kho Dữ Liệu**:
+- ĐỌC: D1 (Ấn Phẩm)
+- GHI: D4 (Bình Luận Đánh Giá)
 
-**Audit**: Immutable records for compliance
+**Quy Tắc Nghiệp Vụ**:
+- Chỉ Người Đánh Giá Cấp Trường mới có thể xuất bản
+- Ấn phẩm đã xuất bản không thể được chỉnh sửa bởi nhà nghiên cứu
 
 ---
 
-## 🔄 Workflow State Transitions
+### 2.5 Cập Nhật Trạng Thái Ấn Phẩm
+
+**Đầu vào**:
+- Thay đổi trạng thái (từ 2.3 hoặc 2.4)
+- Giá trị trạng thái mới
+- Giá trị trạng thái cũ
+
+**Quy trình**:
+1. Cập nhật bảng publications (đặt trạng thái, dấu thời gian)
+2. Nếu PUBLISHED: đặt published_at = NOW()
+
+**Đầu ra**:
+- Trạng thái đã cập nhật → kích hoạt đến 2.6, 2.7
+
+**Truy Cập Kho Dữ Liệu**:
+- GHI: D1 (Ấn Phẩm)
+
+**Giao dịch**: Phải nguyên tử (atomic)
+
+---
+
+### 2.6 Gửi Thông Báo
+
+**Đầu vào**:
+- Sự kiện thay đổi trạng thái (từ 2.5)
+- Dữ liệu người dùng (từ D2)
+
+**Quy trình**:
+1. Xác định người nhận dựa trên sự kiện:
+   - SUBMITTED → Người đánh giá khoa
+   - FACULTY_APPROVED → Nhà nghiên cứu (chủ sở hữu)
+   - REVISION_REQUIRED → Nhà nghiên cứu
+   - REJECTED → Nhà nghiên cứu
+   - PUBLISHED → Nhà nghiên cứu + đồng tác giả
+2. Soạn email từ mẫu
+3. Gửi qua Máy chủ Email (bên ngoài)
+
+**Đầu ra**:
+- Email đã gửi đến người nhận
+
+**Truy Cập Kho Dữ Liệu**:
+- ĐỌC: D2 (Người dùng - lấy email)
+
+**Không đồng bộ**: Gửi email nên không đồng bộ (hàng đợi)
+
+---
+
+### 2.7 Ghi Nhật Ký Lịch Sử
+
+**Đầu vào**:
+- Sự kiện thay đổi trạng thái (từ 2.5)
+- Tác nhân (người đánh giá/nhà nghiên cứu)
+- Bình luận (nếu có)
+
+**Quy trình**:
+1. Tạo bản ghi lịch sử:
+   - từ_trạng_thái
+   - đến_trạng_thái
+   - id_tác_nhân
+   - hành_động
+   - dấu_thời_gian
+
+**Đầu ra**:
+- Bản ghi lịch sử đã lưu
+
+**Truy Cập Kho Dữ Liệu**:
+- GHI: D3 (Lịch Sử Đánh Giá)
+
+**Kiểm toán**: Bản ghi bất biến để tuân thủ
+
+---
+
+## 🔄 Chuyển Đổi Trạng Thái Quy Trình
 
 ```mermaid
 stateDiagram-v2
-    [*] --> DRAFT: Create
-    DRAFT --> SUBMITTED: 2.1 Validate
-    SUBMITTED --> FACULTY_REVIEWING: 2.2 Assign
+    [*] --> DRAFT: Tạo
+    DRAFT --> SUBMITTED: 2.1 Xác thực
+    SUBMITTED --> FACULTY_REVIEWING: 2.2 Phân công
     
-    FACULTY_REVIEWING --> FACULTY_APPROVED: 2.3 Approve
-    FACULTY_REVIEWING --> REVISION_REQUIRED: 2.3 Request Revision
-    FACULTY_REVIEWING --> REJECTED: 2.3 Reject
+    FACULTY_REVIEWING --> FACULTY_APPROVED: 2.3 Phê duyệt
+    FACULTY_REVIEWING --> REVISION_REQUIRED: 2.3 Yêu cầu Chỉnh sửa
+    FACULTY_REVIEWING --> REJECTED: 2.3 Từ chối
     
-    REVISION_REQUIRED --> DRAFT: Researcher edits
+    REVISION_REQUIRED --> DRAFT: Nhà nghiên cứu chỉnh sửa
     
-    FACULTY_APPROVED --> UNIVERSITY_REVIEWING: 2.4 Auto-transition
+    FACULTY_APPROVED --> UNIVERSITY_REVIEWING: 2.4 Tự động chuyển đổi
     
-    UNIVERSITY_REVIEWING --> PUBLISHED: 2.4 Approve
-    UNIVERSITY_REVIEWING --> FACULTY_REVIEWING: 2.4 Send Back
+    UNIVERSITY_REVIEWING --> PUBLISHED: 2.4 Phê duyệt
+    UNIVERSITY_REVIEWING --> FACULTY_REVIEWING: 2.4 Gửi lại
     
     PUBLISHED --> [*]
     REJECTED --> [*]
@@ -274,41 +274,41 @@ stateDiagram-v2
 
 ---
 
-## 📊 Data Store Details
+## 📊 Chi Tiết Kho Dữ Liệu
 
-### D1: Publications
-**Accessed by**: 2.1, 2.2, 2.3, 2.4, 2.5  
-**Operations**: READ, WRITE (status updates)
+### D1: Ấn Phẩm
+**Được truy cập bởi**: 2.1, 2.2, 2.3, 2.4, 2.5  
+**Thao tác**: ĐỌC, GHI (cập nhật trạng thái)
 
-### D2: Users
-**Accessed by**: 2.2, 2.6  
-**Operations**: READ only (get reviewers, get emails)
+### D2: Người Dùng
+**Được truy cập bởi**: 2.2, 2.6  
+**Thao tác**: CHỈ ĐỌC (lấy người đánh giá, lấy email)
 
-### D3: Review History
-**Accessed by**: 2.7  
-**Operations**: WRITE only (append-only audit log)
+### D3: Lịch Sử Đánh Giá
+**Được truy cập bởi**: 2.7  
+**Thao tác**: CHỈ GHI (nhật ký kiểm toán chỉ thêm)
 
-### D4: Review Comments
-**Accessed by**: 2.3, 2.4  
-**Operations**: WRITE (insert comments)
-
----
-
-## ⏱️ Process Timing
-
-| Process | Avg Duration | Type |
-|---------|-------------|------|
-| 2.1 Validate | < 1 second | Synchronous |
-| 2.2 Assign | < 2 seconds | Synchronous |
-| 2.3 Faculty Review | 3-7 days | Human decision |
-| 2.4 University Review | 3-7 days | Human decision |
-| 2.5 Update Status | < 1 second | Synchronous |
-| 2.6 Notifications | 2-5 seconds | Asynchronous |
-| 2.7 Log History | < 1 second | Synchronous |
-
-**Total SLA**: 6-14 days (DRAFT → PUBLISHED)
+### D4: Bình Luận Đánh Giá
+**Được truy cập bởi**: 2.3, 2.4  
+**Thao tác**: GHI (chèn bình luận)
 
 ---
 
-**Related**: act_approval_workflow.md, seq_faculty_review.md, seq_university_approval.md  
-**Created**: 11/02/2026
+## ⏱️ Thời Gian Quy Trình
+
+| Quy Trình | Thời Lượng TB | Loại |
+|-----------|---------------|------|
+| 2.1 Xác thực | < 1 giây | Đồng bộ |
+| 2.2 Phân công | < 2 giây | Đồng bộ |
+| 2.3 Đánh Giá Cấp Khoa | 3-7 ngày | Quyết định con người |
+| 2.4 Đánh Giá Cấp Trường | 3-7 ngày | Quyết định con người |
+| 2.5 Cập Nhật Trạng Thái | < 1 giây | Đồng bộ |
+| 2.6 Thông báo | 2-5 giây | Không đồng bộ |
+| 2.7 Ghi Lịch Sử | < 1 giây | Đồng bộ |
+
+**Tổng SLA**: 6-14 ngày (DRAFT → PUBLISHED)
+
+---
+
+**Liên quan**: act_approval_workflow.md, seq_faculty_review.md, seq_university_approval.md  
+**Ngày tạo**: 11/02/2026

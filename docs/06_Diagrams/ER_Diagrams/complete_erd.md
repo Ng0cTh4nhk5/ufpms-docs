@@ -1,12 +1,12 @@
-# Complete ERD - UFPMS Database Schema
+# ERD Đầy Đủ - Lược Đồ Cơ Sở Dữ Liệu UFPMS
 
-> 📊 **Database**: MySQL 8.0+  
-> 🎯 **Normalization**: 3NF  
-> 📅 **Created**: 10/02/2026
+> 📊 **Cơ sở dữ liệu**: MySQL 8.0+  
+> 🎯 **Chuẩn hóa**: 3NF  
+> 📅 **Ngày tạo**: 10/02/2026
 
 ---
 
-## 📊 Entity Relationship Diagram
+## 📊 Biểu đồ Quan hệ Thực thể
 
 ```mermaid
 erDiagram
@@ -119,153 +119,153 @@ erDiagram
 
 ---
 
-## 📋 Core Entities (10 tables)
+## 📋 Các Thực Thể Cốt Lõi (10 bảng)
 
 ### 1. users
-**Purpose**: All system users  
-**Key**: `id` (PK), `username` (UK)  
-**Volume**: 300-500 records
+**Mục đích**: Tất cả người dùng hệ thống  
+**Khóa**: `id` (PK), `username` (UK)  
+**Khối lượng**: 300-500 bản ghi
 
 ### 2. publications
-**Purpose**: Research publications  
-**Key**: `id` (PK), `doi` (UK)  
-**Volume**: 5K-10K records  
-**Status**: DRAFT, SUBMITTED, FACULTY_REVIEWING, FACULTY_APPROVED, UNIVERSITY_REVIEWING, PUBLISHED, REVISION_REQUIRED, REJECTED, WITHDRAWN
+**Mục đích**: Các ấn phẩm nghiên cứu  
+**Khóa**: `id` (PK), `doi` (UK)  
+**Khối lượng**: 5K-10K bản ghi  
+**Trạng thái**: DRAFT, SUBMITTED, FACULTY_REVIEWING, FACULTY_APPROVED, UNIVERSITY_REVIEWING, PUBLISHED, REVISION_REQUIRED, REJECTED, WITHDRAWN
 
 ### 3. publication_authors
-**Purpose**: Junction table (N:M between users and publications)  
-**Key**: Composite (publication_id, user_id)  
-**Volume**: 15K-30K records (avg 3 authors/publication)
+**Mục đích**: Bảng liên kết (N:M giữa người dùng và ấn phẩm)  
+**Khóa**: Tổng hợp (publication_id, user_id)  
+**Khối lượng**: 15K-30K bản ghi (trung bình 3 tác giả/ấn phẩm)
 
 ### 4. review_history
-**Purpose**: Audit trail of approval workflow  
-**Key**: `id` (PK)  
-**Volume**: 50K+ records (multiple transitions per publication)
+**Mục đích**: Dấu vết kiểm toán của quy trình phê duyệt  
+**Khóa**: `id` (PK)  
+**Khối lượng**: 50K+ bản ghi (nhiều chuyển đổi cho mỗi ấn phẩm)
 
 ### 5. review_comments
-**Purpose**: Comments from reviewers  
-**Key**: `id` (PK)  
-**Volume**: 20K+ records
+**Mục đích**: Bình luận từ người đánh giá  
+**Khóa**: `id` (PK)  
+**Khối lượng**: 20K+ bản ghi
 
 ### 6. user_roles
-**Purpose**: User role assignments  
-**Key**: Composite (user_id, role_name)  
-**Volume**: 500-1K records
+**Mục đích**: Phân công vai trò người dùng  
+**Khóa**: Tổng hợp (user_id, role_name)  
+**Khối lượng**: 500-1K bản ghi
 
 ### 7. departments
-**Purpose**: Academic departments  
-**Key**: `id` (PK)  
-**Volume**: 20-50 records
+**Mục đích**: Các bộ môn  
+**Khóa**: `id` (PK)  
+**Khối lượng**: 20-50 bản ghi
 
 ### 8. faculties
-**Purpose**: Academic faculties  
-**Key**: `id` (PK)  
-**Volume**: 5-15 records
+**Mục đích**: Các đơn vị (Khoa/Viện/Phòng/Ban)  
+**Khóa**: `id` (PK)  
+**Khối lượng**: 5-15 bản ghi
 
 ### 9. publication_types
-**Purpose**: Lookup table for publication types  
-**Key**: `code` (PK)  
-**Volume**: 10 records (static)
+**Mục đích**: Bảng tra cứu loại ấn phẩm  
+**Khóa**: `code` (PK)  
+**Khối lượng**: 10 bản ghi (tĩnh)
 
 ### 10. roles
-**Purpose**: System roles definition  
-**Key**: `name` (PK)  
-**Volume**: 4 records (static)
+**Mục đích**: Định nghĩa vai trò hệ thống  
+**Khóa**: `name` (PK)  
+**Khối lượng**: 4 bản ghi (tĩnh)
 
 ---
 
-## 🔗 Key Relationships
+## 🔗 Mối Quan Hệ Chính
 
 ### 1. users → publications (1:N)
 - **FK**: `publications.owner_id` → `users.id`
-- **Meaning**: Each publication has one owner (researcher who created it)
+- **Ý nghĩa**: Mỗi ấn phẩm có một chủ sở hữu (nhà nghiên cứu đã tạo nó)
 
-### 2. users ↔ publications (N:M via publication_authors)
-- **Junction**: `publication_authors`
-- **Meaning**: A publication can have multiple authors, a user can author multiple publications
+### 2. users ↔ publications (N:M qua publication_authors)
+- **Liên kết**: `publication_authors`
+- **Ý nghĩa**: Một ấn phẩm có thể có nhiều tác giả, một người dùng có thể là tác giả của nhiều ấn phẩm
 
 ### 3. users → review_history (1:N)
 - **FK**: `review_history.actor_id` → `users.id`
-- **Meaning**: Each review action is performed by a user (reviewer)
+- **Ý nghĩa**: Mỗi hành động đánh giá được thực hiện bởi một người dùng (người đánh giá)
 
 ### 4. departments → faculties (N:1)
 - **FK**: `departments.faculty_id` → `faculties.id`
-- **Meaning**: Departments belong to faculties
+- **Ý nghĩa**: Các bộ môn thuộc về các đơn vị
 
 ### 5. users → departments (N:1)
 - **FK**: `users.department_id` → `departments.id`
-- **Meaning**: Users belong to departments
+- **Ý nghĩa**: Người dùng thuộc về các bộ môn
 
 ---
 
-## 📊 Database Statistics
+## 📊 Thống Kê Cơ Sở Dữ Liệu
 
-| Table | Estimated Rows | Growth Rate | Storage |
+| Bảng | Số Hàng Ước Tính | Tốc Độ Tăng Trưởng | Lưu Trữ |
 |-------|----------------|-------------|---------|
-| publications | 5K-10K | +500/year | ~50MB |
-| users | 300-500 | +20/year | ~1MB |
-| publication_authors | 15K-30K | +1.5K/year | ~5MB |
-| review_history | 50K+ | +5K/year | ~20MB |
-| review_comments | 20K+ | +2K/year | ~100MB (text) |
+| publications | 5K-10K | +500/năm | ~50MB |
+| users | 300-500 | +20/năm | ~1MB |
+| publication_authors | 15K-30K | +1.5K/năm | ~5MB |
+| review_history | 50K+ | +5K/năm | ~20MB |
+| review_comments | 20K+ | +2K/năm | ~100MB (văn bản) |
 
-**Total**: ~200MB (first year)
+**Tổng cộng**: ~200MB (năm đầu tiên)
 
 ---
 
-## 🔐 Constraints & Rules
+## 🔐 Ràng Buộc & Quy Tắc
 
-### Unique Constraints
-- `users.username`: Unique
-- `publications.doi`: Unique (if provided)
-- `faculties.code`: Unique
+### Ràng Buộc Duy Nhất
+- `users.username`: Duy nhất
+- `publications.doi`: Duy nhất (nếu được cung cấp)
+- `faculties.code`: Duy nhất
 
-### Check Constraints
-- `publications.year`: BETWEEN 1900 AND CURRENT_YEAR
-- `publications.status`: Valid enum value
+### Ràng Buộc Kiểm Tra (Check Constraints)
+- `publications.year`: GIỮA 1900 VÀ NĂM_HIỆN_TẠI
+- `publications.status`: Giá trị enum hợp lệ
 - `publication_authors.author_order`: > 0
 
-### Foreign Keys
-- All FKs have `ON DELETE RESTRICT` (prevent accidental deletion)
-- Exception: `publications.deleted_at` (soft delete)
+### Khóa Ngoại
+- Tất cả các FK đều có `ON DELETE RESTRICT` (ngăn chặn xóa nhầm)
+- Ngoại lệ: `publications.deleted_at` (xóa mềm)
 
 ---
 
-## 📈 Indexes
+## 📈 Chỉ Mục (Indexes)
 
-### Primary Indexes (auto-created)
-- All `id` columns
+### Chỉ Mục Chính (tự động tạo)
+- Tất cả các cột `id`
 
-### Unique Indexes
+### Chỉ Mục Duy Nhất
 - `users.username`
 - `publications.doi`
 
-### Performance Indexes
+### Chỉ Mục Hiệu Năng
 ```sql
--- Search & Filter
+-- Tìm Kiếm & Lọc
 CREATE INDEX idx_pub_status_year ON publications(status, year);
 CREATE INDEX idx_pub_type ON publications(publication_type);
 CREATE FULLTEXT INDEX idx_pub_search ON publications(title, abstract, keywords);
 
--- Queries
+-- Truy Vấn
 CREATE INDEX idx_pub_owner ON publications(owner_id);
 CREATE INDEX idx_authors_user ON publication_authors(user_id);
 CREATE INDEX idx_history_pub ON review_history(publication_id);
 CREATE INDEX idx_comments_pub ON review_comments(publication_id);
 
--- Department/Faculty lookups
+-- Tra cứu Bộ môn/Đơn vị
 CREATE INDEX idx_users_dept ON users(department_id);
 CREATE INDEX idx_dept_fac ON departments(faculty_id);
 ```
 
 ---
 
-## 🔗 Related Documentation
+## 🔗 Tài Liệu Liên Quan
 
-- **Entity Specifications**: [entity_specifications.md](./entity_specifications.md)
-- **Use Cases**: [../../05_Use_Cases/](../../05_Use_Cases/)
-- **Requirements**: [../../03_Requirements/](../../03_Requirements/)
+- **Đặc Tả Thực Thể**: [entity_specifications.md](./entity_specifications.md)
+- **Ca Sử Dụng**: [../../05_Use_Cases/](../../05_Use_Cases/)
+- **Yêu Cầu**: [../../03_Requirements/](../../03_Requirements/)
 
 ---
 
-**Created**: 10/02/2026  
-**Version**: 1.0
+**Ngày tạo**: 10/02/2026  
+**Phiên bản**: 1.0

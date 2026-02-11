@@ -1,314 +1,314 @@
-# Module 1: Publication Management - Medium-Level Use Cases
+# Module 1: Quản Lý Bài Báo - Use Cases Cấp Trung
 
-> **Module**: 1 - Publication Management  
-> **High-Level UC**: [UC-HL-001](../High_Level/uc_hl_01_manage_publications.md)
+> **Module**: 1 - Quản Lý Bài Báo  
+> **Use Case Cấp Cao**: [UC-HL-001](../High_Level/uc_hl_01_manage_publications.md)
 
 ---
 
-## UC-M1-001: Create Publication
+## UC-M1-001: Tạo Bài Báo (Create Publication)
 
 **ID**: UC-M1-001  
-**Priority**: 🔴 P0  
-**Actor(s)**: Researcher  
-**Related User Stories**: US-RES-001  
-**Related FR**: FR-PUB-001
+**Độ Ưu Tiên**: 🔴 P0  
+**Tác Nhân**: Researcher  
+**User Stories Liên Quan**: US-RES-001  
+**Yêu Cầu Chức Năng Liên Quan**: FR-PUB-001
 
-### Goal
-Researcher creates a new publication entry with required metadata.
+### Mục Tiêu
+Researcher tạo mới một mục bài báo với các siêu dữ liệu (metadata) bắt buộc.
 
-### Preconditions
-- Researcher is logged in
-- Database is accessible
+### Điều Kiện Tiên Quyết
+- Researcher đã đăng nhập
+- Cơ sở dữ liệu có thể truy cập được
 
-### Main Flow
-1. Researcher clicks "Add New Publication"
-2. System displays form with fields:
-   - Required: Title, Authors, Year, Journal Type
-   - Optional: DOI, ISSN, Abstract, Keywords, PDF
-3. Researcher enters information
-4. System validates input (real-time)
-5. Researcher clicks "Save"
-6. System sets status = DRAFT
-7. System saves to database
-8. System shows "Publication created successfully"
+### Luồng Chính
+1. Researcher nhấn "Thêm Bài Báo Mới"
+2. Hệ thống hiển thị biểu mẫu với các trường:
+   - Bắt buộc: Tiêu đề, Tác giả, Năm, Loại Tạp chí/Hội nghị
+   - Tùy chọn: DOI, ISSN, Tóm tắt, Từ khóa, File PDF
+3. Researcher nhập thông tin
+4. Hệ thống xác thực đầu vào (thời gian thực)
+5. Researcher nhấn "Lưu"
+6. Hệ thống đặt trạng thái = DRAFT (Nháp)
+7. Hệ thống lưu vào cơ sở dữ liệu
+8. Hệ thống hiển thị "Tạo bài báo thành công"
 
-### Postconditions
-**Success**: Publication exists with status DRAFT, researcher is owner  
-**Failure**: No data saved, error message displayed
+### Điều Kiện Hậu Quyết
+**Thành Công**: Bài báo tồn tại với trạng thái DRAFT, Researcher là chủ sở hữu  
+**Thất Bại**: Không có dữ liệu nào được lưu, hiển thị thông báo lỗi
 
-### Business Rules
-- BR-PUB-001: Status defaults to DRAFT
-- BR-PUB-004: Year validation: 1900 ≤ year ≤ current + 1
-- BR-PUB-005: Created_by = current user
+### Quy Tắc Nghiệp Vụ
+- BR-PUB-001: Trạng thái mặc định là DRAFT
+- BR-PUB-004: Xác thực năm: 1900 ≤ năm ≤ năm hiện tại + 1
+- BR-PUB-005: Created_by = người dùng hiện tại
 
 ---
 
-## UC-M1-002: Edit Publication
+## UC-M1-002: Sửa Bài Báo (Edit Publication)
 
 **ID**: UC-M1-002  
-**Priority**: 🔴 P0  
-**Actor(s)**: Researcher  
-**Related User Stories**: US-RES-003  
-**Related FR**: FR-PUB-004
+**Độ Ưu Tiên**: 🔴 P0  
+**Tác Nhân**: Researcher  
+**User Stories Liên Quan**: US-RES-003  
+**Yêu Cầu Chức Năng Liên Quan**: FR-PUB-004
 
-### Goal
-Researcher edits an existing publication.
+### Mục Tiêu
+Researcher chỉnh sửa một bài báo hiện có.
 
-### Preconditions
-- Publication status = DRAFT OR REVISION_REQUIRED
-- User is the owner (corresponding author)
+### Điều Kiện Tiên Quyết
+- Trạng thái bài báo = DRAFT hoặc REVISION_REQUIRED
+- Người dùng là chủ sở hữu (tác giả liên hệ)
 
-### Main Flow
-1. Researcher selects publication from list
-2. Researcher clicks "Edit"
-3. System displays form pre-filled with current data
-4. Researcher modifies fields
-5. Researcher clicks "Save"
-6. System validates changes
-7. System updates database
-8. System logs audit trail (who, when, what changed)
-9. System shows "Changes saved"
+### Luồng Chính
+1. Researcher chọn bài báo từ danh sách
+2. Researcher nhấn "Sửa"
+3. Hệ thống hiển thị biểu mẫu đã điền sẵn dữ liệu hiện tại
+4. Researcher sửa đổi các trường
+5. Researcher nhấn "Lưu"
+6. Hệ thống xác thực các thay đổi
+7. Hệ thống cập nhật cơ sở dữ liệu
+8. Hệ thống ghi nhật ký kiểm toán (ai, khi nào, thay đổi gì)
+9. Hệ thống hiển thị "Đã lưu thay đổi"
 
-### Postconditions
-**Success**: Publication updated, audit log created  
-**Failure**: No changes, error shown
+### Điều Kiện Hậu Quyết
+**Thành Công**: Bài báo được cập nhật, nhật ký kiểm toán được tạo  
+**Thất Bại**: Không có thay đổi, hiển thị lỗi
 
-### Business Rules
-- BR-PUB-002: Only edit if DRAFT or REVISION_REQUIRED
-- BR-PUB-001: Only owner can edit
+### Quy Tắc Nghiệp Vụ
+- BR-PUB-002: Chỉ sửa được nếu trạng thái là DRAFT hoặc REVISION_REQUIRED
+- BR-PUB-001: Chỉ chủ sở hữu mới được sửa
 
 ---
 
-## UC-M1-003: Delete Publication
+## UC-M1-003: Xóa Bài Báo (Delete Publication)
 
 **ID**: UC-M1-003  
-**Priority**: 🔴 P0  
-**Actor(s)**: Researcher  
-**Related User Stories**: US-RES-004  
-**Related FR**: FR-PUB-005
+**Độ Ưu Tiên**: 🔴 P0  
+**Tác Nhân**: Researcher  
+**User Stories Liên Quan**: US-RES-004  
+**Yêu Cầu Chức Năng Liên Quan**: FR-PUB-005
 
-### Goal
-Researcher deletes a draft publication.
+### Mục Tiêu
+Researcher xóa một bài báo nháp.
 
-### Preconditions
-- Publication status = DRAFT
-- User is the owner
+### Điều Kiện Tiên Quyết
+- Trạng thái bài báo = DRAFT
+- Người dùng là chủ sở hữu
 
-### Main Flow
-1. Researcher selects publication
-2. Researcher clicks "Delete"
-3. System shows confirmation: "Are you sure?"
-4. Researcher confirms
-5. System soft deletes (sets deleted_at timestamp)
-6. System removes PDF file from storage
-7. System redirects to publication list
+### Luồng Chính
+1. Researcher chọn bài báo
+2. Researcher nhấn "Xóa"
+3. Hệ thống hiển thị xác nhận: "Bạn có chắc chắn không?"
+4. Researcher xác nhận
+5. Hệ thống xóa mềm (đặt timestamp deleted_at)
+6. Hệ thống xóa file PDF khỏi kho lưu trữ
+7. Hệ thống chuyển hướng về danh sách bài báo
 
-### Postconditions
-**Success**: Publication soft-deleted, PDF removed  
-**Failure**: No changes
+### Điều Kiện Hậu Quyết
+**Thành Công**: Bài báo bị xóa mềm, PDF bị xóa  
+**Thất Bại**: Không có thay đổi
 
-### Business Rules
-- BR-PUB-002: Can only delete if status = DRAFT
-- BR-PUB-003: PDF file must be removed from storage
+### Quy Tắc Nghiệp Vụ
+- BR-PUB-002: Chỉ có thể xóa nếu trạng thái = DRAFT
+- BR-PUB-003: File PDF phải được xóa khỏi kho lưu trữ
 
 ---
 
-## UC-M1-004: View Publication List
+## UC-M1-004: Xem Danh Sách Bài Báo (View Publication List)
 
 **ID**: UC-M1-004  
-**Priority**: 🔴 P0  
-**Actor(s)**: Researcher  
-**Related User Stories**: US-RES-005  
-**Related FR**: FR-PUB-006
+**Độ Ưu Tiên**: 🔴 P0  
+**Tác Nhân**: Researcher  
+**User Stories Liên Quan**: US-RES-005  
+**Yêu Cầu Chức Năng Liên Quan**: FR-PUB-006
 
-### Goal
-Researcher views all their publications filtered by status.
+### Mục Tiêu
+Researcher xem tất cả các bài báo của mình được lọc theo trạng thái.
 
-### Preconditions
-- Researcher is logged in
+### Điều Kiện Tiên Quyết
+- Researcher đã đăng nhập
 
-### Main Flow
-1. Researcher navigates to "My Publications"
-2. System queries publications where:
-   - created_by = current user OR user is co-author
-   - deleted_at IS NULL
-3. System displays list with columns:
-   - Title, Status, Updated Date, Actions
-4. Researcher can filter by status: All/Draft/Submitted/Approved/Rejected
-5. System allows sorting: Newest first (default)
+### Luồng Chính
+1. Researcher điều hướng đến "Bài Báo Của Tôi"
+2. Hệ thống truy vấn các bài báo mà:
+   - created_by = người dùng hiện tại HOẶC người dùng là đồng tác giả
+   - deleted_at LÀ NULL
+3. Hệ thống hiển thị danh sách với các cột:
+   - Tiêu đề, Trạng thái, Ngày cập nhật, Hành động
+4. Researcher có thể lọc theo trạng thái: Tất cả/Nháp/Đã nộp/Đã duyệt/Bị từ chối
+5. Hệ thống cho phép sắp xếp: Mới nhất trước (mặc định)
 
-### Postconditions
-**Success**: List displayed  
+### Điều Kiện Hậu Quyết
+**Thành Công**: Danh sách được hiển thị  
 
-### Business Rules
-- Show publications where user is owner OR co-author
-- Default sort: Most recently updated first
+### Quy Tắc Nghiệp Vụ
+- Hiển thị các bài báo mà người dùng là chủ sở hữu HOẶC đồng tác giả
+- Sắp xếp mặc định: Cập nhật gần nhất trước
 
 ---
 
-## UC-M1-005: View Publication Details
+## UC-M1-005: Xem Chi Tiết Bài Báo (View Publication Details)
 
 **ID**: UC-M1-005  
-**Priority**: 🔴 P0  
-**Actor(s)**: Researcher, Faculty Reviewer, University Reviewer, Admin  
-**Related User Stories**: US-RES-008  
-**Related FR**: FR-PUB-010
+**Độ Ưu Tiên**: 🔴 P0  
+**Tác Nhân**: Researcher, Faculty Reviewer, University Reviewer, Admin  
+**User Stories Liên Quan**: US-RES-008  
+**Yêu Cầu Chức Năng Liên Quan**: FR-PUB-010
 
-### Goal
-View complete details of a publication.
+### Mục Tiêu
+Xem chi tiết đầy đủ của một bài báo.
 
-### Preconditions
-- User has permission (owner/reviewer/admin OR publication is PUBLISHED)
+### Điều Kiện Tiên Quyết
+- Người dùng có quyền (chủ sở hữu/người duyệt/admin HOẶC bài báo là PUBLISHED)
 
-### Main Flow
-1. User clicks "View Details" on publication
-2. System checks permissions
-3. System displays:
-   - All metadata
-   - Current status
-   - Review history (if any)
-   - PDF download link (if uploaded)
-   - DOI link (if available)
+### Luồng Chính
+1. Người dùng nhấn "Xem Chi Tiết" trên bài báo
+2. Hệ thống kiểm tra quyền hạn
+3. Hệ thống hiển thị:
+   - Tất cả metadata
+   - Trạng thái hiện tại
+   - Lịch sử xét duyệt (nếu có)
+   - Link tải PDF (nếu đã upload)
+   - Link DOI (nếu có)
 
-### Postconditions
-**Success**: Details displayed
+### Điều Kiện Hậu Quyết
+**Thành Công**: Chi tiết được hiển thị
 
-### Business Rules
-- Public can view ONLY if status = PUBLISHED
-- Internal users can view based on role
+### Quy Tắc Nghiệp Vụ
+- Công khai (Public) CHỈ xem được nếu trạng thái = PUBLISHED
+- Người dùng nội bộ xem được dựa trên vai trò
 
 ---
 
-## UC-M1-006: Upload PDF File
+## UC-M1-006: Tải Lên File PDF (Upload PDF File)
 
 **ID**: UC-M1-006  
-**Priority**: 🔴 P0  
-**Actor(s)**: Researcher  
-**Related User Stories**: US-RES-002  
-**Related FR**: FR-PUB-002
+**Độ Ưu Tiên**: 🔴 P0  
+**Tác Nhân**: Researcher  
+**User Stories Liên Quan**: US-RES-002  
+**Yêu Cầu Chức Năng Liên Quan**: FR-PUB-002
 
-### Goal
-Upload PDF file for a publication.
+### Mục Tiêu
+Tải lên file PDF cho một bài báo.
 
-### Preconditions
-- User is the owner
-- Publication exists
+### Điều Kiện Tiên Quyết
+- Người dùng là chủ sở hữu
+- Bài báo tồn tại
 
-### Main Flow
-1. Researcher selects publication
-2. Researcher clicks "Upload PDF"
-3. Researcher selects PDF file from computer (< 10MB)
-4. System validates:
-   - File type = PDF
-   - File size <10MB
-5. System uploads file to storage
-6. System saves file path to database
-7. System shows thumbnail preview
-8. System shows "Upload successful"
+### Luồng Chính
+1. Researcher chọn bài báo
+2. Researcher nhấn "Upload PDF"
+3. Researcher chọn file PDF từ máy tính (< 10MB)
+4. Hệ thống xác thực:
+   - Loại file = PDF
+   - Kích thước file < 10MB
+5. Hệ thống tải file lên kho lưu trữ
+6. Hệ thống lưu đường dẫn file vào cơ sở dữ liệu
+7. Hệ thống hiển thị ảnh thumbnail xem trước
+8. Hệ thống hiển thị "Upload thành công"
 
-### Postconditions
-**Success**: PDF stored, path saved  
-**Failure**: No file saved
+### Điều Kiện Hậu Quyết
+**Thành Công**: PDF được lưu trữ, đường dẫn được lưu  
+**Thất Bại**: Không có file nào được lưu
 
-### Business Rules
-- BR-PUB-003: PDF only, max 10MB
-- File names sanitized to prevent security issues
+### Quy Tắc Nghiệp Vụ
+- BR-PUB-003: Chỉ PDF, tối đa 10MB
+- Tên file được làm sạch để ngăn chặn các vấn đề bảo mật
 
 ---
 
-## UC-M1-007: Download PDF File
+## UC-M1-007: Tải Xuống File PDF (Download PDF File)
 
 **ID**: UC-M1-007  
-**Priority**: 🔴 P0  
-**Actor(s)**: Researcher, Reviewer, Admin, Public (if published)  
-**Related User Stories**: US-RES-009  
-**Related FR**: FR-PUB-011
+**Độ Ưu Tiên**: 🔴 P0  
+**Tác Nhân**: Researcher, Reviewer, Admin, Public (nếu đã xuất bản)  
+**User Stories Liên Quan**: US-RES-009  
+**Yêu Cầu Chức Năng Liên Quan**: FR-PUB-011
 
-### Goal
-Download PDF file of a publication.
+### Mục Tiêu
+Tải xuống file PDF của một bài báo.
 
-### Preconditions
-- Publication has PDF uploaded
-- User has permission
+### Điều Kiện Tiên Quyết
+- Bài báo có PDF đã upload
+- Người dùng có quyền
 
-### Main Flow
-1. User views publication details
-2. User clicks "Download PDF"
-3. System checks permissions
-4. System serves file for download
-5. System logs audit trail (who downloaded, when)
+### Luồng Chính
+1. Người dùng xem chi tiết bài báo
+2. Người dùng nhấn "Download PDF"
+3. Hệ thống kiểm tra quyền hạn
+4. Hệ thống phục vụ file để tải xuống
+5. Hệ thống ghi nhật ký kiểm toán (ai tải, khi nào)
 
-### Postconditions
-**Success**: File downloaded, audit logged
+### Điều Kiện Hậu Quyết
+**Thành Công**: File được tải xuống, audit được ghi  
 
-### Business Rules
-- Public can download ONLY if status = PUBLISHED
-- All downloads are logged
+### Quy Tắc Nghiệp Vụ
+- Public có thể tải xuống CHỈ nếu trạng thái = PUBLISHED
+- Tất cả lượt tải xuống đều được ghi nhật ký
 
 ---
 
-## UC-M1-008: Add Co-Authors
+## UC-M1-008: Thêm Đồng Tác Giả (Add Co-Authors)
 
 **ID**: UC-M1-008  
-**Priority**: 🟡 P1  
-**Actor(s)**: Researcher  
-**Related User Stories**: US-RES-006  
-**Related FR**: FR-PUB-007
+**Độ Ưu Tiên**: 🟡 P1  
+**Tác Nhân**: Researcher  
+**User Stories Liên Quan**: US-RES-006  
+**Yêu Cầu Chức Năng Liên Quan**: FR-PUB-007
 
-### Goal
-Add co-authors from university to publication.
+### Mục Tiêu
+Thêm đồng tác giả từ trường vào bài báo.
 
-### Preconditions
-- User is the owner
-- Publication is DRAFT or REVISION_REQUIRED
+### Điều Kiện Tiên Quyết
+- Người dùng là chủ sở hữu
+- Bài báo là DRAFT hoặc REVISION_REQUIRED
 
-### Main Flow
-1. Researcher edits publication
-2. Researcher types name in co-authors field
-3. System shows autocomplete suggestions from user database
-4. Researcher selects co-author
-5. System adds to co-authors list
-6. Researcher can remove co-authors (except self)
+### Luồng Chính
+1. Researcher sửa bài báo
+2. Researcher nhập tên vào trường đồng tác giả
+3. Hệ thống hiển thị gợi ý tự động (autocomplete) từ cơ sở dữ liệu người dùng
+4. Researcher chọn đồng tác giả
+5. Hệ thống thêm vào danh sách đồng tác giả
+6. Researcher có thể xóa đồng tác giả (trừ chính mình)
 
-### Postconditions
-**Success**: Co-authors linked to publication
+### Điều Kiện Hậu Quyết
+**Thành Công**: Đồng tác giả được liên kết với bài báo
 
-### Business Rules
-- BR-PUB-001: Corresponding author (owner) cannot be removed
-- Co-authors can view but not edit/delete
+### Quy Tắc Nghiệp Vụ
+- BR-PUB-001: Tác giả liên hệ (chủ sở hữu) không thể bị xóa
+- Đồng tác giả có thể xem nhưng không thể sửa/xóa
 
 ---
 
-## UC-M1-009: Validate DOI/ISSN
+## UC-M1-009: Xác Thực DOI/ISSN (Validate DOI/ISSN)
 
 **ID**: UC-M1-009  
-**Priority**: 🟡 P1  
-**Actor(s)**: System  
-**Related User Stories**: US-RES-017, US-RES-018  
-**Related FR**: FR-PUB-012, FR-PUB-013
+**Độ Ưu Tiên**: 🟡 P1  
+**Tác Nhân**: Hệ Thống  
+**User Stories Liên Quan**: US-RES-017, US-RES-018  
+**Yêu Cầu Chức Năng Liên Quan**: FR-PUB-012, FR-PUB-013
 
-### Goal
-Validate DOI and ISSN formats in real-time.
+### Mục Tiêu
+Xác thực định dạng DOI và ISSN trong thời gian thực.
 
-### Main Flow
-1. Researcher enters DOI or ISSN
-2. Researcher moves to next field (blur event)
-3. System validates format:
+### Luồng Chính
+1. Researcher nhập DOI hoặc ISSN
+2. Researcher chuyển sang trường tiếp theo (sự kiện blur)
+3. Hệ thống xác thực định dạng:
    - DOI: `^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$`
    - ISSN: `^\\d{4}-\\d{3}[0-9X]$`
-4. If valid: Show green checkmark, create clickable link (DOI)
-5. If invalid: Show red error message with format hint
+4. Nếu hợp lệ: Hiển thị dấu tích xanh, tạo liên kết có thể nhấp (DOI)
+5. Nếu không hợp lệ: Hiển thị thông báo lỗi màu đỏ với gợi ý định dạng
 
-### Postconditions
-**Success**: Valid format, link created  
-**Failure**: Error shown, must fix before submit
+### Điều Kiện Hậu Quyết
+**Thành Công**: Định dạng hợp lệ, liên kết được tạo  
+**Thất Bại**: Lỗi hiển thị, phải sửa trước khi nộp
 
-### Business Rules
-- BR-PUB-004: DOI and ISSN formats are strictly validated
+### Quy Tắc Nghiệp Vụ
+- BR-PUB-004: Định dạng DOI và ISSN được xác thực nghiêm ngặt
 
 ---
 
 **Tài liệu liên quan**:
-- [High-Level UC-HL-001](../High_Level/uc_hl_01_manage_publications.md)
+- [Use Case Cấp Cao UC-HL-001](../High_Level/uc_hl_01_manage_publications.md)
 - [User Stories - Researcher](../../04_User_Stories/By_Role/researcher_stories.md)
-- [Requirements - Publication Management](../../03_Requirements/Functional/module_publication_management.md)
+- [Yêu Cầu - Quản Lý Bài Báo](../../03_Requirements/Functional/module_publication_management.md)

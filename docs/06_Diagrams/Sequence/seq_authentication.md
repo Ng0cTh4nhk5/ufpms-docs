@@ -1,97 +1,97 @@
-# Sequence Diagram: User Authentication
+# Biểu đồ Tuần tự: Xác thực Người dùng
 
-> 📊 **Diagram ID**: SEQ-07  
-> 🎯 **Use Case**: System Authentication  
-> 👤 **Actor**: All internal users  
-> ⚙️ **Key**: LDAP/AD integration, JWT token generation
+> 📊 **ID Biểu đồ**: SEQ-07  
+> 🎯 **Ca Sử Dụng**: Xác thực Hệ thống  
+> 👤 **Tác nhân**: Tất cả người dùng nội bộ  
+> ⚙️ **Chính**: Tích hợp LDAP/AD, tạo token JWT
 
 ---
 
-## 📊 Sequence Diagram
+## 📊 Biểu đồ Tuần tự
 
 ```mermaid
 sequenceDiagram
-    actor User as 👤 User
-    participant UI as 🖥️ Login UI
+    actor User as 👤 Người dùng
+    participant UI as 🖥️ Giao diện Đăng nhập
     participant API as 🔌 AuthController
     participant AuthService as 🔐 AuthService
-    participant LDAP as 📁 LDAP/AD Server
+    participant LDAP as 📁 Máy chủ LDAP/AD
     participant UserRepo as 💾 UserRepository
-    participant DB as 🗄️ Database
+    participant DB as 🗄️ CSDL
     participant TokenService as 🎫 JWTService
     
-    %% Open login page
-    User->>UI: Navigate to /login
-    UI-->>User: Show login form
+    %% Mở trang đăng nhập
+    User->>UI: Điều hướng đến /login
+    UI-->>User: Hiển thị biểu mẫu đăng nhập
     
-    %% Enter credentials
-    User->>UI: Enter username + password
-    User->>UI: Click "Login"
+    %% Nhập thông tin xác thực
+    User->>UI: Nhập tên đăng nhập + mật khẩu
+    User->>UI: Nhấn "Đăng nhập"
     
     activate UI
     UI->>API: POST /api/auth/login
     activate API
-    Note over API: Request:<br/>{username, password}
+    Note over API: Yêu cầu:<br/>{username, password}
     
-    %% Authenticate with LDAP
+    %% Xác thực với LDAP
     API->>AuthService: authenticate(username, password)
     activate AuthService
     
     AuthService->>LDAP: LDAP Bind(username, password)
     activate LDAP
     
-    alt Invalid credentials
-        LDAP-->>AuthService: Authentication failed
+    alt Thông tin xác thực không hợp lệ
+        LDAP-->>AuthService: Xác thực thất bại
         AuthService-->>API: AuthenticationError
         API-->>UI: 401 Unauthorized
-        UI-->>User: "Invalid username or password"
-    else Valid credentials
-        LDAP-->>AuthService: Authentication successful
+        UI-->>User: "Tên đăng nhập hoặc mật khẩu không đúng"
+    else Thông tin xác thực hợp lệ
+        LDAP-->>AuthService: Xác thực thành công
         deactivate LDAP
         
-        %% Get or create user
+        %% Lấy hoặc tạo người dùng
         AuthService->>UserRepo: findByUsername(username)
         activate UserRepo
         UserRepo->>DB: SELECT * FROM users<br/>WHERE username = ?
         
-        alt User exists
-            DB-->>UserRepo: User record
-            UserRepo-->>AuthService: User
-        else User not found
-            Note over AuthService: First-time login<br/>Auto-create user
+        alt Người dùng tồn tại
+            DB-->>UserRepo: Bản ghi người dùng
+            UserRepo-->>AuthService: Người dùng
+        else Người dùng không tìm thấy
+            Note over AuthService: Đăng nhập lần đầu<br/>Tự động tạo người dùng
             
-            %% Get user info from LDAP
-            AuthService->>LDAP: Get user attributes
+            %% Lấy thông tin người dùng từ LDAP
+            AuthService->>LDAP: Lấy thuộc tính người dùng
             activate LDAP
             LDAP-->>AuthService: {name, email, department}
             deactivate LDAP
             
             AuthService->>UserRepo: createUser(ldapData)
             UserRepo->>DB: INSERT INTO users<br/>(username, name, email, department)
-            DB-->>UserRepo: New user ID
-            UserRepo-->>AuthService: New user
+            DB-->>UserRepo: ID người dùng mới
+            UserRepo-->>AuthService: Người dùng mới
         end
         deactivate UserRepo
         
-        %% Get user roles
+        %% Lấy vai trò người dùng
         AuthService->>UserRepo: getUserRoles(userId)
         activate UserRepo
         UserRepo->>DB: SELECT roles<br/>FROM user_roles<br/>WHERE user_id = ?
-        DB-->>UserRepo: Roles array
-        UserRepo-->>AuthService: Roles[]
+        DB-->>UserRepo: Mảng vai trò
+        UserRepo-->>AuthService: Vai trò[]
         deactivate UserRepo
         
-        %% Generate JWT token
+        %% Tạo token JWT
         AuthService->>TokenService: generateToken(user, roles)
         activate TokenService
         
         Note over TokenService: Payload:<br/>{userId, username,<br/>name, roles,<br/>exp: now + 24h}
         
-        TokenService->>TokenService: Sign with secret key
-        TokenService-->>AuthService: JWT token
+        TokenService->>TokenService: Ký với khóa bí mật
+        TokenService-->>AuthService: Token JWT
         deactivate TokenService
         
-        %% Log login
+        %% Ghi nhật ký đăng nhập
         AuthService->>UserRepo: logLogin(userId, ipAddress)
         UserRepo->>DB: INSERT INTO audit_logs
         
@@ -101,25 +101,25 @@ sequenceDiagram
         API-->>UI: 200 OK + {token, user, roles}
         deactivate API
         
-        %% Store token
-        UI->>UI: Store token in localStorage
+        %% Lưu trữ token
+        UI->>UI: Lưu trữ token trong localStorage
         Note over UI: localStorage.setItem(<br/>'authToken', token)
         
-        UI-->>User: Redirect to dashboard
+        UI-->>User: Chuyển hướng đến bảng điều khiển
         deactivate UI
     end
 ```
 
 ---
 
-## 📋 Authentication Flow
+## 📋 Luồng Xác thực
 
-### 1. User Submits Credentials
-- Username (e.g., `nguyen.van.a`)
-- Password
+### 1. Người dùng Gửi Thông tin Xác thực
+- Tên đăng nhập (ví dụ: `nguyen.van.a`)
+- Mật khẩu
 
-### 2. LDAP Authentication
-**LDAP Bind** (validate credentials):
+### 2. Xác thực LDAP
+**LDAP Bind** (xác thực thông tin):
 ```java
 ldapTemplate.authenticate(
     "ou=users,dc=university,dc=edu.vn",
@@ -128,36 +128,36 @@ ldapTemplate.authenticate(
 );
 ```
 
-If successful → Fetch user attributes
+Nếu thành công → Lấy thuộc tính người dùng
 
-### 3. Get/Create User
-**If user exists in DB**:
-- Fetch from `users` table
+### 3. Lấy/Tạo Người dùng
+**Nếu người dùng tồn tại trong DB**:
+- Lấy từ bảng `users`
 
-**If first-time login**:
-- Query LDAP for attributes:
-  - Full name
+**Nếu đăng nhập lần đầu**:
+- Truy vấn LDAP để lấy thuộc tính:
+  - Họ tên
   - Email
-  - Department
-  - Faculty
-- Create user record in DB
-- Assign default role: `RESEARCHER`
+  - Bộ môn
+  - Khoa
+- Tạo bản ghi người dùng trong DB
+- Gán vai trò mặc định: `RESEARCHER`
 
-### 4. Get Roles
-Query `user_roles` table:
+### 4. Lấy Vai trò
+Truy vấn bảng `user_roles`:
 ```sql
 SELECT role_name 
 FROM user_roles 
 WHERE user_id = ?
 ```
 
-Possible roles:
+Các vai trò có thể:
 - `RESEARCHER`
 - `FACULTY_REVIEWER`
 - `UNIVERSITY_REVIEWER`
 - `SUPERADMIN`
 
-### 5. Generate JWT Token
+### 5. Tạo Token JWT
 **Payload**:
 ```json
 {
@@ -171,10 +171,10 @@ Possible roles:
 }
 ```
 
-**Sign with secret key** → JWT token
+**Ký với khóa bí mật** → Token JWT
 
-### 6. Return to Client
-Response:
+### 6. Trả về Client
+Phản hồi:
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -188,39 +188,39 @@ Response:
 }
 ```
 
-### 7. Store Token
-UI stores token in `localStorage` or `sessionStorage`
+### 7. Lưu trữ Token
+Giao diện lưu trữ token trong `localStorage` hoặc `sessionStorage`
 
-### 8. Subsequent Requests
-Every API call includes:
+### 8. Các Yêu cầu Tiếp theo
+Mỗi cuộc gọi API bao gồm:
 ```
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
 ---
 
-## 🔒 Authorization
+## 🔒 Ủy quyền
 
-### JWT Verification
-Every protected endpoint:
+### Xác minh JWT
+Mỗi endpoint được bảo vệ:
 ```java
 @PreAuthorize("hasRole('RESEARCHER')")
 public ResponseEntity<?> createPublication(...) {
-    // Endpoint logic
+    // Logic endpoint
 }
 ```
 
-**Middleware** verifies:
-1. Token exists in `Authorization` header
-2. Token signature valid
-3. Token not expired
-4. User has required role
+**Middleware** xác minh:
+1. Token tồn tại trong header `Authorization`
+2. Chữ ký token hợp lệ
+3. Token chưa hết hạn
+4. Người dùng có vai trò yêu cầu
 
 ---
 
-## 🗄️ Database Tables
+## 🗄️ Bảng Cơ sở Dữ liệu
 
-### users table
+### Bảng users
 ```sql
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -234,7 +234,7 @@ CREATE TABLE users (
 );
 ```
 
-### user_roles table
+### Bảng user_roles
 ```sql
 CREATE TABLE user_roles (
     user_id INT,
@@ -245,7 +245,7 @@ CREATE TABLE user_roles (
 );
 ```
 
-### audit_logs (login tracking)
+### Bảng audit_logs (theo dõi đăng nhập)
 ```sql
 INSERT INTO audit_logs (
     user_id, action, ip_address, timestamp
@@ -256,37 +256,37 @@ INSERT INTO audit_logs (
 
 ---
 
-## 🚨 Error Scenarios
+## 🚨 Các Kịch Bản Lỗi
 
-### 401 Unauthorized - Invalid Credentials
+### 401 Unauthorized - Thông tin không hợp lệ
 ```json
 {
-  "error": "Unauthorized",
-  "message": "Invalid username or password"
+  "error": "Không được phép",
+  "message": "Tên đăng nhập hoặc mật khẩu không hợp lệ"
 }
 ```
 
-### 403 Forbidden - Account Disabled
+### 403 Forbidden - Tài khoản bị vô hiệu hóa
 ```json
 {
-  "error": "Forbidden",
-  "message": "Your account has been disabled. Contact admin."
+  "error": "Bị cấm",
+  "message": "Tài khoản của bạn đã bị vô hiệu hóa. Liên hệ quản trị viên."
 }
 ```
 
-### 500 Internal Error - LDAP Unavailable
+### 500 Internal Error - LDAP không khả dụng
 ```json
 {
-  "error": "Internal Server Error",
-  "message": "Authentication service temporarily unavailable"
+  "error": "Lỗi Máy chủ Nội bộ",
+  "message": "Dịch vụ xác thực tạm thời không khả dụng"
 }
 ```
 
 ---
 
-## 🔧 Configuration
+## 🔧 Cấu hình
 
-### LDAP Connection
+### Kết nối LDAP
 ```properties
 ldap.url=ldap://ldap.university.edu.vn:389
 ldap.base.dn=dc=university,dc=edu,dc=vn
@@ -295,39 +295,39 @@ ldap.bind.username=cn=admin,dc=university,dc=edu,dc=vn
 ldap.bind.password=${LDAP_PASSWORD}
 ```
 
-### JWT Settings
+### Cài đặt JWT
 ```properties
 jwt.secret=${JWT_SECRET_KEY}
-jwt.expiration=86400000  # 24 hours in milliseconds
+jwt.expiration=86400000  # 24 giờ tính bằng mili giây
 jwt.issuer=UFPMS
 ```
 
 ---
 
-## 🔄 Token Refresh (P1)
+## 🔄 Làm mới Token (P1)
 
-**Problem**: Token expires after 24h  
-**Solution**: Refresh token endpoint
+**Vấn đề**: Token hết hạn sau 24h  
+**Giải pháp**: Endpoint làm mới token
 
 ```
 POST /api/auth/refresh
 Authorization: Bearer {expired_token}
 
-Response: {new_token}
+Phản hồi: {new_token}
 ```
 
 ---
 
-## 🔐 Security Best Practices
+## 🔐 Các Thực hành Bảo mật Tốt nhất
 
-1. **HTTPS only** in production
-2. **Secure secret key**: Strong, rotated periodically
-3. **Token expiration**: 24h (configurable)
-4. **Rate limiting**: Max 5 login attempts per minute
-5. **Audit logging**: All login attempts logged
-6. **LDAP password**: Never stored in DB
+1. **Chỉ HTTPS** trong production
+2. **Khóa bí mật an toàn**: Mạnh, xoay vòng định kỳ
+3. **Hết hạn Token**: 24h (có thể cấu hình)
+4. **Giới hạn tốc độ**: Tối đa 5 lần thử đăng nhập mỗi phút
+5. **Ghi nhật ký kiểm toán**: Tất cả các lần thử đăng nhập đều được ghi lại
+6. **Mật khẩu LDAP**: Không bao giờ lưu trữ trong DB
 
 ---
 
-**Related**: FR-ADM-004 (LDAP integration), NFR-Security  
-**Created**: 10/02/2026
+**Liên quan**: FR-ADM-004 (Tích hợp LDAP), NFR-Security  
+**Ngày tạo**: 10/02/2026

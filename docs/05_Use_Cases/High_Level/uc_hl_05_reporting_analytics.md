@@ -1,70 +1,70 @@
-# UC-HL-005: Reporting & Analytics
+# UC-HL-005: Báo Cáo & Phân Tích (Reporting & Analytics)
 
-> **Module**: 5 - Reporting & Analytics  
-> **Priority**: 🟡 P1 - Should Have  
-> **Actors**: Faculty Reviewer, University Reviewer, SuperAdmin
+> **Module**: 5 - Báo Cáo & Phân Tích  
+> **Độ Ưu Tiên**: 🟡 P1 - Nên Có  
+> **Tác Nhân**: Faculty Reviewer, University Reviewer, SuperAdmin
 
 ---
 
-## 📋 Use Case Overview
+## 📋 Tổng Quan Use Case
 
 **ID**: UC-HL-005  
-**Name**: Reporting & Analytics  
-**Description**: Tạo báo cáo và xem analytics về năng suất nghiên cứu cấp Khoa và Trường. Hỗ trợ export Excel/PDF cho ban giám hiệu.
+**Tên**: Báo Cáo & Phân Tích  
+**Mô Tả**: Tạo báo cáo và xem phân tích về năng suất nghiên cứu cấp Khoa và Trường. Hỗ trợ xuất ra Excel/PDF cho ban giám hiệu.
 
 ---
 
-## 👥 Actors
+## 👥 Tác Nhân
 
-### Primary Actors
-- **Faculty Reviewer**: View faculty-level reports
-- **University Reviewer**: View university-wide reports
-- **SuperAdmin**: View all reports, system analytics
+### Tác Nhân Chính
+- **Faculty Reviewer**: Xem báo cáo cấp Khoa
+- **University Reviewer**: Xem báo cáo toàn trường
+- **SuperAdmin**: Xem tất cả báo cáo, phân tích hệ thống
 
 ---
 
-## 🎯 Goals
+## 🎯 Mục Tiêu
 
 - Theo dõi năng suất nghiên cứu theo đơn vị
 - Hỗ trợ ra quyết định quản lý
 - Cung cấp dữ liệu cho báo cáo hàng năm
-- Benchmark giữa các khoa
+- Đối sánh (Benchmark) giữa các khoa
 
 ---
 
-## 🔗 Related Artifacts
+## 🔗 Tài Liệu Liên Quan
 
 **User Stories** (7 stories):
 - US-FCR-008: Xem Báo Cáo Khoa (P1)
 - US-FCR-009: Theo Dõi SLA Xét Duyệt (P2)
-- US-UNR-007: Xem Dashboard Analytics Toàn Trường (P1)
+- US-UNR-007: Xem Dashboard Phân Tích Toàn Trường (P1)
 - US-UNR-008: Tạo Báo Cáo Toàn Trường (P1)
-- US-UNR-009: Xem Báo Cáo Theo Quartile (P1)
+- US-UNR-009: Xem Báo Cáo Theo Xếp Hạng (Quartile) (P1)
 - US-UNR-010: Xem Xu Hướng Phát Triển (P2)
 
-**Functional Requirements**: FR-REP-001 to FR-REP-007
+**Yêu Cầu Chức Năng**: FR-REP-001 đến FR-REP-007
 
 ---
 
-## 📊 Reporting Architecture
+## 📊 Kiến Trúc Báo Cáo
 
 ```mermaid
 graph TB
-    A[User] --> B{Role}
+    A[User] --> B{Vai Trò}
     
-    B -->|Faculty Reviewer| C[Faculty Dashboard]
-    B -->|University Reviewer| D[University Dashboard]
-    B -->|SuperAdmin| E[System Dashboard]
+    B -->|Faculty Reviewer| C[Dashboard Khoa]
+    B -->|University Reviewer| D[Dashboard Trường]
+    B -->|SuperAdmin| E[Dashboard Hệ Thống]
     
-    C --> F[Faculty Reports]
-    D --> G[University Reports]
-    E --> H[All Reports + System Metrics]
+    C --> F[Báo Cáo Khoa]
+    D --> G[Báo Cáo Trường]
+    E --> H[Tất Cả Báo Cáo + Metrics Hệ Thống]
     
-    F --> I[Generate Report]
+    F --> I[Tạo Báo Cáo]
     G --> I
     H --> I
     
-    I --> J{Export Format}
+    I --> J{Định Dạng Xuất}
     J -->|Excel| K[.xlsx]
     J -->|PDF| L[.pdf]
     J -->|CSV| M[.csv]
@@ -76,199 +76,199 @@ graph TB
 
 ---
 
-## 🔄 Main Flows
+## 🔄 Luồng Chính (Main Flows)
 
-### Flow 1: Faculty Report (Faculty Reviewer)
+### Flow 1: Báo Cáo Khoa (Faculty Reviewer)
 
-1. Faculty Reviewer logs in
-2. Reviewer clicks "Reports"
-3. System shows Faculty Dashboard with:
-   - Total publications this year (auto-filtered to their faculty)
-   - Distribution by quartile
-   - Top researchers in faculty
-   - Trend chart (last 5 years)
-4. Reviewer selects year range and options
-5. Reviewer clicks "Generate Detail Report"
-6. System generates report with:
-   - All publications by faculty
-   - Grouped by researcher
-   - Summary statistics
-7. Reviewer exports to Excel/PDF
+1. Faculty Reviewer đăng nhập
+2. Reviewer nhấn "Báo Cáo"
+3. Hệ thống hiển thị Dashboard Khoa với:
+   - Tổng số bài báo năm nay (tự động lọc theo khoa của họ)
+   - Phân bố theo xếp hạng (quartile)
+   - Các nhà nghiên cứu hàng đầu trong khoa
+   - Biểu đồ xu hướng (5 năm gần nhất)
+4. Reviewer chọn khoảng thời gian và tùy chọn
+5. Reviewer nhấn "Tạo Báo Cáo Chi Tiết"
+6. Hệ thống tạo báo cáo với:
+   - Tất cả bài báo theo khoa
+   - Nhóm theo nhà nghiên cứu
+   - Thống kê tóm tắt
+7. Reviewer xuất ra Excel/PDF
 
-**Report Content**:
-- Faculty name and year range
-- Summary: Total pubs, by quartile, by type
-- Researcher breakdown: Name, pubs count, quartile distribution
-- Detailed publication list
-
----
-
-### Flow 2: University Report (University Reviewer)
-
-1. University Reviewer logs in
-2. Reviewer clicks "Analytics"
-3. System shows University Dashboard with:
-   - Total publications (all faculties)
-   - Distribution by faculty
-   - Distribution by quartile
-   - Top 10 researchers university-wide
-   - Year-over-year growth
-4. Reviewer can filter by faculty, year range
-5. System updates visualizations dynamically
-
-**Metrics Displayed**:
-- Total publications: All time, this year, last year
-- By Faculty: Bar chart comparing faculties
-- By Quartile: Pie chart Q1/Q2/Q3/Q4
-- By Year: Line chart showing trend
+**Nội Dung Báo Cáo**:
+- Tên khoa và khoảng thời gian
+- Tóm tắt: Tổng số bài báo, theo xếp hạng, theo loại
+- Chi tiết theo nhà nghiên cứu: Tên, số lượng bài báo, phân bố xếp hạng
+- Danh sách bài báo chi tiết
 
 ---
 
-### Flow 3: Generate Comprehensive Report
+### Flow 2: Báo Cáo Trường (University Reviewer)
 
-1. Reviewer selects parameters:
-   - Year range (from - to)
-   - Faculty filter (all or specific)
-   - Include/exclude fields
-2. Reviewer clicks "Generate Report"
-3. System queries database (may take 30s - 5min for large datasets)
-4. System shows progress indicator  
-5. System generates report
-6. Reviewer chooses export format
-7. System downloads file
+1. University Reviewer đăng nhập
+2. Reviewer nhấn "Phân Tích" (Analytics)
+3. Hệ thống hiển thị Dashboard Trường với:
+   - Tổng số bài báo (tất cả các khoa)
+   - Phân bố theo khoa
+   - Phân bố theo xếp hạng
+   - Top 10 nhà nghiên cứu toàn trường
+   - Tăng trưởng theo năm (Year-over-year)
+4. Reviewer có thể lọc theo khoa, khoảng thời gian
+5. Hệ thống cập nhật biểu đồ động
 
-**Export Formats**:
-- **Excel (.xlsx)**: Multiple sheets (Summary, by Faculty, by Researcher, Detail)
-- **PDF (.pdf)**: Formatted report with charts
-- **CSV (.csv)**: Raw data for further analysis
-
----
-
-### Flow 4: Quartile Analysis (P1)
-
-1. University Reviewer accesses Quartile Report
-2. Reviewer selects year range
-3. System shows breakdown:
-   - Q1 publications: Count + list
-   - Q2 publications: Count + list  
-   - Q3/Q4 publications: Count + list
-   - Conference papers: Count + list
-4. System compares to previous year:
-   - Q1: +15% from last year
-   - Total: +8% from last year
-5. Reviewer can drill down to see individual publications
+**Các Chỉ Số Hiển Thị**:
+- Tổng bài báo: Mọi thời đại, năm nay, năm ngoái
+- Theo Khoa: Biểu đồ cột so sánh các khoa
+- Theo Xếp Hạng: Biểu đồ tròn Q1/Q2/Q3/Q4
+- Theo Năm: Biểu đồ đường thể hiện xu hướng
 
 ---
 
-### Flow 5: Trend Analysis (P2)
+### Flow 3: Tạo Báo Cáo Tổng Hợp
 
-1. University Reviewer views Trend Analysis
-2. System shows:
-   - Year-over-year growth rate (%)
-   - Top growing faculties
-   - Emerging research fields (from keywords frequency)
-   - Most productive researchers this year
-3. Visualizations:
-   - Line chart: Growth trajectory
-   - Word cloud: Hot research topics
-   - Leaderboard: Top contributors
+1. Reviewer chọn tham số:
+   - Khoảng thời gian (từ - đến)
+   - Lọc theo khoa (tất cả hoặc cụ thể)
+   - Bao gồm/loại trừ các trường thông tin
+2. Reviewer nhấn "Tạo Báo Cáo"
+3. Hệ thống truy vấn cơ sở dữ liệu (có thể mất 30s - 5phút với dữ liệu lớn)
+4. Hệ thống hiển thị chỉ báo tiến trình
+5. Hệ thống tạo báo cáo
+6. Reviewer chọn định dạng xuất
+7. Hệ thống tải xuống tập tin
 
----
-
-### Flow 6: SLA Monitoring (Faculty/University, P2)
-
-1. Reviewer views SLA dashboard
-2. System shows publications grouped by status:
-   - Pending review (how many days)
-   - Overdue (> 7 days at current level)
-   - Average review time
-3. Overdue publications highlighted in red
-4. Reviewer can click to review immediately
-
-**Metrics**:
-- Average Faculty review time: X days
-- Average University review time: Y days
-- % reviewed within SLA (7 days): Z%
+**Định Dạng Xuất**:
+- **Excel (.xlsx)**: Nhiều sheet (Tóm tắt, Theo Khoa, Theo Researcher, Chi tiết)
+- **PDF (.pdf)**: Báo cáo định dạng sẵn với biểu đồ
+- **CSV (.csv)**: Dữ liệu thô để phân tích thêm
 
 ---
 
-## ✅ Preconditions
+### Flow 4: Phân Tích Xếp Hạng (P1)
 
-- User has Reviewer or Admin role
-- Publications exist in system
-- User is authenticated
+1. University Reviewer truy cập Báo Cáo Xếp Hạng (Quartile Report)
+2. Reviewer chọn khoảng thời gian
+3. Hệ thống hiển thị chi tiết:
+   - Bài báo Q1: Số lượng + danh sách
+   - Bài báo Q2: Số lượng + danh sách
+   - Bài báo Q3/Q4: Số lượng + danh sách
+   - Bài báo Hội nghị: Số lượng + danh sách
+4. Hệ thống so sánh với năm trước:
+   - Q1: +15% so với năm ngoái
+   - Tổng cộng: +8% so với năm ngoái
+5. Reviewer có thể đi sâu (drill down) để xem từng bài báo
 
 ---
 
-## 📝 Postconditions
+### Flow 5: Phân Tích Xu Hướng (P2)
 
-**Success**:
-- User has insights into research productivity
-- Reports can be shared with management
-- Exported files are usable in Excel/PowerPoint
+1. University Reviewer xem Phân Tích Xu Hướng
+2. Hệ thống hiển thị:
+   - Tỷ lệ tăng trưởng theo năm (%)
+   - Các khoa tăng trưởng nhanh nhất
+   - Các lĩnh vực nghiên cứu mới nổi (từ tần suất từ khóa)
+   - Các nhà nghiên cứu năng suất nhất năm nay
+3. Trực quan hóa:
+   - Biểu đồ đường: Quỹ đạo tăng trưởng
+   - Word cloud: Chủ đề nghiên cứu nóng
+   - Bảng xếp hạng: Những người đóng góp hàng đầu
 
 ---
 
-## 🔒 Business Rules
+### Flow 6: Theo Dõi SLA (Faculty/University, P2)
 
-### BR-REP-001: Access Control
-- Faculty Reviewer: CHỈ xem faculty của mình
-- University Reviewer: Xem tất cả faculties
-- SuperAdmin: Xem all + system metrics
+1. Reviewer xem dashboard SLA
+2. Hệ thống hiển thị các bài báo nhóm theo trạng thái:
+   - Đang chờ xét duyệt (bao nhiêu ngày)
+   - Quá hạn (> 7 ngày ở cấp hiện tại)
+   - Thời gian xét duyệt trung bình
+3. Các bài báo quá hạn được tô đỏ
+4. Reviewer có thể nhấn vào để xét duyệt ngay
 
-### BR-REP-002: Data Scope
-- CHỈ bao gồm PUBLISHED publications
+**Chỉ Số**:
+- Thời gian xét duyệt trung bình cấp Khoa: X ngày
+- Thời gian xét duyệt trung bình cấp Trường: Y ngày
+- % xét duyệt trong SLA (7 ngày): Z%
+
+---
+
+## ✅ Điều Kiện Tiên Quyết
+
+- Người dùng có vai trò Reviewer hoặc Admin
+- Có dữ liệu bài báo trong hệ thống
+- Người dùng đã xác thực
+
+---
+
+## 📝 Điều Kiện Hậu Quyết
+
+**Thành Công**:
+- Người dùng có cái nhìn sâu sắc về năng suất nghiên cứu
+- Báo cáo có thể được chia sẻ với ban lãnh đạo
+- Tập tin xuất ra có thể sử dụng trong Excel/PowerPoint
+
+---
+
+## 🔒 Quy Tắc Nghiệp Vụ
+
+### BR-REP-001: Kiểm Soát Truy Cập
+- Faculty Reviewer: CHỈ xem được khoa của mình
+- University Reviewer: Xem được tất cả các khoa
+- SuperAdmin: Xem tất cả + metrics hệ thống
+
+### BR-REP-002: Phạm Vi Dữ Liệu
+- CHỈ bao gồm các bài báo ĐÃ XUẤT BẢN (PUBLISHED)
 - KHÔNG bao gồm: DRAFT, SUBMITTED, REJECTED
 
-### BR-REP-003: Refresh Rate
-- Dashboard: Real-time (updated on page load)
-- Reports: Generated on-demand
-- Charts: Cached 1 hour
+### BR-REP-003: Tần Suất Làm Mới
+- Dashboard: Real-time (cập nhật khi tải trang)
+- Báo cáo: Tạo theo yêu cầu (on-demand)
+- Biểu đồ: Cache 1 giờ
 
-### BR-REP-004: Performance
-- Dashboard load: < 3 seconds
-- Report generation: < 5 minutes (for 10 years data)
-- Export download: Immediate (file prepared in background)
+### BR-REP-004: Hiệu Năng
+- Tải Dashboard: < 3 giây
+- Tạo báo cáo: < 5 phút (cho dữ liệu 10 năm)
+- Tải xuất file: Ngay lập tức (file được chuẩn bị trong nền)
 
-### BR-REP-005: Data Retention
-- Generated reports stored 30 days
-- User can re-download within retention period
-
----
-
-## 📐 Sub Use Cases (Medium-Level)
-
-- UC-M5-001: Generate Faculty Report
-- UC-M5-002: Generate University Report
-- UC-M5-003: Export to Excel
-- UC-M5-004: Export to PDF
-- UC-M5-005: View Dashboard Statistics
-- UC-M5-006: Track Productivity Trends
-- UC-M5-007: Benchmark Faculties
+### BR-REP-005: Lưu Trữ Dữ Liệu
+- Báo cáo đã tạo được lưu 30 ngày
+- Người dùng có thể tải lại trong thời gian lưu trữ
 
 ---
 
-## 📊 Key Metrics
+## 📐 Use Cases Con (Cấp Trung)
 
-- **Usage**: % reviewers who use reports monthly
-- **Report Size**: Average rows per export
-- **Performance**: Generation time (target < 2 min)
-- **Downlo ads**: Top exported formats
+- [UC-M5-001: Tạo Báo Cáo Khoa](../Medium_Level/module_05_reporting_analytics.md)
+- [UC-M5-002: Tạo Báo Cáo Trường](../Medium_Level/module_05_reporting_analytics.md)
+- [UC-M5-003: Xuất Excel](../Medium_Level/module_05_reporting_analytics.md)
+- [UC-M5-004: Xuất PDF](../Medium_Level/module_05_reporting_analytics.md)
+- [UC-M5-005: Xem Thống Kê Dashboard](../Medium_Level/module_05_reporting_analytics.md)
+- [UC-M5-006: Theo Dõi Xu Hướng Năng Suất](../Medium_Level/module_05_reporting_analytics.md)
+- [UC-M5-007: Đối Sánh Các Khoa](../Medium_Level/module_05_reporting_analytics.md)
 
 ---
 
-## 🚨 Exceptions
+## 📊 Chỉ Số Chính
 
-| Error | Condition | System Response |
+- **Sử dụng**: % reviewers sử dụng báo cáo hàng tháng
+- **Kích thước báo cáo**: Số dòng trung bình mỗi lần xuất
+- **Hiệu năng**: Thời gian tạo báo cáo (mục tiêu < 2 phút)
+- **Tải xuống**: Các định dạng xuất phổ biến nhất
+
+---
+
+## 🚨 Ngoại Lệ
+
+| Lỗi | Điều Kiện | Phản Hồi Hệ Thống |
 |-------|-----------|-----------------|
-| No data | Year range has 0 publications | Show "No data for this period" |
-| Timeout | Report generation > 5 min | Cancel, suggest smaller range |
-| Export failed | File generation error | Retry, alert user |
-| Unauthorized | Faculty reviewer tries university report | Show "Access denied" |
+| Không có dữ liệu | Khoảng thời gian có 0 bài báo | Hiển thị "Không có dữ liệu cho giai đoạn này" |
+| Timeout | Tạo báo cáo > 5 phút | Hủy, gợi ý chọn khoảng thời gian nhỏ hơn |
+| Xuất lỗi | Lỗi tạo file | Thử lại, cảnh báo người dùng |
+| Không được phép | Faculty reviewer thử xem báo cáo trường | Hiển thị "Truy cập bị từ chối" |
 
 ---
 
 **Tài liệu liên quan**:
 - [User Stories - Faculty Reviewer](../../04_User_Stories/By_Role/faculty_reviewer_stories.md)
 - [User Stories - University Reviewer](../../04_User_Stories/By_Role/university_reviewer_stories.md)
-- [Requirements - Reporting](../../03_Requirements/Functional/module_reporting.md)
+- [Yêu Cầu - Báo Cáo & Phân Tích](../../03_Requirements/Functional/module_reporting.md)

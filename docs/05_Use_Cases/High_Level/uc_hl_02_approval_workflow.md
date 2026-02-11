@@ -1,51 +1,51 @@
-# UC-HL-002: Approval Workflow
+# UC-HL-002: Quy Trình Xét Duyệt (Approval Workflow)
 
-> **Module**: 2 - Approval Workflow  
-> **Priority**: 🔴 P0 - Must Have  
-> **Actors**: Researcher, Faculty Reviewer, University Reviewer
+> **Module**: 2 - Quy Trình Xét Duyệt  
+> **Độ Ưu Tiên**: 🔴 P0 - Phải Có  
+> **Tác Nhân**: Researcher, Faculty Reviewer, University Reviewer
 
 ---
 
-## 📋 Use Case Overview
+## 📋 Tổng Quan Use Case
 
 **ID**: UC-HL-002  
-**Name**: Approval Workflow  
-**Description**: Quy trình phê duyệt bài báo 2 cấp (Faculty → University) với các trạng thái và hành động: submit, approve, reject, request revision, withdraw, publish.
+**Tên**: Quy Trình Xét Duyệt  
+**Mô Tả**: Quy trình phê duyệt bài báo 2 cấp (Khoa → Trường) với các trạng thái và hành động: nộp, phê duyệt, từ chối, yêu cầu chỉnh sửa, rút lại, xuất bản.
 
 ---
 
-## 👥 Actors
+## 👥 Tác Nhân
 
-### Primary Actors
-- **Researcher**: Submit và revise bài báo
+### Tác Nhân Chính
+- **Researcher**: Nộp (Submit) và chỉnh sửa (Revise) bài báo
 - **Faculty Reviewer**: Xét duyệt cấp Khoa
-- **University Reviewer**: Phê duyệt cuối và publish
+- **University Reviewer**: Phê duyệt cuối và xuất bản (Publish)
 
-### Secondary Actors
-- **Email System**: Gửi notifications
-- **Audit System**: Log mọi state transitions
+### Tác Nhân Phụ
+- **Hệ Thống Email**: Gửi thông báo
+- **Hệ Thống Audit**: Ghi nhật ký mọi chuyển đổi trạng thái
 
 ---
 
-## 🔄 Workflow State Machine
+## 🔄 Máy Trạng Thái (Workflow State Machine)
 
 ```mermaid
 stateDiagram-v2
-    [*] --> DRAFT: Create
-    DRAFT --> SUBMITTED: Researcher submits
-    SUBMITTED --> FACULTY_REVIEWING: Faculty starts review
+    [*] --> DRAFT: Tạo Mới
+    DRAFT --> SUBMITTED: Researcher nộp
+    SUBMITTED --> FACULTY_REVIEWING: Khoa bắt đầu xét duyệt
     
-    FACULTY_REVIEWING --> REVISION_REQUIRED: Request revision
-    FACULTY_REVIEWING --> FACULTY_APPROVED: Approve
-    FACULTY_REVIEWING --> FACULTY_REJECTED: Reject
+    FACULTY_REVIEWING --> REVISION_REQUIRED: Yêu cầu chỉnh sửa
+    FACULTY_REVIEWING --> FACULTY_APPROVED: Phê duyệt
+    FACULTY_REVIEWING --> FACULTY_REJECTED: Từ chối
     
-    REVISION_REQUIRED --> DRAFT: Researcher edits
-    DRAFT --> SUBMITTED: Resubmit
+    REVISION_REQUIRED --> DRAFT: Researcher chỉnh sửa
+    DRAFT --> SUBMITTED: Nộp lại
     
-    FACULTY_APPROVED --> UNIVERSITY_REVIEWING: Auto-forward
+    FACULTY_APPROVED --> UNIVERSITY_REVIEWING: Tự động chuyển tiếp
     
-    UNIVERSITY_REVIEWING --> PUBLISHED: Approve & Publish
-    UNIVERSITY_REVIEWING --> UNIVERSITY_REJECTED: Reject
+    UNIVERSITY_REVIEWING --> PUBLISHED: Phê duyệt & Xuất bản
+    UNIVERSITY_REVIEWING --> UNIVERSITY_REJECTED: Từ chối
     
     PUBLISHED --> [*]
     FACULTY_REJECTED --> [*]
@@ -54,196 +54,196 @@ stateDiagram-v2
 
 ---
 
-## 🎯 Goals
+## 🎯 Mục Tiêu
 
-- Đảm bảo chất lượng bài báo qua 2 cấp review
-- Minh bạch quy trình với audit trail đầy đủ
+- Đảm bảo chất lượng bài báo qua 2 cấp xét duyệt
+- Minh bạch quy trình với nhật ký kiểm toán (audit trail) đầy đủ
 - Thông báo kịp thời cho các bên liên quan
-- Quản lý SLA (6-14 ngày từ submit → publish)
+- Quản lý SLA (6-14 ngày từ khi nộp → xuất bản)
 
 ---
 
-## 🔗 Related Artifacts
+## 🔗 Tài Liệu Liên Quan
 
 **User Stories** (26 stories):
-- Researcher: US-RES-010 to US-RES-013 (4 stories)
-- Faculty Reviewer: US-FCR-001 to US-FCR-007 (7 stories)
-- University Reviewer: US-UNR-001 to US-UNR-006 (6 stories)  
-- Advanced: US-FCR-009, US-UNR-007, etc.
+- Researcher: US-RES-010 đến US-RES-013 (4 stories)
+- Faculty Reviewer: US-FCR-001 đến US-FCR-007 (7 stories)
+- University Reviewer: US-UNR-001 đến US-UNR-006 (6 stories)  
+- Nâng cao: US-FCR-009, US-UNR-007, v.v.
 
-**Functional Requirements**: FR-APR-001 to FR-APR-020
-
----
-
-## 🔄 Main Flows
-
-### Flow 1: Researcher Submits Publication
-
-1. Researcher completes publication (status = DRAFT)
-2. Researcher clicks "Submit for Review"
-3. System validates all required fields
-4. System changes status: DRAFT → SUBMITTED
-5. System sends email to Faculty Reviewer
-6. System logs audit trail
+**Yêu Cầu Chức Năng**: FR-APR-001 đến FR-APR-020
 
 ---
 
-### Flow 2: Faculty Reviews and Approves
+## 🔄 Luồng Chính (Main Flows)
 
-1. Faculty Reviewer receives email notification
-2. Reviewer accesses Faculty Dashboard
-3. Reviewer views publication details
-4. Reviewer clicks "Approve" and adds optional comment
-5. System changes status: FACULTY_REVIEWING → FACULTY_APPROVED
-6. System sends email to:
-   - Researcher: "Approved by Faculty"
-   - University Reviewer: "Pending your review"
-7. System logs audit trail
+### Flow 1: Researcher Nộp Bài Báo
 
-**Alternative**: Request Revision
-- Reviewer clicks "Request Revision" with required comment
-- Status → REVISION_REQUIRED
-- Email to Researcher with feedback
-- Researcher edits and resubmits
-
-**Alternative**: Reject
-- Reviewer clicks "Reject" with required reason
-- Status → FACULTY_REJECTED (final)
-- Email to Researcher
-- Process ends
+1. Researcher hoàn thiện bài báo (trạng thái = DRAFT)
+2. Researcher nhấn "Gửi Xét Duyệt" (Submit for Review)
+3. Hệ thống xác thực tất cả các trường bắt buộc
+4. Hệ thống đổi trạng thái: DRAFT → SUBMITTED
+5. Hệ thống gửi email cho Faculty Reviewer
+6. Hệ thống ghi nhật ký kiểm toán
 
 ---
 
-### Flow 3: University Final Approval
+### Flow 2: Khoa Xét Duyệt và Phê Duyệt
 
-1. University Reviewer receives email
-2. Reviewer views publication and faculty comments
-3. Reviewer clicks "Approve & Publish"
-4. System changes status: UNIVERSITY_REVIEWING → PUBLISHED
-5. System makes publication public (visible in search)
-6. System sends email to Researcher: "Published!"
-7. System logs audit trail
+1. Faculty Reviewer nhận email thông báo
+2. Reviewer truy cập Dashboard Khoa
+3. Reviewer xem chi tiết bài báo
+4. Reviewer nhấn "Phê Duyệt" (Approve) và thêm bình luận tùy chọn
+5. Hệ thống đổi trạng thái: FACULTY_REVIEWING → FACULTY_APPROVED
+6. Hệ thống gửi email cho:
+   - Researcher: "Đã được Khoa phê duyệt"
+   - University Reviewer: "Chờ bạn xét duyệt"
+7. Hệ thống ghi nhật ký kiểm toán
 
-**Alternative**: Reject at University Level
-- Status → UNIVERSITY_REJECTED
-- Emails to Researcher and Faculty Reviewer
-- Process ends
+**Luồng Thay Thế**: Yêu Cầu Chỉnh Sửa
+- Reviewer nhấn "Yêu Cầu Chỉnh Sửa" với bình luận bắt buộc
+- Trạng thái → REVISION_REQUIRED
+- Email gửi Researcher kèm phản hồi
+- Researcher chỉnh sửa và nộp lại
 
----
-
-### Flow 4: Researcher Tracks Status
-
-1. Researcher accesses "My Publications"
-2. System shows publication with current status
-3. Researcher clicks publication
-4. System displays:
-   - Status timeline
-   - Reviewer comments
-   - State transition dates
-   - Next expected action
+**Luồng Thay Thế**: Từ Chối
+- Reviewer nhấn "Từ Chối" với lý do bắt buộc
+- Trạng thái → FACULTY_REJECTED (kết thúc)
+- Email gửi Researcher
+- Quy trình kết thúc
 
 ---
 
-## ✅ Preconditions
+### Flow 3: Trường Phê Duyệt Cuối
 
-- Publication exists with complete metadata
-- Users are authenticated with appropriate roles
-- Email system is configured
-- Audit logging is enabled
+1. University Reviewer nhận email
+2. Reviewer xem bài báo và các bình luận của Khoa
+3. Reviewer nhấn "Phê Duyệt & Xuất Bản"
+4. Hệ thống đổi trạng thái: UNIVERSITY_REVIEWING → PUBLISHED
+5. Hệ thống công khai bài báo (hiển thị trong tìm kiếm)
+6. Hệ thống gửi email cho Researcher: "Đã Xuất Bản!"
+7. Hệ thống ghi nhật ký kiểm toán
 
----
-
-## 📝 Postconditions
-
-**Success**:
-- Publication reaches PUBLISHED status
-- Visible publicly in search
-- Audit trail is complete
-- All parties are notified
-
-**Failure**:
-- Publication is REJECTED at some level
-- Stuck in REVISION_REQUIRED
-- Audit trail shows all decisions
+**Luồng Thay Thế**: Từ Chối cấp Trường
+- Trạng thái → UNIVERSITY_REJECTED
+- Email gửi Researcher và Faculty Reviewer
+- Quy trình kết thúc
 
 ---
 
-## 🔒 Business Rules
+### Flow 4: Researcher Theo Dõi Trạng Thái
 
-### BR-APR-001: State Transitions
-- CHỈ researcher mới submit/resubmit/withdraw
+1. Researcher truy cập "Bài Báo Của Tôi"
+2. Hệ thống hiển thị bài báo với trạng thái hiện tại
+3. Researcher nhấn vào bài báo
+4. Hệ thống hiển thị:
+   - Dòng thời gian trạng thái (timeline)
+   - Bình luận của người xét duyệt
+   - Ngày chuyển đổi trạng thái
+   - Hành động tiếp theo dự kiến
+
+---
+
+## ✅ Điều Kiện Tiên Quyết
+
+- Bài báo tồn tại với metadata đầy đủ
+- Người dùng đã xác thực với vai trò phù hợp
+- Hệ thống Email đã được cấu hình
+- Ghi nhật ký Audit đã được kích hoạt
+
+---
+
+## 📝 Điều Kiện Hậu Quyết
+
+**Thành Công**:
+- Bài báo đạt trạng thái PUBLISHED
+- Hiển thị công khai trong tìm kiếm
+- Nhật ký kiểm toán đầy đủ
+- Tất cả các bên đều nhận được thông báo
+
+**Thất Bại**:
+- Bài báo bị TỪ CHỐI (REJECTED) ở cấp độ nào đó
+- Bị kẹt ở REVISION_REQUIRED
+- Nhật ký kiểm toán hiển thị tất cả các quyết định
+
+---
+
+## 🔒 Quy Tắc Nghiệp Vụ
+
+### BR-APR-001: Chuyển Đổi Trạng Thái
+- CHỈ Researcher mới được submit/resubmit/withdraw
 - CHỈ Faculty Reviewer xét duyệt cấp Khoa
 - CHỈ University Reviewer phê duyệt cuối
 
-### BR-APR-002: Sequential Approval
-- PHẢI qua Faculty approval trước University
+### BR-APR-002: Xét Duyệt Tuần Tự
+- PHẢI qua phê duyệt của Khoa trước khi đến Trường
 - KHÔNG thể bỏ qua bất kỳ cấp nào
 
-### BR-APR-003: Finality of Decisions
-- FACULTY_REJECTED: Cannot resubmit (must create new)
-- UNIVERSITY_REJECTED: Cannot resubmit
+### BR-APR-003: Tính Chung Thẩm Của Quyết Định
+- FACULTY_REJECTED: Không thể nộp lại (phải tạo mới)
+- UNIVERSITY_REJECTED: Không thể nộp lại
 
-### BR-APR-004: Notifications
-- Email GỬI ngay khi status thay đổi
-- Email PHẢI có link trực tiếp đến publication
+### BR-APR-004: Thông Báo
+- Email GỬI ngay khi trạng thái thay đổi
+- Email PHẢI có link trực tiếp đến bài báo
 
-### BR-APR-005: Comments
-- Request Revision: Comment bắt buộc (min 10 chars)
-- Reject: Reason bắt buộc (min 20 chars)
-- Approve: Comment tùy chọn
+### BR-APR-005: Bình Luận
+- Yêu Cầu Chỉnh Sửa: Bình luận bắt buộc (tối thiểu 10 ký tự)
+- Từ Chối: Lý do bắt buộc (tối thiểu 20 ký tự)
+- Phê Duyệt: Bình luận tùy chọn
 
-### BR-APR-006: SLA Targets
-- Faculty review: Target 7 days
-- University review: Target 7 days
-- Total: 6-14 days (best to worst case)
-
----
-
-## 📐 Sub Use Cases (Medium-Level)
-
-### Researcher Actions
-- UC-M2-001: Submit for Review
-- UC-M2-002: Track Review Status
-- UC-M2-003: Revise Publication
-- UC-M2-004: Withdraw Submission
-
-### Faculty Reviewer Actions
-- UC-M2-005: Faculty Review - Approve
-- UC-M2-006: Faculty Review - Request Revision
-- UC-M2-007: Faculty Review - Reject
-- UC-M2-010: View Review History
-- UC-M2-012: Bulk Approve (P1)
-
-### University Reviewer Actions
-- UC-M2-008: University Review - Approve & Publish
-- UC-M2-009: University Review - Reject
-- UC-M2-010: View Review History
-- UC-M2-013: Bulk Approve (P1)
-
-### System Actions
-- UC-M2-011: Send Email Notifications
-- UC-M2-015: SLA Monitoring (P2)
+### BR-APR-006: Mục Tiêu SLA
+- Xét duyệt Khoa: Mục tiêu 7 ngày
+- Xét duyệt Trường: Mục tiêu 7 ngày
+- Tổng cộng: 6-14 ngày (từ tốt nhất đến xấu nhất)
 
 ---
 
-## 📊 Key Metrics
+## 📐 Use Cases Con (Cấp Trung)
 
-- **SLA**: 90% approved within 14 days
-- **Response Time**: Email sent < 1 minute after action
-- **Audit Coverage**: 100% of state transitions logged
-- **Throughput**: Support 50 concurrent reviews
+### Hành Động Của Researcher
+- [UC-M2-001: Gửi Xét Duyệt](../Medium_Level/module_02_approval_workflow.md)
+- [UC-M2-002: Theo Dõi Trạng Thái](../Medium_Level/module_02_approval_workflow.md)
+- [UC-M2-003: Chỉnh Sửa Bài Báo](../Medium_Level/module_02_approval_workflow.md)
+- [UC-M2-004: Rút Bài Báo](../Medium_Level/module_02_approval_workflow.md)
+
+### Hành Động Của Faculty Reviewer
+- [UC-M2-005: Khoa Phê Duyệt](../Medium_Level/module_02_approval_workflow.md)
+- [UC-M2-006: Khoa Yêu Cầu Chỉnh Sửa](../Medium_Level/module_02_approval_workflow.md)
+- [UC-M2-007: Khoa Từ Chối](../Medium_Level/module_02_approval_workflow.md)
+- [UC-M2-010: Xem Lịch Sử Xét Duyệt](../Medium_Level/module_02_approval_workflow.md)
+- UC-M2-012: Phê Duyệt Hàng Loạt (P1)
+
+### Hành Động Của University Reviewer
+- [UC-M2-008: Trường Phê Duyệt & Xuất Bản](../Medium_Level/module_02_approval_workflow.md)
+- [UC-M2-009: Trường Từ Chối](../Medium_Level/module_02_approval_workflow.md)
+- [UC-M2-010: Xem Lịch Sử Xét Duyệt](../Medium_Level/module_02_approval_workflow.md)
+- UC-M2-013: Phê Duyệt Hàng Loạt (P1)
+
+### Hành Động Hệ Thống
+- [UC-M2-011: Gửi Email Thông Báo](../Medium_Level/module_02_approval_workflow.md)
+- UC-M2-015: Giám Sát SLA (P2)
 
 ---
 
-## 🚨 Exceptions
+## 📊 Chỉ Số Chính
 
-| Error | Condition | System Response |
+- **SLA**: 90% được phê duyệt trong vòng 14 ngày
+- **Thời Gian Phản Hồi**: Email được gửi < 1 phút sau hành động
+- **Độ Phủ Audit**: 100% chuyển đổi trạng thái được ghi lại
+- **Thông Lượng**: Hỗ trợ 50 xét duyệt đồng thời
+
+---
+
+## 🚨 Ngoại Lệ
+
+| Lỗi | Điều Kiện | Phản Hồi Hệ Thống |
 |-------|-----------|-----------------|
-| Missing required fields | Submit with incomplete data | Block submission, show missing fields |
-| Unauthorized action | Non-reviewer tries to approve | Show "Access denied" |
-| Email failure | SMTP error | Log error, retry 3 times, alert admin |
-| Already approved | Try to re-approve | Show "Already processed" |
-| Withdrawn during review | Researcher withdraws | Notify reviewer, remove from queue |
+| Thiếu trường bắt buộc | Nộp với dữ liệu không đầy đủ | Chặn nộp, hiển thị các trường còn thiếu |
+| Hành động không hợp lệ | Người không phải reviewer cố gắng phê duyệt | Hiển thị "Truy cập bị từ chối" |
+| Lỗi Email | Lỗi SMTP | Ghi lỗi, thử lại 3 lần, cảnh báo admin |
+| Đã phê duyệt | Cố gắng phê duyệt lại | Hiển thị "Đã được xử lý" |
+| Rút lại trong khi xét duyệt | Researcher rút bài | Thông báo cho reviewer, xóa khỏi hàng chờ |
 
 ---
 
@@ -251,4 +251,4 @@ stateDiagram-v2
 - [User Stories - Researcher](../../04_User_Stories/By_Role/researcher_stories.md)
 - [User Stories - Faculty Reviewer](../../04_User_Stories/By_Role/faculty_reviewer_stories.md)
 - [User Stories - University Reviewer](../../04_User_Stories/By_Role/university_reviewer_stories.md)
-- [Requirements - Approval Workflow](../../03_Requirements/Functional/module_approval_workflow.md)
+- [Yêu Cầu - Quy Trình Xét Duyệt](../../03_Requirements/Functional/module_approval_workflow.md)

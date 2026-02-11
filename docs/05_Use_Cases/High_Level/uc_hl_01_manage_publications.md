@@ -1,40 +1,40 @@
-# UC-HL-001: Manage Publications
+# UC-HL-001: Quản Lý Bài Báo (Manage Publications)
 
-> **Module**: 1 - Publication Management  
-> **Priority**: 🔴 P0 - Must Have  
-> **Actors**: Researcher, SuperAdmin
+> **Module**: 1 - Quản Lý Bài Báo  
+> **Độ Ưu Tiên**: 🔴 P0 - Phải Có  
+> **Tác Nhân**: Researcher, SuperAdmin
 
 ---
 
-## 📋 Use Case Overview
+## 📋 Tổng Quan Use Case
 
 **ID**: UC-HL-001  
-**Name**: Manage Publications  
-**Description**: Giảng viên và Admin quản lý toàn bộ vòng đời của bài báo khoa học, bao gồm tạo mới, chỉnh sửa, xóa, upload PDF, và quản lý metadata.
+**Tên**: Quản Lý Bài Báo  
+**Mô Tả**: Giảng viên và Admin quản lý toàn bộ vòng đời của bài báo khoa học, bao gồm tạo mới, chỉnh sửa, xóa, tải lên PDF, và quản lý siêu dữ liệu (metadata).
 
 ---
 
-## 👥 Actors
+## 👥 Tác Nhân
 
-### Primary Actors
+### Tác Nhân Chính
 - **Researcher (Giảng viên)**: Tạo và quản lý bài báo của mình
 - **SuperAdmin**: Quản lý tất cả bài báo trong hệ thống
 
-### Secondary Actors  
-- **System**: Tự động validate, lưu trữ files
+### Tác Nhân Phụ
+- **Hệ Thống**: Tự động xác thực, lưu trữ tập tin
 
 ---
 
-## 🎯 Goals
+## 🎯 Mục Tiêu
 
 - Researcher có thể dễ dàng nhập bài báo vào hệ thống
 - Metadata được quản lý đầy đủ và chính xác
 - Files PDF được lưu trữ an toàn
-- Hỗ trợ co-authors và validation
+- Hỗ trợ đồng tác giả (co-authors) và xác thực (validation)
 
 ---
 
-## 🔗 Related Artifacts
+## 🔗 Tài Liệu Liên Quan
 
 **User Stories** (9 stories):
 - US-RES-001: Tạo Bài Báo Mới
@@ -47,27 +47,27 @@
 - US-RES-008: Xem Chi Tiết Bài Báo
 - US-RES-009: Download File PDF
 
-**Functional Requirements**:
-- FR-PUB-001 to FR-PUB-015
+**Yêu Cầu Chức Năng**:
+- FR-PUB-001 đến FR-PUB-015
 
 ---
 
-## 📊 Main Capabilities
+## 📊 Chức Năng Chính
 
 ```mermaid
 graph LR
-    A[Researcher] --> B[Create Publication]
-    A --> C[Edit Publication]
-    A --> D[Delete Publication]
-    A --> E[View Publications]
+    A[Researcher] --> B[Tạo Bài Báo]
+    A --> C[Sửa Bài Báo]
+    A --> D[Xóa Bài Báo]
+    A --> E[Xem Bài Báo]
     A --> F[Upload PDF]
-    A --> G[Add Co-Authors]
+    A --> G[Thêm Đồng Tác Giả]
     
-    B --> H[Publication Database]
+    B --> H[CSDL Bài Báo]
     C --> H
     D --> H
     E --> H
-    F --> I[File Storage]
+    F --> I[Lưu Trữ File]
     G --> H
     
     style A fill:#ffd93d
@@ -77,137 +77,137 @@ graph LR
 
 ---
 
-## 🔄 Main Flow (High-Level)
+## 🔄 Luồng Chính (Cấp Cao)
 
-### 1. Create Publication
-1. Researcher clicks "Add New Publication"
-2. System displays form with required and optional fields
-3. Researcher enters metadata
-4. System validates input (DOI, ISSN format)
-5. System saves with status = DRAFT
-6. System shows success message
+### 1. Tạo Bài Báo
+1. Researcher nhấn "Thêm Bài Báo Mới"
+2. Hệ thống hiển thị biểu mẫu với các trường bắt buộc và tùy chọn
+3. Researcher nhập metadata
+4. Hệ thống xác thực đầu vào (định dạng DOI, ISSN)
+5. Hệ thống lưu với trạng thái = DRAFT (Nháp)
+6. Hệ thống hiển thị thông báo thành công
 
 ### 2. Upload PDF
-1. Researcher selects publication
-2. Researcher chooses PDF file (< 10MB)
-3. System validates file type and size
-4. System uploads to storage
-5. System saves file path to database
+1. Researcher chọn bài báo
+2. Researcher chọn file PDF (< 10MB)
+3. Hệ thống xác thực loại file và kích thước
+4. Hệ thống tải lên kho lưu trữ
+5. Hệ thống lưu đường dẫn file vào cơ sở dữ liệu
 
-### 3. Edit Publication
-1. Researcher selects DRAFT or REVISION_REQUIRED publication
-2. Researcher modifies information
-3. System validates changes
-4. System updates database
-5. System logs audit trail
+### 3. Sửa Bài Báo
+1. Researcher chọn bài báo trạng thái DRAFT hoặc REVISION_REQUIRED
+2. Researcher chỉnh sửa thông tin
+3. Hệ thống xác thực thay đổi
+4. Hệ thống cập nhật cơ sở dữ liệu
+5. Hệ thống ghi nhật ký kiểm toán (audit trail)
 
-### 4. Delete Publication
-1. Researcher selects DRAFT publication
-2. Researcher confirms deletion
-3. System soft deletes (sets deleted_at timestamp)
-4. System removes PDF from storage
-5. System redirects to publication list
+### 4. Xóa Bài Báo
+1. Researcher chọn bài báo trạng thái DRAFT
+2. Researcher xác nhận xóa
+3. Hệ thống xóa mềm (đặt timestamp deleted_at)
+4. Hệ thống xóa file PDF khỏi kho lưu trữ
+5. Hệ thống chuyển hướng về danh sách bài báo
 
-### 5. View Publications
-1. Researcher accesses "My Publications"
-2. System displays publications list
-3. Researcher can filter by status
-4. Researcher can sort by date
-5. System shows actions based on status
-
----
-
-## ✅ Preconditions
-
-- User is authenticated (LDAP/AD login)
-- User has Researcher or SuperAdmin role
-- System database is accessible
+### 5. Xem Bài Báo
+1. Researcher truy cập "Bài Báo Của Tôi"
+2. Hệ thống hiển thị danh sách bài báo
+3. Researcher có thể lọc theo trạng thái
+4. Researcher có thể sắp xếp theo ngày
+5. Hệ thống hiển thị các hành động dựa trên trạng thái
 
 ---
 
-## 📝 Postconditions
+## ✅ Điều Kiện Tiên Quyết
 
-**Success**:
-- Publication is created/updated/deleted in database
-- Files are stored securely
-- Audit logs are created
-- User sees confirmation message
-
-**Failure**:
-- No data is changed
-- Error message is displayed
-- System state is unchanged
+- Người dùng đã xác thực (đăng nhập LDAP/AD)
+- Người dùng có vai trò Researcher hoặc SuperAdmin
+- Cơ sở dữ liệu hệ thống có thể truy cập được
 
 ---
 
-## 🔒 Business Rules
+## 📝 Điều Kiện Hậu Quyết
 
-### BR-PUB-001: Ownership
+**Thành Công**:
+- Bài báo được tạo/cập nhật/xóa trong cơ sở dữ liệu
+- File được lưu trữ an toàn
+- Nhật ký kiểm toán được tạo
+- Người dùng thấy thông báo xác nhận
+
+**Thất Bại**:
+- Không có dữ liệu nào bị thay đổi
+- Thông báo lỗi được hiển thị
+- Trạng thái hệ thống không đổi
+
+---
+
+## 🔒 Quy Tắc Nghiệp Vụ
+
+### BR-PUB-001: Quyền Sở Hữu
 - CHỈ owner (tác giả chính) mới được sửa/xóa bài báo
 - Co-authors có quyền xem nhưng không sửa/xóa
 
-### BR-PUB-002: Status-Based Permissions
+### BR-PUB-002: Quyền Dựa Trên Trạng Thái
 - Sửa được KHI: status = DRAFT hoặc REVISION_REQUIRED
 - Xóa được KHI: status = DRAFT only
 - KHÔNG sửa/xóa KHI: SUBMITTED, REVIEWING, PUBLISHED
 
-### BR-PUB-003: File Management
-- PDF file type only
-- Max size: 10MB
-- Files are stored outside web root
-- File names are sanitized
+### BR-PUB-003: Quản Lý File
+- Chỉ chấp nhận loại file PDF
+- Kích thước tối đa: 10MB
+- File được lưu trữ ngoài thư mục web root
+- Tên file được làm sạch (sanitized)
 
-### BR-PUB-004: Validation
-- DOI format: `10.xxxx/xxxxx`
-- ISSN format: `xxxx-xxxx`
-- Required fields: Title, Authors, Year, Journal
-- Year: 1900 ≤ year ≤ current year + 1
+### BR-PUB-004: Xác Thực (Validation)
+- Định dạng DOI: `10.xxxx/xxxxx`
+- Định dạng ISSN: `xxxx-xxxx`
+- Các trường bắt buộc: Tiêu đề, Tác giả, Năm, Tạp chí
+- Năm: 1900 ≤ năm ≤ năm hiện tại + 1
 
-### BR-PUB-005: Default Values
-- New publication status = DRAFT
-- Created_by = current user
-- Created_at = current timestamp
-
----
-
-## 📐 Sub Use Cases (Medium-Level)
-
-This high-level use case breaks down into:
-
-- [UC-M1-001: Create Publication](../Medium_Level/module_01_publication_management.md#uc-m1-001)
-- [UC-M1-002: Edit Publication](../Medium_Level/module_01_publication_management.md#uc-m1-002)
-- [UC-M1-003: Delete Publication](../Medium_Level/module_01_publication_management.md#uc-m1-003)
-- [UC-M1-004: View Publication List](../Medium_Level/module_01_publication_management.md#uc-m1-004)
-- [UC-M1-005: View Publication Details](../Medium_Level/module_01_publication_management.md#uc-m1-005)
-- [UC-M1-006: Upload PDF File](../Medium_Level/module_01_publication_management.md#uc-m1-006)
-- [UC-M1-007: Download PDF File](../Medium_Level/module_01_publication_management.md#uc-m1-007)
-- [UC-M1-008: Add Co-Authors](../Medium_Level/module_01_publication_management.md#uc-m1-008)
-- [UC-M1-009: Validate DOI/ISSN](../Medium_Level/module_01_publication_management.md#uc-m1-009)
+### BR-PUB-005: Giá Trị Mặc Định
+- Trạng thái bài báo mới = DRAFT
+- Created_by = người dùng hiện tại
+- Created_at = timestamp hiện tại
 
 ---
 
-## 📊 Key Metrics
+## 📐 Use Cases Con (Cấp Trung)
 
-- **Performance**: Create publication < 3 seconds
-- **Usability**: Form completion time < 5 minutes
-- **Storage**: Support up to 20,000 publications
-- **Reliability**: 99.9% file upload success rate
+Use case cấp cao này phân rã thành:
+
+- [UC-M1-001: Tạo Bài Báo](../Medium_Level/module_01_publication_management.md#uc-m1-001)
+- [UC-M1-002: Sửa Bài Báo](../Medium_Level/module_01_publication_management.md#uc-m1-002)
+- [UC-M1-003: Xóa Bài Báo](../Medium_Level/module_01_publication_management.md#uc-m1-003)
+- [UC-M1-004: Xem Danh Sách Bài Báo](../Medium_Level/module_01_publication_management.md#uc-m1-004)
+- [UC-M1-005: Xem Chi Tiết Bài Báo](../Medium_Level/module_01_publication_management.md#uc-m1-005)
+- [UC-M1-006: Upload File PDF](../Medium_Level/module_01_publication_management.md#uc-m1-006)
+- [UC-M1-007: Download File PDF](../Medium_Level/module_01_publication_management.md#uc-m1-007)
+- [UC-M1-008: Thêm Đồng Tác Giả](../Medium_Level/module_01_publication_management.md#uc-m1-008)
+- [UC-M1-009: Xác Thực DOI/ISSN](../Medium_Level/module_01_publication_management.md#uc-m1-009)
 
 ---
 
-## 🚨 Exceptions & Error Handling
+## 📊 Chỉ Số Chính
 
-| Error | Condition | System Response |
+- **Hiệu năng**: Tạo bài báo < 3 giây
+- **Khả năng sử dụng**: Thời gian hoàn thành biểu mẫu < 5 phút
+- **Lưu trữ**: Hỗ trợ lên đến 20,000 bài báo
+- **Độ tin cậy**: Tỷ lệ upload file thành công 99.9%
+
+---
+
+## 🚨 Ngoại Lệ & Xử Lý Lỗi
+
+| Lỗi | Điều Kiện | Phản Hồi Hệ Thống |
 |-------|-----------|-----------------|
-| Invalid DOI | DOI format incorrect | Show error message with format hint |
-| File too large | PDF > 10MB | Reject upload, show size limit |
-| Duplicate DOI | DOI already exists | Warn user, suggest add as co-author |
-| Unauthorized edit | User not owner | Display "Access denied" message |
-| Network error | Upload failed | Show retry option |
+| DOI không hợp lệ | Định dạng DOI sai | Hiện thông báo lỗi với gợi ý định dạng |
+| File quá lớn | PDF > 10MB | Từ chối upload, hiện giới hạn kích thước |
+| Trùng DOI | DOI đã tồn tại | Cảnh báo người dùng, gợi ý thêm với tư cách đồng tác giả |
+| Sửa không hợp lệ | Người dùng không phải owner | Hiển thị thông báo "Truy cập bị từ chối" |
+| Lỗi mạng | Upload thất bại | Hiển thị tùy chọn thử lại |
 
 ---
 
 **Tài liệu liên quan**:
 - [User Stories - Researcher](../../04_User_Stories/By_Role/researcher_stories.md)
-- [Requirements - Publication Management](../../03_Requirements/Functional/module_publication_management.md)
-- [Medium-Level Use Cases](../Medium_Level/module_01_publication_management.md)
+- [Yêu Cầu - Quản Lý Bài Báo](../../03_Requirements/Functional/module_publication_management.md)
+- [Use Cases Cấp Trung](../Medium_Level/module_01_publication_management.md)

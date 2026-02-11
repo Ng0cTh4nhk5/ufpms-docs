@@ -1,65 +1,65 @@
-# Module 2: Approval Workflow - Use Case Diagram
+# Module 2: Quy trình Phê duyệt - Biểu đồ Ca Sử dụng
 
-> 📊 **Diagram ID**: UCD-02  
-> 📦 **Module**: Approval Workflow  
-> 👥 **Actors**: Researcher, Faculty Reviewer, University Reviewer  
-> 📋 **Use Cases**: 15
-
----
-
-## 🎯 Module Overview
-
-Module này handle quy trình phê duyệt 2 cấp (Khoa → Trường) cho publications.
-
-**Workflow States**:
-```
-DRAFT → SUBMITTED → FACULTY_REVIEWING → FACULTY_APPROVED → 
-UNIVERSITY_REVIEWING → PUBLISHED
-
-Alternative: REVISION_REQUIRED → DRAFT
-Alternative: REJECTED (final)
-```
+> 📊 **ID Biểu đồ**: UCD-02  
+> 📦 **Module**: Quy trình Phê duyệt  
+> 👥 **Tác nhân**: Nhà nghiên cứu, Người đánh giá Khoa, Người đánh giá Trường  
+> 📋 **Ca Sử dụng**: 15
 
 ---
 
-## 📊 Use Case Diagram
+## 🎯 Tổng quan Module
+
+Module này xử lý quy trình phê duyệt 2 cấp (Khoa → Trường) cho ấn phẩm.
+
+**Trạng thái Quy trình**:
+```
+DRAFT (Nháp) → SUBMITTED (Đã gửi) → FACULTY_REVIEWING (Khoa đang duyệt) → FACULTY_APPROVED (Khoa đã duyệt) → 
+UNIVERSITY_REVIEWING (Trường đang duyệt) → PUBLISHED (Đã xuất bản)
+
+Thay thế: REVISION_REQUIRED (Yêu cầu chỉnh sửa) → DRAFT (Nháp)
+Thay thế: REJECTED (Bị từ chối) (cuối cùng)
+```
+
+---
+
+## 📊 Biểu đồ Ca Sử dụng
 
 ```mermaid
 graph TB
-    subgraph Actors["👥 Actors"]
-        RES[👨‍🔬 Researcher]
-        FCR[👨‍💼 Faculty<br/>Reviewer]
-        UNR[👨‍💼 University<br/>Reviewer]
+    subgraph Actors["👥 Tác nhân"]
+        RES[👨‍🔬 Nhà nghiên cứu]
+        FCR[👨‍💼 Người đánh giá<br/>Khoa]
+        UNR[👨‍💼 Người đánh giá<br/>Trường]
     end
     
-    subgraph APPROVAL["✅ Approval Workflow Module"]
+    subgraph APPROVAL["✅ Module Quy trình Phê duyệt"]
         direction TB
         
-        subgraph Submission["📤 Submission (Researcher)"]
-            UC1[UC-M2-001<br/>Submit for Review<br/>P0]
-            UC2[UC-M2-002<br/>Withdraw Submission<br/>P0]
-            UC3[UC-M2-003<br/>Resubmit After Revision<br/>P0]
-            UC4[UC-M2-004<br/>Track Approval Status<br/>P0]
+        subgraph Submission["📤 Gửi bài (Nhà nghiên cứu)"]
+            UC1[UC-M2-001<br/>Gửi để Đánh giá<br/>P0]
+            UC2[UC-M2-002<br/>Rút lại Bài gửi<br/>P0]
+            UC3[UC-M2-003<br/>Gửi lại Sau chỉnh sửa<br/>P0]
+            UC4[UC-M2-004<br/>Theo dõi Trạng thái<br/>P0]
         end
         
-        subgraph FacultyReview["🏛️ Faculty Review"]
-            UC5[UC-M2-005<br/>Review Submission<br/>P0]
-            UC6[UC-M2-006<br/>Approve at Faculty<br/>P0]
-            UC7[UC-M2-007<br/>Request Revision<br/>P0]
-            UC8[UC-M2-008<br/>Reject Submission<br/>P0]
-            UC9[UC-M2-009<br/>Assign Reviewer<br/>P1]
+        subgraph FacultyReview["🏛️ Đánh giá Khoa"]
+            UC5[UC-M2-005<br/>Đánh giá Bài gửi<br/>P0]
+            UC6[UC-M2-006<br/>Phê duyệt tại Khoa<br/>P0]
+            UC7[UC-M2-007<br/>Yêu cầu Chỉnh sửa<br/>P0]
+            UC8[UC-M2-008<br/>Từ chối Bài gửi<br/>P0]
+            UC9[UC-M2-009<br/>Phân công Người đánh giá<br/>P1]
         end
         
-        subgraph UniversityReview["🎓 University Review"]
-            UC10[UC-M2-010<br/>Review at University<br/>P0]
-            UC11[UC-M2-011<br/>Final Approval<br/>P0]
-            UC12[UC-M2-012<br/>Send Back to Faculty<br/>P0]
+        subgraph UniversityReview["🎓 Đánh giá Trường"]
+            UC10[UC-M2-010<br/>Đánh giá tại Trường<br/>P0]
+            UC11[UC-M2-011<br/>Phê duyệt Cuối cùng<br/>P0]
+            UC12[UC-M2-012<br/>Gửi Trả về Khoa<br/>P0]
         end
         
-        subgraph Common["🔔 Common"]
-            UC13[UC-M2-013<br/>View Review History<br/>P0]
-            UC14[UC-M2-014<br/>Receive Notifications<br/>P0]
-            UC15[UC-M2-015<br/>Add Review Comments<br/>P1]
+        subgraph Common["🔔 Chung"]
+            UC13[UC-M2-013<br/>Xem Lịch sử Đánh giá<br/>P0]
+            UC14[UC-M2-014<br/>Nhận Thông báo<br/>P0]
+            UC15[UC-M2-015<br/>Thêm Bình luận<br/>P1]
         end
         
         %% Include relationships
@@ -75,28 +75,28 @@ graph TB
     end
     
     %% Researcher connections
-    RES -->|submit| UC1
-    RES -->|withdraw| UC2
-    RES -->|resubmit| UC3
-    RES -->|track| UC4
-    RES -->|view| UC13
-    RES -->|receive| UC14
+    RES -->|gửi| UC1
+    RES -->|rút lại| UC2
+    RES -->|gửi lại| UC3
+    RES -->|theo dõi| UC4
+    RES -->|xem| UC13
+    RES -->|nhận| UC14
     
     %% Faculty Reviewer connections
-    FCR -->|review| UC5
-    FCR -->|approve| UC6
-    FCR -->|request revision| UC7
-    FCR -->|reject| UC8
-    FCR -->|assign| UC9
-    FCR -->|view| UC13
-    FCR -->|add| UC15
+    FCR -->|đánh giá| UC5
+    FCR -->|phê duyệt| UC6
+    FCR -->|yêu cầu chỉnh sửa| UC7
+    FCR -->|từ chối| UC8
+    FCR -->|phân công| UC9
+    FCR -->|xem| UC13
+    FCR -->|thêm| UC15
     
     %% University Reviewer connections
-    UNR -->|review| UC10
-    UNR -->|final approve| UC11
-    UNR -->|send back| UC12
-    UNR -->|view| UC13  
-    UNR -->|add| UC15
+    UNR -->|đánh giá| UC10
+    UNR -->|phê duyệt cuối| UC11
+    UNR -->|gửi trả về| UC12
+    UNR -->|xem| UC13  
+    UNR -->|thêm| UC15
     
     %% Styling
     style UC1 fill:#ff6b9d,stroke:#333,stroke-width:2px
@@ -122,308 +122,308 @@ graph TB
 
 ---
 
-## 📋 Use Cases - Submission Group
+## 📋 Ca Sử dụng - Nhóm Gửi bài
 
-### UC-M2-001: Submit for Review
-**Priority**: P0  
-**Actor**: Researcher  
-**Description**: Submit publication từ DRAFT sang SUBMITTED  
+### UC-M2-001: Gửi để Đánh giá
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Gửi ấn phẩm từ DRAFT sang SUBMITTED  
 
-**Preconditions**:
-- Publication ở status DRAFT
-- Tất cả required fields đã điền
-- PDF đã upload
+**Điều kiện tiên quyết**:
+- Ấn phẩm ở trạng thái DRAFT
+- Tất cả các trường bắt buộc đã điền
+- PDF đã tải lên
 
-**Main Flow**:
-1. Researcher view DRAFT publication
-2. Click "Submit for Review"
-3. System validate completion
-4. System change status: DRAFT → SUBMITTED
-5. System tự động chuyển sang FACULTY_REVIEWING
-6. System send email notification to Faculty Reviewers
-7. System log action vào review_history
+**Luồng chính**:
+1. Nhà nghiên cứu xem ấn phẩm DRAFT
+2. Nhấn "Gửi để Đánh giá"
+3. Hệ thống xác thực hoàn thành
+4. Hệ thống đổi trạng thái: DRAFT → SUBMITTED
+5. Hệ thống tự động chuyển sang FACULTY_REVIEWING
+6. Hệ thống gửi email thông báo cho Người đánh giá Khoa
+7. Hệ thống ghi nhật ký hành động vào review_history
 
-**Business Rules**:
-- Sau khi submit, researcher KHÔNG thể edit
-- CHỈ có thể withdraw nếu chưa có reviewer claim
+**Quy tắc Nghiệp vụ**:
+- Sau khi gửi, nhà nghiên cứu KHÔNG thể chỉnh sửa
+- CHỈ có thể rút lại nếu chưa có người đánh giá nhận xử lý
 
-**Related**: FR-APR-001, US-RES-010
-
----
-
-### UC-M2-002: Withdraw Submission
-**Priority**: P0  
-**Actor**: Researcher  
-**Description**: Rút lại submission (SUBMITTED → DRAFT)
-
-**Preconditions**:
-- Status = SUBMITTED hoặc FACULTY_REVIEWING
-- Chưa có reviewer bắt đầu review (hoặc được reviewer approve withdraw)
-
-**Related**: FR-APR-002, US-RES-011
+**Liên quan**: FR-APR-001, US-RES-010
 
 ---
 
-### UC-M2-003: Resubmit After Revision
-**Priority**: P0  
-**Actor**: Researcher  
-**Description**: Submit lại sau khi fix theo yêu cầu revision
+### UC-M2-002: Rút lại Bài gửi
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Rút lại bài gửi (SUBMITTED → DRAFT)
 
-**Preconditions**:
-- Status = REVISION_REQUIRED (sau khi Faculty/University request revision)
-- Researcher đã edit xong
+**Điều kiện tiên quyết**:
+- Trạng thái = SUBMITTED hoặc FACULTY_REVIEWING
+- Chưa có người đánh giá bắt đầu đánh giá (hoặc được người đánh giá chấp thuận rút lại)
 
-**Flow**:
-- REVISION_REQUIRED → DRAFT (researcher edit)
-- DRAFT → SUBMITTED (resubmit)
-- SUBMITTED → FACULTY_REVIEWING (back to review)
-
-**Related**: FR-APR-003, US-RES-012
+**Liên quan**: FR-APR-002, US-RES-011
 
 ---
 
-### UC-M2-004: Track Approval Status
-**Priority**: P0  
-**Actor**: Researcher  
-**Description**: Xem real-time status của publication trong workflow
+### UC-M2-003: Gửi lại Sau chỉnh sửa
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Gửi lại sau khi sửa theo yêu cầu chỉnh sửa
 
-**Information Displayed**:
-- Current state
-- Timeline (submitted date, reviewed date, etc.)
-- Reviewer names (if disclosed)
-- Comments (if any)
+**Điều kiện tiên quyết**:
+- Trạng thái = REVISION_REQUIRED (sau khi Khoa/Trường yêu cầu chỉnh sửa)
+- Nhà nghiên cứu đã sửa xong
 
-**Related**: FR-APR-004, US-RES-013
+**Luồng**:
+- REVISION_REQUIRED → DRAFT (nhà nghiên cứu sửa)
+- DRAFT → SUBMITTED (gửi lại)
+- SUBMITTED → FACULTY_REVIEWING (quay lại đánh giá)
 
----
-
-## 📋 Use Cases - Faculty Review Group
-
-### UC-M2-005: Review Submission
-**Priority**: P0  
-**Actor**: Faculty Reviewer  
-**Description**: Xét duyệt publication ở cấp Khoa
-
-**Preconditions**:
-- Status = FACULTY_REVIEWING
-- Reviewer thuộc Faculty tương ứng
-
-**Main Flow**:
-1. Faculty Reviewer view danh sách submissions cần review
-2. Click vào publication
-3. System hiển thị full details + PDF
-4. Reviewer đọc và đánh giá
-5. Reviewer thêm comments (UC-M2-015 include)
-6. Reviewer choose action: Approve / Request Revision / Reject
-
-**Related**: FR-APR-005, FR-APR-006, US-FCR-002
+**Liên quan**: FR-APR-003, US-RES-012
 
 ---
 
-### UC-M2-006: Approve at Faculty
-**Priority**: P0  
-**Actor**: Faculty Reviewer  
-**Description**: Phê duyệt ở cấp Khoa
+### UC-M2-004: Theo dõi Trạng thái
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Xem trạng thái thời gian thực của ấn phẩm trong quy trình
 
-**Postconditions**:
-- Status: FACULTY_REVIEWING → FACULTY_APPROVED
-- System tự động chuyển sang UNIVERSITY_REVIEWING
-- Email notification to University Reviewers
+**Thông tin hiển thị**:
+- Trạng thái hiện tại
+- Dòng thời gian (ngày gửi, ngày đánh giá, v.v.)
+- Tên người đánh giá (nếu được công khai)
+- Bình luận (nếu có)
 
-**Related**: FR-APR-007, US-FCR-003
-
----
-
-### UC-M2-007: Request Revision
-**Priority**: P0  
-**Actor**: Faculty Reviewer  
-**Description**: Yêu cầu researcher sửa lại
-
-**Postconditions**:
-- Status: FACULTY_REVIEWING → REVISION_REQUIRED
-- Researcher received notification with comments
-- Researcher có thể edit lại
-
-**Related**: FR-APR-008, US-FCR-004
+**Liên quan**: FR-APR-004, US-RES-013
 
 ---
 
-### UC-M2-008: Reject Submission
-**Priority**: P0  
-**Actor**: Faculty Reviewer  
-**Description**: Từ chối publication (final rejection)
+## 📋 Ca Sử dụng - Nhóm Đánh giá Khoa
 
-**Preconditions**:
-- Lý do rejection phải được ghi rõ
+### UC-M2-005: Đánh giá Bài gửi
+**Độ ưu tiên**: P0  
+**Tác nhân**: Người đánh giá Khoa  
+**Mô tả**: Xét duyệt ấn phẩm ở cấp Khoa
 
-**Postconditions**:
-- Status: FACULTY_REVIEWING → REJECTED
-- KHÔNG thể resubmit (chỉ SuperAdmin mới unlock được)
+**Điều kiện tiên quyết**:
+- Trạng thái = FACULTY_REVIEWING
+- Người đánh giá thuộc Khoa tương ứng
 
-**Related**: FR-APR-009, US-FCR-005
+**Luồng chính**:
+1. Người đánh giá Khoa xem danh sách bài gửi cần đánh giá
+2. Nhấn vào ấn phẩm
+3. Hệ thống hiển thị chi tiết đầy đủ + PDF
+4. Người đánh giá đọc và đánh giá
+5. Người đánh giá thêm bình luận (UC-M2-015 include)
+6. Người đánh giá chọn hành động: Phê duyệt / Yêu cầu Chỉnh sửa / Từ chối
 
----
-
-### UC-M2-009: Assign Reviewer
-**Priority**: P1  
-**Actor**: Faculty Reviewer (Lead/Admin)  
-**Description**: Assign submission cho specific reviewer
-
-**Use Case**: Phân công reviewer khi có nhiều CB Khoa
-
-**Related**: FR-APR-010
+**Liên quan**: FR-APR-005, FR-APR-006, US-FCR-002
 
 ---
 
-## 📋 Use Cases - University Review Group
+### UC-M2-006: Phê duyệt tại Khoa
+**Độ ưu tiên**: P0  
+**Tác nhân**: Người đánh giá Khoa  
+**Mô tả**: Phê duyệt ở cấp Khoa
 
-### UC-M2-010: Review at University
-**Priority**: P0  
-**Actor**: University Reviewer  
-**Description**: Xét duyệt cấp Trường (final review)
+**Điều kiện hậu**:
+- Trạng thái: FACULTY_REVIEWING → FACULTY_APPROVED
+- Hệ thống tự động chuyển sang UNIVERSITY_REVIEWING
+- Thông báo email cho Người đánh giá Trường
 
-**Preconditions**:
-- Status = UNIVERSITY_REVIEWING
-- Publication đã được Faculty approve
-
-**Actions**:
-- Final Approve → PUBLISHED
-- Send back to Faculty → FACULTY_REVIEWING
-
-**Related**: FR-APR-011, FR-APR-012, US-UNR-003
+**Liên quan**: FR-APR-007, US-FCR-003
 
 ---
 
-### UC-M2-011: Final Approval
-**Priority**: P0  
-**Actor**: University Reviewer  
-**Description**: Phê duyệt cuối cùng và publish
+### UC-M2-007: Yêu cầu Chỉnh sửa
+**Độ ưu tiên**: P0  
+**Tác nhân**: Người đánh giá Khoa  
+**Mô tả**: Yêu cầu nhà nghiên cứu sửa lại
 
-**Postconditions**:
-- Status: UNIVERSITY_REVIEWING → PUBLISHED
-- Publication visible publicly
-- Researcher notified
-- Audit log created
+**Điều kiện hậu**:
+- Trạng thái: FACULTY_REVIEWING → REVISION_REQUIRED
+- Nhà nghiên cứu nhận thông báo kèm bình luận
+- Nhà nghiên cứu có thể sửa lại
 
-**Business Rule**: Sau khi PUBLISHED, CHỈ SuperAdmin mới edit/delete được
-
-**Related**: FR-APR-013, US-UNR-004
+**Liên quan**: FR-APR-008, US-FCR-004
 
 ---
 
-### UC-M2-012: Send Back to Faculty
-**Priority**: P0  
-**Actor**: University Reviewer  
-**Description**: Gửi lại cho Faculty để xem xét thêm
+### UC-M2-008: Từ chối Bài gửi
+**Độ ưu tiên**: P0  
+**Tác nhân**: Người đánh giá Khoa  
+**Mô tả**: Từ chối ấn phẩm (từ chối cuối cùng)
 
-**Postconditions**:
-- Status: UNIVERSITY_REVIEWING → FACULTY_REVIEWING
-- Faculty reviewer notified
+**Điều kiện tiên quyết**:
+- Lý do từ chối phải được ghi rõ
 
-**Related**: FR-APR-014, US-UNR-005
+**Điều kiện hậu**:
+- Trạng thái: FACULTY_REVIEWING → REJECTED
+- KHÔNG thể gửi lại (chỉ Quản trị viên Cấp cao mới mở khóa được)
 
----
-
-## 📋 Use Cases - Common Group
-
-### UC-M2-013: View Review History
-**Priority**: P0  
-**Actor**: Researcher, Faculty Reviewer, University Reviewer  
-**Description**: Xem complete history của approval process
-
-**Information**:
-- All state transitions với timestamps
-- Who did what
-- Comments từ reviewers
-- Email notifications sent
-
-**Related**: FR-APR-015, US-RES-014, US-FCR-006, US-UNR-006
+**Liên quan**: FR-APR-009, US-FCR-005
 
 ---
 
-### UC-M2-014: Receive Notifications
-**Priority**: P0  
-**Actor**: All  
-**Description**: Nhận email notifications về workflow events
+### UC-M2-009: Phân công Người đánh giá
+**Độ ưu tiên**: P1  
+**Tác nhân**: Người đánh giá Khoa (Trưởng nhóm/Quản trị)  
+**Mô tả**: Phân công bài gửi cho người đánh giá cụ thể
 
-**Events Trigger Notifications**:
-- Submission submitted → Faculty Reviewers
-- Approved at Faculty → University Reviewers, Researcher
-- Revision requested → Researcher
-- Rejected → Researcher
-- Published → Researcher, all co-authors
+**Ca sử dụng**: Phân công người đánh giá khi có nhiều Cán bộ Khoa
 
-**Related**: FR-APR-016, FR-APR-017
+**Liên quan**: FR-APR-010
 
 ---
 
-### UC-M2-015: Add Review Comments
-**Priority**: P1  
-**Actor**: Faculty Reviewer, University Reviewer  
-**Description**: Thêm comments khi review
+## 📋 Ca Sử dụng - Nhóm Đánh giá Trường
 
-**Features**:
-- Rich text comments
-- Attach files (optional - P2)
-- Tag specific sections of PDF (P2)
+### UC-M2-010: Đánh giá tại Trường
+**Độ ưu tiên**: P0  
+**Tác nhân**: Người đánh giá Trường  
+**Mô tả**: Xét duyệt cấp Trường (đánh giá cuối cùng)
 
-**Related**: FR-APR-018
+**Điều kiện tiên quyết**:
+- Trạng thái = UNIVERSITY_REVIEWING
+- Ấn phẩm đã được Khoa phê duyệt
+
+**Hành động**:
+- Phê duyệt Cuối cùng → PUBLISHED
+- Gửi Trả về Khoa → FACULTY_REVIEWING
+
+**Liên quan**: FR-APR-011, FR-APR-012, US-UNR-003
 
 ---
 
-## 📊 Statistics
+### UC-M2-011: Phê duyệt Cuối cùng
+**Độ ưu tiên**: P0  
+**Tác nhân**: Người đánh giá Trường  
+**Mô tả**: Phê duyệt cuối cùng và xuất bản
 
-| Priority | Use Cases | % |
+**Điều kiện hậu**:
+- Trạng thái: UNIVERSITY_REVIEWING → PUBLISHED
+- Ấn phẩm hiển thị công khai
+- Nhà nghiên cứu được thông báo
+- Nhật ký kiểm toán được tạo
+
+**Quy tắc Nghiệp vụ**: Sau khi PUBLISHED, CHỈ Quản trị viên Cấp cao mới sửa/xóa được
+
+**Liên quan**: FR-APR-013, US-UNR-004
+
+---
+
+### UC-M2-012: Gửi Trả về Khoa
+**Độ ưu tiên**: P0  
+**Tác nhân**: Người đánh giá Trường  
+**Mô tả**: Gửi lại cho Khoa để xem xét thêm
+
+**Điều kiện hậu**:
+- Trạng thái: UNIVERSITY_REVIEWING → FACULTY_REVIEWING
+- Người đánh giá Khoa được thông báo
+
+**Liên quan**: FR-APR-014, US-UNR-005
+
+---
+
+## 📋 Ca Sử dụng - Nhóm Chung
+
+### UC-M2-013: Xem Lịch sử Đánh giá
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu, Người đánh giá Khoa, Người đánh giá Trường  
+**Mô tả**: Xem lịch sử đầy đủ của quy trình phê duyệt
+
+**Thông tin**:
+- Tất cả chuyển đổi trạng thái với dấu thời gian
+- Ai đã làm gì
+- Bình luận từ người đánh giá
+- Thông báo email đã gửi
+
+**Liên quan**: FR-APR-015, US-RES-014, US-FCR-006, US-UNR-006
+
+---
+
+### UC-M2-014: Nhận Thông báo
+**Độ ưu tiên**: P0  
+**Tác nhân**: Tất cả  
+**Mô tả**: Nhận email thông báo về sự kiện quy trình
+
+**Sự kiện Kích hoạt Thông báo**:
+- Bài gửi đã nộp → Người đánh giá Khoa
+- Đã phê duyệt tại Khoa → Người đánh giá Trường, Nhà nghiên cứu
+- Yêu cầu chỉnh sửa → Nhà nghiên cứu
+- Bị từ chối → Nhà nghiên cứu
+- Đã xuất bản → Nhà nghiên cứu, tất cả đồng tác giả
+
+**Liên quan**: FR-APR-016, FR-APR-017
+
+---
+
+### UC-M2-015: Thêm Bình luận
+**Độ ưu tiên**: P1  
+**Tác nhân**: Người đánh giá Khoa, Người đánh giá Trường  
+**Mô tả**: Thêm bình luận khi đánh giá
+
+**Tính năng**:
+- Bình luận văn bản phong phú
+- Đính kèm tệp (tùy chọn - P2)
+- Gắn thẻ các phần cụ thể của PDF (P2)
+
+**Liên quan**: FR-APR-018
+
+---
+
+## 📊 Thống kê
+
+| Độ ưu tiên | Ca Sử dụng | % |
 |----------|-----------|---|
-| P0 - Must Have | 13 | 87% |
-| P1 - Should Have | 2 | 13% |
+| P0 - Phải Có | 13 | 87% |
+| P1 - Nên Có | 2 | 13% |
 
 ---
 
-## 🔄 State Transitions
+## 🔄 Chuyển đổi Trạng thái
 
 ```mermaid
 stateDiagram-v2
     [*] --> DRAFT
-    DRAFT --> SUBMITTED: UC-M2-001<br/>Submit
-    SUBMITTED --> FACULTY_REVIEWING: Auto
-    FACULTY_REVIEWING --> FACULTY_APPROVED: UC-M2-006<br/>Approve
-    FACULTY_REVIEWING --> REVISION_REQUIRED: UC-M2-007<br/>Request Revision
-    FACULTY_REVIEWING --> REJECTED: UC-M2-008<br/>Reject
-    REVISION_REQUIRED --> DRAFT: Researcher edit
-    DRAFT --> SUBMITTED: UC-M2-003<br/>Resubmit
-    FACULTY_APPROVED --> UNIVERSITY_REVIEWING: Auto
-    UNIVERSITY_REVIEWING --> PUBLISHED: UC-M2-011<br/>Final Approve
-    UNIVERSITY_REVIEWING --> FACULTY_REVIEWING: UC-M2-012<br/>Send Back
+    DRAFT --> SUBMITTED: UC-M2-001<br/>Gửi
+    SUBMITTED --> FACULTY_REVIEWING: Tự động
+    FACULTY_REVIEWING --> FACULTY_APPROVED: UC-M2-006<br/>Phê duyệt
+    FACULTY_REVIEWING --> REVISION_REQUIRED: UC-M2-007<br/>Yêu cầu Chỉnh sửa
+    FACULTY_REVIEWING --> REJECTED: UC-M2-008<br/>Từ chối
+    REVISION_REQUIRED --> DRAFT: Nhà nghiên cứu sửa
+    DRAFT --> SUBMITTED: UC-M2-003<br/>Gửi lại
+    FACULTY_APPROVED --> UNIVERSITY_REVIEWING: Tự động
+    UNIVERSITY_REVIEWING --> PUBLISHED: UC-M2-011<br/>Phê duyệt Cuối cùng
+    UNIVERSITY_REVIEWING --> FACULTY_REVIEWING: UC-M2-012<br/>Gửi Trả về
     REJECTED --> [*]
     PUBLISHED --> [*]
 ```
 
 ---
 
-## 🔗 Traceability
+## 🔗 Truy xuất nguồn gốc
 
-### Functional Requirements
-- FR-APR-001 to FR-APR-020 (tất cả 20 FRs)
+### Yêu cầu Chức năng
+- FR-APR-001 đến FR-APR-020 (tất cả 20 FRs)
 
-### User Stories
-**Researcher**: US-RES-010 to US-RES-014  
-**Faculty Reviewer**: US-FCR-002 to US-FCR-006  
-**University Reviewer**: US-UNR-003 to US-UNR-006
+### Câu chuyện Người dùng
+**Nhà nghiên cứu**: US-RES-010 đến US-RES-014  
+**Người đánh giá Khoa**: US-FCR-002 đến US-FCR-006  
+**Người đánh giá Trường**: US-UNR-003 đến US-UNR-006
 
 ---
 
-## 📚 Related Documentation
+## 📚 Tài liệu Liên quan
 
-- **Use Cases**: [05_Use_Cases/Medium_Level/module_02_approval_workflow.md](../../05_Use_Cases/Medium_Level/module_02_approval_workflow.md)
-- **Requirements**: [03_Requirements/Functional/module_approval_workflow.md](../../03_Requirements/Functional/module_approval_workflow.md)
-- **Sequence Diagrams**: 
+- **Ca Sử dụng**: [05_Use_Cases/Medium_Level/module_02_approval_workflow.md](../../05_Use_Cases/Medium_Level/module_02_approval_workflow.md)
+- **Yêu cầu**: [03_Requirements/Functional/module_approval_workflow.md](../../03_Requirements/Functional/module_approval_workflow.md)
+- **Biểu đồ Tuần tự**: 
   - [seq_submit_for_review.md](../Sequence/seq_submit_for_review.md)
   - [seq_faculty_review.md](../Sequence/seq_faculty_review.md)
   - [seq_university_approval.md](../Sequence/seq_university_approval.md)
-- **Activity Diagrams**: [act_approval_workflow.md](../Activity/act_approval_workflow.md)
+- **Biểu đồ Hoạt động**: [act_approval_workflow.md](../Activity/act_approval_workflow.md)
 
 ---
 
-**Created**: 10/02/2026  
-**Version**: 1.0
+**Ngày tạo**: 10/02/2026  
+**Phiên bản**: 1.0

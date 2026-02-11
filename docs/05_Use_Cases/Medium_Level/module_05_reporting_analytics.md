@@ -1,145 +1,145 @@
-# Module 5: Reporting & Analytics - Medium-Level Use Cases
+# Module 5: Báo Cáo & Phân Tích - Use Cases Cấp Trung
 
-> **Module**: 5 - Reporting & Analytics  
-> **High-Level UC**: [UC-HL-005](../High_Level/uc_hl_05_reporting_analytics.md)
-
----
-
-## UC-M5-001: Generate Faculty Report
-**ID**: UC-M5-001 | **Priority**: 🟡 P1 | **Actor**: Faculty Reviewer  
-**Related**: US-FCR-008, FR-REP-002
-
-**Goal**: Generate faculty-level publication report  
-**Preconditions**: User is Faculty Reviewer  
-**Main Flow**:
-1. Reviewer selects parameters:
-   - Year range (from-to)
-   - Group by: Researcher, Quartile, Type
-2. Reviewer clicks "Generate Report"
-3. System queriesPublications WHERE faculty = reviewer's faculty AND status = PUBLISHED
-4. System generates report:
-   - Summary: Total, by quartile, by type
-   - Researcher breakdown
-   - Detailed publication list
-5. System displays preview
-
-**Business Rules**: BR-REP-001 (only own faculty), BR-REP-002 (PUBLISHED only)
+> **Module**: 5 - Báo Cáo & Phân Tích  
+> **Use Case Cấp Cao**: [UC-HL-005](../High_Level/uc_hl_05_reporting_analytics.md)
 
 ---
 
-## UC-M5-002: Generate University Report
-**ID**: UC-M5-002 | **Priority**: 🟡 P1 | **Actor**: University Reviewer  
-**Related**: US-UNR-008, FR-REP-002, FR-REP-005
+## UC-M5-001: Tạo Báo Cáo Khoa (Generate Faculty Report)
+**ID**: UC-M5-001 | **Độ Ưu Tiên**: 🟡 P1 | **Tác Nhân**: Faculty Reviewer  
+**Liên Quan**: US-FCR-008, FR-REP-002
 
-**Goal**: Generate university-wide report  
-**Preconditions**: User is University Reviewer or SuperAdmin  
-**Main Flow**:
-1. Reviewer selects parameters:
-   - Year range
-   - Faculty filter (all or specific)
-   - Grouping options
-2. Reviewer clicks "Generate Report"
-3. System queries all faculties
-4. System generates comprehensive report:
-   - University summary
-   - By faculty comparison
-   - By researcher (top researchers)
-   - Detailed lists
-5. System shows progress bar (may take 30s-5min)
+**Mục Tiêu**: Tạo báo cáo bài báo cấp khoa  
+**Điều Kiện Tiên Quyết**: Người dùng là Faculty Reviewer  
+**Luồng Chính**:
+1. Reviewer chọn tham số:
+   - Khoảng năm (từ-đến)
+   - Nhóm theo: Researcher, Xếp hạng (Quartile), Loại
+2. Reviewer nhấn "Tạo Báo Cáo"
+3. Hệ thống truy vấn các bài báo MÀ khoa = khoa của reviewer VÀ trạng thái = PUBLISHED
+4. Hệ thống tạo báo cáo:
+   - Tóm tắt: Tổng cộng, theo xếp hạng, theo loại
+   - Chi tiết theo Researcher
+   - Danh sách bài báo chi tiết
+5. Hệ thống hiển thị bản xem trước
 
-**Postconditions**: Report ready for export  
-**Business Rules**: BR-REP-001 (university-wide access), BR-REP-004 (< 5min)
+**Quy Tắc Nghiệp Vụ**: BR-REP-001 (chỉ khoa của mình), BR-REP-002 (chỉ PUBLISHED)
 
 ---
 
-## UC-M5-003: Export to Excel
-**ID**: UC-M5-003 | **Priority**: 🟡 P1 | **Actor**: Faculty/University Reviewer  
-**Related**: FR-REP-006
+## UC-M5-002: Tạo Báo Cáo Trường (Generate University Report)
+**ID**: UC-M5-002 | **Độ Ưu Tiên**: 🟡 P1 | **Tác Nhân**: University Reviewer  
+**Liên Quan**: US-UNR-008, FR-REP-002, FR-REP-005
 
-**Goal**: Export report to Excel format  
-**Main Flow**:
-1. User has generated report
-2. User clicks "Export to Excel"
-3. System creates .xlsx file with multiple sheets:
-   - Summary
-   - By Faculty
-   - By Researcher
-   - Detail (all publications)
-4. System downloads file: `report_YYYY-MM-DD.xlsx`
+**Mục Tiêu**: Tạo báo cáo toàn trường  
+**Điều Kiện Tiên Quyết**: Người dùng là University Reviewer hoặc SuperAdmin  
+**Luồng Chính**:
+1. Reviewer chọn tham số:
+   - Khoảng năm
+   - Bộ lọc khoa (tất cả hoặc cụ thể)
+   - Tùy chọn nhóm
+2. Reviewer nhấn "Tạo Báo Cáo"
+3. Hệ thống truy vấn tất cả các khoa
+4. Hệ thống tạo báo cáo toàn diện:
+   - Tóm tắt toàn trường
+   - So sánh theo khoa
+   - Theo nhà nghiên cứu (top researchers)
+   - Danh sách chi tiết
+5. Hệ thống hiển thị thanh tiến trình (có thể mất 30s-5phút)
 
-**Business Rules**: BR-REP-005 (30-day retention)
-
----
-
-## UC-M5-004: Export to PDF
-**ID**: UC-M5-004 | **Priority**: 🟡 P1 | **Actor**: Faculty/University Reviewer  
-**Related**: FR-REP-006
-
-**Goal**: Export formatted report to PDF  
-**Main Flow**:
-1. User has generated report
-2. User clicks "Export to PDF"
-3. System generates formatted PDF with:
-   - Cover page (university logo, date)
-   - Summary page with charts
-   - Detailed tables
-4. System downloads file
+**Điều Kiện Hậu Quyết**: Báo cáo sẵn sàng để xuất  
+**Quy Tắc Nghiệp Vụ**: BR-REP-001 (truy cập toàn trường), BR-REP-004 (thời gian < 5phút)
 
 ---
 
-## UC-M5-005: View Dashboard Statistics
-**ID**: UC-M5-005 | **Priority**: 🟡 P1 | **Actor**: Faculty/University Reviewer  
-**Related**: US-UNR-007, FR-REP-001
+## UC-M5-003: Xuất Excel (Export to Excel)
+**ID**: UC-M5-003 | **Độ Ưu Tiên**: 🟡 P1 | **Tác Nhân**: Faculty/University Reviewer  
+**Liên Quan**: FR-REP-006
 
-**Goal**: View real-time dashboardstatistics  
-**Main Flow**:
-1. Reviewer accesses dashboard
-2. System displays key metrics:
-   - Total publications (this year, all time)
-   - Distribution by quartile (pie chart)
-   - Distribution by faculty (bar chart)
-   - Trend line (last 5 years)
+**Mục Tiêu**: Xuất báo cáo ra định dạng Excel  
+**Luồng Chính**:
+1. Người dùng đã tạo báo cáo
+2. Người dùng nhấn "Xuất ra Excel"
+3. Hệ thống tạo file .xlsx với nhiều sheet:
+   - Tóm tắt
+   - Theo Khoa
+   - Theo Researcher
+   - Chi tiết (tất cả bài báo)
+4. Hệ thống tải xuống file: `report_YYYY-MM-DD.xlsx`
+
+**Quy Tắc Nghiệp Vụ**: BR-REP-005 (lưu trữ 30 ngày)
+
+---
+
+## UC-M5-004: Xuất PDF (Export to PDF)
+**ID**: UC-M5-004 | **Độ Ưu Tiên**: 🟡 P1 | **Tác Nhân**: Faculty/University Reviewer  
+**Liên Quan**: FR-REP-006
+
+**Mục Tiêu**: Xuất báo cáo định dạng PDF  
+**Luồng Chính**:
+1. Người dùng đã tạo báo cáo
+2. Người dùng nhấn "Xuất ra PDF"
+3. Hệ thống tạo file PDF được định dạng với:
+   - Trang bìa (logo trường, ngày)
+   - Trang tóm tắt với biểu đồ
+   - Các bảng chi tiết
+4. Hệ thống tải xuống file
+
+---
+
+## UC-M5-005: Xem Thống Kê Dashboard (View Dashboard Statistics)
+**ID**: UC-M5-005 | **Độ Ưu Tiên**: 🟡 P1 | **Tác Nhân**: Faculty/University Reviewer  
+**Liên Quan**: US-UNR-007, FR-REP-001
+
+**Mục Tiêu**: Xem thống kê dashboard thời gian thực  
+**Luồng Chính**:
+1. Reviewer truy cập dashboard
+2. Hệ thống hiển thị các chỉ số chính:
+   - Tổng số bài báo (năm nay, mọi thời đại)
+   - Phân bố theo xếp hạng (biểu đồ tròn)
+   - Phân bố theo khoa (biểu đồ cột)
+   - Đường xu hướng (5 năm qua)
+   - Các nhà nghiên cứu hàng đầu
+3. Các biểu đồ có tính tương tác
+4. Dữ liệu cập nhật khi tải trang
+
+**Quy Tắc Nghiệp Vụ**: BR-REP-003 (cache 1 giờ)
+
+---
+
+## UC-M5-006: Theo Dõi Xu Hướng Năng Suất (Track Productivity Trends)
+**ID**: UC-M5-006 | **Độ Ưu Tiên**: 🟢 P2 | **Tác Nhân**: University Reviewer  
+**Liên Quan**: US-UNR-010, FR-REP-004
+
+**Mục Tiêu**: Phân tích xu hướng năng suất  
+**Luồng Chính**:
+1. Reviewer truy cập Phân Tích Xu Hướng
+2. Hệ thống tính toán:
+   - Tỷ lệ tăng trưởng theo năm (Year-over-year)
+   - Các khoa tăng trưởng hàng đầu
+   - Các lĩnh vực nghiên cứu mới nổi (tần suất từ khóa)
+   - Các nhà nghiên cứu năng suất nhất năm nay
+3. Hệ thống trực quan hóa bằng biểu đồ
+
+---
+
+## UC-M5-007: Đối Sánh Các Khoa (Benchmark Faculties)
+**ID**: UC-M5-007 | **Độ Ưu Tiên**: 🟢 P2 | **Tác Nhân**: University Reviewer  
+**Liên Quan**: FR-REP-007
+
+**Mục Tiêu**: So sánh các khoa cạnh nhau  
+**Luồng Chính**:
+1. Reviewer chọn 2 khoa trở lên
+2. Reviewer chọn khoảng năm
+3. Hệ thống hiển thị bảng so sánh:
+   - Tổng số bài báo
+   - Theo xếp hạng (quartile)
    - Top researchers
-3. Charts are interactive
-4. Data updates on page load
-
-**Business Rules**: BR-REP-003 (cache 1 hour)
-
----
-
-## UC-M5-006: Track Productivity Trends
-**ID**: UC-M5-006 | **Priority**: 🟢 P2 | **Actor**: University Reviewer  
-**Related**: US-UNR-010, FR-REP-004
-
-**Goal**: Analyze productivity trends  
-**Main Flow**:
-1. Reviewer accesses Trend Analysis
-2. System calculates:
-   - Year-over-year growth rate
-   - Top growing faculties
-   - Emerging research fields (keyword frequency)
-   - Most productive researchers this year
-3. System visualizes with charts
-
----
-
-## UC-M5-007: Benchmark Faculties
-**ID**: UC-M5-007 | **Priority**: 🟢 P2 | **Actor**: University Reviewer  
-**Related**: FR-REP-007
-
-**Goal**: Compare faculties side-by-side  
-**Main Flow**:
-1. Reviewer selects 2+ faculties
-2. Reviewer selects year range
-3. System shows comparison table:
-   - Total publications
-   - By quartile
-   - Top researchers
-4. System highlights best performers
+4. Hệ thống làm nổi bật các bên có hiệu suất tốt nhất
 
 ---
 
 **Tài liệu liên quan**:
-- [High-Level UC-HL-005](../High_Level/uc_hl_05_reporting_analytics.md)
+- [Use Case Cấp Cao UC-HL-005](../High_Level/uc_hl_05_reporting_analytics.md)
 - [User Stories - Reviewers](../../04_User_Stories/By_Role/)
-- [Requirements - Reporting](../../03_Requirements/Functional/module_reporting.md)
+- [Yêu Cầu - Báo Cáo](../../03_Requirements/Functional/module_reporting.md)

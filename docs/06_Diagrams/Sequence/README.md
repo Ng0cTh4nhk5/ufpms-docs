@@ -1,33 +1,33 @@
-# Sequence Diagrams - README
+# Biểu đồ Tuần tự - README
 
-> 📁 **Folder**: `06_Diagrams/Sequence`  
+> 📁 **Thư mục**: `06_Diagrams/Sequence`  
 > 📅 **Cập nhật**: 10/02/2026  
-> 🎯 **Mục đích**: Minh họa flows và interactions cho P0 use cases
+> 🎯 **Mục đích**: Minh họa luồng và tương tác cho các ca sử dụng P0
 
 ---
 
 ## 📊 Tổng Quan
 
-Sequence Diagrams hiển thị:
-- **Actors**: Users và external systems
-- **Components**: UI, Controller, Service, Repository, Database
-- **Messages**: Method calls và responses
-- **Time**: Flow từ trên xuống dưới
+Biểu đồ Tuần tự hiển thị:
+- **Tác nhân**: Người dùng và hệ thống bên ngoài
+- **Thành phần**: Giao diện, Bộ điều khiển, Dịch vụ, Kho lưu trữ, Cơ sở dữ liệu
+- **Thông điệp**: Các cuộc gọi phương thức và phản hồi
+- **Thời gian**: Luồng từ trên xuống dưới
 
 ---
 
-## 🏗️ System Architecture (Simplified)
+## 🏗️ Kiến trúc Hệ thống (Đơn giản hóa)
 
 ```mermaid
 graph LR
-    Actor[👤 Actor] --> UI[🖥️ UI<br/>React]
-    UI --> API[🔌 API<br/>Controller]
-    API --> SVC[⚙️ Service<br/>Business Logic]
-    SVC --> REPO[💾 Repository<br/>Data Access]
-    REPO --> DB[(🗄️ Database<br/>MySQL)]
+    Actor[👤 Tác nhân] --> UI[🖥️ Giao diện<br/>React]
+    UI --> API[🔌 API<br/>Bộ điều khiển]
+    API --> SVC[⚙️ Dịch vụ<br/>Logic Nghiệp vụ]
+    SVC --> REPO[💾 Kho lưu trữ<br/>Truy cập Dữ liệu]
+    REPO --> DB[(🗄️ Cơ sở dữ liệu<br/>MySQL)]
     
-    SVC --> EMAIL[📧 Email<br/>Service]
-    API --> AUTH[🔐 Auth<br/>Service]
+    SVC --> EMAIL[📧 Email<br/>Dịch vụ]
+    API --> AUTH[🔐 Xác thực<br/>Dịch vụ]
     
     style UI fill:#61dafb,color:#000
     style API fill:#6bcf7f,color:#000
@@ -38,182 +38,182 @@ graph LR
 
 ---
 
-## 📁 Sequence Diagrams
+## 📁 Biểu đồ Tuần tự
 
-### P0 Critical Flows
+### Các Luồng Quan Trọng P0
 
 #### [seq_create_publication.md](./seq_create_publication.md)
-**Use Case**: UC-D1-01 - Create Publication  
-**Actors**: Researcher  
-**Components**: UI → Controller → Service → Repository → DB  
-**Key Actions**:
-- Validate input
-- Save publication (status = DRAFT)
-- Return publication ID
+**Ca Sử Dụng**: UC-D1-01 - Tạo Ấn phẩm  
+**Tác nhân**: Nhà nghiên cứu  
+**Thành phần**: Giao diện → Bộ điều khiển → Dịch vụ → Kho lưu trữ → CSDL  
+**Hành động Chính**:
+- Xác thực đầu vào
+- Lưu ấn phẩm (trạng thái = DRAFT)
+- Trả về ID ấn phẩm
 
 ---
 
 #### [seq_submit_for_review.md](./seq_submit_for_review.md)
-**Use Case**: UC-D2-01 - Submit for Review  
-**Actors**: Researcher  
-**Key Actions**:
-- Validate completion (all required fields, PDF uploaded)
-- State transition: DRAFT → SUBMITTED → FACULTY_REVIEWING
-- Trigger email notification to Faculty Reviewers
-- Log to review_history
+**Ca Sử Dụng**: UC-D2-01 - Gửi để Đánh giá  
+**Tác nhân**: Nhà nghiên cứu  
+**Hành động Chính**:
+- Xác thực hoàn thành (tất cả các trường bắt buộc, PDF đã tải lên)
+- Chuyển đổi trạng thái: DRAFT → SUBMITTED → FACULTY_REVIEWING
+- Kích hoạt email thông báo cho Người đánh giá Khoa
+- Ghi vào lịch sử đánh giá
 
 ---
 
 #### [seq_faculty_review.md](./seq_faculty_review.md)
-**Use Case**: UC-D2-05 - Faculty Review Process  
-**Actors**: Faculty Reviewer  
-**Key Actions**:
-- View submission details
-- Add review comments
-- Choose action: Approve / Request Revision / Reject
-- State transition based on action
-- Send notification to Researcher
+**Ca Sử Dụng**: UC-D2-05 - Quy trình Đánh giá Khoa  
+**Tác nhân**: Người đánh giá Khoa  
+**Hành động Chính**:
+- Xem chi tiết bài gửi
+- Thêm bình luận đánh giá
+- Chọn hành động: Phê duyệt / Yêu cầu Chỉnh sửa / Từ chối
+- Chuyển đổi trạng thái dựa trên hành động
+- Gửi thông báo cho Nhà nghiên cứu
 
 ---
 
 #### [seq_university_approval.md](./seq_university_approval.md)
-**Use Case**: UC-D2-08 - University Final Approval  
-**Actors**: University Reviewer  
-**Key Actions**:
-- Review at university level
-- Final approval: UNIVERSITY_REVIEWING → PUBLISHED
-- Notification to Researcher + co-authors
-- Create audit log
+**Ca Sử Dụng**: UC-D2-08 - Phê duyệt Cuối cùng của Trường  
+**Tác nhân**: Người đánh giá Trường  
+**Hành động Chính**:
+- Đánh giá ở cấp trường
+- Phê duyệt cuối cùng: UNIVERSITY_REVIEWING → PUBLISHED
+- Thông báo cho Nhà nghiên cứu + đồng tác giả
+- Tạo nhật ký kiểm toán
 
 ---
 
 #### [seq_revision_request.md](./seq_revision_request.md)
-**Use Case**: Alternative flow - Request Revision  
-**Actors**: Faculty/University Reviewer  
-**Key Actions**:
-- Add revision comments
-- State transition: REVIEWING → REVISION_REQUIRED
-- Notification with comments to Researcher
-- Researcher can re-edit (back to DRAFT)
+**Ca Sử Dụng**: Luồng thay thế - Yêu cầu Chỉnh sửa  
+**Tác nhân**: Người đánh giá Khoa/Trường  
+**Hành động Chính**:
+- Thêm bình luận chỉnh sửa
+- Chuyển đổi trạng thái: REVIEWING → REVISION_REQUIRED
+- Thông báo với các bình luận cho Nhà nghiên cứu
+- Nhà nghiên cứu có thể chỉnh sửa lại (quay lại DRAFT)
 
 ---
 
 #### [seq_search_publications.md](./seq_search_publications.md)
-**Use Case**: UC-D3-01 - Search Publications  
-**Actors**: Public Visitor  
-**Key Actions**:
-- Submit search query
-- Filter by status = PUBLISHED (visibility rule)
-- Return paginated results
-- Display metadata
+**Ca Sử Dụng**: UC-D3-01 - Tìm kiếm Ấn phẩm  
+**Tác nhân**: Khách truy cập  
+**Hành động Chính**:
+- Gửi truy vấn tìm kiếm
+- Lọc theo trạng thái = PUBLISHED (quy tắc hiển thị)
+- Trả về kết quả phân trang
+- Hiển thị siêu dữ liệu
 
 ---
 
 #### [seq_authentication.md](./seq_authentication.md)
-**Use Case**: System Authentication  
-**Actors**: All internal users  
-**Key Actions**:
-- User login with credentials
-- Authenticate via LDAP/AD
-- Generate JWT token
-- Fetch user roles
-- Return token + user info
+**Ca Sử Dụng**: Xác thực Hệ thống  
+**Tác nhân**: Tất cả người dùng nội bộ  
+**Hành động Chính**:
+- Người dùng đăng nhập với thông tin đăng nhập
+- Xác thực qua LDAP/AD
+- Tạo token JWT
+- Lấy vai trò người dùng
+- Trả về token + thông tin người dùng
 
 ---
 
-## 🎨 Diagram Conventions
+## 🎨 Quy ước Biểu đồ
 
-### Participants
-
-```
-Actor (stick figure)
-UI Component (box)
-Backend Service (box)
-Database (cylinder in participant list)
-External System (box with dashed border)
-```
-
-### Message Types
+### Các Bên Tham Gia
 
 ```
-→  : Synchronous call
---→ : Asynchronous call
---→ : Return message (dashed)
--x : Failed call
+Tác nhân (hình người)
+Thành phần Giao diện (hộp)
+Dịch vụ Backend (hộp)
+Cơ sở dữ liệu (hình trụ trong danh sách tham gia)
+Hệ thống Bên ngoài (hộp với viền nét đứt)
 ```
 
-### Activation Boxes
-- Vertical bars show when component is processing
+### Các Loại Thông Điệp
+
+```
+→  : Gọi đồng bộ
+--→ : Gọi bất đồng bộ
+--→ : Tin nhắn trả về (nét đứt)
+-x : Gọi thất bại
+```
+
+### Hộp Kích Hoạt
+- Các thanh dọc hiển thị khi thành phần đang xử lý
 
 ---
 
-## 📋 Template
+## 📋 Mẫu
 
 ```mermaid
 sequenceDiagram
-    actor User as 👤 User
-    participant UI as 🖥️ UI
+    actor User as 👤 Người dùng
+    participant UI as 🖥️ Giao diện
     participant API as 🔌 API
-    participant Service as ⚙️ Service
-    participant DB as 🗄️ DB
+    participant Service as ⚙️ Dịch vụ
+    participant DB as 🗄️ CSDL
     
-    User->>UI: Action
-    UI->>API: HTTP Request
-    API->>Service: Business Logic
-    Service->>DB: Query
-    DB-->>Service: Result
-    Service-->>API: Response
+    User->>UI: Hành động
+    UI->>API: Yêu cầu HTTP
+    API->>Service: Logic Nghiệp vụ
+    Service->>DB: Truy vấn
+    DB-->>Service: Kết quả
+    Service-->>API: Phản hồi
     API-->>UI: JSON
-    UI-->>User: Display
+    UI-->>User: Hiển thị
 ```
 
 ---
 
-## 🔗 Traceability
+## 🔗 Truy Xuất
 
-### với Use Cases
+### với Ca Sử Dụng
 
-| Sequence Diagram | Use Case | Module | Priority |
+| Biểu đồ Tuần tự | Ca Sử Dụng | Mô-đun | Ưu tiên |
 |------------------|----------|--------|----------|
-| seq_create_publication | UC-D1-01 | Publication | P0 |
-| seq_submit_for_review | UC-D2-01 | Approval | P0 |
-| seq_faculty_review | UC-D2-05 | Approval | P0 |
-| seq_university_approval | UC-D2-08, UC-D2-11 | Approval | P0 |
-| seq_revision_request | UC-D2-07 | Approval | P0 |
-| seq_search_publications | UC-D3-01 | Search | P0 |
-| seq_authentication | System | - | P0 |
+| seq_create_publication | UC-D1-01 | Ấn phẩm | P0 |
+| seq_submit_for_review | UC-D2-01 | Phê duyệt | P0 |
+| seq_faculty_review | UC-D2-05 | Phê duyệt | P0 |
+| seq_university_approval | UC-D2-08, UC-D2-11 | Phê duyệt | P0 |
+| seq_revision_request | UC-D2-07 | Phê duyệt | P0 |
+| seq_search_publications | UC-D3-01 | Tìm kiếm | P0 |
+| seq_authentication | Hệ thống | - | P0 |
 
 ---
 
-## 💡 How to Read
+## 💡 Cách Đọc
 
-### For Developers
-1. Identify components you're implementing
-2. Follow message flow top to bottom
-3. Note validation points
-4. Check error handling
+### Cho Nhà Phát Triển
+1. Xác định các thành phần bạn đang triển khai
+2. Theo dõi luồng thông điệp từ trên xuống dưới
+3. Lưu ý các điểm xác thực
+4. Kiểm tra xử lý lỗi
 
-### For Testers
-1. Map flow to test steps
-2. Identify validation points → assertions
-3. Note alternative flows → test cases
-4. Check error scenarios
+### Cho Người Kiểm Thử
+1. Ánh xạ luồng tới các bước kiểm thử
+2. Xác định các điểm xác thực → khẳng định
+3. Lưu ý các luồng thay thế → trường hợp kiểm thử
+4. Kiểm tra các kịch bản lỗi
 
-### For Business Analysts
-1. Verify business logic sequence
-2. Check notifications are sent
-3. Validate state transitions
-
----
-
-## 📚 Related Documentation
-
-- **Use Cases**: [05_Use_Cases/Detailed_Level/](../../05_Use_Cases/Detailed_Level/)
-- **Use Case Diagrams**: [../UseCase/](../UseCase/)
-- **Activity Diagrams**: [../Activity/](../Activity/)
-- **Requirements**: [03_Requirements/Functional/](../../03_Requirements/Functional/)
+### Cho Chuyên Viên Phân Tích Nghiệp Vụ
+1. Xác minh trình tự logic nghiệp vụ
+2. Kiểm tra thông báo được gửi
+3. Xác thực chuyển đổi trạng thái
 
 ---
 
-**Created**: 10/02/2026  
-**Version**: 1.0
+## 📚 Tài Liệu Liên Quan
+
+- **Ca Sử Dụng**: [05_Use_Cases/Detailed_Level/](../../05_Use_Cases/Detailed_Level/)
+- **Biểu đồ Ca Sử Dụng**: [../UseCase/](../UseCase/)
+- **Biểu đồ Hoạt động**: [../Activity/](../Activity/)
+- **Yêu Cầu**: [03_Requirements/Functional/](../../03_Requirements/Functional/)
+
+---
+
+**Ngày tạo**: 10/02/2026  
+**Phiên bản**: 1.0

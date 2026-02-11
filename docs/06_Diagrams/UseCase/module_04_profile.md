@@ -1,38 +1,38 @@
-# Module 4: Researcher Profile - Use Case Diagram
+# Module 4: Hồ sơ Nhà nghiên cứu - Biểu đồ Ca Sử dụng
 
-> 📊 **Diagram ID**: UCD-04  
-> 📦 **Module**: Researcher Profile  
-> 👥 **Actors**: Researcher, Public Visitor  
-> 📋 **Use Cases**: 6
-
----
-
-## 🎯 Module Overview
-
-Module này provide public portfolio/profile cho researchers.
-
-**Purpose**: Showcase researcher's publications và achievements publicly
+> 📊 **ID Biểu đồ**: UCD-04  
+> 📦 **Module**: Hồ sơ Nhà nghiên cứu  
+> 👥 **Tác nhân**: Nhà nghiên cứu, Khách truy cập  
+> 📋 **Ca Sử dụng**: 6
 
 ---
 
-## 📊 Use Case Diagram
+## 🎯 Tổng quan Module
+
+Module này cung cấp danh mục/hồ sơ công khai cho nhà nghiên cứu.
+
+**Mục đích**: Trưng bày các ấn phẩm và thành tựu của nhà nghiên cứu một cách công khai
+
+---
+
+## 📊 Biểu đồ Ca Sử dụng
 
 ```mermaid
 graph TB
-    subgraph Actors["👥 Actors"]
-        RES[👨‍🔬 Researcher]
-        VIW[👤 Public Visitor]
+    subgraph Actors["👥 Tác nhân"]
+        RES[👨‍🔬 Nhà nghiên cứu]
+        VIW[👤 Khách truy cập]
     end
     
-    subgraph PROFILE["👤 Researcher Profile Module"]
+    subgraph PROFILE["👤 Module Hồ sơ Nhà nghiên cứu"]
         direction TB
         
-        UC1[UC-M4-001<br/>View Own Profile<br/>P0]
-        UC2[UC-M4-002<br/>Edit Profile Info<br/>P1]
-        UC3[UC-M4-003<br/>View Public Profile<br/>P1]
-        UC4[UC-M4-004<br/>View Publication Statistics<br/>P1]
-        UC5[UC-M4-005<br/>Customize Profile Visibility<br/>P2]
-        UC6[UC-M4-006<br/>Export Profile to CV<br/>P2]
+        UC1[UC-M4-001<br/>Xem Hồ sơ Của mình<br/>P0]
+        UC2[UC-M4-002<br/>Sửa Thông tin Hồ sơ<br/>P1]
+        UC3[UC-M4-003<br/>Xem Hồ sơ Công khai<br/>P1]
+        UC4[UC-M4-004<br/>Xem Thống kê Ấn phẩm<br/>P1]
+        UC5[UC-M4-005<br/>Tùy chỉnh Hiển thị Hồ sơ<br/>P2]
+        UC6[UC-M4-006<br/>Xuất Hồ sơ sang CV<br/>P2]
         
         %% Include relationships
         UC1 -.->|include| UC4
@@ -40,16 +40,16 @@ graph TB
     end
     
     %% Researcher connections
-    RES -->|view own| UC1
-    RES -->|edit| UC2
-    RES -->|preview public| UC3
-    RES -->|view stats| UC4
-    RES -->|customize| UC5
-    RES -->|export| UC6
+    RES -->|xem của mình| UC1
+    RES -->|sửa| UC2
+    RES -->|xem trước công khai| UC3
+    RES -->|xem thống kê| UC4
+    RES -->|tùy chỉnh| UC5
+    RES -->|xuất| UC6
     
     %% Public Visitor connections
-    VIW -->|view public| UC3
-    VIW -->|view stats| UC4
+    VIW -->|xem công khai| UC3
+    VIW -->|xem thống kê| UC4
     
     %% Styling
     style UC1 fill:#ffd93d,stroke:#333,stroke-width:2px,color:#000
@@ -65,166 +65,166 @@ graph TB
 
 ---
 
-## 📋 Use Cases
+## 📋 Ca Sử dụng
 
-### UC-M4-001: View Own Profile
-**Priority**: P0  
-**Actor**: Researcher  
-**Description**: Researcher xem profile của mình
+### UC-M4-001: Xem Hồ sơ Của mình
+**Độ ưu tiên**: P0  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Nhà nghiên cứu xem hồ sơ của mình
 
-**Information Displayed**:
-- Basic info (name, title, department, faculty)
-- Contact info
-- Research interests
-- Publications list (all states)
-- Statistics (total pubs, citations, h-index - P2)
-- Photo (P1)
-- Bio (P1)
+**Thông tin Hiển thị**:
+- Thông tin cơ bản (tên, chức danh, bộ môn, khoa)
+- Thông tin liên hệ
+- Lĩnh vực nghiên cứu
+- Danh sách ấn phẩm (mọi trạng thái)
+- Thống kê (tổng ấn phẩm, trích dẫn, chỉ số h - P2)
+- Ảnh (P1)
+- Tiểu sử (P1)
 
-**Business Rule**: Auto-generated từ user data + publications
+**Quy tắc Nghiệp vụ**: Tự động tạo từ dữ liệu người dùng + ấn phẩm
 
-**Related**: FR-PRO-001, US-RES-020
-
----
-
-### UC-M4-002: Edit Profile Info
-**Priority**: P1  
-**Actor**: Researcher  
-**Description**: Chỉnh sửa profile information
-
-**Editable Fields**:
-- Photo
-- Bio/Research interests
-- Contact info (email, phone)
-- External links (ORCID, Google Scholar, personal website)
-- Social media (optional)
-
-**Not Editable** (synced từ HR system):
-- Name
-- Department/Faculty
-- Official title
-
-**Related**: FR-PRO-002, US-RES-021
+**Liên quan**: FR-PRO-001, US-RES-020
 
 ---
 
-### UC-M4-003: View Public Profile
-**Priority**: P1  
-**Actor**: Public Visitor, Researcher  
-**Description**: Xem public profile của researcher
+### UC-M4-002: Sửa Thông tin Hồ sơ
+**Độ ưu tiên**: P1  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Chỉnh sửa thông tin hồ sơ
+
+**Trường có thể Sửa**:
+- Ảnh
+- Tiểu sử/Lĩnh vực nghiên cứu
+- Thông tin liên hệ (email, điện thoại)
+- Liên kết bên ngoài (ORCID, Google Scholar, trang web cá nhân)
+- Mạng xã hội (tùy chọn)
+
+**Không thể Sửa** (đồng bộ từ hệ thống nhân sự):
+- Tên
+- Bộ môn/Khoa
+- Chức danh chính thức
+
+**Liên quan**: FR-PRO-002, US-RES-021
+
+---
+
+### UC-M4-003: Xem Hồ sơ Công khai
+**Độ ưu tiên**: P1  
+**Tác nhân**: Khách truy cập, Nhà nghiên cứu  
+**Mô tả**: Xem hồ sơ công khai của nhà nghiên cứu
 
 **URL**: `/profile/{username}` hoặc `/profile/{orcid}`
 
-**Visibility**:
-- Basic info
-- PUBLISHED publications only
-- Public statistics
-- External links
+**Khả năng hiển thị**:
+- Thông tin cơ bản
+- CHỈ ấn phẩm ĐÃ XUẤT BẢN
+- Thống kê công khai
+- Liên kết bên ngoài
 
-**Privacy**: Researcher control visibility settings (UC-M4-005)
+**Riêng tư**: Nhà nghiên cứu kiểm soát cài đặt hiển thị (UC-M4-005)
 
-**Related**: FR-PRO-003, US-VIW-007
-
----
-
-### UC-M4-004: View Publication Statistics
-**Priority**: P1  
-**Actor**: Researcher, Public Visitor  
-**Description**: Xem thống kê publications
-
-**Metrics** (P0):
-- Total PUBLISHED publications
-- By year (chart)
-- By publication type (pie chart)
-
-**Metrics** (P1):
-- By quartile (Q1, Q2, Q3, Q4)
-- By faculty/department ranking
-
-**Metrics** (P2):
-- Citation count
-- h-index
-- i10-index
-- Collaboration network
-
-**Related**: FR-PRO-004, US-RES-022
+**Liên quan**: FR-PRO-003, US-VIW-007
 
 ---
 
-### UC-M4-005: Customize Profile Visibility
-**Priority**: P2  
-**Actor**: Researcher  
-**Description**: Control những gì hiển thị publicly
+### UC-M4-004: Xem Thống kê Ấn phẩm
+**Độ ưu tiên**: P1  
+**Tác nhân**: Nhà nghiên cứu, Khách truy cập  
+**Mô tả**: Xem thống kê ấn phẩm
 
-**Visibility Settings**:
-- Show/hide contact info
-- Show/hide bio
-- Show/hide specific publications (even if PUBLISHED)
-- Show/hide statistics
+**Chỉ số** (P0):
+- Tổng ấn phẩm ĐÃ XUẤT BẢN
+- Theo năm (biểu đồ)
+- Theo loại ấn phẩm (biểu đồ tròn)
 
-**Default**: All public info visible
+**Chỉ số** (P1):
+- Theo hạng (Q1, Q2, Q3, Q4)
+- Theo xếp hạng khoa/bộ môn
 
-**Related**: FR-PRO-005
+**Chỉ số** (P2):
+- Số lượt trích dẫn
+- Chỉ số h
+- Chỉ số i10
+- Mạng lưới cộng tác
+
+**Liên quan**: FR-PRO-004, US-RES-022
 
 ---
 
-### UC-M4-006: Export Profile to CV
-**Priority**: P2  
-**Actor**: Researcher  
-**Description**: Export profile data sang CV format
+### UC-M4-005: Tùy chỉnh Hiển thị Hồ sơ
+**Độ ưu tiên**: P2  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Kiểm soát những gì hiển thị công khai
 
-**Formats**:
-- PDF (formatted CV)
-- Word (editable)
+**Cài đặt Hiển thị**:
+- Hiện/ẩn thông tin liên hệ
+- Hiện/ẩn tiểu sử
+- Hiện/ẩn ấn phẩm cụ thể (ngay cả khi ĐÃ XUẤT BẢN)
+- Hiện/ẩn thống kê
+
+**Mặc định**: Tất cả thông tin công khai hiển thị
+
+**Liên quan**: FR-PRO-005
+
+---
+
+### UC-M4-006: Xuất Hồ sơ sang CV
+**Độ ưu tiên**: P2  
+**Tác nhân**: Nhà nghiên cứu  
+**Mô tả**: Xuất dữ liệu hồ sơ sang định dạng CV
+
+**Định dạng**:
+- PDF (CV định dạng sẵn)
+- Word (có thể chỉnh sửa)
 - LaTeX
 
-**Use Case**: Nộp hồ sơ, apply funding, etc.
+**Ca sử dụng**: Nộp hồ sơ, xin tài trợ, v.v.
 
-**Related**: FR-PRO-006
+**Liên quan**: FR-PRO-006
 
 ---
 
-## 📊 Statistics
+## 📊 Thống kê
 
-| Priority | Use Cases | % |
+| Độ ưu tiên | Ca Sử dụng | % |
 |----------|-----------|---|
-| P0 - Must Have | 1 | 17% |
-| P1 - Should Have | 3 | 50% |
-| P2 - Nice to Have | 2 | 33% |
+| P0 - Phải Có | 1 | 17% |
+| P1 - Nên Có | 3 | 50% |
+| P2 - Có Thì Tốt | 2 | 33% |
 
 ---
 
-## 🔒 Privacy Levels
+## 🔒 Cấp độ Riêng tư
 
-| Information | Public Visitor | Researcher (Own) | Researcher (Others) |
+| Thông tin | Khách truy cập | Nhà nghiên cứu (Của mình) | Nhà nghiên cứu (Người khác) |
 |-------------|---------------|------------------|---------------------|
-| Name, Title | ✅ | ✅ | ✅ |
-| Department | ✅ | ✅ | ✅ |
-| PUBLISHED pubs | ✅ | ✅ | ✅ |
-| Contact info | ✅ (if allowed) | ✅ | ✅ (if allowed) |
-| Bio | ✅ | ✅ | ✅ |
-| DRAFT/SUBMITTED pubs | ❌ | ✅ | ❌ |
-| Statistics | ✅ | ✅ (detailed) | ✅ |
+| Tên, Chức danh | ✅ | ✅ | ✅ |
+| Bộ môn | ✅ | ✅ | ✅ |
+| Ấn phẩm ĐÃ XUẤT BẢN | ✅ | ✅ | ✅ |
+| Thông tin liên hệ | ✅ (nếu cho phép) | ✅ | ✅ (nếu cho phép) |
+| Tiểu sử | ✅ | ✅ | ✅ |
+| Ấn phẩm NHÁP/ĐÃ GỬI | ❌ | ✅ | ❌ |
+| Thống kê | ✅ | ✅ (chi tiết) | ✅ |
 
 ---
 
-## 🔗 Traceability
+## 🔗 Truy xuất nguồn gốc
 
-### Functional Requirements
-- FR-PRO-001 to FR-PRO-006 (6 FRs)
+### Yêu cầu Chức năng
+- FR-PRO-001 đến FR-PRO-006 (6 FRs)
 
-### User Stories
-**Researcher**: US-RES-020, US-RES-021, US-RES-022  
-**Public Visitor**: US-VIW-007, US-VIW-008
-
----
-
-## 📚 Related Documentation
-
-- **Use Cases**: [05_Use_Cases/Medium_Level/module_04_researcher_profile.md](../../05_Use_Cases/Medium_Level/module_04_researcher_profile.md)
-- **Requirements**: [03_Requirements/Functional/module_profile.md](../../03_Requirements/Functional/module_profile.md)
+### Câu chuyện Người dùng
+**Nhà nghiên cứu**: US-RES-020, US-RES-021, US-RES-022  
+**Khách truy cập**: US-VIW-007, US-VIW-008
 
 ---
 
-**Created**: 10/02/2026  
-**Version**: 1.0
+## 📚 Tài liệu Liên quan
+
+- **Ca Sử dụng**: [05_Use_Cases/Medium_Level/module_04_researcher_profile.md](../../05_Use_Cases/Medium_Level/module_04_researcher_profile.md)
+- **Yêu cầu**: [03_Requirements/Functional/module_profile.md](../../03_Requirements/Functional/module_profile.md)
+
+---
+
+**Ngày tạo**: 10/02/2026  
+**Phiên bản**: 1.0

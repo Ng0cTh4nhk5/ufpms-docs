@@ -1,104 +1,104 @@
-# Sequence Diagram: Faculty Review Process
+# Biểu đồ Tuần tự: Quy trình Đánh giá cấp Khoa
 
-> 📊 **Diagram ID**: SEQ-03  
-> 🎯 **Use Case**: UC-D2-05 - Faculty Review  
-> 👤 **Actor**: Faculty Reviewer  
-> ⚙️ **Key**: Review, Approve/Reject/Request Revision
+> 📊 **ID Biểu đồ**: SEQ-03  
+> 🎯 **Ca Sử Dụng**: UC-D2-05 - Đánh giá Khoa  
+> 👤 **Tác nhân**: Người đánh giá Khoa  
+> ⚙️ **Chính**: Đánh giá, Phê duyệt/Từ chối/Yêu cầu Chỉnh sửa
 
 ---
 
-## 📊 Sequence Diagram
+## 📊 Biểu đồ Tuần tự
 
 ```mermaid
 sequenceDiagram
-    actor Reviewer as 👨‍💼 Faculty Reviewer
-    participant UI as 🖥️ React UI
+    actor Reviewer as 👨‍💼 Người đánh giá Khoa
+    participant UI as 🖥️ Giao diện React
     participant API as 🔌 WorkflowController
     participant Service as ⚙️ WorkflowService
     participant Repo as 💾 Repository
-    participant DB as 🗄️ Database
-    participant Notif as 📧 NotificationService
+    participant DB as 🗄️ CSDL
+    participant Notif as 📧 Dịch vụ Thông báo
     
-    %% View submissions
-    Reviewer->>UI: Navigate to "My Reviews"
+    %% Xem danh sách bài gửi
+    Reviewer->>UI: Điều hướng đến "Đánh giá của Tôi"
     UI->>API: GET /api/reviews/pending
     API->>Service: getPendingReviews(reviewerId)
     Service->>Repo: findByFacultyAndStatus(facultyId, "FACULTY_REVIEWING")
     Repo->>DB: SELECT * WHERE faculty_id = ?<br/>AND status = 'FACULTY_REVIEWING'
-    DB-->>Repo: Publications list
-    Repo-->>Service: Publications[]
-    Service-->>API: Publications
-    API-->>UI: List of pending reviews
-    UI-->>Reviewer: Display list
+    DB-->>Repo: Danh sách ấn phẩm
+    Repo-->>Service: Ấn phẩm[]
+    Service-->>API: Ấn phẩm
+    API-->>UI: Danh sách đánh giá đang chờ
+    UI-->>Reviewer: Hiển thị danh sách
     
-    %% View details
-    Reviewer->>UI: Click publication
+    %% Xem chi tiết
+    Reviewer->>UI: Nhấn vào ấn phẩm
     UI->>API: GET /api/publications/{id}
     API->>Repo: findById(id)
-    Repo->>DB: SELECT with authors, PDF
-    DB-->>Repo: Full publication data
-    Repo-->>API: Publication
-    API-->>UI: Publication details
-    UI-->>Reviewer: Show details + PDF viewer
+    Repo->>DB: SELECT với tác giả, PDF
+    DB-->>Repo: Dữ liệu ấn phẩm đầy đủ
+    Repo-->>API: Ấn phẩm
+    API-->>UI: Chi tiết ấn phẩm
+    UI-->>Reviewer: Hiển thị chi tiết + Trình xem PDF
     
-    %% Add comments
-    Reviewer->>UI: Type review comments
-    Reviewer->>UI: Select action: Approve/Revision/Reject
+    %% Thêm bình luận
+    Reviewer->>UI: Nhập bình luận đánh giá
+    Reviewer->>UI: Chọn hành động: Phê duyệt/Chỉnh sửa/Từ chối
     
-    alt Action: Approve
-        Reviewer->>UI: Click "Approve"
+    alt Hành động: Phê duyệt
+        Reviewer->>UI: Nhấn "Phê duyệt"
         UI->>API: POST /api/reviews/{id}/approve
         activate API
         
         API->>Service: approveAtFaculty(pubId, reviewerId, comments)
         activate Service
         
-        Note over Service,DB: START TRANSACTION
+        Note over Service,DB: BẮT ĐẦU GIAO DỊCH
         
-        %% Update status
+        %% Cập nhật trạng thái
         Service->>Repo: updateStatus(pubId, "FACULTY_APPROVED")
         Repo->>DB: UPDATE publications<br/>SET status = 'FACULTY_APPROVED'
         
-        %% Auto transition to university review
+        %% Tự động chuyển sang đánh giá cấp trường
         Service->>Repo: updateStatus(pubId, "UNIVERSITY_REVIEWING")
         Repo->>DB: UPDATE publications<br/>SET status = 'UNIVERSITY_REVIEWING'
         
-        %% Log review
+        %% Ghi lịch sử đánh giá
         Service->>Repo: createReviewHistory(entry)
         Repo->>DB: INSERT INTO review_history
         
-        %% Save comments
-        alt Comments provided
+        %% Lưu bình luận
+        alt Có bình luận
             Service->>Repo: saveComments(pubId, reviewerId, comments)
             Repo->>DB: INSERT INTO review_comments
         end
         
-        Note over Service,DB: COMMIT
+        Note over Service,DB: CAM KẾT
         
-        %% Notify
+        %% Thông báo
         Service->>Notif: notifyFacultyApproval(publication)
         activate Notif
-        Notif->>Notif: Notify researcher (approved)
-        Notif->>Notif: Notify university reviewers (new task)
+        Notif->>Notif: Thông báo cho nhà nghiên cứu (đã phê duyệt)
+        Notif->>Notif: Thông báo cho người đánh giá trường (nhiệm vụ mới)
         deactivate Notif
         
-        Service-->>API: Success
+        Service-->>API: Thành công
         deactivate Service
         API-->>UI: 200 OK
         deactivate API
-        UI-->>Reviewer: "Approved successfully"
+        UI-->>Reviewer: "Đã phê duyệt thành công"
         
-    else Action: Request Revision
-        Reviewer->>UI: Click "Request Revision"
-        UI->>UI: Require comments
-        Reviewer->>UI: Enter revision reasons
+    else Hành động: Yêu cầu Chỉnh sửa
+        Reviewer->>UI: Nhấn "Yêu cầu Chỉnh sửa"
+        UI->>UI: Yêu cầu bình luận
+        Reviewer->>UI: Nhập lý do chỉnh sửa
         
         UI->>API: POST /api/reviews/{id}/request-revision
         activate API
         API->>Service: requestRevision(pubId, reviewerId, comments)
         activate Service
         
-        Note over Service,DB: START TRANSACTION
+        Note over Service,DB: BẮT ĐẦU GIAO DỊCH
         
         Service->>Repo: updateStatus(pubId, "REVISION_REQUIRED")
         Repo->>DB: UPDATE publications<br/>SET status = 'REVISION_REQUIRED'
@@ -109,30 +109,30 @@ sequenceDiagram
         Service->>Repo: createReviewHistory(entry)
         Repo->>DB: INSERT INTO review_history
         
-        Note over Service,DB: COMMIT
+        Note over Service,DB: CAM KẾT
         
         Service->>Notif: notifyRevisionRequired(publication, comments)
         activate Notif
-        Notif->>Notif: Send email to researcher with comments
+        Notif->>Notif: Gửi email cho nhà nghiên cứu kèm bình luận
         deactivate Notif
         
-        Service-->>API: Success
+        Service-->>API: Thành công
         deactivate Service
         API-->>UI: 200 OK
         deactivate API
-        UI-->>Reviewer: "Revision requested"
+        UI-->>Reviewer: "Đã yêu cầu chỉnh sửa"
         
-    else Action: Reject
-        Reviewer->>UI: Click "Reject"
-        UI->>UI: Require rejection reason
-        Reviewer->>UI: Enter reason
+    else Hành động: Từ chối
+        Reviewer->>UI: Nhấn "Từ chối"
+        UI->>UI: Yêu cầu lý do từ chối
+        Reviewer->>UI: Nhập lý do
         
         UI->>API: POST /api/reviews/{id}/reject
         activate API
         API->>Service: rejectPublication(pubId, reviewerId, reason)
         activate Service
         
-        Note over Service,DB: START TRANSACTION
+        Note over Service,DB: BẮT ĐẦU GIAO DỊCH
         
         Service->>Repo: updateStatus(pubId, "REJECTED")
         Repo->>DB: UPDATE publications<br/>SET status = 'REJECTED'
@@ -143,56 +143,56 @@ sequenceDiagram
         Service->>Repo: createReviewHistory(entry)
         Repo->>DB: INSERT INTO review_history
         
-        Note over Service,DB: COMMIT
+        Note over Service,DB: CAM KẾT
         
         Service->>Notif: notifyRejection(publication, reason)
         activate Notif
-        Notif->>Notif: Send email to researcher
+        Notif->>Notif: Gửi email cho nhà nghiên cứu
         deactivate Notif
         
-        Service-->>API: Success
+        Service-->>API: Thành công
         deactivate Service
         API-->>UI: 200 OK
         deactivate API
-        UI-->>Reviewer: "Publication rejected"
+        UI-->>Reviewer: "Ấn phẩm bị từ chối"
     end
 ```
 
 ---
 
-## 📋 Three Actions
+## 📋 Ba Hành Động
 
-### 1. Approve ✅
-- Status: `FACULTY_REVIEWING` → `FACULTY_APPROVED` → `UNIVERSITY_REVIEWING`
-- Notification: Researcher (approved) + University Reviewers (new task)
-- Comments optional
+### 1. Phê duyệt ✅
+- Trạng thái: `FACULTY_REVIEWING` → `FACULTY_APPROVED` → `UNIVERSITY_REVIEWING`
+- Thông báo: Nhà nghiên cứu (đã phê duyệt) + Người đánh giá Trường (nhiệm vụ mới)
+- Bình luận tùy chọn
 
-### 2. Request Revision 📝
-- Status: `FACULTY_REVIEWING` → `REVISION_REQUIRED`
-- Researcher can re-edit → resubmit
-- Comments **required**
+### 2. Yêu cầu Chỉnh sửa 📝
+- Trạng thái: `FACULTY_REVIEWING` → `REVISION_REQUIRED`
+- Nhà nghiên cứu có thể chỉnh sửa lại → gửi lại
+- Bình luận **bắt buộc**
 
-### 3. Reject ❌
-- Status: `FACULTY_REVIEWING` → `REJECTED`
-- Final rejection (cannot resubmit without SuperAdmin)
-- Reason **required**
+### 3. Từ chối ❌
+- Trạng thái: `FACULTY_REVIEWING` → `REJECTED`
+- Từ chối cuối cùng (không thể gửi lại nếu không có SuperAdmin)
+- Lý do **bắt buộc**
 
 ---
 
-## 🗄️ Database Changes
+## 🗄️ Thay Đổi Cơ Sở Dữ Liệu
 
-### Approve
+### Phê duyệt
 ```sql
--- Status transitions
+-- Chuyển đổi trạng thái
 UPDATE publications SET status = 'FACULTY_APPROVED' WHERE id = ?;
 UPDATE publications SET status = 'UNIVERSITY_REVIEWING' WHERE id = ?;
 
--- History
+-- Lịch sử
 INSERT INTO review_history (publication_id, from_status, to_status, actor_id, action, comments)
 VALUES (?, 'FACULTY_REVIEWING', 'UNIVERSITY_REVIEWING', ?, 'APPROVE', ?);
 ```
 
-### Request Revision
+### Yêu cầu Chỉnh sửa
 ```sql
 UPDATE publications SET status = 'REVISION_REQUIRED' WHERE id = ?;
 
@@ -202,7 +202,7 @@ VALUES (?, ?, 'REVISION_REQUEST', ?);
 INSERT INTO review_history ...
 ```
 
-### Reject
+### Từ chối
 ```sql
 UPDATE publications SET status = 'REJECTED' WHERE id = ?;
 
@@ -214,5 +214,5 @@ INSERT INTO review_history ...
 
 ---
 
-**Related**: FR-APR-005 to APR-009, US-FCR-002 to FCR-005  
-**Created**: 10/02/2026
+**Liên quan**: FR-APR-005 đến APR-009, US-FCR-002 đến FCR-005  
+**Ngày tạo**: 10/02/2026

@@ -1,33 +1,33 @@
-# Non-Functional Requirements - README
+# Yêu Cầu Phi Chức Năng - README
 
-> 📁 **Folder**: `03_Requirements/Non_Functional`  
+> 📁 **Thư mục**: `03_Requirements/Non_Functional`  
 > 📅 **Cập nhật**: 10/02/2026  
 > 🎯 **Mục đích**: Tổng hợp yêu cầu phi chức năng
 
 ---
 
-## 📚 Tài Liệu Trong Folder
+## 📚 Tài Liệu Trong Thư Mục
 
-1. **[performance.md](./performance.md)** - Hiệu năng (response time, throughput, caching)
-2. **[security.md](./security.md)** - Bảo mật (auth, authorization, HTTPS, audit)
-3. **[usability.md](./usability.md)** - Khả năng sử dụng (UI/UX, accessibility, help)
-4. **[scalability.md](./scalability.md)** - Khả năng mở rộng (data volume, scaling strategy)
-5. **[compatibility.md](./compatibility.md)** - Tương thích (browsers, OS, integrations)
+1. **[performance.md](./performance.md)** - Hiệu năng (thời gian phản hồi, thông lượng, bộ nhớ đệm)
+2. **[security.md](./security.md)** - Bảo mật (xác thực, phân quyền, HTTPS, kiểm toán)
+3. **[usability.md](./usability.md)** - Khả năng sử dụng (Giao diện/Trải nghiệm, khả năng truy cập, trợ giúp)
+4. **[scalability.md](./scalability.md)** - Khả năng mở rộng (khối lượng dữ liệu, chiến lược mở rộng)
+5. **[compatibility.md](./compatibility.md)** - Tương thích (trình duyệt, hệ điều hành, tích hợp)
 
 ---
 
-## 📊 Summary
+## 📊 Tóm Tắt
 
-| Category | Key Requirements |
+| Danh mục | Yêu cầu Chính |
 |----------|-----------------|
-| **Performance** | Page load < 2s, Search < 1s, Report < 5 phút |
-| **Security** | LDAP/AD SSO, HTTPS, RBAC, Audit logs |
-| **Usability** | Form < 5 phút, Responsive, Tiếng Việt, WCAG AA |
-| **Scalability** | 20K publications, 1K users, Redis cache, Stateless |
-| **Compatibility** | Chrome 90+, MySQL 8.0+, PDF only |
+| **Hiệu năng** | Tải trang < 2s, Tìm kiếm < 1s, Báo cáo < 5 phút |
+| **Bảo mật** | Đăng nhập một lần (SSO) LDAP/AD, HTTPS, Phân quyền theo vai trò (RBAC), Nhật ký kiểm toán |
+| **Khả năng sử dụng** | Nhập liệu < 5 phút, Responsive (tương thích mọi thiết bị), Tiếng Việt, Chuẩn WCAG AA |
+| **Khả năng mở rộng** | 20K bài báo, 1K người dùng, Redis cache, Stateless (phi trạng thái) |
+| **Tương thích** | Chrome 90+, MySQL 8.0+, Chỉ hỗ trợ PDF |
 
 ---
 
 **Tài liệu liên quan**:
-- [Functional Requirements](../Functional/)
-- [User Needs](../../02_System_Clarification/User_Analysis/user_needs.md)
+- [Yêu Cầu Chức Năng](../Functional/)
+- [Nhu Cầu Người Dùng](../../02_System_Clarification/User_Analysis/user_needs.md)

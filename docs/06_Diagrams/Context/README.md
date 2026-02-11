@@ -1,18 +1,18 @@
-# Context Diagrams - README
+# Biểu đồ Ngữ cảnh - README
 
-> 📁 **Folder**: `06_Diagrams/Context`  
-> 🎯 **Mục đích**: System boundaries và external integrations
+> 📁 **Thư mục**: `06_Diagrams/Context`  
+> 🎯 **Mục đích**: Phạm vi hệ thống và tích hợp bên ngoài
 
 ---
 
-## 📁 Documents
+## 📁 Tài liệu
 
 ### [system_context.md](./system_context.md)
-UFPMS system context với external systems và actors
+Ngữ cảnh hệ thống UFPMS với các hệ thống bên ngoài và tác nhân
 
 ### [external_integrations.md](./external_integrations.md)
-Chi tiết external system integrations
+Chi tiết tích hợp hệ thống bên ngoài
 
 ---
 
-**Created**: 10/02/2026
+**Ngày tạo**: 10/02/2026

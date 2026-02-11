@@ -8,53 +8,53 @@
 
 ## Tổng Quan
 
-**Total P2 Stories**: 7  
+**Tổng số User Story P2**: 7  
 
 ---
 
-## Phân Bổ Theo Role
+## Phân Bổ Theo Vai Trò
 
-| Role | P2 Stories |
+| Vai trò | Số lượng P2 Stories |
 |------|-----------|
-| Researcher | 3 |
-| Faculty Reviewer | 1 |
-| University Reviewer | 1 |
-| SuperAdmin | 0 |
-| Public Visitor | 2 |
+| Giảng viên (Researcher) | 3 |
+| Cán bộ Duyệt Khoa (Faculty Reviewer) | 1 |
+| Cán bộ Duyệt Trường (University Reviewer) | 1 |
+| Quản trị viên (SuperAdmin) | 0 |
+| Khách (Public Visitor) | 2 |
 
 ---
 
-## Researcher (3 Stories)
+## Giảng viên (Researcher) (3 Stories)
 
-### Advanced Features
+### Tính năng Nâng cao (Advanced Features)
 - **US-RES-020**: Auto-Fetch Metadata từ DOI (FR-PUB-003)
-  - **Value**: Tự động điền metadata từ CrossRef API
-  - **Dependency**: CrossRef API integration
+  - **Giá trị**: Tự động điền metadata từ CrossRef API
+  - **Phụ thuộc**: CrossRef API integration
   - **Effort**: Medium
 
 - **US-RES-021**: Import từ ORCID (FR-PUB-015)
-  - **Value**: Bulk import publications từ ORCID profile
-  - **Dependency**: ORCID API integration
+  - **Giá trị**: Bulk import publications từ ORCID profile
+  - **Phụ thuộc**: ORCID API integration
   - **Effort**: High
 
-### Analytics & Visualization
+### Phân tích & Trực quan hóa (Analytics & Visualization)
 - **US-RES-022**: Xem Biểu Đồ Năng Suất (FR-PRO-004)
-  - **Value**: Visual analytics trên profile
-  - **Dependency**: Chart library
+  - **Giá trị**: Visual analytics trên profile
+  - **Phụ thuộc**: Chart library
   - **Effort**: Low
 
 - **US-RES-023**: Xem Word Cloud Lĩnh Vực (FR-PRO-005)
-  - **Value**: Research field visualization
-  - **Dependency**: Word cloud library
+  - **Giá trị**: Research field visualization
+  - **Phụ thuộc**: Word cloud library
   - **Effort**: Low
 
 ---
 
-## Faculty Reviewer (1 Story)
+## Cán bộ Duyệt Khoa (Faculty Reviewer) (1 Story)
 
-### Workflow Analytics
+### Phân tích Quy trình (Workflow Analytics)
 - **US-FCR-009**: Theo Dõi SLA Xét Duyệt (FR-APR-020)
-  - **Value**: Track review performance metrics
+  - **Giá trị**: Track review performance metrics
   - **Metrics**:
     - Average time: SUBMITTED → FACULTY_APPROVED
     - % reviewed within 7 days
@@ -62,12 +62,12 @@
 
 ---
 
-## University Reviewer (1 Story)
+## Cán bộ Duyệt Trường (University Reviewer) (1 Story)
 
-### Advanced Reporting
+### Báo cáo Nâng cao (Advanced Reporting)
 - **US-UNR-010**: Xem Xu Hướng Phát Triển (FR-REP-004)
-  - **Value**: Trend analysis, emerging research areas
-  - **Features**:
+  - **Giá trị**: Trend analysis, emerging research areas
+  - **Tính năng**:
     - Year-over-year growth
     - Top growing faculties
     - Emerging research fields from keywords
@@ -75,27 +75,27 @@
 
 ---
 
-## Public Visitor (2 Stories)
+## Khách (Public Visitor) (2 Stories)
 
-### Export & Discovery
+### Xuất dữ liệu & Khám phá (Export & Discovery)
 - **US-VIW-007**: Export Kết Quả Tìm Kiếm (FR-SEA-004)
-  - **Value**: Export to BibTeX, RIS, CSV, JSON
+  - **Giá trị**: Export to BibTeX, RIS, CSV, JSON
   - **Use Case**: Reference manager integration
   - **Effort**: Low
 
 - **US-VIW-008**: Xem Profile Giảng Viên (FR-PRO-001, FR-PRO-006)
-  - **Value**: Public researcher profiles with SEO
-  - **Features**: Bio, publications, charts, word cloud
+  - **Giá trị**: Public researcher profiles with SEO
+  - **Tính năng**: Bio, publications, charts, word cloud
   - **Effort**: Medium (depends on US-RES-022, US-RES-023)
 
 ---
 
-## Implementation Strategy
+## Chiến lược Triển khai (Implementation Strategy)
 
-### Phase 2A: External Integrations
-**Timeline**: 3-4 weeks after MVP
+### Giai đoạn 2A: Tích hợp Bên ngoài
+**Thời gian**: 3-4 tuần sau MVP
 
-**Features**:
+**Tính năng**:
 1. **US-RES-020**: DOI metadata auto-fetch
    - Integrate CrossRef API
    - Auto-fill publication metadata
@@ -106,98 +106,98 @@
    - Bulk import publications
    - Match with existing entries
 
-**Dependencies**:
+**Sự phụ thuộc**:
 - CrossRef API account
 - ORCID API credentials
 - Network access to external APIs
 
 ---
 
-### Phase 2B: Analytics & Visualization
-**Timeline**: 2 weeks after Phase 2A
+### Giai đoạn 2B: Phân tích & Trực quan hóa
+**Thời gian**: 2 tuần sau Giai đoạn 2A
 
-**Features**:
+**Tính năng**:
 1. **US-RES-022**: Publication productivity charts
 2. **US-RES-023**: Research field word cloud
 3. **US-FCR-009**: SLA tracking
 4. **US-UNR-010**: Trend analysis
 
-**Dependencies**:
+**Sự phụ thuộc**:
 - Chart.js or D3.js library
 - Word cloud library (e.g., react-wordcloud)
 - Analytics data processing
 
 ---
 
-### Phase 2C: Export & Public Profiles
-**Timeline**: 2 weeks after Phase 2B
+### Giai đoạn 2C: Xuất dữ liệu & Hồ sơ Công khai
+**Thời gian**: 2 tuần sau Giai đoạn 2B
 
-**Features**:
+**Tính năng**:
 1. **US-VIW-007**: Export search results
 2. **US-VIW-008**: Full public profiles
 
-**Dependencies**:
+**Sự phụ thuộc**:
 - BibTeX/RIS generation libraries
 - SEO optimization (meta tags, Open Graph)
 - Static site generation for profiles (optional)
 
 ---
 
-## Business Value (Phase 2)
+## Giá trị Kinh doanh (Giai đoạn 2)
 
-### Time Savings
+### Tiết kiệm Thời gian
 - **US-RES-020**: Save 2-3 minutes per publication (auto-fill)
 - **US-RES-021**: Import 10-50 publications in minutes vs hours
 
-### User Satisfaction
+### Sự hài lòng của Người dùng
 - **US-RES-022, US-RES-023**: Visual representation of research output
 - **US-VIW-008**: Professional online presence for researchers
 
-### Research Management
+### Quản lý Nghiên cứu
 - **US-FCR-009**: Identify bottlenecks in review process
 - **US-UNR-010**: Strategic planning based on trends
 
-### Integration
+### Tích hợp
 - **US-VIW-007**: Better integration with reference managers
 - **US-RES-021**: Leverage existing ORCID data
 
 ---
 
-## ROI Analysis
+## Phân tích ROI (ROI Analysis)
 
-### Development Cost
-- **Total Effort**: ~6-8 weeks (1 developer)
-- **External APIs**: Free tier available (CrossRef, ORCID)
+### Chi phí Phát triển
+- **Tổng Nỗ lực**: ~6-8 tuần (1 developer)
+- **API Bên ngoài**: Free tier available (CrossRef, ORCID)
 
-### Benefits
-- **Automation**: 50-70% reduction in metadata entry time
-- **Visibility**: Improved researcher profiles → more citations
-- **Insights**: Data-driven review process improvements
+### Lợi ích
+- **Tự động hóa**: 50-70% reduction in metadata entry time
+- **Khả năng hiển thị**: Improved researcher profiles → more citations
+- **Thông tin chi tiết**: Data-driven review process improvements
 
-### Priority Justification
+### Biện minh cho Ưu tiên
 - Not critical for MVP launch
 - High value for user satisfaction
 - Good for Phase 2 "polish" release
 
 ---
 
-## Technical Considerations
+## Cân nhắc Kỹ thuật (Technical Considerations)
 
-### API Rate Limits
+### Giới hạn Tốc độ API
 - **CrossRef**: 50 requests/second (free tier)
 - **ORCID**: Rate limits apply, need to handle gracefully
 
-### Caching Strategy
+### Chiến lược Caching
 - Cache DOI metadata (reduce API calls)
 - Cache analytics charts (regenerate daily)
 
-### Data Storage
+### Lưu trữ Dữ liệu
 - Store fetched metadata
 - Keep audit trail of imports
 
 ---
 
-## Feature Flags for P2
+## Cờ Tính năng cho P2
 
 ```javascript
 {
@@ -224,19 +224,19 @@ Enable features incrementally based on:
 
 ---
 
-## Success Metrics
+## Chỉ số Thành công (Success Metrics)
 
-### Adoption
+### Sự chấp nhận
 - % of researchers using DOI auto-fetch
 - % of researchers importing from ORCID
 - % of researchers with complete profiles
 
-### Performance
+### Hiệu năng
 - API response time < 2s
 - Chart rendering < 1s
 - Export generation < 5s
 
-### User Satisfaction
+### Sự hài lòng của Người dùng
 - Survey: "How useful are the charts?" (1-5 scale)
 - Survey: "How much time saved with auto-fetch?" (minutes)
 

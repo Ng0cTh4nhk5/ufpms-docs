@@ -1,37 +1,37 @@
-# Module 2: Approval Workflow - Yêu Cầu Chức Năng
+# Phân hệ 2: Quy trình Phê duyệt - Yêu Cầu Chức Năng
 
 > 📅 **Cập nhật**: 10/02/2026  
-> 🎯 **Module**: Quy Trình Phê Duyệt 2 Cấp  
-> 👥 **Users**: Researcher, Faculty Reviewer, University Reviewer, SuperAdmin
+> 🎯 **Phân hệ**: Quy Trình Phê Duyệt 2 Cấp  
+> 👥 **Người dùng**: Nhà nghiên cứu, Người duyệt cấp Khoa, Người duyệt cấp Trường, Quản trị viên cấp cao
 
 ---
 
-## 1. Tổng Quan Module
+## 1. Tổng Quan Phân hệ
 
 **Mục đích**: Quản lý quy trình phê duyệt bài báo với 2 cấp (Khoa → Trường)
 
-**State Machine**: 9 trạng thái
+**Máy trạng thái (State Machine)**: 9 trạng thái
 
 ```
-DRAFT → SUBMITTED → FACULTY_REVIEWING → FACULTY_APPROVED
+DRAFT (Nháp) → SUBMITTED (Đã nộp) → FACULTY_REVIEWING (Khoa đang duyệt) → FACULTY_APPROVED (Khoa đã duyệt)
           ↓                    ↓
-    (có thể sửa)      REVISION_REQUIRED / FACULTY_REJECTED
+    (có thể sửa)      REVISION_REQUIRED (Yêu cầu chỉnh sửa) / FACULTY_REJECTED (Khoa từ chối)
                              ↓
-                   UNIVERSITY_REVIEWING
+                   UNIVERSITY_REVIEWING (Trường đang duyệt)
                              ↓
-              PUBLISHED / UNIVERSITY_REJECTED
+              PUBLISHED (Đã xuất bản) / UNIVERSITY_REJECTED (Trường từ chối)
 ```
 
 ---
 
-## 2. Functional Requirements - Researcher
+## 2. Yêu Cầu Chức Năng - Nhà nghiên cứu (Researcher)
 
 ### FR-APR-001: Nộp Xét Duyệt (Submit)
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: Giảng viên nộp bài báo để xét duyệt
+**Mô tả**: Giảng viên nộp bài báo để xét duyệt
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN bài báo ở trạng thái DRAFT
 AND đã điền đủ thông tin bắt buộc
@@ -39,138 +39,138 @@ WHEN nhấn "Nộp xét duyệt"
 THEN
   - Trạng thái: DRAFT → SUBMITTED
   - Gửi email cho CB Khoa
-  - Lưu audit log
+  - Lưu nhật ký kiểm toán (audit log)
   - Hiển thị "Đã nộp thành công"
 ```
 
-**Business Rules**:
-- Required fields: Title, Authors, Journal, Year, PDF
+**Quy tắc nghiệp vụ**:
+- Các trường bắt buộc: Tiêu đề, Tác giả, Tạp chí, Năm, PDF
 - Không thể sửa sau khi nộp
 
 ---
 
 ### FR-APR-002: Xem Trạng Thái Xét Duyệt
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: Giảng viên theo dõi trạng thái bài báo
+**Mô tả**: Giảng viên theo dõi trạng thái bài báo
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN đã nộp bài báo
 WHEN xem chi tiết
 THEN hiển thị:
-  - Timeline (visual): DRAFT → SUBMITTED → REVIEWING → APPROVED
-  - Current status
-  - Reviewer comments (nếu có)
+  - Dòng thời gian (trực quan): DRAFT → SUBMITTED → REVIEWING → APPROVED
+  - Trạng thái hiện tại
+  - Bình luận của người duyệt (nếu có)
   - Ngày chuyển trạng thái
 ```
 
 ---
 
 ### FR-APR-003: Chỉnh Sửa Theo Yêu Cầu (Revision)
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: Giảng viên sửa bài theo feedback
+**Mô tả**: Giảng viên sửa bài theo phản hồi (feedback)
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN trạng thái REVISION_REQUIRED
-AND có comment từ reviewer
+AND có bình luận từ người duyệt
 WHEN sửa và "Nộp lại"
 THEN
   - Trạng thái: REVISION_REQUIRED → SUBMITTED
   - Gửi email cho CB Khoa: "Đã sửa và nộp lại"
-  - Lưu audit log
+  - Lưu nhật ký kiểm toán
 ```
 
 ---
 
-## 3. Functional Requirements - Faculty Reviewer
+## 3. Yêu Cầu Chức Năng - Người duyệt cấp Khoa (Faculty Reviewer)
 
-### FR-APR-005: Dashboard Chờ Duyệt Cấp Khoa
-**Priority**: 🔴 P0 - Must Have
+### FR-APR-005: Bảng điều khiển Chờ Duyệt Cấp Khoa
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: CB Khoa xem danh sách công trình chờ duyệt
+**Mô tả**: CB Khoa xem danh sách công trình chờ duyệt
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
-GIVEN là Faculty Reviewer
-WHEN vào "Faculty Review Dashboard"
+GIVEN là Người duyệt cấp Khoa
+WHEN vào "Bảng điều khiển Duyệt cấp Khoa"
 THEN hiển thị:
   - CHỈ công trình của Khoa mình
   - Trạng thái: SUBMITTED hoặc FACULTY_REVIEWING
-  - Filter: All / New / In Review
-  - Sort: Oldest first
-  - Highlight: Quá 7 ngày chưa duyệt
+  - Bộ lọc: Tất cả / Mới / Đang duyệt
+  - Sắp xếp: Cũ nhất trước
+  - Làm nổi bật: Quá 7 ngày chưa duyệt
 ```
 
 ---
 
 ### FR-APR-006: Xét Duyệt (Approve)
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: CB Khoa phê duyệt công trình
+**Mô tả**: CB Khoa phê duyệt công trình
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN công trình đang FACULTY_REVIEWING
-WHEN nhấn "Approve" và nhập comment (optional)
+WHEN nhấn "Chấp thuận" và nhập bình luận (tùy chọn)
 THEN
   - Trạng thái: → FACULTY_APPROVED
   - Gửi email cho GV: "Đã được Khoa duyệt"
   - Gửi email cho CB Trường: "Có công trình mới chờ duyệt"
-  - Lưu audit log (reviewer, timestamp, comment)
+  - Lưu nhật ký kiểm toán (người duyệt, thời gian, bình luận)
 ```
 
 ---
 
 ### FR-APR-007: Yêu Cầu Bổ Sung (Revision)
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: CB Khoa yêu cầu giảng viên sửa
+**Mô tả**: CB Khoa yêu cầu giảng viên sửa
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN công trình đang FACULTY_REVIEWING
-WHEN nhấn "Request Revision" và nhập comment (bắt buộc)
+WHEN nhấn "Yêu cầu Chỉnh sửa" và nhập bình luận (bắt buộc)
 THEN
   - Trạng thái: → REVISION_REQUIRED
-  - Gửi email cho GV kèm comment
-  - Lưu audit log
+  - Gửi email cho GV kèm bình luận
+  - Lưu nhật ký kiểm toán
 ```
 
-**Validation**:
-- Comment bắt buộc, min 10 characters
+**Kiểm tra hợp lệ**:
+- Bình luận bắt buộc, tối thiểu 10 ký tự
 
 ---
 
 ### FR-APR-008: Từ Chối (Reject)
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: CB Khoa từ chối công trình
+**Mô tả**: CB Khoa từ chối công trình
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN công trình đang FACULTY_REVIEWING
-WHEN nhấn "Reject" và nhập lý do (bắt buộc)
+WHEN nhấn "Từ chối" và nhập lý do (bắt buộc)
 THEN
   - Trạng thái: → FACULTY_REJECTED
   - Gửi email cho GV kèm lý do
-  - Lưu audit log
-  - Không thể revert
+  - Lưu nhật ký kiểm toán
+  - Không thể hoàn tác (revert)
 ```
 
 ---
 
-### FR-APR-009: Bulk Approve
-**Priority**: 🟡 P1 - Should Have
+### FR-APR-009: Duyệt Hàng Loạt (Bulk Approve)
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Description**: Duyệt nhiều bài cùng lúc
+**Mô tả**: Duyệt nhiều bài cùng lúc
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
-GIVEN chọn nhiều công trình (checkbox)
-WHEN nhấn "Approve Selected"
+GIVEN chọn nhiều công trình (hộp kiểm)
+WHEN nhấn "Duyệt Đã chọn"
 THEN
   - Chuyển tất cả → FACULTY_APPROVED
   - Gửi email cho từng GV
@@ -179,91 +179,91 @@ THEN
 
 ---
 
-## 4. Functional Requirements - University Reviewer
+## 4. Yêu Cầu Chức Năng - Người duyệt cấp Trường (University Reviewer)
 
-### FR-APR-010: Dashboard Chờ Duyệt Cấp Trường
-**Priority**: 🔴 P0 - Must Have
+### FR-APR-010: Bảng điều khiển Chờ Duyệt Cấp Trường
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: CB Trường xem công trình toàn trường chờ duyệt
+**Mô tả**: CB Trường xem công trình toàn trường chờ duyệt
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
-GIVEN là University Reviewer
-WHEN vào "University Review Dashboard"
+GIVEN là Người duyệt cấp Trường
+WHEN vào "Bảng điều khiển Duyệt cấp Trường"
 THEN hiển thị:
   - CHỈ công trình FACULTY_APPROVED
-  - Filter: By Faculty, By Journal Type, By Year
-  - Sort: Oldest first
-  - Columns: Title, Author, Faculty, Review Date
+  - Bộ lọc: Theo Khoa, Theo Loại Tạp chí, Theo Năm
+  - Sắp xếp: Cũ nhất trước
+  - Cột: Tiêu đề, Tác giả, Khoa, Ngày duyệt
 ```
 
 ---
 
 ### FR-APR-011: Xem Ý Kiến Của CB Khoa
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: CB Trường xem nhận xét từ cấp Khoa
+**Mô tả**: CB Trường xem nhận xét từ cấp Khoa
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN công trình FACULTY_APPROVED
 WHEN xem chi tiết
 THEN hiển thị:
-  - Faculty reviewer name
-  - Faculty approval date
-  - Faculty comment (if any)
-  - Revision history (nếu có)
+  - Tên người duyệt cấp Khoa
+  - Ngày Khoa duyệt
+  - Bình luận của Khoa (nếu có)
+  - Lịch sử chỉnh sửa (nếu có)
 ```
 
 ---
 
 ### FR-APR-012: Phê Duyệt Cuối (Publish)
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: CB Trường phê duyệt và công bố
+**Mô tả**: CB Trường phê duyệt và công bố
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN công trình UNIVERSITY_REVIEWING
-WHEN nhấn "Approve & Publish"
+WHEN nhấn "Duyệt & Xuất bản"
 THEN
   - Trạng thái: → PUBLISHED
   - Gửi email cho GV: "Đã công bố"
-  - **Công trình xuất hiện công khai** (Module 3, 4)
-  - Lưu audit log
+  - **Công trình xuất hiện công khai** (Phân hệ 3, 4)
+  - Lưu nhật ký kiểm toán
 ```
 
-**Business Rules**:
-- PUBLISHED = cuối cùng, không thể revert
-- Tự động visible trên profile và search
+**Quy tắc nghiệp vụ**:
+- PUBLISHED = cuối cùng, không thể hoàn tác
+- Tự động hiển thị trên hồ sơ và tìm kiếm
 
 ---
 
 ### FR-APR-013: Từ Chối Cấp Trường (Reject)
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: CB Trường từ chối (hiếm xảy ra)
+**Mô tả**: CB Trường từ chối (hiếm xảy ra)
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN công trình UNIVERSITY_REVIEWING
-WHEN nhấn "Reject" và nhập lý do (bắt buộc)
+WHEN nhấn "Từ chối" và nhập lý do (bắt buộc)
 THEN
   - Trạng thái: → UNIVERSITY_REJECTED
   - Gửi email cho GV + CB Khoa
-  - Lưu audit log
+  - Lưu nhật ký kiểm toán
 ```
 
 ---
 
-## 5. Functional Requirements - Common
+## 5. Yêu Cầu Chức Năng - Chung
 
-### FR-APR-015: Audit Trail Đầy Đủ
-**Priority**: 🔴 P0 - Must Have
+### FR-APR-015: Vết Kiểm Toán Đầy Đủ
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: Lưu lịch sử mọi thay đổi trạng thái
+**Mô tả**: Lưu lịch sử mọi thay đổi trạng thái
 
-**Data Model**:
+**Mô hình Dữ liệu**:
 ```typescript
 interface ApprovalHistory {
   id: UUID;
@@ -280,50 +280,50 @@ interface ApprovalHistory {
 
 ---
 
-### FR-APR-016: Email Notifications
-**Priority**: 🔴 P0 - Must Have
+### FR-APR-016: Thông Báo Email
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: Thông báo tự động khi chuyển trạng thái
+**Mô tả**: Thông báo tự động khi chuyển trạng thái
 
-**Email Templates**:
+**Mẫu Email**:
 
-**1. Submitted (to Faculty Reviewer)**:
+**1. Đã nộp (gửi Người duyệt cấp Khoa)**:
 ```
-Subject: [UFPMS] New publication pending review
-Dear [Reviewer Name],
-[Author Name] has submitted a publication for review:
-Title: [Publication Title]
-Review at: [Link]
-```
-
-**2. Approved by Faculty (to Author)**:
-```
-Subject: [UFPMS] Your publication approved by Faculty
-Dear [Author Name],
-Your publication has been approved by [Faculty Name]:
-Title: [Publication Title]
-Next step: University review
+Chủ đề: [UFPMS] Bài báo mới chờ duyệt
+Kính gửi [Tên Người duyệt],
+[Tên Tác giả] đã nộp một bài báo để xét duyệt:
+Tiêu đề: [Tiêu đề Bài báo]
+Xem tại: [Liên kết]
 ```
 
-**3. Published (to Author)**:
+**2. Khoa đã duyệt (gửi Tác giả)**:
 ```
-Subject: [UFPMS] Your publication is now published!
-Dear [Author Name],
-Congratulations! Your publication is now published:
-Title: [Publication Title]
-Public profile: [Link]
+Chủ đề: [UFPMS] Bài báo của bạn đã được Khoa phê duyệt
+Kính gửi [Tên Tác giả],
+Bài báo của bạn đã được [Tên Khoa] phê duyệt:
+Tiêu đề: [Tiêu đề Bài báo]
+Bước tiếp theo: Trường xét duyệt
+```
+
+**3. Đã xuất bản (gửi Tác giả)**:
+```
+Chủ đề: [UFPMS] Bài báo của bạn đã được xuất bản!
+Kính gửi [Tên Tác giả],
+Chúc mừng! Bài báo của bạn hiện đã được xuất bản:
+Tiêu đề: [Tiêu đề Bài báo]
+Hồ sơ công khai: [Liên kết]
 ```
 
 ---
 
-### FR-APR-017: State Transition Validation
-**Priority**: 🔴 P0 - Must Have
+### FR-APR-017: Kiểm Tra Chuyển Đổi Trạng Thái
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**: Validate quy tắc chuyển trạng thái
+**Mô tả**: Kiểm tra quy tắc chuyển trạng thái hợp lệ
 
-**Business Rules**:
+**Quy tắc nghiệp vụ**:
 ```
-Allowed Transitions:
+Chuyển đổi Cho phép:
 DRAFT → SUBMITTED
 SUBMITTED → FACULTY_REVIEWING
 FACULTY_REVIEWING → FACULTY_APPROVED | REVISION_REQUIRED | FACULTY_REJECTED
@@ -331,110 +331,110 @@ REVISION_REQUIRED → DRAFT
 FACULTY_APPROVED → UNIVERSITY_REVIEWING
 UNIVERSITY_REVIEWING → PUBLISHED | UNIVERSITY_REJECTED
 
-Not Allowed:
-PUBLISHED → anything (final state)
+Không Cho phép:
+PUBLISHED → bất kỳ (trạng thái cuối)
 ```
 
 ---
 
-### FR-APR-018: Reassign Reviewer
-**Priority**: 🟢 P2 - Nice to Have
+### FR-APR-018: Chỉ Định Lại Người Duyệt
+**Độ ưu tiên**: 🟢 P2 - Có Thể Có
 
-**Description**: Admin có thể chuyển reviewer
+**Mô tả**: Admin có thể chuyển người duyệt
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
-GIVEN là SuperAdmin
-WHEN nhấn "Reassign Reviewer"
+GIVEN là Quản trị viên cấp cao
+WHEN nhấn "Chỉ định lại Người duyệt"
 THEN
-  - Chọn Faculty Reviewer mới
+  - Chọn Người duyệt cấp Khoa mới
   - Gửi email thông báo cho cả 2
-  - Lưu audit log
+  - Lưu nhật ký kiểm toán
 ```
 
 ---
 
-### FR-APR-019: Withdraw Submission
-**Priority**: 🟡 P1 - Should Have
+### FR-APR-019: Rút Lại Đơn (Withdraw Submission)
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Description**: Giảng viên rút lại đơn đã nộp
+**Mô tả**: Giảng viên rút lại đơn đã nộp
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN trạng thái SUBMITTED hoặc FACULTY_REVIEWING
-WHEN nhấn "Withdraw" và confirm
+WHEN nhấn "Rút lại" và xác nhận
 THEN
   - Trạng thái: → DRAFT
-  - Gửi email cho reviewer (nếu đang review)
-  - Lưu audit log
+  - Gửi email cho người duyệt (nếu đang duyệt)
+  - Lưu nhật ký kiểm toán
 ```
 
-**Business Rules**:
-- CHỈ withdraw được trước khi approved
-- KHÔNG withdraw được sau khi FACULTY_APPROVED
+**Quy tắc nghiệp vụ**:
+- CHỈ rút lại được trước khi được duyệt
+- KHÔNG rút lại được sau khi FACULTY_APPROVED
 
 ---
 
-### FR-APR-020: SLA Tracking
-**Priority**: 🟢 P2 - Nice to Have
+### FR-APR-020: Theo Dõi SLA
+**Độ ưu tiên**: 🟢 P2 - Có Thể Có
 
-**Description**: Theo dõi thời gian xét duyệt
+**Mô tả**: Theo dõi thời gian xét duyệt
 
-**Metrics**:
-- Average time: SUBMITTED → FACULTY_APPROVED
-- Average time: FACULTY_APPROVED → PUBLISHED
-- % reviewed within 7 days
+**Chỉ số**:
+- Thời gian trung bình: SUBMITTED → FACULTY_APPROVED
+- Thời gian trung bình: FACULTY_APPROVED → PUBLISHED
+- % được duyệt trong vòng 7 ngày
 
-**Dashboard**:
-- Highlight công trình quá 7 ngày chưa duyệt
+**Bảng điều khiển**:
+- Làm nổi bật công trình quá 7 ngày chưa duyệt
 
 ---
 
-## 6. State Machine Diagram
+## 6. Sơ đồ Máy trạng thái (State Machine Diagram)
 
 ```mermaid
 stateDiagram-v2
-    [*] --> DRAFT: Create
-    DRAFT --> SUBMITTED: Submit (Researcher)
+    [*] --> DRAFT: Tạo mới
+    DRAFT --> SUBMITTED: Nộp (Nhà nghiên cứu)
     
-    SUBMITTED --> FACULTY_REVIEWING: Start Review (Faculty Reviewer)
+    SUBMITTED --> FACULTY_REVIEWING: Bắt đầu duyệt (Người duyệt Khoa)
     
-    FACULTY_REVIEWING --> FACULTY_APPROVED: Approve (Faculty)
-    FACULTY_REVIEWING --> REVISION_REQUIRED: Request Revision (Faculty)
-    FACULTY_REVIEWING --> FACULTY_REJECTED: Reject (Faculty)
+    FACULTY_REVIEWING --> FACULTY_APPROVED: Duyệt (Khoa)
+    FACULTY_REVIEWING --> REVISION_REQUIRED: Yêu cầu sửa (Khoa)
+    FACULTY_REVIEWING --> FACULTY_REJECTED: Từ chối (Khoa)
     
-    REVISION_REQUIRED --> DRAFT: Edit (Researcher)
-    DRAFT --> SUBMITTED: Resubmit (Researcher)
+    REVISION_REQUIRED --> DRAFT: Sửa (Nhà nghiên cứu)
+    DRAFT --> SUBMITTED: Nộp lại (Nhà nghiên cứu)
     
-    FACULTY_APPROVED --> UNIVERSITY_REVIEWING: Start Review (University Reviewer)
+    FACULTY_APPROVED --> UNIVERSITY_REVIEWING: Bắt đầu duyệt (Người duyệt Trường)
     
-    UNIVERSITY_REVIEWING --> PUBLISHED: Approve (University)
-    UNIVERSITY_REVIEWING --> UNIVERSITY_REJECTED: Reject (University)
+    UNIVERSITY_REVIEWING --> PUBLISHED: Duyệt (Trường)
+    UNIVERSITY_REVIEWING --> UNIVERSITY_REJECTED: Từ chối (Trường)
     
-    PUBLISHED --> [*]: End
-    FACULTY_REJECTED --> [*]: End
-    UNIVERSITY_REJECTED --> [*]: End
+    PUBLISHED --> [*]: Kết thúc
+    FACULTY_REJECTED --> [*]: Kết thúc
+    UNIVERSITY_REJECTED --> [*]: Kết thúc
 ```
 
 ---
 
-## 7. Permissions Matrix
+## 7. Ma trận Quyền hạn (Permissions Matrix)
 
-| Action | Researcher | Faculty Reviewer | University Reviewer | Admin |
+| Hành động | Nhà nghiên cứu | Người duyệt Khoa | Người duyệt Trường | Admin |
 |--------|-----------|------------------|---------------------|-------|
-| Submit | ✅ (own) | ❌ | ❌ | ✅ |
-| Withdraw | ✅ (own) | ❌ | ❌ | ✅ |
-| Faculty Approve | ❌ | ✅ (own faculty) | ❌ | ✅ |
-| Faculty Reject | ❌ | ✅ (own faculty) | ❌ | ✅ |
-| University Approve | ❌ | ❌ | ✅ | ✅ |
-| University Reject | ❌ | ❌ | ✅ | ✅ |
-| View Audit Trail | ✅ (own) | ✅ (reviewed) | ✅ (all) | ✅ (all) |
+| Nộp | ✅ (của mình) | ❌ | ❌ | ✅ |
+| Rút lại | ✅ (của mình) | ❌ | ❌ | ✅ |
+| Khoa Duyệt | ❌ | ✅ (cùng khoa) | ❌ | ✅ |
+| Khoa Từ chối | ❌ | ✅ (cùng khoa) | ❌ | ✅ |
+| Trường Duyệt | ❌ | ❌ | ✅ | ✅ |
+| Trường Từ chối | ❌ | ❌ | ✅ | ✅ |
+| Xem Vết Kiểm toán | ✅ (của mình) | ✅ (đã duyệt) | ✅ (tất cả) | ✅ (tất cả) |
 
 ---
 
-## 8. API Endpoints (Sample)
+## 8. API Endpoints (Mẫu)
 
-| Method | Endpoint | Description | Auth |
+| Phương thức | Endpoint | Mô tả | Xác thực |
 |--------|----------|-------------|------|
 | POST | `/api/publications/:id/submit` | Nộp xét duyệt | Researcher |
 | POST | `/api/publications/:id/withdraw` | Rút lại | Researcher |
@@ -445,11 +445,11 @@ stateDiagram-v2
 | GET | `/api/university-review/pending` | Dashboard Trường | University Reviewer |
 | POST | `/api/university-review/:id/approve` | Phê duyệt Trường | University Reviewer |
 | POST | `/api/university-review/:id/reject` | Từ chối Trường | University Reviewer |
-| GET | `/api/publications/:id/history` | Audit trail | Authorized |
+| GET | `/api/publications/:id/history` | Vết kiểm toán | Authorized |
 
 ---
 
 **Tài liệu liên quan**:
-- [To-Be Process](../../02_System_Clarification/Business_Context/to_be_process.md) - Quy trình chi tiết
-- [Business Rules](./business_rules.md) - Quy tắc chuyển trạng thái
-- [Module 1: Publication Management](./module_publication_management.md)
+- [Quy trình Tương lai](../../02_System_Clarification/Business_Context/to_be_process.md) - Quy trình chi tiết
+- [Quy tắc Nghiệp vụ](./business_rules.md) - Quy tắc chuyển trạng thái
+- [Phân hệ 1: Quản lý Bài báo](./module_publication_management.md)

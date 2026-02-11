@@ -8,71 +8,71 @@
 
 ## Tổng Quan
 
-**Total P1 Stories**: 18  
+**Tổng số User Story P1**: 18  
 
 ---
 
-## Phân Bổ Theo Role
+## Phân Bổ Theo Vai Trò
 
-| Role | P1 Stories |
+| Vai trò | Số lượng P1 Stories |
 |------|-----------|
-| Researcher | 7 |
-| Faculty Reviewer | 2 |
-| University Reviewer | 3 |
-| SuperAdmin | 2 |
-| Public Visitor | 4 |
+| Giảng viên (Researcher) | 7 |
+| Cán bộ Duyệt Khoa (Faculty Reviewer) | 2 |
+| Cán bộ Duyệt Trường (University Reviewer) | 3 |
+| Quản trị viên (SuperAdmin) | 2 |
+| Khách (Public Visitor) | 4 |
 
 ---
 
-## Researcher (7 Stories)
+## Giảng viên (Researcher) (7 Stories)
 
-### Publication Management
+### Quản lý Bài báo (Publication Management)
 - **US-RES-006**: Thêm Đồng Tác Giả (FR-PUB-007)
 - **US-RES-007**: Gắn Tags/Keywords (FR-PUB-008)
 - **US-RES-017**: Validate DOI Format (FR-PUB-012)
 - **US-RES-018**: Validate ISSN Format (FR-PUB-013)
 - **US-RES-019**: Cảnh Báo Trùng Lặp (FR-PUB-014)
 
-### Workflow
+### Quy trình (Workflow)
 - **US-RES-013**: Rút Lại Đơn Nộp (FR-APR-019)
 
-### Profile
+### Hồ sơ (Profile)
 - **US-RES-014**: Xem Profile Công Khai Của Mình (FR-PRO-001)
 - **US-RES-015**: Chỉnh Sửa Profile (FR-PRO-002)
 - **US-RES-016**: Xem Danh Sách Bài Báo Trên Profile (FR-PRO-003)
 
 ---
 
-## Faculty Reviewer (2 Stories)
+## Cán bộ Duyệt Khoa (Faculty Reviewer) (2 Stories)
 
-### Workflow
+### Quy trình (Workflow)
 - **US-FCR-007**: Duyệt Nhiều Bài Cùng Lúc (FR-APR-009)
 
-### Reporting
+### Báo cáo (Reporting)
 - **US-FCR-008**: Xem Báo Cáo Khoa (FR-REP-002)
 
 ---
 
-## University Reviewer (3 Stories)
+## Cán bộ Duyệt Trường (University Reviewer) (3 Stories)
 
-### Reporting & Analytics
+### Báo cáo & Phân tích (Reporting & Analytics)
 - **US-UNR-007**: Xem Dashboard Analytics Toàn Trường (FR-REP-001)
 - **US-UNR-008**: Tạo Báo Cáo Toàn Trường (FR-REP-002, FR-REP-005)
 - **US-UNR-009**: Xem Báo Cáo Theo Quartile (FR-REP-003)
 
 ---
 
-## SuperAdmin (2 Stories)
+## Quản trị viên (SuperAdmin) (2 Stories)
 
-### Admin Features
+### Tính năng Quản trị (Admin Features)
 - **US-ADM-008**: Xem System Dashboard (FR-ADM-008)
 - **US-ADM-009**: Import Người Dùng từ Excel (FR-ADM-009)
 
 ---
 
-## Public Visitor (4 Stories)
+## Khách (Public Visitor) (4 Stories)
 
-### Search & Browse
+### Tìm kiếm & Duyệt (Search & Browse)
 - **US-VIW-001**: Tìm Kiếm Full-Text (FR-SEA-001)
 - **US-VIW-002**: Lọc Kết Quả Nâng Cao (FR-SEA-002)
 - **US-VIW-003**: Duyệt Theo Danh Mục (FR-SEA-003)
@@ -80,107 +80,107 @@
 
 ---
 
-## Implementation Roadmap
+## Lộ trình Triển khai (Implementation Roadmap)
 
-### Phase 1.5: Enhanced Publication Management
-**After MVP Core**
+### Giai đoạn 1.5: Quản lý Bài báo Nâng cao
+**Sau MVP Cốt lõi**
 
-**Features**:
-- Co-author linking (US-RES-006)
-- Keywords/tags (US-RES-007)
-- DOI/ISSN validation (US-RES-017, US-RES-018)
-- Duplicate detection (US-RES-019)
-- Withdraw submission (US-RES-013)
+**Tính năng**:
+- Thêm đồng tác giả (US-RES-006)
+- Tags/Keywords (US-RES-007)
+- Validate DOI/ISSN (US-RES-017, US-RES-018)
+- Phát hiện trùng lặp (US-RES-019)
+- Rút lại đơn nộp (US-RES-013)
 
-**Value**:
-- Prevents duplicate entries
-- Better data quality
-- Improved metadata management
-- More flexible workflow
-
----
-
-### Phase 2: Advanced Search & Profile
-**After Approval Workflow Complete**
-
-**Features**:
-- Full-text search (US-VIW-001)
-- Advanced filtering (US-VIW-002, US-VIW-003, US-VIW-004)
-- Public profiles (US-RES-014, US-RES-015, US-RES-016)
-
-**Value**:
-- Public visibility
-- Better discoverability
-- Researcher showcase
+**Giá trị**:
+- Ngăn chặn nhập liệu trùng lặp
+- Chất lượng dữ liệu tốt hơn
+- Quản lý siêu dữ liệu (metadata) cải thiện
+- Quy trình linh hoạt hơn
 
 ---
 
-### Phase 3: Reporting & Analytics
-**After Public Access**
+### Giai đoạn 2: Tìm kiếm Nâng cao & Hồ sơ (Profile)
+**Sau khi Hoàn thành Quy trình Duyệt**
 
-**Features**:
-- Faculty reports (US-FCR-008)
-- University-wide analytics (US-UNR-007, US-UNR-008, US-UNR-009)
-- System dashboard (US-ADM-008)
+**Tính năng**:
+- Tìm kiếm full-text (US-VIW-001)
+- Bộ lọc nâng cao (US-VIW-002, US-VIW-003, US-VIW-004)
+- Hồ sơ công khai (US-RES-014, US-RES-015, US-RES-016)
 
-**Value**:
-- Data-driven decisions
-- Performance tracking
-- Automated reporting (vs 2-3 days manual work)
-
----
-
-### Phase 4: Admin Enhancements
-**Ongoing**
-
-**Features**:
-- Bulk approval (US-FCR-007)
-- Excel import (US-ADM-009)
-
-**Value**:
-- Administrative efficiency
-- Bulk onboarding
+**Giá trị**:
+- Hiển thị công khai
+- Khả năng khám phá tốt hơn
+- Trưng bày kết quả nghiên cứu của giảng viên
 
 ---
 
-## Business Value
+### Giai đoạn 3: Báo cáo & Phân tích
+**Sau khi Truy cập Công khai**
 
-### Reduced Manual Work
+**Tính năng**:
+- Báo cáo cấp Khoa (US-FCR-008)
+- Phân tích cấp Trường (US-UNR-007, US-UNR-008, US-UNR-009)
+- Dashboard hệ thống (US-ADM-008)
+
+**Giá trị**:
+- Quyết định dựa trên dữ liệu
+- Theo dõi hiệu suất
+- Báo cáo tự động (so với 2-3 ngày làm thủ công)
+
+---
+
+### Giai đoạn 4: Cải tiến Quản trị (Admin)
+**Đang diễn ra**
+
+**Tính năng**:
+- Duyệt hàng loạt (US-FCR-007)
+- Import Excel (US-ADM-009)
+
+**Giá trị**:
+- Hiệu quả quản trị
+- Thêm mới hàng loạt (Bulk onboarding)
+
+---
+
+## Giá trị Kinh doanh (Business Value)
+
+### Giảm công việc thủ công
 - **US-FCR-008 + US-UNR-008**: Report generation < 5 minutes (vs 2-3 days)
 - **US-ADM-009**: Bulk user import (vs manual entry)
 - **US-FCR-007**: Bulk approval (faster processing)
 
-### Improved Data Quality
+### Cải thiện chất lượng dữ liệu
 - **US-RES-017, US-RES-018**: Format validation
 - **US-RES-019**: Duplicate prevention
 - **US-RES-006**: Proper co-author tracking
 
-### Enhanced User Experience
+### Nâng cao trải nghiệm người dùng
 - **US-VIW-001 to US-VIW-004**: Better search and discovery
 - **US-RES-014 to US-RES-016**: Professional profiles
 - **US-RES-013**: More flexible workflow
 
 ---
 
-## Dependencies
+## Các sự phụ thuộc (Dependencies)
 
-### For Search Features
+### Cho Tìm kiếm
 - Consider Elasticsearch for better performance (optional)
 - MySQL full-text search sufficient for MVP
 
-### For Profile Features
+### Cho Hồ sơ (Profile)
 - Chart library (e.g., Chart.js, D3.js)
 - Image upload and storage
 
-### For Reporting
+### Cho Báo cáo
 - Excel export library (e.g., Apache POI)
 - PDF generation library
 
 ---
 
-## Feature Flags (Recommended)
+## Cờ Tính năng (Feature Flags) (Khuyến nghị)
 
-Enable P1 features incrementally:
+Bật tính năng P1 theo từng bước:
 
 ```javascript
 {

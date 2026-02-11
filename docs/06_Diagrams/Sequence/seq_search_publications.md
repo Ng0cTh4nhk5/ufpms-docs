@@ -1,74 +1,74 @@
-# Sequence Diagram: Search Publications
+# Biểu đồ Tuần tự: Tìm kiếm Ấn phẩm
 
-> 📊 **Diagram ID**: SEQ-06  
-> 🎯 **Use Case**: UC-D3-01 - Search Publications  
-> 👤 **Actor**: Public Visitor (unauthenticated)  
-> ⚙️ **Key**: Public access, visibility filtering
+> 📊 **ID Biểu đồ**: SEQ-06  
+> 🎯 **Ca Sử Dụng**: UC-D3-01 - Tìm kiếm Ấn phẩm  
+> 👤 **Tác nhân**: Khách truy cập (chưa đăng nhập)  
+> ⚙️ **Chính**: Truy cập công khai, lọc khả năng hiển thị
 
 ---
 
-## 📊 Sequence Diagram
+## 📊 Biểu đồ Tuần tự
 
 ```mermaid
 sequenceDiagram
-    actor Visitor as 👤 Public Visitor
-    participant UI as 🖥️ UI
+    actor Visitor as 👤 Khách truy cập
+    participant UI as 🖥️ Giao diện
     participant API as 🔌 SearchController
     participant Service as ⚙️ SearchService
     participant Repo as 💾 PublicationRepository
-    participant DB as 🗄️ Database
+    participant DB as 🗄️ CSDL
     
-    %% Open search page
-    Visitor->>UI: Navigate to /search
+    %% Mở trang tìm kiếm
+    Visitor->>UI: Điều hướng đến /search
     activate UI
     UI->>API: GET /api/search/filters
     API->>Service: getAvailableFilters()
     Service->>Repo: getPublicationTypes(), getYears(), getFaculties()
     Repo->>DB: SELECT DISTINCT ...
-    DB-->>Repo: Filter options
-    Repo-->>Service: Options
+    DB-->>Repo: Tùy chọn bộ lọc
+    Repo-->>Service: Tùy chọn
     Service-->>API: FilterOptions
-    API-->>UI: Available filters
-    UI-->>Visitor: Show search form + filters
+    API-->>UI: Bộ lọc khả dụng
+    UI-->>Visitor: Hiển thị biểu mẫu tìm kiếm + bộ lọc
     deactivate UI
     
-    %% Enter search query
-    Visitor->>UI: Enter keywords:<br/>"machine learning"
-    Visitor->>UI: Select filters:<br/>Year: 2023, Type: Journal
-    Visitor->>UI: Click "Search"
+    %% Nhập truy vấn tìm kiếm
+    Visitor->>UI: Nhập từ khóa:<br/>"machine learning"
+    Visitor->>UI: Chọn bộ lọc:<br/>Năm: 2023, Loại: Tạp chí
+    Visitor->>UI: Nhấn "Tìm kiếm"
     
     activate UI
     UI->>API: GET /api/search?q=machine learning&year=2023&type=journal&page=1
     activate API
-    Note over API: No authentication required<br/>Public endpoint
+    Note over API: Không yêu cầu xác thực<br/>Endpoint công khai
     
     API->>Service: search(query, filters, pagination)
     activate Service
     
-    %% Build query
-    Note over Service: Build SQL:<br/>- WHERE status = 'PUBLISHED'<br/>- AND text match<br/>- AND filters<br/>- ORDER BY relevance
+    %% Xây dựng truy vấn
+    Note over Service: Xây dựng SQL:<br/>- WHERE status = 'PUBLISHED'<br/>- AND khớp văn bản<br/>- AND bộ lọc<br/>- ORDER BY độ liên quan
     
     Service->>Repo: searchPublications(criteria)
     activate Repo
     
-    Repo->>DB: Full-text search query
+    Repo->>DB: Truy vấn tìm kiếm toàn văn
     Note over DB: SELECT p.*, u.name as author<br/>FROM publications p<br/>JOIN publication_authors pa<br/>JOIN users u<br/>WHERE p.status = 'PUBLISHED'<br/>AND MATCH(title, abstract)<br/>AGAINST ('machine learning')<br/>AND year = 2023<br/>LIMIT 20 OFFSET 0
     
-    DB-->>Repo: Result rows
-    Repo-->>Service: Publications[] + totalCount
+    DB-->>Repo: Các hàng kết quả
+    Repo-->>Service: Ấn phẩm[] + tổng số lượng
     deactivate Repo
     
-    Service-->>API: SearchResult {<br/>  items: Publications[],<br/>  total: 45,<br/>  page: 1,<br/>  pageSize: 20<br/>}
+    Service-->>API: Kết quả Tìm kiếm {<br/>  items: Ấn phẩm[],<br/>  total: 45,<br/>  page: 1,<br/>  pageSize: 20<br/>}
     deactivate Service
     
     API-->>UI: 200 OK + JSON
     deactivate API
     
-    UI-->>Visitor: Display results<br/>(20 per page, 45 total)
+    UI-->>Visitor: Hiển thị kết quả<br/>(20 mỗi trang, tổng 45)
     deactivate UI
     
-    %% View details
-    Visitor->>UI: Click publication title
+    %% Xem chi tiết
+    Visitor->>UI: Nhấn tiêu đề ấn phẩm
     activate UI
     UI->>API: GET /api/publications/{id}
     activate API
@@ -80,71 +80,71 @@ sequenceDiagram
     activate Repo
     Repo->>DB: SELECT * WHERE id = ?<br/>AND status = 'PUBLISHED'
     
-    alt Publication is PUBLISHED
-        DB-->>Repo: Publication data
-        Repo-->>Service: Publication
+    alt Ấn phẩm ĐÃ XUẤT BẢN
+        DB-->>Repo: Dữ liệu ấn phẩm
+        Repo-->>Service: Ấn phẩm
         
-        %% Log view (analytics - async)
+        %% Ghi nhận lượt xem (analytics - bất đồng bộ)
         Service->>Repo: logView(pubId)
-        Note over Repo: Analytics: track views
+        Note over Repo: Analytics: theo dõi lượt xem
         
-        Service-->>API: Publication details
+        Service-->>API: Chi tiết ấn phẩm
         deactivate Service
-        API-->>UI: 200 OK + Full publication
+        API-->>UI: 200 OK + Ấn phẩm đầy đủ
         deactivate API
-        UI-->>Visitor: Show full details +<br/>PDF download link
-    else Not published or not found
+        UI-->>Visitor: Hiển thị chi tiết đầy đủ +<br/>liên kết tải xuống PDF
+    else Chưa xuất bản hoặc không tìm thấy
         DB-->>Repo: null
         Repo-->>Service: null
         Service-->>API: NotFoundError
         API-->>UI: 404 Not Found
-        UI-->>Visitor: "Publication not found"
+        UI-->>Visitor: "Không tìm thấy ấn phẩm"
     end
     deactivate UI
 ```
 
 ---
 
-## 📋 Search Features
+## 📋 Tính năng Tìm kiếm
 
-### 1. Full-Text Search
-- Search in: title, abstract, keywords
-- MySQL `MATCH ... AGAINST` or ElasticSearch (P2)
-- Ranking by relevance
+### 1. Tìm kiếm Toàn văn
+- Tìm trong: tiêu đề, tóm tắt, từ khóa
+- MySQL `MATCH ... AGAINST` hoặc ElasticSearch (P2)
+- Xếp hạng theo mức độ liên quan
 
-### 2. Filters
-- **Year**: dropdown or range
-- **Publication Type**: Journal, Conference,Book Chapter
-- **Faculty**: All faculties
-- **Quartile**: Q1, Q2, Q3, Q4 (if available)
-- **Has PDF**: checkbox
+### 2. Bộ lọc
+- **Năm**: danh sách thả xuống hoặc khoảng
+- **Loại Ấn phẩm**: Tạp chí, Hội nghị, Chương Sách
+- **Khoa**: Tất cả các khoa
+- **Hạng**: Q1, Q2, Q3, Q4 (nếu có)
+- **Có PDF**: hộp kiểm
 
-### 3. Pagination
-- 20 results per page (default)
-- Page navigation
-- Show total count
+### 3. Phân trang
+- 20 kết quả mỗi trang (mặc định)
+- Điều hướng trang
+- Hiển thị tổng số lượng
 
 ---
 
-## 🔒 Visibility Rule
+## 🔒 Quy tắc Hiển thị
 
-**CRITICAL**: CHỈ publications với `status = 'PUBLISHED'` mới visible cho public
+**QUAN TRỌNG**: CHỈ publications với `status = 'PUBLISHED'` mới hiển thị cho công chúng
 
 ```sql
--- Always include this WHERE clause for public search
+-- Luôn bao gồm mệnh đề WHERE này cho tìm kiếm công khai
 WHERE status = 'PUBLISHED'
 ```
 
-**For logged-in researchers**:
+**Cho nhà nghiên cứu đã đăng nhập**:
 ```sql
--- Can see PUBLISHED + own publications
+-- Có thể xem ĐÃ XUẤT BẢN + ấn phẩm của chính mình
 WHERE status = 'PUBLISHED' 
    OR owner_id = {current_user_id}
 ```
 
 ---
 
-## 📊 Search Query Example
+## 📊 Ví dụ Truy vấn Tìm kiếm
 
 ```sql
 SELECT 
@@ -170,7 +170,7 @@ LIMIT 20 OFFSET 0;
 
 ---
 
-## 📈 Response Format
+## 📈 Định dạng Phản hồi
 
 ```json
 {
@@ -183,10 +183,10 @@ LIMIT 20 OFFSET 0;
     "items": [
       {
         "id": 123,
-        "title": "Machine Learning for...",
+        "title": "Học Máy trong...",
         "authors": ["Nguyen Van A", "Tran Thi B"],
         "year": 2023,
-        "journal": "IEEE Transactions...",
+        "journal": "Giao dịch IEEE...",
         "doi": "10.1234/example",
         "relevance": 0.95
       }
@@ -203,28 +203,28 @@ LIMIT 20 OFFSET 0;
 
 ---
 
-## 🚀 Performance Optimization
+## 🚀 Tối ưu hóa Hiệu năng
 
-### Database Indexes
+### Chỉ mục Cơ sở dữ liệu
 ```sql
--- Full-text index
+-- Chỉ mục toàn văn
 CREATE FULLTEXT INDEX idx_search ON publications(title, abstract, keywords);
 
--- Filter indexes
+-- Chỉ mục bộ lọc
 CREATE INDEX idx_year ON publications(year);
 CREATE INDEX idx_type ON publications(publication_type);
 CREATE INDEX idx_status ON publications(status);
 
--- Composite index for common queries
+-- Chỉ mục phức hợp cho các truy vấn phổ biến
 CREATE INDEX idx_status_year ON publications(status, year);
 ```
 
-### Caching (P1)
-- Cache filter options (rarely change)
-- Cache popular searches (Redis)
-- Cache publication details (frequently viewed)
+### Bộ nhớ đệm (Caching - P1)
+- Cache tùy chọn bộ lọc (ít thay đổi)
+- Cache tìm kiếm phổ biến (Redis)
+- Cache chi tiết ấn phẩm (thường xuyên xem)
 
 ---
 
-**Related**: FR-SRC-001 to FR-SRC-005, US-VIW-001, US-VIW-005  
-**Created**: 10/02/2026
+**Liên quan**: FR-SRC-001 đến FR-SRC-005, US-VIW-001, US-VIW-005  
+**Ngày tạo**: 10/02/2026

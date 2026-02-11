@@ -1,216 +1,216 @@
-# Yêu Cầu Khả Dụng - UsabilityRequirements
+# Yêu Cầu Khả Dụng - Usability Requirements
 
 > 📅 **Cập nhật**: 10/02/2026  
-> 🎯 **Danh mục**: Non-Functional Requirements
+> 🎯 **Danh mục**: Yêu cầu Phi Chức Năng
 
 ---
 
-## 1. Learnability (Dễ Học)
+## 1. Khả năng Dễ học (Learnability)
 
 ### NFR-USA-001: Nhập Bài Báo trong < 5 Phút
-**Target**: Giảng viên mới có thể nhập bài báo đầu tiên trong < 5 phút
+**Mục tiêu**: Giảng viên mới có thể nhập bài báo đầu tiên trong < 5 phút
 
-**Measures**:
+**Biện pháp**:
 - Form đơn giản, rõ ràng
-- Required fields có đánh dấu *
-- Tooltips cho các field phức tạp
-- Auto-save every 30s
+- Các trường bắt buộc có đánh dấu *
+- Chú thích (Tooltips) cho các trường phức tạp
+- Tự động lưu mỗi 30s
 
 ---
 
-### NFR-USA-002: Onboarding Tutorial
-**Requirement**: First-time users thấy tutorial
+### NFR-USA-002: Hướng dẫn Nhập môn (Onboarding Tutorial)
+**Yêu cầu**: Người dùng lần đầu nhìn thấy hướng dẫn
 
-**Content**:
-- Video 2-3 phút (optional)
-- Step-by-step guide
-- "Skip for now" option
+**Nội dung**:
+- Video 2-3 phút (tùy chọn)
+- Hướng dẫn từng bước
+- Tùy chọn "Bỏ qua lúc này"
 
 ---
 
-## 2. Efficiency (Hiệu Quả)
+## 2. Hiệu Quả (Efficiency)
 
 ### NFR-USA-010: Số Click Tối Thiểu
-**Targets**:
+**Mục tiêu**:
 - Tạo bài báo mới: < 3 clicks
-- Nộp xét duyệt: 1 click (từ publication detail)
+- Nộp xét duyệt: 1 click (từ chi tiết bài báo)
 - Duyệt công trình: 2-3 clicks
 - Tạo báo cáo: 3-4 clicks
 
 ---
 
-### NFR-USA-011: Keyboard Shortcuts
-**Support shortcuts** (optional):
-- Ctrl+S: Save
-- Ctrl+Enter: Submit form
-- Esc: Close dialog
+### NFR-USA-011: Phím Tắt Bàn Phím
+**Hỗ trợ phím tắt** (tùy chọn):
+- Ctrl+S: Lưu
+- Ctrl+Enter: Nộp form
+- Esc: Đóng hộp thoại
 
 ---
 
-## 3. Error Prevention & Recovery
+## 3. Phòng ngừa & Khắc phục Lỗi (Error Prevention & Recovery)
 
-### NFR-USA-020: Validation Real-time
-**Requirement**: Validate ngay khi blur khỏi field
+### NFR-USA-020: Kiểm tra Hợp lệ Thời gian thực
+**Yêu cầu**: Kiểm tra ngay khi rời khỏi trường nhập (blur)
 
-**Examples**:
-- Email format
-- DOI format
-- Required fields
-
----
-
-### NFR-USA-021: Confirmation Dialogs
-**Show confirmation cho**:
-- Delete publication
-- Reject publication
-- Submit for review
-
-**Format**: "Are you sure? [Action] cannot be undone."
+**Ví dụ**:
+- Định dạng Email
+- Định dạng DOI
+- Các trường bắt buộc
 
 ---
 
-### NFR-USA-022: Auto-save Drafts
-**Requirement**: Tự động lưu nháp mỗi 30s
+### NFR-USA-021: Hộp thoại Xác nhận
+**Hiển thị xác nhận cho**:
+- Xóa bài báo
+- Từ chối bài báo
+- Nộp xét duyệt
 
-**Indicator**: "Saving..." / "Saved at HH:MM"
-
----
-
-## 4. Visual Design
-
-### NFR-USA-030: Responsive Design
-**Support**:
-- Desktop: 1920x1080, 1366x768
-- Tablet: 768x1024 (iPad)
-- Mobile: 375x667 (iPhone), 360x640 (Android)
-
-**Breakpoints**:
-- Mobile: < 768px
-- Tablet: 768px - 1024px
-- Desktop: > 1024px
+**Định dạng**: "Bạn có chắc chắn không? Hành động [Tên hành động] không thể hoàn tác."
 
 ---
 
-### NFR-USA-031: Consistent UI
-**Design system**:
-- Material-UI components
-- Consistent colors, fonts, spacing
-- Reusable components
+### NFR-USA-022: Tự động Lưu Nháp
+**Yêu cầu**: Tự động lưu bản nháp mỗi 30 giây
+
+**Chỉ báo**: "Đang lưu..." / "Đã lưu lúc HH:MM"
 
 ---
 
-### NFR-USA-032: Visual Feedback
-**Requirements**:
-- Loading spinners cho async operations
-- Success/Error toasts
-- Progress bars cho uploads
-- Skeleton screens (loading placeholders)
+## 4. Thiết kế Trực quan (Visual Design)
+
+### NFR-USA-030: Thiết kế Đáp ứng (Responsive Design)
+**Hỗ trợ**:
+- Máy tính: 1920x1080, 1366x768
+- Máy tính bảng: 768x1024 (iPad)
+- Di động: 375x667 (iPhone), 360x640 (Android)
+
+**Điểm ngắt (Breakpoints)**:
+- Di động: < 768px
+- Máy tính bảng: 768px - 1024px
+- Máy tính: > 1024px
 
 ---
 
-## 5. Accessibility (A11Y)
-
-### NFR-USA-040: WCAG 2.1 Level AA
-**Requirements**:
-- Color contrast ratio: >= 4.5:1 (text)
-- Keyboard navigation: Tất cả functions accessible
-- Screen reader: ARIA labels
-- Focus indicators: Visible
+### NFR-USA-031: Giao diện Nhất quán
+**Hệ thống thiết kế**:
+- Thành phần Material-UI
+- Nhất quán về màu sắc, phông chữ, khoảng cách
+- Thành phần tái sử dụng
 
 ---
 
-### NFR-USA-041: Alt Text for Images
-**Requirement**: Mọi image có alt text
+### NFR-USA-032: Phản hồi Trực quan
+**Yêu cầu**:
+- Biểu tượng tải (Loading spinners) cho các tác vụ bất đồng bộ
+- Thông báo Thành công/Lỗi (Toasts)
+- Thanh tiến trình cho tải lên
+- Màn hình khung xương (Skeleton screens) khi đang tải
 
 ---
 
-## 6. Internationalization (i18n)
+## 5. Khả năng Truy cập (Accessibility - A11Y)
+
+### NFR-USA-040: Chuẩn WCAG 2.1 Mức AA
+**Yêu cầu**:
+- Tỷ lệ tương phản màu: >= 4.5:1 (văn bản)
+- Điều hướng bàn phím: Tất cả chức năng có thể truy cập
+- Trình đọc màn hình: Nhãn ARIA
+- Chỉ báo tiêu điểm (Focus indicators): Nhìn thấy được
+
+---
+
+### NFR-USA-041: Văn bản Thay thế cho Hình ảnh
+**Yêu cầu**: Mọi hình ảnh đều có văn bản thay thế (alt text)
+
+---
+
+## 6. Quốc tế hóa (Internationalization - i18n)
 
 ### NFR-USA-050: Ngôn Ngữ Tiếng Việt
-**Requirement**: UI, error messages, emails đều tiếng Việt
+**Yêu cầu**: Giao diện, thông báo lỗi, email đều bằng tiếng Việt
 
-**Encoding**: UTF-8
+**Mã hóa**: UTF-8
 
-**Future**: Support English (Phase 2)
-
----
-
-## 7. Help & Documentation
-
-### NFR-USA-060: Inline Help
-**Requirements**:
-- Tooltips cho các field
-- Help icon (?) bên cạnh complex features
-- Link đến documentation
+**Tương lai**: Hỗ trợ tiếng Anh (Giai đoạn 2)
 
 ---
 
-### NFR-USA-061: FAQ Section
-**Topics**:
+## 7. Trợ giúp & Tài liệu (Help & Documentation)
+
+### NFR-USA-060: Trợ giúp Tại chỗ (Inline Help)
+**Yêu cầu**:
+- Tooltips cho các trường
+- Biểu tượng trợ giúp (?) bên cạnh các tính năng phức tạp
+- Liên kết đến tài liệu hướng dẫn
+
+---
+
+### NFR-USA-061: Mục Câu hỏi Thường gặp (FAQ)
+**Chủ đề**:
 - Làm sao để thêm bài báo?
 - Làm sao kiểm tra trạng thái xét duyệt?
 - Làm sao tạo báo cáo?
-- Làm sao upload PDF?
+- Làm sao tải lên PDF?
 
 ---
 
-## 8. Search & Navigation
+## 8. Tìm kiếm & Điều hướng
 
-### NFR-USA-070: Search Auto-complete
-**Requirement**: Gợi ý khi gõ >= 3 ký tự
+### NFR-USA-070: Tự động Hoàn thành Tìm kiếm
+**Yêu cầu**: Gợi ý khi gõ >= 3 ký tự
 
-**Suggest**:
-- Publication titles
-- Author names
-- Keywords
-
----
-
-### NFR-USA-071: Breadcrumbs
-**Show navigation path**:
-Example: Home > Publications > Publication Detail
+**Gợi ý**:
+- Tiêu đề bài báo
+- Tên tác giả
+- Từ khóa
 
 ---
 
-## 9. Feedback Mechanisms
-
-### NFR-USA-080: User Feedback Form
-**Location**: Footer hoặc Help menu
-
-**Fields**:
-- Issue type (Bug, Feature request, Question)
-- Description
-- Screenshot upload (optional)
+### NFR-USA-071: Đường dẫn (Breadcrumbs)
+**Hiển thị đường dẫn điều hướng**:
+Ví dụ: Trang chủ > Bài báo > Chi tiết bài báo
 
 ---
 
-## 10. Performance Perception
+## 9. Cơ chế Phản hồi
 
-### NFR-USA-090: Progress Indicators
-**For long operations**:
-- PDF upload: Progress bar
-- Report generation: "Processing... 50%"
-- Search: Loading spinner
+### NFR-USA-080: Form Phản hồi Người dùng
+**Vị trí**: Chân trang hoặc menu Trợ giúp
+
+**Các trường**:
+- Loại vấn đề (Lỗi, Yêu cầu tính năng, Câu hỏi)
+- Mô tả
+- Tải lên ảnh chụp màn hình (tùy chọn)
 
 ---
 
-## 11. Usability Testing
+## 10. Cảm nhận Hiệu năng
 
-### NFR-USA-100: User Testing
-**Frequency**: Before major releases
+### NFR-USA-090: Chỉ báo Tiến trình
+**Cho các tác vụ dài**:
+- Tải lên PDF: Thanh tiến trình
+- Tạo báo cáo: "Đang xử lý... 50%"
+- Tìm kiếm: Biểu tượng đang tải
 
-**Scenarios**:
-1. Researcher: Thêm bài báo mới
-2. Faculty Reviewer: Xét duyệt công trình
-3. Viewer: Tìm kiếm giảng viên theo lĩnh vực
+---
 
-**Metrics**:
-- Task completion rate: > 90%
-- Task completion time
-- User satisfaction: > 4/5
+## 11. Kiểm thử Khả dụng (Usability Testing)
+
+### NFR-USA-100: Kiểm thử Người dùng
+**Tần suất**: Trước các bản phát hành lớn
+
+**Kịch bản**:
+1. Nhà nghiên cứu: Thêm bài báo mới
+2. Người duyệt Khoa: Xét duyệt công trình
+3. Người xem: Tìm kiếm giảng viên theo lĩnh vực
+
+**Chỉ số**:
+- Tỷ lệ hoàn thành tác vụ: > 90%
+- Thời gian hoàn thành tác vụ
+- Sự hài lòng của người dùng: > 4/5
 
 ---
 
 **Tài liệu liên quan**:
-- [User Needs](../../02_System_Clarification/User_Analysis/user_needs.md)
-- [User Groups](../../02_System_Clarification/User_Analysis/user_groups.md)
+- [Nhu cầu Người dùng](../../02_System_Clarification/User_Analysis/user_needs.md)
+- [Nhóm Người dùng](../../02_System_Clarification/User_Analysis/user_groups.md)

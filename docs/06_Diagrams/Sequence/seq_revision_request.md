@@ -1,45 +1,45 @@
-# Sequence Diagram: Revision Request Flow
+# Biểu đồ Tuần tự: Luồng Yêu cầu Chỉnh sửa
 
-> 📊 **Diagram ID**: SEQ-05  
-> 🎯 **Alternative Flow**: Request Revision  
-> 👤 **Actors**: Reviewer → Researcher  
-> ⚙️ **Result**: Researcher edits and resubmits
+> 📊 **ID Biểu đồ**: SEQ-05  
+> 🎯 **Luồng Thay Thế**: Yêu cầu Chỉnh sửa  
+> 👤 **Tác nhân**: Người đánh giá → Nhà nghiên cứu  
+> ⚙️ **Kết quả**: Nhà nghiên cứu chỉnh sửa và gửi lại
 
 ---
 
-## 📊 Sequence Diagram
+## 📊 Biểu đồ Tuần tự
 
 ```mermaid
 sequenceDiagram
-    actor Researcher as 👨‍🔬 Researcher
-    participant UI as 🖥️ UI
+    actor Researcher as 👨‍🔬 Nhà nghiên cứu
+    participant UI as 🖥️ Giao diện
     participant API as 🔌 API
-    participant Service as ⚙️ Service
-    participant Repo as 💾 Repo
-    participant DB as 🗄️ DB
-    participant Notif as 📧 Notif
+    participant Service as ⚙️ Dịch vụ
+    participant Repo as 💾 Repository
+    participant DB as 🗄️ CSDL
+    participant Notif as 📧 Thông báo
     
-    Note over Researcher: Publication is in<br/>REVISION_REQUIRED state<br/>(reviewer requested changes)
+    Note over Researcher: Ấn phẩm đang ở trạng thái<br/>REVISION_REQUIRED<br/>(người đánh giá yêu cầu thay đổi)
     
-    %% Step 1: Receive notification
-    Notif->>Researcher: Email: "Revision requested"
-    Researcher->>UI: Click link in email
+    %% Bước 1: Nhận thông báo
+    Notif->>Researcher: Email: "Đã yêu cầu chỉnh sửa"
+    Researcher->>UI: Nhấn vào liên kết trong email
     
-    %% View revision requirements
+    %% Xem yêu cầu chỉnh sửa
     UI->>API: GET /api/publications/{id}
     API->>Repo: findWithComments(id)
     Repo->>DB: SELECT publication, review_comments
-    DB-->>Repo: Data
-    Repo-->>API: Publication + Comments
-    API-->>UI: Full data
-    UI-->>Researcher: Show publication +<br/>yellow banner: "Revision Required"<br/>+ reviewer comments
+    DB-->>Repo: Dữ liệu
+    Repo-->>API: Ấn phẩm + Bình luận
+    API-->>UI: Dữ liệu đầy đủ
+    UI-->>Researcher: Hiển thị ấn phẩm +<br/>banner vàng: "Yêu cầu Chỉnh sửa"<br/>+ bình luận của người đánh giá
     
-    %% Read comments
-    Researcher->>UI: Read comments
-    Note over UI: Display comments:<br/>- From faculty/university<br/>- Revision requirements<br/>- Suggestions
+    %% Đọc bình luận
+    Researcher->>UI: Đọc bình luận
+    Note over UI: Hiển thị bình luận:<br/>- Từ khoa/trường<br/>- Yêu cầu chỉnh sửa<br/>- Đề xuất
     
-    %% Edit to address
-    Researcher->>UI: Click "Edit to Address Comments"
+    %% Chỉnh sửa để giải quyết
+    Researcher->>UI: Nhấn "Chỉnh sửa để Giải quyết Bình luận"
     UI->>API: POST /api/publications/{id}/start-revision
     API->>Service: changeStatusToDraft(pubId)
     activate Service
@@ -47,162 +47,162 @@ sequenceDiagram
     Repo->>DB: UPDATE publications<br/>SET status = 'DRAFT'
     Service->>Repo: logHistory(...)
     Repo->>DB: INSERT review_history<br/>(REVISION_REQUIRED → DRAFT)
-    Service-->>API: Success
+    Service-->>API: Thành công
     deactivate Service
     API-->>UI: 200 OK
-    UI-->>Researcher: Edit form enabled
+    UI-->>Researcher: Biểu mẫu chỉnh sửa được bật
     
-    %% Make changes
-    Researcher->>UI: Make changes based on comments
-    Note over Researcher,UI: Fix title, abstract,<br/>add missing info, etc.
+    %% Thực hiện thay đổi
+    Researcher->>UI: Thực hiện thay đổi dựa trên bình luận
+    Note over Researcher,UI: Sửa tiêu đề, tóm tắt,<br/>thêm thông tin thiếu, v.v.
     
-    Researcher->>UI: Click "Save Changes"
+    Researcher->>UI: Nhấn "Lưu Thay đổi"
     UI->>API: PUT /api/publications/{id}
     API->>Service: updatePublication(id, data)
     Service->>Repo: update(publication)
     Repo->>DB: UPDATE publications
-    Repo-->>Service: Updated
-    Service-->>API: Success
+    Repo-->>Service: Đã cập nhật
+    Service-->>API: Thành công
     API-->>UI: 200 OK
-    UI-->>Researcher: "Changes saved"
+    UI-->>Researcher: "Đã lưu thay đổi"
     
-    %% Resubmit
-    Researcher->>UI: Click "Resubmit for Review"
+    %% Gửi lại
+    Researcher->>UI: Nhấn "Gửi lại để Đánh giá"
     UI->>API: POST /api/publications/{id}/resubmit
     activate API
     API->>Service: resubmitAfterRevision(pubId, userId)
     activate Service
     
-    %% Validate completion again
+    %% Xác thực hoàn thành lại
     Service->>Service: validateCompletion()
     
-    alt Incomplete
+    alt Chưa hoàn thành
         Service-->>API: ValidationError
-        API-->>UI: 400 + missing fields
-        UI-->>Researcher: "Please complete: ..."
-    else Complete
-        Note over Service,DB: START TRANSACTION
+        API-->>UI: 400 + trường thiếu
+        UI-->>Researcher: "Vui lòng hoàn thành: ..."
+    else Hoàn thành
+        Note over Service,DB: BẮT ĐẦU GIAO DỊCH
         
-        %% Status transitions
+        %% Chuyển đổi trạng thái
         Service->>Repo: updateStatus(pubId, "SUBMITTED")
         Repo->>DB: UPDATE status = 'SUBMITTED'
         
         Service->>Repo: updateStatus(pubId, "FACULTY_REVIEWING")
         Repo->>DB: UPDATE status = 'FACULTY_REVIEWING'
         
-        %% Log resubmission
+        %% Ghi nhật ký gửi lại
         Service->>Repo: logHistory(...)
-        Repo->>DB: INSERT review_history<br/>(action: RESUBMIT_AFTER_REVISION)
+        Repo->>DB: INSERT review_history<br/>(hành động: RESUBMIT_AFTER_REVISION)
         
-        Note over Service,DB: COMMIT
+        Note over Service,DB: CAM KẾT
         
-        %% Notify same reviewers
+        %% Thông báo cho cùng người đánh giá
         Service->>Notif: notifyResubmission(publication)
         activate Notif
-        Note over Notif: Notify original reviewer<br/>(same person who requested revision)
-        Notif->>Notif: Send email with "Resubmitted" flag
+        Note over Notif: Thông báo cho người đánh giá gốc<br/>(người đã yêu cầu chỉnh sửa)
+        Notif->>Notif: Gửi email với cờ "Đã gửi lại"
         deactivate Notif
         
-        Service-->>API: Success
+        Service-->>API: Thành công
         deactivate Service
         API-->>UI: 200 OK
         deactivate API
-        UI-->>Researcher: "Resubmitted successfully!"
+        UI-->>Researcher: "Đã gửi lại thành công!"
     end
 ```
 
 ---
 
-## 📋 Flow Steps
+## 📋 Các Bước Luồng
 
-### 1. Notification
-- Researcher receives email: "Revision requested"
-- Email contains:
-  - Reviewer comments
-  - Link to publication
-  - Deadline (if any - P2)
+### 1. Thông báo
+- Nhà nghiên cứu nhận email: "Đã yêu cầu chỉnh sửa"
+- Email chứa:
+  - Bình luận của người đánh giá
+  - Liên kết đến ấn phẩm
+  - Hạn chót (nếu có - P2)
 
-### 2. View Comments
-- Publication status = `REVISION_REQUIRED`
-- UI shows yellow banner: "Revision Required"
-- Display all review comments from reviewer(s)
+### 2. Xem Bình luận
+- Trạng thái ấn phẩm = `REVISION_REQUIRED`
+- Giao diện hiển thị banner vàng: "Yêu cầu Chỉnh sửa"
+- Hiển thị tất cả bình luận đánh giá từ người đánh giá
 
-### 3. Start Revision
-- Click "Edit to Address Comments"
-- Status changes back to `DRAFT`
-- Edit form enabled
-- Comments still visible for reference
+### 3. Bắt đầu Chỉnh sửa
+- Nhấn "Chỉnh sửa để Giải quyết Bình luận"
+- Trạng thái chuyển lại thành `DRAFT`
+- Biểu mẫu chỉnh sửa được bật
+- Bình luận vẫn hiển thị để tham khảo
 
-### 4. Make Changes
-- Researcher addresses each comment
-- Can mark comments as "Addressed" (P2)
-- Save changes incrementally
+### 4. Thực hiện Thay đổi
+- Nhà nghiên cứu giải quyết từng bình luận
+- Có thể đánh dấu bình luận là "Đã giải quyết" (P2)
+- Lưu thay đổi dần dần
 
-### 5. Resubmit
-- Click "Resubmit for Review"
-- System validates completion (same as initial submission)
-- Status: `DRAFT` → `SUBMITTED` → `FACULTY_REVIEWING`
-- Flag: This is a resubmission (not new)
+### 5. Gửi lại
+- Nhấn "Gửi lại để Đánh giá"
+- Hệ thống xác thực hoàn thành (giống như lần gửi đầu tiên)
+- Trạng thái: `DRAFT` → `SUBMITTED` → `FACULTY_REVIEWING`
+- Cờ: Đây là lần gửi lại (không phải mới)
 
-### 6. Re-Review
-- Goes back to **same reviewer**
-- Reviewer can see:
-  - Original comments
-  - What changed (diff - P2)
-  - This is a revision resubmission
+### 6. Đánh giá lại
+- Quay lại **cùng người đánh giá**
+- Người đánh giá có thể thấy:
+  - Bình luận gốc
+  - Những gì đã thay đổi (diff - P2)
+  - Đây là một bản gửi lại sau chỉnh sửa
 
 ---
 
-## 📧 Email Notifications
+## 📧 Thông báo Email
 
-### To Researcher (Revision Requested)
+### Đến Nhà nghiên cứu (Yêu cầu Chỉnh sửa)
 ```
-Subject: Revision requested - {title}
+Chủ đề: Yêu cầu chỉnh sửa - {title}
 
-Hello {researcher_name},
+Thân gửi {researcher_name},
 
-The reviewer has requested revisions to your publication:
+Người đánh giá đã yêu cầu chỉnh sửa cho ấn phẩm của bạn:
 
-Title: {title}
-Reviewer: {reviewer_name}
-Date: {timestamp}
+Tiêu đề: {title}
+Người đánh giá: {reviewer_name}
+Ngày: {timestamp}
 
-Comments:
+Bình luận:
 {comments}
 
-Please make necessary changes and resubmit.
+Vui lòng thực hiện các thay đổi cần thiết và gửi lại.
 
-View publication: {url}
+Xem ấn phẩm: {url}
 
-Best regards,
+Trân trọng,
 UFPMS
 ```
 
-### To Reviewer (Resubmitted)
+### Đến Người đánh giá (Đã gửi lại)
 ```
-Subject: Publication resubmitted - {title}
+Chủ đề: Ấn phẩm đã được gửi lại - {title}
 
-Hello {reviewer_name},
+Thân gửi {reviewer_name},
 
-The publication you requested revisions for has been resubmitted:
+Ấn phẩm bạn yêu cầu chỉnh sửa đã được gửi lại:
 
-Title: {title}
-Researcher: {researcher_name}
-Resubmitted: {timestamp}
+Tiêu đề: {title}
+Nhà nghiên cứu: {researcher_name}
+Đã gửi lại: {timestamp}
 
-Original comments: {original_comments}
+Bình luận gốc: {original_comments}
 
-Please review: {url}
+Vui lòng đánh giá: {url}
 
-Best regards,
+Trân trọng,
 UFPMS
 ```
 
 ---
 
-## 🗄️ Database Changes
+## 🗄️ Thay Đổi Cơ Sở Dữ Liệu
 
-### Start Revision
+### Bắt đầu Chỉnh sửa
 ```sql
 UPDATE publications 
 SET status = 'DRAFT'
@@ -217,7 +217,7 @@ INSERT INTO review_history (
 );
 ```
 
-### Resubmit After Revision
+### Gửi lại Sau khi Chỉnh sửa
 ```sql
 UPDATE publications 
 SET status = 'FACULTY_REVIEWING'
@@ -234,32 +234,32 @@ INSERT INTO review_history (
 
 ---
 
-## 🔄 State Transitions
+## 🔄 Chuyển đổi Trạng thái
 
 ```mermaid
 stateDiagram-v2
-    FACULTY_REVIEWING --> REVISION_REQUIRED: Request Revision
-    REVISION_REQUIRED --> DRAFT: Start Editing
-    DRAFT --> DRAFT: Save Changes
-    DRAFT --> SUBMITTED: Resubmit
-    SUBMITTED --> FACULTY_REVIEWING: Auto
+    FACULTY_REVIEWING --> REVISION_REQUIRED: Yêu cầu Chỉnh sửa
+    REVISION_REQUIRED --> DRAFT: Bắt đầu Chỉnh sửa
+    DRAFT --> DRAFT: Lưu Thay đổi
+    DRAFT --> SUBMITTED: Gửi lại
+    SUBMITTED --> FACULTY_REVIEWING: Tự động
     
     note right of FACULTY_REVIEWING
-        Goes back to same reviewer
-        Flagged as resubmission
+        Quay lại cùng người đánh giá
+        Được gắn cờ là gửi lại
     end note
 ```
 
 ---
 
-## 💡 Business Rules
+## 💡 Quy Tắc Nghiệp Vụ
 
-1. **Researcher can edit unlimited times** while in DRAFT
-2. **Multiple revisions allowed**: Reviewer can request revision again
-3. **Deadline tracking** (P2): Send reminders if not resubmitted in X days
-4. **Revision count**: Track how many times revised (for analytics)
+1. **Nhà nghiên cứu có thể chỉnh sửa không giới hạn lần** khi ở trạng thái DRAFT
+2. **Cho phép nhiều lần chỉnh sửa**: Người đánh giá có thể yêu cầu chỉnh sửa lại
+3. **Theo dõi hạn chót** (P2): Gửi nhắc nhở nếu không gửi lại trong X ngày
+4. **Số lần chỉnh sửa**: Theo dõi số lần đã chỉnh sửa (để phân tích)
 
 ---
 
-**Related**: FR-APR-008, FR-APR-003, US-RES-012, US-FCR-004  
-**Created**: 10/02/2026
+**Liên quan**: FR-APR-008, FR-APR-003, US-RES-012, US-FCR-004  
+**Ngày tạo**: 10/02/2026

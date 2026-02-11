@@ -1,115 +1,115 @@
-# Module 3: Search & Browse - Yêu Cầu Chức Năng
+# Phân hệ 3: Tìm kiếm & Tra cứu - Yêu Cầu Chức Năng
 
 > 📅 **Cập nhật**: 10/02/2026  
-> 🎯 **Module**: Tìm kiếm và Tra cứu Bài báo  
-> 👥 **Users**: Tất cả (Public Access)
+> 🎯 **Phân hệ**: Tìm kiếm và Tra cứu Bài báo  
+> 👥 **Người dùng**: Tất cả (Truy cập Công khai)
 
 ---
 
-## 1. Functional Requirements
+## 1. Yêu Cầu Chức Năng
 
-### FR-SEA-001: Full-Text Search
-**Priority**: 🟡 P1 - Should Have
+### FR-SEA-001: Tìm kiếm Toàn văn (Full-Text Search)
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
-GIVEN user truy cập trang tìm kiếm
-WHEN nhập từ khóa và search
-THEN hiển thị kết quả chỉ công trình PUBLISHED:
-  - Tìm trong: Title, Abstract, Keywords, Author names
-  - Highlight từ khóa trong kết quả
-  - Sắp xếp theo relevance
+GIVEN người dùng truy cập trang tìm kiếm
+WHEN nhập từ khóa và tìm kiếm
+THEN hiển thị kết quả chỉ công trình ĐÃ XUẤT BẢN:
+  - Tìm trong: Tiêu đề, Tóm tắt, Từ khóa, Tên tác giả
+  - Làm nổi bật từ khóa trong kết quả
+  - Sắp xếp theo độ liên quan
 ```
 
 ---
 
-### FR-SEA-002: Advanced Filters
-**Priority**: 🟡 P1 - Should Have
+### FR-SEA-002: Bộ lọc Nâng cao
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Filters**:
-- Year (range: từ năm - đến năm)  
-- Faculty/Department  
-- Journal Type (Q1/Q2/Q3/Q4 hoặc Conference)  
-- Publication Type (Journal/Conference)  
-- Research Field
+**Bộ lọc**:
+- Năm (khoảng: từ năm - đến năm)  
+- Khoa/Bộ môn  
+- Loại Tạp chí (Q1/Q2/Q3/Q4 hoặc Hội nghị)  
+- Loại Bài báo (Tạp chí/Hội nghị)  
+- Lĩnh vực Nghiên cứu
 
 ---
 
-### FR-SEA-003: Browse by Category
-**Priority**: 🟡 P1 - Should Have
+### FR-SEA-003: Duyệt theo Danh mục
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
-WHEN chọn "Browse"
+WHEN chọn "Duyệt" (Browse)
 THEN hiển thị các danh mục:
-  - By Faculty
-  - By Year
-  - By Research Field
-  - By Journal Quartile
+  - Theo Khoa
+  - Theo Năm
+  - Theo Lĩnh vực Nghiên cứu
+  - Theo Nhóm tứ phân vị Tạp chí
 ```
 
 ---
 
-### FR-SEA-004: Export Search Results
-**Priority**: 🟢 P2 - Nice to Have
+### FR-SEA-004: Xuất Kết quả Tìm kiếm
+**Độ ưu tiên**: 🟢 P2 - Có Thể Có
 
-**Export formats**:
+**Định dạng xuất**:
 - BibTeX
-- RIS (for reference managers)
+- RIS (cho các trình quản lý trích dẫn)
 - CSV  
 - JSON
 
 ---
 
-### FR-SEA-005: Pagination
-**Priority**: 🔴 P0 - Must Have
+### FR-SEA-005: Phân trang
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Acceptance Criteria**:
-- Default: 20 results/page
-- Options: 10, 20, 50, 100
-- Infinite scroll (optional)
+**Tiêu chí chấp nhận**:
+- Mặc định: 20 kết quả/trang
+- Tùy chọn: 10, 20, 50, 100
+- Cuộn vô tận (tùy chọn)
 
 ---
 
-### FR-SEA-006: View Publication Details (Public)
-**Priority**: 🔴 P0 - Must Have
+### FR-SEA-006: Xem Chi tiết Bài báo (Công khai)
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
-WHEN click vào bài báo
+WHEN nhấn vào bài báo
 THEN hiển thị:
-  - Full metadata
-  - DOI link
-  - Download PDF (nếu cho phép)
-  - Author profiles (link đến profile)
+  - Metadata đầy đủ
+  - Liên kết DOI
+  - Tải xuống PDF (nếu cho phép)
+  - Hồ sơ tác giả (liên kết đến hồ sơ)
 ```
 
 ---
 
-### FR-SEA-007: Sort Options
-**Priority**: 🟡 P1 - Should Have
+### FR-SEA-007: Tùy chọn Sắp xếp
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Sort by**:
-- Newest first (default)
-- Oldest first  
-- Most cited  
-- Impact Factor (high to low)
+**Sắp xếp theo**:
+- Mới nhất trước (mặc định)
+- Cũ nhất trước  
+- Được trích dẫn nhiều nhất  
+- Chỉ số ảnh hưởng (cao xuống thấp)
 
 ---
 
-## 2. Non-Functional Requirements
+## 2. Yêu Cầu Phi Chức Năng
 
-**Performance**:
-- Search response time < 1 second (10,000 publications)
-- Support fuzzy search
-- Index với Elasticsearch (optional)
+**Hiệu năng**:
+- Thời gian phản hồi tìm kiếm < 1 giây (10,000 bài báo)
+- Hỗ trợ tìm kiếm mờ (fuzzy search)
+- Đánh chỉ mục với Elasticsearch (tùy chọn)
 
 **SEO**:
-- Meta tags cho từng publication page
+- Thẻ Meta cho từng trang bài báo
 - Sitemap.xml
 - Robots.txt
 
 ---
 
 **Tài liệu liên quan**:
-- [Module 4: Researcher Profile](./module_profile.md)
+- [Phân hệ 4: Hồ sơ Nhà nghiên cứu](./module_profile.md)

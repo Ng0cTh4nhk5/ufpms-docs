@@ -1,310 +1,310 @@
-# Module 1: Publication Management - Yêu Cầu Chức Năng
+# Phân hệ 1: Quản lý Bài báo - Yêu Cầu Chức Năng
 
 > 📅 **Cập nhật**: 10/02/2026  
-> 🎯 **Module**: Quản lý Bài báo Khoa học  
-> 👥 **Users**: Researcher, SuperAdmin
+> 🎯 **Phân hệ**: Quản lý Bài báo Khoa học  
+> 👥 **Người dùng**: Nhà nghiên cứu, Quản trị viên cấp cao
 
 ---
 
-## 1. Tổng Quan Module
+## 1. Tổng Quan Phân hệ
 
-**Mục đích**: Quản lý bài báo khoa học (CRUD + metadata)
+**Mục đích**: Quản lý bài báo khoa học (Thêm/Xóa/Sửa + metadata)
 
-**Scope**:
-- ✅ CRUD bài báo
-- ✅ Upload file PDF
+**Phạm vi**:
+- ✅ Thêm/Xóa/Sửa bài báo
+- ✅ Tải lên tệp PDF
 - ✅ Quản lý metadata
 - ✅ Liên kết đồng tác giả
-- ❌ KHÔNG bao gồm: Quy trình phê duyệt (Module 2)
+- ❌ KHÔNG bao gồm: Quy trình phê duyệt (Phân hệ 2)
 
 ---
 
-## 2. Functional Requirements
+## 2. Yêu Cầu Chức Năng
 
 ### FR-PUB-001: Tạo Bài Báo Mới
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**:  
+**Mô tả**:  
 Giảng viên có thể tạo bài báo mới với các thông tin bắt buộc và tùy chọn.
 
 **User Story**: US-RES-001
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN giảng viên đã đăng nhập
 WHEN nhấn "Thêm bài báo mới"
 THEN hiển thị form với các trường:
   - Bắt buộc: Tiêu đề, Tác giả, Năm xuất bản, Loại tạp chí
-  - Tùy chọn: DOI, ISSN, Abstract, Keywords, File PDF
+  - Tùy chọn: DOI, ISSN, Tóm tắt (Abstract), Từ khóa (Keywords), Tệp PDF
 ```
 
-**Business Rules**:
-- Trạng thái mặc định: DRAFT
-- Chỉ tác giả chính (owner) mới có quyền sửa/xóa
+**Quy tắc nghiệp vụ**:
+- Trạng thái mặc định: DRAFT (Nháp)
+- Chỉ tác giả chính (chủ sở hữu) mới có quyền sửa/xóa
 
-**Technical Notes**:
-- Form validation real-time
-- Auto-save every 30s (nháp)
+**Ghi chú kỹ thuật**:
+- Validate form theo thời gian thực (Real-time)
+- Tự động lưu mỗi 30s (nháp)
 
 ---
 
-### FR-PUB-002: Upload File PDF
-**Priority**: 🔴 P0 - Must Have
+### FR-PUB-002: Tải lên Tệp PDF
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**:  
-Giảng viên có thể upload file PDF bài báo full-text.
+**Mô tả**:  
+Giảng viên có thể upload file PDF bài báo toàn văn (full-text).
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN đang tạo/sửa bài báo
 WHEN chọn file PDF (< 10MB)
 THEN
-  - Upload file lên server
-  - Lưu path vào database
-  - Hiển thị preview thumbnail
-  - Cho phép download lại
+  - Tải file lên máy chủ
+  - Lưu đường dẫn vào cơ sở dữ liệu
+  - Hiển thị hình thu nhỏ (thumbnail) xem trước
+  - Cho phép tải xuống lại
 ```
 
-**Validation Rules**:
-- File type: PDF only (`.pdf`)
-- File size: Max 10MB
-- File name: Sanitize để tránh SQL injection
+**Quy tắc kiểm tra**:
+- Loại tệp: Chỉ PDF (`.pdf`)
+- Kích thước tệp: Tối đa 10MB
+- Tên tệp: Làm sạch để tránh SQL injection
 
 ---
 
-### FR-PUB-003: Auto-Fetch Metadata từ DOI
-**Priority**: 🟢 P2 - Nice to Have (Phase 2)
+### FR-PUB-003: Tự động lấy Metadata từ DOI
+**Độ ưu tiên**: 🟢 P2 - Có Thể Có (Giai đoạn 2)
 
-**Description**:  
-Khi nhập DOI, tự động lấy metadata từ DOI Resolver.
+**Mô tả**:  
+Khi nhập DOI, tự động lấy metadata từ Bộ giải quyết DOI (DOI Resolver).
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN giảng viên nhập DOI hợp lệ (10.xxxx/xxxxx)
 WHEN nhấn "Lấy thông tin từ DOI"
 THEN
-  - Gọi CrossRef API
-  - Auto-fill: Title, Authors, Journal, Year, ISSN
+  - Gọi API CrossRef
+  - Tự động điền: Tiêu đề, Tác giả, Tạp chí, Năm, ISSN
   - Cho phép chỉnh sửa thủ công
 ```
 
-**Dependencies**:
-- CrossRef API hoặc DOI.org API
+**Sự phụ thuộc**:
+- API CrossRef hoặc API DOI.org
 
 ---
 
 ### FR-PUB-004: Sửa Bài Báo
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**:  
+**Mô tả**:  
 Giảng viên có thể sửa bài báo của mình.
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN bài báo ở trạng thái DRAFT hoặc REVISION_REQUIRED
-AND user là owner
-WHEN sửa thông tin và Save
+AND người dùng là chủ sở hữu
+WHEN sửa thông tin và Lưu
 THEN
-  - Cập nhật database
-  - Lưu audit log (ai sửa, khi nào)
+  - Cập nhật cơ sở dữ liệu
+  - Lưu nhật ký kiểm toán (ai sửa, khi nào)
   - Hiển thị thông báo "Đã lưu"
 ```
 
-**Business Rules**:
+**Quy tắc nghiệp vụ**:
 - CHỈ sửa được khi: DRAFT hoặc REVISION_REQUIRED
 - KHÔNG sửa được khi: SUBMITTED, REVIEWING, PUBLISHED
 
 ---
 
 ### FR-PUB-005: Xóa Bài Báo
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**:  
+**Mô tả**:  
 Giảng viên có thể xóa bài báo nháp của mình.
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN bài báo ở trạng thái DRAFT
-AND user là owner
-WHEN nhấn "Xóa" và confirm
+AND người dùng là chủ sở hữu
+WHEN nhấn "Xóa" và xác nhận
 THEN
-  - Soft delete (set deleted_at timestamp)
-  - Xóa file PDF khỏi storage
-  - Redirect về danh sách
+  - Xóa mềm (đặt dấu thời gian deleted_at)
+  - Xóa file PDF khỏi lưu trữ
+  - Chuyển hướng về danh sách
 ```
 
-**Business Rules**:
+**Quy tắc nghiệp vụ**:
 - CHỈ xóa được khi: DRAFT
 - KHÔNG xóa được: Đã nộp hoặc đã duyệt
 
 ---
 
 ### FR-PUB-006: Xem Danh Sách Bài Báo Của Mình
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**:  
+**Mô tả**:  
 Giảng viên xem danh sách bài báo của mình, phân loại theo trạng thái.
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN giảng viên đã đăng nhập
-WHEN vào "My Publications"
+WHEN vào "Bài báo của tôi"
 THEN hiển thị danh sách với:
-  - Filter: All / Draft / Submitted / Approved / Rejected
-  - Sort: Newest first
-  - Thông tin: Title, Status, Updated date, Actions
+  - Bộ lọc: Tất cả / Nháp / Đã nộp / Đã duyệt / Bị từ chối
+  - Sắp xếp: Mới nhất trước
+  - Thông tin: Tiêu đề, Trạng thái, Ngày cập nhật, Hành động
 ```
 
 ---
 
 ### FR-PUB-007: Thêm Đồng Tác Giả (Co-authors)
-**Priority**: 🟡 P1 - Should Have
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Description**:  
+**Mô tả**:  
 Liên kết bài báo với đồng tác giả (giảng viên khác trong trường).
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN đang tạo/sửa bài báo
 WHEN nhập tên giảng viên
 THEN
-  - Autocomplete từ danh sách GV trong hệ thống
-  - Thêm vào danh sách co-authors
+  - Tự động hoàn thành từ danh sách GV trong hệ thống
+  - Thêm vào danh sách đồng tác giả
   - Có thể xóa khỏi danh sách
 ```
 
-**Business Rules**:
-- Tác giả chính (owner) không thể bị xóa
+**Quy tắc nghiệp vụ**:
+- Tác giả chính (chủ sở hữu) không thể bị xóa
 - Đồng tác giả không có quyền sửa/xóa bài báo
 
 ---
 
-### FR-PUB-008: Gắn Tags/Keywords
-**Priority**: 🟡 P1 - Should Have
+### FR-PUB-008: Gắn Thẻ/Từ khóa
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Description**:  
+**Mô tả**:  
 Gắn từ khóa cho bài báo để hỗ trợ tìm kiếm và phân loại.
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN đang tạo/sửa bài báo
-WHEN nhập keywords (phân tách bằng dấu phẩy)
+WHEN nhập từ khóa (phân tách bằng dấu phẩy)
 THEN
-  - Lưu dưới dạng array
-  - Hiển thị dạng tags
-  - Cho phép xóa từng tag
+  - Lưu dưới dạng mảng
+  - Hiển thị dạng thẻ
+  - Cho phép xóa từng thẻ
 ```
 
 ---
 
-### FR-PUB-009: Phân Loại Theo Quartile (Q1/Q2/Q3/Q4)
-**Priority**: 🟡 P1 - Should Have
+### FR-PUB-009: Phân Loại Theo Nhóm tứ phân vị (Q1/Q2/Q3/Q4)
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Description**:  
+**Mô tả**:  
 Tự động phân loại tạp chí theo Quartile (Scopus).
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN nhập ISSN của tạp chí
 WHEN lưu bài báo
 THEN
-  - Tra cứu Scopus ranking (nếu có API)
+  - Tra cứu xếp hạng Scopus (nếu có API)
   - Gắn nhãn Q1/Q2/Q3/Q4
-  - Hiển thị badge
+  - Hiển thị huy hiệu (badge)
 ```
 
-**Dependencies**:
-- Scopus API (hoặc danh sách cứng từ Excel)
+**Sự phụ thuộc**:
+- API Scopus (hoặc danh sách cứng từ Excel)
 
 ---
 
 ### FR-PUB-010: Xem Chi Tiết Bài Báo
-**Priority**: 🔴 P0 - Must Have
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**:  
+**Mô tả**:  
 Xem đầy đủ thông tin bài báo.
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
-GIVEN có quyền xem bài báo (owner hoặc admin hoặc reviewer)
-WHEN nhấn "View Details"
+GIVEN có quyền xem bài báo (chủ sở hữu hoặc admin hoặc người duyệt)
+WHEN nhấn "Xem Chi tiết"
 THEN hiển thị:
   - Tất cả metadata
   - Trạng thái hiện tại
   - Lịch sử xét duyệt (nếu có)
-  - File PDF (nếu đã upload)
-  - Link DOI (nếu có)
+  - Tệp PDF (nếu đã tải lên)
+  - Liên kết DOI (nếu có)
 ```
 
 ---
 
-### FR-PUB-011: Download File PDF
-**Priority**: 🔴 P0 - Must Have
+### FR-PUB-011: Tải xuống Tệp PDF
+**Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Description**:  
-Download file PDF đã upload.
+**Mô tả**:  
+Tải xuống file PDF đã upload.
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN bài báo có file PDF
-AND user có quyền xem (owner / admin / reviewer / hoặc PUBLISHED)
-WHEN nhấn "Download PDF"
+AND người dùng có quyền xem (chủ sở hữu / admin / người duyệt / hoặc ĐÃ XUẤT BẢN)
+WHEN nhấn "Tải xuống PDF"
 THEN
   - Tải file về máy
-  - Log audit trail (ai tải, khi nào)
+  - Ghi nhật ký kiểm toán (ai tải, khi nào)
 ```
 
-**Security**:
+**Bảo mật**:
 - CHỈ cho tải nếu có quyền
-- PDF không public link (cần authentication)
+- PDF không có link công khai (cần xác thực)
 
 ---
 
-### FR-PUB-012: Validate DOI Format
-**Priority**: 🟡 P1 - Should Have
+### FR-PUB-012: Kiểm tra Định dạng DOI
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Description**:  
+**Mô tả**:  
 Kiểm tra format DOI hợp lệ.
 
-**Business Rule**:
+**Quy tắc nghiệp vụ**:
 ```
-DOI format: 10.xxxx/xxxxx
+Định dạng DOI: 10.xxxx/xxxxx
 Regex: ^10\.\d{4,9}/[-._;()/:A-Z0-9]+$
 ```
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN giảng viên nhập DOI
-WHEN blur khỏi field
+WHEN rời khỏi trường nhập (blur)
 THEN
-  - Validate format
+  - Kiểm tra định dạng
   - Hiển thị lỗi nếu sai
-  - Link đến https://doi.org/[DOI] nếu đúng
+  - Liên kết đến https://doi.org/[DOI] nếu đúng
 ```
 
 ---
 
-### FR-PUB-013: Validate ISSN Format
-**Priority**: 🟡 P1 - Should Have
+### FR-PUB-013: Kiểm tra Định dạng ISSN
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Description**:  
+**Mô tả**:  
 Kiểm tra format ISSN hợp lệ.
 
-**Business Rule**:
+**Quy tắc nghiệp vụ**:
 ```
-ISSN format: xxxx-xxxx
+Định dạng ISSN: xxxx-xxxx
 Regex: ^\d{4}-\d{3}[0-9X]$
 ```
 
 ---
 
-### FR-PUB-014: Duplicate Detection (Co-authors)
-**Priority**: 🟡 P1 - Should Have
+### FR-PUB-014: Phát hiện Trùng lặp (Đồng tác giả)
+**Độ ưu tiên**: 🟡 P1 - Nên Có
 
-**Description**:  
+**Mô tả**:  
 Cảnh báo khi có nhiều giảng viên khai báo cùng 1 bài.
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN bài báo có DOI
 WHEN lưu bài báo
@@ -316,45 +316,45 @@ THEN
 
 ---
 
-### FR-PUB-015: Import từ ORCID
-**Priority**: 🟢 P2 - Nice to Have (Phase 2)
+### FR-PUB-015: Nhập từ ORCID
+**Độ ưu tiên**: 🟢 P2 - Có Thể Có (Giai đoạn 2)
 
-**Description**:  
+**Mô tả**:  
 Import danh sách bài báo từ ORCID tự động.
 
-**Acceptance Criteria**:
+**Tiêu chí chấp nhận**:
 ```
 GIVEN giảng viên có ORCID
-WHEN nhấn "Import from ORCID"
+WHEN nhấn "Nhập từ ORCID"
 THEN
-  - Gọi ORCID API
+  - Gọi API ORCID
   - Hiển thị danh sách bài báo
   - Cho phép chọn bài nào muốn thêm
-  - Auto-fill metadata
+  - Tự động điền metadata
 ```
 
 ---
 
-## 3. Data Model (Publication Entity)
+## 3. Mô hình Dữ liệu (Thực thể Bài báo)
 
 ```typescript
 interface Publication {
-  // Primary Key
+  // Khóa chính
   id: UUID;
   
   // Metadata
   title: string; // Bắt buộc
   abstract?: string; // Tùy chọn
   authors: Author[]; // Bắt buộc, ít nhất 1
-  correspondingAuthor: User; // Owner
+  correspondingAuthor: User; // Chủ sở hữu
   
-  // Journal Info
+  // Thông tin Tạp chí
   journalName: string; // Bắt buộc
   journalISSN?: string;
   journalQuartile?: 'Q1' | 'Q2' | 'Q3' | 'Q4';
   impactFactor?: number;
   
-  // Publication Info
+  // Thông tin Xuất bản
   publicationYear: number; // Bắt buộc
   publicationDate?: Date;
   volume?: string;
@@ -363,24 +363,24 @@ interface Publication {
   doi?: string;
   url?: string;
   
-  // Classification
+  // Phân loại
   publicationType: 'journal' | 'conference';
   keywords?: string[];
   researchField?: string;
   
-  // File
+  // Tệp tin
   pdfPath?: string;
   pdfSize?: number;
   
-  // State
+  // Trạng thái
   status: PublicationStatus;
   
-  // Audit
+  // Kiểm toán
   createdAt: Date;
   updatedAt: Date;
   createdBy: UUID;
   updatedBy: UUID;
-  deletedAt?: Date; // Soft delete
+  deletedAt?: Date; // Xóa mềm
 }
 
 enum PublicationStatus {
@@ -398,9 +398,9 @@ enum PublicationStatus {
 
 ---
 
-## 4. API Endpoints (Sample)
+## 4. API Endpoints (Mẫu)
 
-| Method | Endpoint | Description | Auth |
+| Phương thức | Endpoint | Mô tả | Xác thực |
 |--------|----------|-------------|------|
 | POST | `/api/publications` | Tạo bài báo mới | Researcher |
 | GET | `/api/publications` | Danh sách của mình | Researcher |
@@ -412,9 +412,9 @@ enum PublicationStatus {
 
 ---
 
-## 5. Traceability
+## 5. Truy xuất nguồn gốc
 
-| FR ID | User Need | User Story | Test Case |
+| ID Yêu cầu | Nhu cầu Người dùng | User Story | Test Case |
 |-------|-----------|------------|-----------|
 | FR-PUB-001 | Nhập bài báo nhanh | US-RES-001 | TC-PUB-001 |
 | FR-PUB-002 | Upload PDF | US-RES-002 | TC-PUB-002 |
@@ -424,6 +424,6 @@ enum PublicationStatus {
 ---
 
 **Tài liệu liên quan**:
-- [Module 2: Approval Workflow](./module_approval_workflow.md)
-- [User Needs - Researcher](../../02_System_Clarification/User_Analysis/user_needs.md#1-researcher)
-- [Business Rules](./business_rules.md)
+- [Phân hệ 2: Quy trình Phê duyệt](./module_approval_workflow.md)
+- [Nhu cầu Người dùng - Nhà nghiên cứu](../../02_System_Clarification/User_Analysis/user_needs.md#1-researcher)
+- [Quy tắc Nghiệp vụ](./business_rules.md)

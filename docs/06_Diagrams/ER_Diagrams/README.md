@@ -1,31 +1,31 @@
-# ER Diagrams - README
+# Biểu đồ ER - README
 
-> 📁 **Folder**: `06_Diagrams/ER_Diagrams`  
+> 📁 **Thư mục**: `06_Diagrams/ER_Diagrams`  
 > 📅 **Cập nhật**: 10/02/2026  
-> 🎯 **Mục đích**: Database schema và entity relationships
+> 🎯 **Mục đích**: Lược đồ cơ sở dữ liệu và mối quan hệ thực thể
 
 ---
 
 ## 📊 Tổng Quan
 
-ERD (Entity Relationship Diagram) cho MySQL database của UFPMS.
+ERD (Biểu đồ Quan hệ Thực thể) cho cơ sở dữ liệu MySQL của UFPMS.
 
-**Normalization**: 3NF (Third Normal Form)  
-**Estimated Data Volume**:
-- Publications: 5K-10K records
-- Users: 300-500 records
-- Review history: 50K records (over time)
+**Chuẩn hóa**: 3NF (Dạng Chuẩn 3)  
+**Khối Lượng Dữ Liệu Ước Tính**:
+- Ấn phẩm: 5K-10K bản ghi
+- Người dùng: 300-500 bản ghi
+- Lịch sử đánh giá: 50K bản ghi (theo thời gian)
 
 ---
 
-## 📁 Documents
+## 📁 Tài liệu
 
 ### [complete_erd.md](./complete_erd.md)
-Complete ERD với tất cả entities và relationships
+ERD Đầy đủ với tất cả các thực thể và mối quan hệ
 
 ### [entity_specifications.md](./entity_specifications.md)
-Chi tiết từng entity: columns, constraints, indexes
+Chi tiết từng thực thể: cột, ràng buộc, chỉ mục
 
 ---
 
-**Created**: 10/02/2026
+**Ngày tạo**: 10/02/2026

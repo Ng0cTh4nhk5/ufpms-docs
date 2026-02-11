@@ -1,68 +1,68 @@
-# Search and Filter Workflow - Activity Diagram
+# Quy Trình Tìm Kiếm và Lọc - Biểu đồ Hoạt động
 
-> 📊 **Diagram**: Search & Filter Publications  
-> 🎯 **Scope**: Public search với multiple filters  
-> 👤 **Actor**: Public Visitor / Researcher
+> 📊 **Biểu đồ**: Tìm kiếm & Lọc Ấn phẩm  
+> 🎯 **Phạm vi**: Tìm kiếm công khai với nhiều bộ lọc  
+> 👤 **Tác nhân**: Khách truy cập / Nhà nghiên cứu
 
 ---
 
-## 📊 Activity Diagram
+## 📊 Biểu đồ Hoạt động
 
 ```mermaid
 flowchart TD
-    Start([User opens<br/>Search Page]) --> LoadPage[Load search page]
+    Start([Người dùng mở<br/>Trang Tìm kiếm]) --> LoadPage[Tải trang tìm kiếm]
     
-    LoadPage --> FetchFilters[Fetch filter options<br/>from database]
-    FetchFilters --> DisplaySearch[Display search form<br/>+ empty results]
+    LoadPage --> FetchFilters[Lấy tùy chọn bộ lọc<br/>từ cơ sở dữ liệu]
+    FetchFilters --> DisplaySearch[Hiển thị biểu mẫu tìm kiếm<br/>+ kết quả trống]
     
-    DisplaySearch --> UserAction{User action?}
+    DisplaySearch --> UserAction{Hành động người dùng?}
     
-    UserAction -->|Enter keywords| EnterQuery[Type search keywords]
-    EnterQuery --> CheckQuery{Query length?}
-    CheckQuery -->|< 3 chars| ShowHint[Show: "Min 3 characters"]
+    UserAction -->|Nhập từ khóa| EnterQuery[Gõ từ khóa tìm kiếm]
+    EnterQuery --> CheckQuery{Độ dài truy vấn?}
+    CheckQuery -->|< 3 ký tự| ShowHint[Hiển thị: "Tối thiểu 3 ký tự"]
     ShowHint --> EnterQuery
-    CheckQuery -->|>= 3 chars| ApplyFilters
+    CheckQuery -->|>= 3 ký tự| ApplyFilters
     
-    UserAction -->|Select filters| SelectYear[Select year range]
-    SelectYear --> SelectType[Select publication type]
-    SelectType --> SelectFaculty[Select faculty optional]
-    SelectFaculty --> ApplyFilters{Apply search?}
+    UserAction -->|Chọn bộ lọc| SelectYear[Chọn khoảng năm]
+    SelectYear --> SelectType[Chọn loại ấn phẩm]
+    SelectType --> SelectFaculty[Chọn khoa (tùy chọn)]
+    SelectFaculty --> ApplyFilters{Áp dụng tìm kiếm?}
     
-    ApplyFilters -->|Click Search| BuildQuery[Build search query]
+    ApplyFilters -->|Nhấn Tìm kiếm| BuildQuery[Xây dựng truy vấn tìm kiếm]
     
-    BuildQuery --> CheckAuth{User<br/>authenticated?}
+    BuildQuery --> CheckAuth{Người dùng<br/>đã xác thực?}
     
-    CheckAuth -->|No: Public| AddPublicFilter[Add filter:<br/>status = PUBLISHED]
+    CheckAuth -->|Không: Công khai| AddPublicFilter[Thêm bộ lọc:<br/>trạng thái = PUBLISHED]
     AddPublicFilter --> ExecuteSearch
     
-    CheckAuth -->|Yes: Researcher| AddResearcherFilter[Add filter:<br/>PUBLISHED OR<br/>owner = userId]
+    CheckAuth -->|Có: Nhà nghiên cứu| AddResearcherFilter[Thêm bộ lọc:<br/>PUBLISHED HOẶC<br/>chủ sở hữu = userId]
     AddResearcherFilter --> ExecuteSearch
     
-    ExecuteSearch[Execute<br/>full-text search] --> GetResults[Fetch from database]
+    ExecuteSearch[Thực hiện<br/>tìm kiếm toàn văn] --> GetResults[Lấy từ cơ sở dữ liệu]
     
-    GetResults --> CheckResults{Results found?}
+    GetResults --> CheckResults{Tìm thấy kết quả?}
     
-    CheckResults -->|No results| ShowEmpty[Show:<br/>"No publications found"<br/>+ suggestions]
+    CheckResults -->|Không có kết quả| ShowEmpty[Hiển thị:<br/>"Không tìm thấy ấn phẩm"<br/>+ gợi ý]
     ShowEmpty --> UserAction
     
-    CheckResults -->|Has results| SortResults[Sort by relevance<br/>then year DESC]
+    CheckResults -->|Có kết quả| SortResults[Sắp xếp theo mức độ liên quan<br/>sau đó năm giảm dần]
     
-    SortResults --> Paginate[Apply pagination<br/>20 per page]
+    SortResults --> Paginate[Áp dụng phân trang<br/>20 mỗi trang]
     
-    Paginate --> DisplayResults[Display results list]
+    Paginate --> DisplayResults[Hiển thị danh sách kết quả]
     
-    DisplayResults --> UserNext{User action?}
+    DisplayResults --> UserNext{Hành động người dùng?}
     
-    UserNext -->|Click publication| ViewDetail[Redirect to<br/>publication detail page]
-    ViewDetail --> End1([End])
+    UserNext -->|Nhấn vào ấn phẩm| ViewDetail[Chuyển hướng đến<br/>trang chi tiết ấn phẩm]
+    ViewDetail --> End1([Kết thúc])
     
-    UserNext -->|Change page| ChangePage[Go to page N]
+    UserNext -->|Đổi trang| ChangePage[Đi đến trang N]
     ChangePage --> Paginate
     
-    UserNext -->|Modify filters| UserAction
+    UserNext -->|Sửa đổi bộ lọc| UserAction
     
-    UserNext -->|Export results| ExportCSV[Export to CSV<br/>P2 feature]
-    ExportCSV --> End2([Download file])
+    UserNext -->|Xuất kết quả| ExportCSV[Xuất ra CSV<br/>tính năng P2]
+    ExportCSV --> End2([Tải xuống tệp])
     
     style Start fill:#e3f2fd
     style End1 fill:#c8e6c9
@@ -73,107 +73,107 @@ flowchart TD
 
 ---
 
-## 📋 Search Features
+## 📋 Tính Năng Tìm Kiếm
 
-### 1. Full-Text Search
-**Fields searched**:
-- Title (highest weight)
-- Abstract
-- Keywords
-- Author names
+### 1. Tìm Kiếm Toàn Văn
+**Các trường được tìm kiếm**:
+- Tiêu đề (trọng số cao nhất)
+- Tóm tắt
+- Từ khóa
+- Tên tác giả
 
-**Query**:
+**Truy vấn**:
 ```sql
 MATCH(title, abstract, keywords) AGAINST ('query' IN NATURAL LANGUAGE MODE)
 ```
 
-### 2. Filters
+### 2. Bộ Lọc
 
-| Filter | Options | Default |
+| Bộ Lọc | Tùy Chọn | Mặc Định |
 |--------|---------|---------|
-| **Year** | 1900-current, range | All years |
-| **Publication Type** | Journal, Conference, Book, etc. | All types |
-| **Faculty** | List from database | All faculties |
-| **Has PDF** (P1) | Yes/No checkbox | All |
-| **Quartile** (P2) | Q1, Q2, Q3, Q4 | All |
+| **Năm** | 1900-hiện tại, khoảng | Tất cả các năm |
+| **Loại Ấn Phẩm** | Tạp chí, Hội nghị, Sách, v.v. | Tất cả các loại |
+| **Khoa** | Danh sách từ cơ sở dữ liệu | Tất cả các khoa |
+| **Có PDF** (P1) | Hộp kiểm Có/Không | Tất cả |
+| **Tứ phân vị** (P2) | Q1, Q2, Q3, Q4 | Tất cả |
 
-### 3. Sorting
+### 3. Sắp Xếp
 
-**Default**: Relevance DESC, Year DESC
+**Mặc định**: Mức độ liên quan giảm dần, Năm giảm dần
 
-**Options** (P1):
-- Newest first
-- Oldest first
-- Title A-Z
-- Citation count (P2)
+**Tùy chọn** (P1):
+- Mới nhất trước
+- Cũ nhất trước
+- Tiêu đề A-Z
+- Số lượng trích dẫn (P2)
 
-### 4. Pagination
-- 20 results per page
-- Page numbers: 1, 2, 3... (max 10 visible)
-- "Previous" / "Next" buttons
+### 4. Phân Trang
+- 20 kết quả mỗi trang
+- Số trang: 1, 2, 3... (tối đa 10 hiển thị)
+- Nút "Trước" / "Sau"
 
 ---
 
-## 👁️ Visibility Rules
+## 👁️ Quy Tắc Hiển Thị
 
-### Public Visitor (Unauthenticated)
+### Khách Truy Cập (Chưa Xác Thực)
 ```sql
 WHERE status = 'PUBLISHED'
 ```
-**Can see**: Only published publications
+**Có thể xem**: Chỉ các ấn phẩm đã xuất bản
 
-### Researcher (Authenticated)
+### Nhà Nghiên Cứu (Đã Xác Thực)
 ```sql
 WHERE status = 'PUBLISHED' 
    OR owner_id = {current_user_id}
 ```
-**Can see**: Published + own publications (all statuses)
+**Có thể xem**: Đã xuất bản + ấn phẩm của chính mình (mọi trạng thái)
 
 ---
 
-## 📊 Result Display
+## 📊 Hiển Thị Kết Quả
 
-Each result shows:
-- **Title** (clickable)
-- **Authors** (first 3, then "et al.")
-- **Year**, **Type** (Journal/Conference)
-- **Journal/Conference name**
-- **DOI** (if available)
-- **PDF badge** (if PDF uploaded)
+Mỗi kết quả hiển thị:
+- **Tiêu đề** (có thể nhấn vào)
+- **Tác giả** (3 người đầu tiên, sau đó "et al.")
+- **Năm**, **Loại** (Tạp chí/Hội nghị)
+- **Tên Tạp chí/Hội nghị**
+- **DOI** (nếu có)
+- **Huy hiệu PDF** (nếu PDF đã được tải lên)
 
-**Highlighted**: Search keywords highlighted in yellow
-
----
-
-## 🚨 Edge Cases
-
-### Empty Results
-**Message**: "No publications found matching your criteria"
-
-**Suggestions**:
-- Try fewer filters
-- Check spelling
-- Try different keywords
-
-### Query Too Short
-**Message**: "Please enter at least 3 characters"
-
-### Too Many Results
-**Message**: "Showing top 1000 results. Please refine your search."
-(Limit: max 1000 results = 50 pages)
+**Nổi bật**: Từ khóa tìm kiếm được tô sáng màu vàng
 
 ---
 
-## ⏱️ Performance
+## 🚨 Các Tình Huống Biên
 
-**Target**: < 500ms response time
+### Kết Quả Trống
+**Thông báo**: "Không tìm thấy ấn phẩm nào phù hợp với tiêu chí của bạn"
 
-**Optimizations**:
-- Full-text index on title, abstract, keywords
-- Caching popular searches (P1)
-- Database query optimization
+**Gợi ý**:
+- Thử ít bộ lọc hơn
+- Kiểm tra chính tả
+- Thử các từ khóa khác
+
+### Truy Vấn Quá Ngắn
+**Thông báo**: "Vui lòng nhập ít nhất 3 ký tự"
+
+### Quá Nhiều Kết Quả
+**Thông báo**: "Đang hiển thị 1000 kết quả hàng đầu. Vui lòng tinh chỉnh tìm kiếm của bạn."
+(Giới hạn: tối đa 1000 kết quả = 50 trang)
 
 ---
 
-**Related**: UC-D3-01, seq_search_publications.md  
-**Created**: 11/02/2026
+## ⏱️ Hiệu Năng
+
+**Mục tiêu**: < 500ms thời gian phản hồi
+
+**Tối ưu hóa**:
+- Chỉ mục toàn văn trên tiêu đề, tóm tắt, từ khóa
+- Bộ nhớ đệm cho các tìm kiếm phổ biến (P1)
+- Tối ưu hóa truy vấn cơ sở dữ liệu
+
+---
+
+**Liên quan**: UC-D3-01, seq_search_publications.md  
+**Ngày tạo**: 11/02/2026

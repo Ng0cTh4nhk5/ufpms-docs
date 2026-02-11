@@ -1,95 +1,95 @@
-# Report Generation Workflow - Activity Diagram
+# Quy Trình Tạo Báo Cáo - Biểu đồ Hoạt động
 
-> 📊 **Diagram**: Report Generation  
-> 🎯 **Scope**: Generate faculty/university reports  
-> 👤 **Actors**: Faculty Reviewer, University Reviewer, SuperAdmin
+> 📊 **Biểu đồ**: Tạo Báo cáo  
+> 🎯 **Phạm vi**: Tạo báo cáo cấp Khoa/Trường  
+> 👤 **Tác nhân**: Người đánh giá cấp Khoa, Người đánh giá cấp Trường, Quản trị viên cấp cao
 
 ---
 
-## 📊 Activity Diagram
+## 📊 Biểu đồ Hoạt động
 
 ```mermaid
 flowchart TD
-    Start([User clicks<br/>"Generate Report"]) --> SelectType{Report type?}
+    Start([Người dùng nhấn<br/>"Tạo Báo cáo"]) --> SelectType{Loại báo cáo?}
     
-    SelectType -->|Faculty Report| SetScopeFac[Scope:<br/>Current faculty only]
+    SelectType -->|Báo cáo Khoa| SetScopeFac[Phạm vi:<br/>Chỉ Khoa hiện tại]
     SetScopeFac --> SelectPeriod
     
-    SelectType -->|University Report| CheckRole{User role?}
-    CheckRole -->|Not Uni Reviewer/Admin| ShowError[Show: Access Denied]
-    ShowError --> End1([End])
+    SelectType -->|Báo cáo Trường| CheckRole{Vai trò?}
+    CheckRole -->|Không phải ĐG Trường/Admin| ShowError[Hiển thị: Từ chối truy cập]
+    ShowError --> End1([Kết thúc])
     
-    CheckRole -->|Authorized| SetScopeUni[Scope:<br/>All faculties]
+    CheckRole -->|Được phép| SetScopeUni[Phạm vi:<br/>Tất cả các Khoa]
     SetScopeUni --> SelectPeriod
     
-    SelectPeriod[Select time period] --> PeriodOptions{Period type?}
+    SelectPeriod[Chọn khoảng thời gian] --> PeriodOptions{Loại thời gian?}
     
-    PeriodOptions -->|By Year| SelectYear[Select year:<br/>2020-current]
+    PeriodOptions -->|Theo Năm| SelectYear[Chọn năm:<br/>2020-hiện tại]
     SelectYear --> SelectMetrics
     
-    PeriodOptions -->|By Date Range| SelectStart[Select start date]
-    SelectStart --> SelectEnd[Select end date]
-    SelectEnd --> ValidateRange{Valid range?}
+    PeriodOptions -->|Theo Khoảng Ngày| SelectStart[Chọn ngày bắt đầu]
+    SelectStart --> SelectEnd[Chọn ngày kết thúc]
+    SelectEnd --> ValidateRange{Khoảng hợp lệ?}
     
-    ValidateRange -->|End < Start| ShowError2[Show: Invalid range]
+    ValidateRange -->|Kết thúc < Bắt đầu| ShowError2[Hiển thị: Khoảng không hợp lệ]
     ShowError2 --> SelectStart
     
-    ValidateRange -->|> 5 years| ShowWarning[Show: Large range,<br/>may be slow]
+    ValidateRange -->|> 5 năm| ShowWarning[Hiển thị: Khoảng lớn,<br/>có thể chậm]
     ShowWarning --> SelectMetrics
     
-    ValidateRange -->|Valid| SelectMetrics
+    ValidateRange -->|Hợp lệ| SelectMetrics
     
-    SelectMetrics[Select metrics] --> MetricOptions{Include?}
+    SelectMetrics[Chọn chỉ số] --> MetricOptions{Bao gồm?}
     
-    MetricOptions --> CheckTotal[☑ Total publications]
-    CheckTotal --> CheckByType[☑ By type breakdown]
-    CheckByType --> CheckByFaculty[☑ By faculty P1]
-    CheckByFaculty --> CheckTopAuthors[☑ Top authors]
+    MetricOptions --> CheckTotal[☑ Tổng số ấn phẩm]
+    CheckTotal --> CheckByType[☑ Phân loại theo loại]
+    CheckByType --> CheckByFaculty[☑ Theo Khoa P1]
+    CheckByFaculty --> CheckTopAuthors[☑ Tác giác hàng đầu]
     CheckTopAuthors --> SelectFormat
     
-    SelectFormat{Output format?}
+    SelectFormat{Định dạng đầu ra?}
     
-    SelectFormat -->|View on screen| ClickGenerate[Click "Generate"]
-    SelectFormat -->|Export| SelectExport{Export format?}
+    SelectFormat -->|Xem trên màn hình| ClickGenerate[Nhấn "Tạo"]
+    SelectFormat -->|Xuất| SelectExport{Định dạng xuất?}
     
-    SelectExport -->|PDF| SetFormatPDF[Format: PDF]
-    SelectExport -->|Excel| SetFormatExcel[Format: Excel]
+    SelectExport -->|PDF| SetFormatPDF[Định dạng: PDF]
+    SelectExport -->|Excel| SetFormatExcel[Định dạng: Excel]
     SetFormatPDF --> ClickGenerate
     SetFormatExcel --> ClickGenerate
     
-    ClickGenerate --> ShowLoading[Show loading spinner]
+    ClickGenerate --> ShowLoading[Hiển thị biểu tượng tải]
     
-    ShowLoading --> QueryDB[Query database]
-    QueryDB --> FilterData[Filter by:<br/>- Scope<br/>- Period<br/>- Status = PUBLISHED]
+    ShowLoading --> QueryDB[Truy vấn cơ sở dữ liệu]
+    QueryDB --> FilterData[Lọc theo:<br/>- Phạm vi<br/>- Thời gian<br/>- Trạng thái = PUBLISHED]
     
-    FilterData --> AggregateData[Aggregate data:<br/>- Count by type<br/>- Count by year<br/>- Top authors]
+    FilterData --> AggregateData[Tổng hợp dữ liệu:<br/>- Đếm theo loại<br/>- Đếm theo năm<br/>- Tác giả hàng đầu]
     
-    AggregateData --> CheckData{Data found?}
+    AggregateData --> CheckData{Tìm thấy dữ liệu?}
     
-    CheckData -->|No data| ShowEmpty[Show:<br/>"No publications<br/>in this period"]
-    ShowEmpty --> End2([End])
+    CheckData -->|Không có dữ liệu| ShowEmpty[Hiển thị:<br/>"Không có ấn phẩm<br/>trong giai đoạn này"]
+    ShowEmpty --> End2([Kết thúc])
     
-    CheckData -->|Has data| GenerateCharts[Generate charts:<br/>- Bar chart by type<br/>- Line chart by year<br/>- Pie chart by faculty]
+    CheckData -->|Có dữ liệu| GenerateCharts[Tạo biểu đồ:<br/>- Biểu đồ cột theo loại<br/>- Biểu đồ đường theo năm<br/>- Biểu đồ tròn theo khoa]
     
-    GenerateCharts --> FormatOutput{Output type?}
+    GenerateCharts --> FormatOutput{Loại đầu ra?}
     
-    FormatOutput -->|Screen| RenderHTML[Render HTML report]
-    RenderHTML --> DisplayReport[Display on page]
-    DisplayReport --> UserAction{User action?}
+    FormatOutput -->|Màn hình| RenderHTML[Kết xuất báo cáo HTML]
+    RenderHTML --> DisplayReport[Hiển thị trên trang]
+    DisplayReport --> UserAction{Hành động người dùng?}
     
-    UserAction -->|Save| SaveReport[Save report config<br/>for future P1]
-    SaveReport --> End3([End])
+    UserAction -->|Lưu| SaveReport[Lưu cấu hình báo cáo<br/>cho tương lai P1]
+    SaveReport --> End3([Kết thúc])
     
-    UserAction -->|Export now| SelectExport
-    UserAction -->|Close| End3
+    UserAction -->|Xuất ngay| SelectExport
+    UserAction -->|Đóng| End3
     
-    FormatOutput -->|PDF| GeneratePDF[Generate PDF<br/>with charts + tables]
-    GeneratePDF --> DownloadPDF[Trigger download]
-    DownloadPDF --> End4([Downloaded])
+    FormatOutput -->|PDF| GeneratePDF[Tạo PDF<br/>với biểu đồ + bảng]
+    GeneratePDF --> DownloadPDF[Kích hoạt tải xuống]
+    DownloadPDF --> End4([Đã tải xuống])
     
-    FormatOutput -->|Excel| GenerateExcel[Generate Excel<br/>with data + pivot]
-    GenerateExcel --> DownloadExcel[Trigger download]
-    DownloadExcel --> End5([Downloaded])
+    FormatOutput -->|Excel| GenerateExcel[Tạo Excel<br/>với dữ liệu + pivot]
+    GenerateExcel --> DownloadExcel[Kích hoạt tải xuống]
+    DownloadExcel --> End5([Đã tải xuống])
     
     style Start fill:#e3f2fd
     style End1 fill:#ffcdd2
@@ -102,103 +102,103 @@ flowchart TD
 
 ---
 
-## 📋 Report Types
+## 📋 Các Loại Báo Cáo
 
-### 1. Faculty Report
-**Scope**: Publications from one faculty only
+### 1. Báo Cáo Khoa
+**Phạm vi**: Ấn phẩm từ một khoa duy nhất
 
-**Access**:
-- Faculty Reviewer (own faculty)
-- University Reviewer (all faculties)
-- SuperAdmin (all faculties)
+**Quyền truy cập**:
+- Người đánh giá cấp Khoa (khoa của mình)
+- Người đánh giá cấp Trường (tất cả các khoa)
+- Quản trị viên cấp cao (tất cả các khoa)
 
-**Default period**: Current year
-
----
-
-### 2. University Report
-**Scope**: All faculties combined
-
-**Access**:
-- University Reviewer only
-- SuperAdmin only
-
-**Default period**: Current year
+**Khoảng thời gian mặc định**: Năm hiện tại
 
 ---
 
-## 📊 Metrics Included
+### 2. Báo Cáo Trường
+**Phạm vi**: Tất cả các khoa kết hợp
 
-### Basic Metrics
-1. **Total publications** (PUBLISHED only)
-2. **By publication type**:
-   - Journal articles
-   - Conference papers
-   - Book chapters
-   - Others
+**Quyền truy cập**:
+- Người đánh giá cấp Trường (chỉ quyền này)
+- Quản trị viên cấp cao (chỉ quyền này)
 
-3. **By year** (trend line chart)
-
-### Advanced Metrics (P1)
-4. **By faculty** (for university reports)
-5. **Top authors** (top 10 by publication count)
-6. **Average publications per researcher**
-7. **Quartile distribution** (Q1, Q2, Q3, Q4 - P2)
+**Khoảng thời gian mặc định**: Năm hiện tại
 
 ---
 
-## 📥 Export Formats
+## 📊 Các Chỉ Số Được Bao Gồm
 
-### PDF Format
-**Content**:
-- Cover page (logo, title, date)
-- Summary statistics (numbers)
-- Charts (PNG embedded)
-- Tables (detailed breakdown)
-- Footer (page numbers)
+### Chỉ Số Cơ Bản
+1. **Tổng số ấn phẩm** (chỉ PUBLISHED)
+2. **Theo loại ấn phẩm**:
+   - Bài báo tạp chí
+   - Bài báo hội nghị
+   - Chương sách
+   - Khác
 
-**Library**: jsPDF + Chart.js
+3. **Theo năm** (biểu đồ đường xu hướng)
 
----
-
-### Excel Format
-**Sheets**:
-1. **Summary** - Key metrics
-2. **By Type** - Breakdown table
-3. **By Year** - Trend data
-4. **By Faculty** - Faculty comparison (if applicable)
-5. **Raw Data** - Full publication list
-
-**Library**: SheetJS (xlsx)
+### Chỉ Số Nâng Cao (P1)
+4. **Theo Khoa** (cho báo cáo cấp trường)
+5. **Tác giả hàng đầu** (top 10 theo số lượng ấn phẩm)
+6. **Trung bình ấn phẩm mỗi nhà nghiên cứu**
+7. **Phân bố tứ phân vị** (Q1, Q2, Q3, Q4 - P2)
 
 ---
 
-## 🔒 Access Control
+## 📥 Định Dạng Xuất
 
-| Role | Faculty Report | University Report |
-|------|----------------|-------------------|
-| Researcher | ❌ | ❌ |
-| Faculty Reviewer | ✅ (own faculty) | ❌ |
-| University Reviewer | ✅ (all faculties) | ✅ |
-| SuperAdmin | ✅ (all faculties) | ✅ |
+### Định Dạng PDF
+**Nội dung**:
+- Trang bìa (logo, tiêu đề, ngày)
+- Thống kê tóm tắt (số liệu)
+- Biểu đồ (nhúng PNG)
+- Bảng (chi tiết)
+- Chân trang (số trang)
 
----
-
-## ⏱️ Performance
-
-**Target**: 
-- On-screen: < 3 seconds
-- PDF export: < 10 seconds
-- Excel export: < 5 seconds
-
-**Optimizations**:
-- Database aggregation queries (GROUP BY)
-- Caching for current year reports (P1)
-- Background job for large reports (>1000 publications) (P2)
+**Thư viện**: jsPDF + Chart.js
 
 ---
 
-## 📊 Sample SQL Query
+### Định Dạng Excel
+**Các Sheet**:
+1. **Tóm tắt** - Các chỉ số chính
+2. **Theo Loại** - Bảng phân loại
+3. **Theo Năm** - Dữ liệu xu hướng
+4. **Theo Khoa** - So sánh khoa (nếu có)
+5. **Dữ liệu Thô** - Danh sách ấn phẩm đầy đủ
+
+**Thư viện**: SheetJS (xlsx)
+
+---
+
+## 🔒 Kiểm Soát Truy Cập
+
+| Vai Trò | Báo Cáo Khoa | Báo Cáo Trường |
+|---------|--------------|-----------------|
+| Nhà nghiên cứu | ❌ | ❌ |
+| Người đánh giá cấp Khoa | ✅ (khoa của mình) | ❌ |
+| Người đánh giá cấp Trường | ✅ (tất cả các khoa) | ✅ |
+| Quản trị viên cấp cao | ✅ (tất cả các khoa) | ✅ |
+
+---
+
+## ⏱️ Hiệu Năng
+
+**Mục tiêu**: 
+- Trên màn hình: < 3 giây
+- Xuất PDF: < 10 giây
+- Xuất Excel: < 5 giây
+
+**Tối ưu hóa**:
+- Truy vấn tổng hợp cơ sở dữ liệu (GROUP BY)
+- Bộ nhớ đệm cho báo cáo năm hiện tại (P1)
+- Tác vụ nền cho báo cáo lớn (>1000 ấn phẩm) (P2)
+
+---
+
+## 📊 Truy Vấn SQL Mẫu
 
 ```sql
 -- Faculty report, year 2024
@@ -217,5 +217,5 @@ ORDER BY count DESC;
 
 ---
 
-**Related**: UC-M5-001 to UC-M5-007, FR-REP-001 to FR-REP-010  
-**Created**: 11/02/2026
+**Liên quan**: UC-M5-001 đến UC-M5-007, FR-REP-001 đến FR-REP-010  
+**Ngày tạo**: 11/02/2026

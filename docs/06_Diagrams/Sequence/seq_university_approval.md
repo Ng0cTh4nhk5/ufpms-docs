@@ -1,100 +1,100 @@
-# Sequence Diagram: University Final Approval
+# Biểu đồ Tuần tự: Phê duyệt Cuối cùng của Trường
 
-> 📊 **Diagram ID**: SEQ-04  
-> 🎯 **Use Case**: UC-D2-11 - University Final Approval  
-> 👤 **Actor**: University Reviewer  
-> ⚙️ **Result**: PUBLISHED or sent back to Faculty
+> 📊 **ID Biểu đồ**: SEQ-04  
+> 🎯 **Ca Sử Dụng**: UC-D2-11 - Phê duyệt Cuối cùng của Trường  
+> 👤 **Tác nhân**: Người đánh giá Trường  
+> ⚙️ **Kết quả**: ĐÃ XUẤT BẢN hoặc gửi trả về Khoa
 
 ---
 
-## 📊 Sequence Diagram
+## 📊 Biểu đồ Tuần tự
 
 ```mermaid
 sequenceDiagram
-    actor Reviewer as 👨‍💼 University Reviewer
-    participant UI as 🖥️ UI
+    actor Reviewer as 👨‍💼 Người đánh giá Trường
+    participant UI as 🖥️ Giao diện
     participant API as 🔌 API
     participant Service as ⚙️ WorkflowService
     participant Repo as 💾 Repository
-    participant DB as 🗄️ Database
-    participant Notif as 📧 Notification
+    participant DB as 🗄️ CSDL
+    participant Notif as 📧 Thông báo
     
-    %% Get pending
-    Reviewer->>UI: View university reviews
+    %% Lấy danh sách chờ
+    Reviewer->>UI: Xem đánh giá cấp trường
     UI->>API: GET /api/reviews/university
     API->>Service: getUniversityPendingReviews()
     Service->>Repo: findByStatus("UNIVERSITY_REVIEWING")
     Repo->>DB: SELECT * WHERE status = 'UNIVERSITY_REVIEWING'
-    DB-->>Repo: List
-    Repo-->>Service: Publications[]
-    Service-->>API: Data
-    API-->>UI: Pending reviews
-    UI-->>Reviewer: Display list
+    DB-->>Repo: Danh sách
+    Repo-->>Service: Ấn phẩm[]
+    Service-->>API: Dữ liệu
+    API-->>UI: Đánh giá đang chờ
+    UI-->>Reviewer: Hiển thị danh sách
     
-    %% View details
-    Reviewer->>UI: Click publication
+    %% Xem chi tiết
+    Reviewer->>UI: Nhấn vào ấn phẩm
     UI->>API: GET /api/publications/{id}
     API->>Repo: findWithHistory(id)
-    Repo->>DB: SELECT with review_history
-    DB-->>Repo: Full data + faculty comments
-    Repo-->>API: Publication
-    API-->>UI: Details
-    UI-->>Reviewer: Show publication +<br/>faculty review comments
+    Repo->>DB: SELECT với review_history
+    DB-->>Repo: Dữ liệu đầy đủ + bình luận của khoa
+    Repo-->>API: Ấn phẩm
+    API-->>UI: Chi tiết
+    UI-->>Reviewer: Hiển thị ấn phẩm +<br/>bình luận đánh giá của khoa
     
-    alt Final Approve → PUBLISH
-        Reviewer->>UI: Click "Publish"
+    alt Phê duyệt Cuối cùng → XUẤT BẢN
+        Reviewer->>UI: Nhấn "Xuất bản"
         UI->>API: POST /api/reviews/{id}/publish
         activate API
         API->>Service: publishPublication(pubId, reviewerId)
         activate Service
         
-        Note over Service,DB: START TRANSACTION
+        Note over Service,DB: BẮT ĐẦU GIAO DỊCH
         
-        %% Update status
+        %% Cập nhật trạng thái
         Service->>Repo: updateStatus(pubId, "PUBLISHED")
         activate Repo
         Repo->>DB: UPDATE publications<br/>SET status = 'PUBLISHED',<br/>published_at = NOW()
         deactivate Repo
         
-        %% Log history
+        %% Ghi lịch sử
         Service->>Repo: createReviewHistory(entry)
-        Repo->>DB: INSERT INTO review_history<br/>(from: UNIVERSITY_REVIEWING,<br/>to: PUBLISHED,<br/>actor: reviewerId)
+        Repo->>DB: INSERT INTO review_history<br/>(từ: UNIVERSITY_REVIEWING,<br/>đến: PUBLISHED,<br/>tác nhân: reviewerId)
         
-        %% Audit log
+        %% Nhật ký kiểm toán
         Service->>Repo: logAudit(...)
         Repo->>DB: INSERT INTO audit_logs
         
-        Note over Service,DB: COMMIT
+        Note over Service,DB: CAM KẾT
         
-        %% Notifications
+        %% Thông báo
         Service->>Notif: notifyPublished(publication)
         activate Notif
         
-        Note over Notif: Notify:<br/>- Researcher (owner)<br/>- All co-authors<br/>- Faculty reviewer
+        Note over Notif: Thông báo:<br/>- Nhà nghiên cứu (chủ sở hữu)<br/>- Tất cả đồng tác giả<br/>- Người đánh giá khoa
         
-        loop For each recipient
-            Notif->>Notif: Send email
+        loop Cho mỗi người nhận
+            Notif->>Notif: Gửi email
         end
         
         deactivate Notif
         
-        Service-->>API: Success
+        Service-->>API: Thành công
         deactivate Service
-        API-->>UI: 200 OK + Published publication
+        API-->>UI: 200 OK + Ấn phẩm đã xuất bản
         deactivate API
-        UI-->>Reviewer: "Published successfully!"<br/>+ Link to public view
+        UI-->>Reviewer: "Xuất bản thành công!"<br/>+ Liên kết đến chế độ xem công khai
         
-    else Send Back to Faculty
-        Reviewer->>UI: Click "Send Back to Faculty"
-        UI->>UI: Require reason
-        Reviewer->>UI: Enter reason
+    else Gửi Trả về Khoa
+        Reviewer->>UI: Nhấn "Gửi Trả về Khoa"
+        UI->>UI: Yêu cầu lý do
+        Reviewer->>UI: Nhập lý do
         
         UI->>API: POST /api/reviews/{id}/send-back
         activate API
         API->>Service: sendBackToFaculty(pubId, reviewerId, reason)
         activate Service
         
-        Note over Service,DB: START TRANSACTION
+        Note over Service,DB: BẮT ĐẦU GIAO DỊCH
         
         Service->>Repo: updateStatus(pubId, "FACULTY_REVIEWING")
         Repo->>DB: UPDATE publications<br/>SET status = 'FACULTY_REVIEWING'
@@ -105,72 +105,72 @@ sequenceDiagram
         Service->>Repo: createReviewHistory(entry)
         Repo->>DB: INSERT INTO review_history
         
-        Note over Service,DB: COMMIT
+        Note over Service,DB: CAM KẾT
         
         Service->>Notif: notifySentBack(publication, reason)
         activate Notif
-        Notif->>Notif: Notify faculty reviewer
+        Notif->>Notif: Thông báo cho người đánh giá khoa
         deactivate Notif
         
-        Service-->>API: Success
+        Service-->>API: Thành công
         deactivate Service
         API-->>UI: 200 OK
         deactivate API
-        UI-->>Reviewer: "Sent back to faculty"
+        UI-->>Reviewer: "Đã gửi trả về khoa"
     end
 ```
 
 ---
 
-## 📋 Two Actions
+## 📋 Hai Hành Động
 
-### 1. Final Approve → Publish ✅
-**Effect**:
-- Status: `UNIVERSITY_REVIEWING` → `PUBLISHED`
-- `published_at` timestamp set
-- Publication becomes **publicly visible**
+### 1. Phê duyệt Cuối cùng → Xuất bản ✅
+**Tác dụng**:
+- Trạng thái: `UNIVERSITY_REVIEWING` → `PUBLISHED`
+- Dấu thời gian `published_at` được thiết lập
+- Ấn phẩm trở nên **hiển thị công khai**
 
-**Notifications**:
-1. Researcher (owner)
-2. All co-authors
-3. Faculty reviewer (FYI)
+**Thông báo**:
+1. Nhà nghiên cứu (chủ sở hữu)
+2. Tất cả đồng tác giả
+3. Người đánh giá khoa (để biết thông tin)
 
-**Email Content**:
+**Nội dung Email**:
 ```
-Subject: Your publication has been published!
+Chủ đề: Ấn phẩm của bạn đã được xuất bản!
 
-Dear {researcher_name},
+Thân gửi {researcher_name},
 
-Congratulations! Your publication has been approved and published:
+Chúc mừng! Ấn phẩm của bạn đã được phê duyệt và xuất bản:
 
-Title: {title}
-Published: {timestamp}
+Tiêu đề: {title}
+Ngày xuất bản: {timestamp}
 
-View public page: {public_url}
+Xem trang công khai: {public_url}
 
-Best regards,
+Trân trọng,
 UFPMS
 ```
 
 ---
 
-### 2. Send Back to Faculty 🔄
-**Effect**:
-- Status: `UNIVERSITY_REVIEWING` → `FACULTY_REVIEWING`
-- Faculty reviewer needs to re-review
+### 2. Gửi Trả về Khoa 🔄
+**Tác dụng**:
+- Trạng thái: `UNIVERSITY_REVIEWING` → `FACULTY_REVIEWING`
+- Người đánh giá khoa cần đánh giá lại
 
-**Use Cases**:
-- University reviewer disagrees with faculty decision
-- Found issues not caught by faculty
-- Needs more information
+**Ca Sử Dụng**:
+- Người đánh giá trường không đồng ý với quyết định của khoa
+- Phát hiện vấn đề mà khoa không bắt được
+- Cần thêm thông tin
 
-**Reason required**: Why sending back
+**Yêu cầu lý do**: Tại sao gửi trả lại
 
 ---
 
-## 🗄️ Database Changes
+## 🗄️ Thay Đổi Cơ Sở Dữ Liệu
 
-### Publish
+### Xuất bản
 ```sql
 UPDATE publications 
 SET status = 'PUBLISHED',
@@ -187,7 +187,7 @@ INSERT INTO review_history (
 );
 ```
 
-### Send Back
+### Gửi Trả lại
 ```sql
 UPDATE publications 
 SET status = 'FACULTY_REVIEWING',
@@ -204,37 +204,37 @@ INSERT INTO review_comments (
 
 ---
 
-## 🔒 Business Rules
+## 🔒 Quy Tắc Nghiệp Vụ
 
-1. **Only University Reviewers** can publish
-2. After PUBLISHED:
-   - Researcher **cannot edit** (only SuperAdmin)
-   - Researcher **cannot delete** (only SuperAdmin)
-   - Publication visible to **public**
-3. Published publication counts toward:
-   - Researcher statistics
-   - Faculty/University reports
-   - Public search results
-
----
-
-## 📈 Post-Publication Effects
-
-### Visibility
-- Appears in public search
-- Visible on researcher's profile
-- Included in faculty/university reports
-
-### Statistics Update
-- Researcher publication count +1
-- Faculty publication count +1
-- University publication count +1
-
-### Analytics (P2)
-- Citation tracking enabled
-- Download tracking enabled
+1. **Chỉ Người đánh giá Trường** mới có thể xuất bản
+2. Sau khi XUẤT BẢN:
+   - Nhà nghiên cứu **không thể chỉnh sửa** (chỉ SuperAdmin)
+   - Nhà nghiên cứu **không thể xóa** (chỉ SuperAdmin)
+   - Ấn phẩm hiển thị với **công chúng**
+3. Ấn phẩm đã xuất bản được tính vào:
+   - Thống kê nhà nghiên cứu
+   - Báo cáo Khoa/Trường
+   - Kết quả tìm kiếm công khai
 
 ---
 
-**Related**: FR-APR-013, FR-APR-014, US-UNR-004, US-UNR-005  
-**Created**: 10/02/2026
+## 📈 Tác Động Sau Xuất Bản
+
+### Hiển thị
+- Xuất hiện trong tìm kiếm công khai
+- Hiển thị trên hồ sơ nhà nghiên cứu
+- Bao gồm trong báo cáo khoa/trường
+
+### Cập nhật Thống kê
+- Số lượng ấn phẩm của nhà nghiên cứu +1
+- Số lượng ấn phẩm của khoa +1
+- Số lượng ấn phẩm của trường +1
+
+### Phân tích (P2)
+- Kích hoạt theo dõi trích dẫn
+- Kích hoạt theo dõi lượt tải xuống
+
+---
+
+**Liên quan**: FR-APR-013, FR-APR-014, US-UNR-004, US-UNR-005  
+**Ngày tạo**: 10/02/2026

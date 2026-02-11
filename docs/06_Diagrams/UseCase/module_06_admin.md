@@ -1,55 +1,55 @@
-# Module 6: Admin Management - Use Case Diagram
+# Module 6: Quản lý Quản trị - Biểu đồ Ca Sử dụng
 
-> 📊 **Diagram ID**: UCD-06  
-> 📦 **Module**: Admin & User Management  
-> 👥 **Actors**: SuperAdmin  
-> 📋 **Use Cases**: 10
-
----
-
-## 🎯 Module Overview
-
-Module này handle all administrative functions cho hệ thống UFPMS.
-
-**Scope**:
-- User management
-- Role and permission management  
-- System configuration
-- Audit logs
+> 📊 **ID Biểu đồ**: UCD-06  
+> 📦 **Module**: Quản lý Quản trị & Người dùng  
+> 👥 **Tác nhân**: Quản trị viên Cấp cao  
+> 📋 **Ca Sử dụng**: 10
 
 ---
 
-## 📊 Use Case Diagram
+## 🎯 Tổng quan Module
+
+Module này xử lý tất cả các chức năng quản trị cho hệ thống UFPMS.
+
+**Phạm vi**:
+- Quản lý người dùng
+- Quản lý vai trò và quyền hạn
+- Cấu hình hệ thống
+- Nhật ký kiểm toán
+
+---
+
+## 📊 Biểu đồ Ca Sử dụng
 
 ```mermaid
 graph TB
-    subgraph Actors["👥 Actors"]
-        ADM[👨‍💻 SuperAdmin]
+    subgraph Actors["👥 Tác nhân"]
+        ADM[👨‍💻 Quản trị viên Cấp cao]
     end
     
-    subgraph ADMIN["⚙️ Admin Management Module"]
+    subgraph ADMIN["⚙️ Module Quản lý Quản trị"]
         direction TB
         
-        subgraph UserMgmt["👥 User Management"]
-            UC1[UC-M6-001<br/>Create User<br/>P0]
-            UC2[UC-M6-002<br/>Edit User<br/>P0]
-            UC3[UC-M6-003<br/>Deactivate User<br/>P0]
-            UC4[UC-M6-004<br/>Sync with LDAP<br/>P1]
+        subgraph UserMgmt["👥 Quản lý Người dùng"]
+            UC1[UC-M6-001<br/>Tạo Người dùng<br/>P0]
+            UC2[UC-M6-002<br/>Sửa Người dùng<br/>P0]
+            UC3[UC-M6-003<br/>Vô hiệu hóa Người dùng<br/>P0]
+            UC4[UC-M6-004<br/>Đồng bộ với LDAP<br/>P1]
         end
         
-        subgraph RoleMgmt["🔐 Role Management"]
-            UC5[UC-M6-005<br/>Assign Role<br/>P0]
-            UC6[UC-M6-006<br/>Manage Permissions<br/>P1]
+        subgraph RoleMgmt["🔐 Quản lý Vai trò"]
+            UC5[UC-M6-005<br/>Gán Vai trò<br/>P0]
+            UC6[UC-M6-006<br/>Quản lý Quyền hạn<br/>P1]
         end
         
-        subgraph SystemConfig["⚙️ System Config"]
-            UC7[UC-M6-007<br/>Configure System<br/>P0]
-            UC8[UC-M6-008<br/>Manage Departments<br/>P0]
+        subgraph SystemConfig["⚙️ Cấu hình Hệ thống"]
+            UC7[UC-M6-007<br/>Cấu hình Hệ thống<br/>P0]
+            UC8[UC-M6-008<br/>Quản lý Khoa/Bộ môn<br/>P0]
         end
         
-        subgraph Audit["📋 Audit & Logs"]
-            UC9[UC-M6-009<br/>View Audit Logs<br/>P0]
-            UC10[UC-M6-010<br/>Generate Audit Report<br/>P1]
+        subgraph Audit["📋 Kiểm toán & Nhật ký"]
+            UC9[UC-M6-009<br/>Xem Nhật ký Kiểm toán<br/>P0]
+            UC10[UC-M6-010<br/>Tạo Báo cáo Kiểm toán<br/>P1]
         end
         
         %% Include relationships
@@ -58,16 +58,16 @@ graph TB
     end
     
     %% SuperAdmin connections
-    ADM -->|create| UC1
-    ADM -->|edit| UC2
-    ADM -->|deactivate| UC3
-    ADM -->|sync| UC4
-    ADM -->|assign| UC5
-    ADM -->|manage| UC6
-    ADM -->|configure| UC7
-    ADM -->|manage| UC8
-    ADM -->|view| UC9
-    ADM -->|generate| UC10
+    ADM -->|tạo| UC1
+    ADM -->|sửa| UC2
+    ADM -->|vô hiệu hóa| UC3
+    ADM -->|đồng bộ| UC4
+    ADM -->|gán| UC5
+    ADM -->|quản lý| UC6
+    ADM -->|cấu hình| UC7
+    ADM -->|quản lý| UC8
+    ADM -->|xem| UC9
+    ADM -->|tạo| UC10
     
     %% Styling
     style UC1 fill:#ff9f43,stroke:#333,stroke-width:2px,color:#000
@@ -86,301 +86,301 @@ graph TB
 
 ---
 
-## 📋 Use Cases - User Management
+## 📋 Ca Sử dụng - Quản lý Người dùng
 
-### UC-M6-001: Create User
-**Priority**: P0  
-**Actor**: SuperAdmin  
-**Description**: Tạo user account mới
+### UC-M6-001: Tạo Người dùng
+**Độ ưu tiên**: P0  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Tạo tài khoản người dùng mới
 
-**Methods**:
-1. **Manual**: Nhập thông tin tay
-2. **LDAP Sync**: Import từ LDAP/AD (UC-M6-004)
-3. **Bulk Import**: Upload Excel (P1)
+**Phương thức**:
+1. **Thủ công**: Nhập thông tin tay
+2. **Đồng bộ LDAP**: Import từ LDAP/AD (UC-M6-004)
+3. **Import Hàng loạt**: Upload Excel (P1)
 
-**Required Fields**:
-- Username (unique)
-- Full name
+**Trường Bắt buộc**:
+- Tên đăng nhập (duy nhất)
+- Họ và tên
 - Email
-- Department/Faculty
-- Initial role (include UC-M6-005)
+- Khoa/Bộ môn
+- Vai trò ban đầu (bao gồm UC-M6-005)
 
-**Postconditions**:
-- User account created
-- Credentials sent via email
-- Default role assigned
+**Hậu điều kiện**:
+- Tài khoản người dùng được tạo
+- Thông tin đăng nhập gửi qua email
+- Vai trò mặc định được gán
 
-**Related**: FR-ADM-001, US-ADM-001
-
----
-
-### UC-M6-002: Edit User
-**Priority**: P0  
-**Actor**: SuperAdmin  
-**Description**: Chỉnh sửa user information
-
-**Editable Fields**:
-- Name, email
-- Department/Faculty
-- Role assignment
-- Active/Inactive status
-
-**Business Rules**:
-- Cannot edit username (primary key)
-- Cannot delete users, only deactivate (UC-M6-003)
-
-**Related**: FR-ADM-002, US-ADM-002
+**Liên quan**: FR-ADM-001, US-ADM-001
 
 ---
 
-### UC-M6-003: Deactivate User
-**Priority**: P0  
-**Actor**: SuperAdmin  
-**Description**: Deactivate user account
+### UC-M6-002: Sửa Người dùng
+**Độ ưu tiên**: P0  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Chỉnh sửa thông tin người dùng
 
-**Use Cases**:
+**Trường có thể Sửa**:
+- Tên, email
+- Khoa/Bộ môn
+- Gán vai trò
+- Trạng thái Hoạt động/Không hoạt động
+
+**Quy tắc Nghiệp vụ**:
+- Không thể sửa tên đăng nhập (khóa chính)
+- Không thể xóa người dùng, chỉ vô hiệu hóa (UC-M6-003)
+
+**Liên quan**: FR-ADM-002, US-ADM-002
+
+---
+
+### UC-M6-003: Vô hiệu hóa Người dùng
+**Độ ưu tiên**: P0  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Vô hiệu hóa tài khoản người dùng
+
+**Ca sử dụng**:
 - Giảng viên nghỉ việc
-- Temporary suspension
+- Tạm ngưng hoạt động
 
-**Effects**:
-- User cannot login
-- User's publications remain visible (if PUBLISHED)
-- Audit trail preserved
+**Tác động**:
+- Người dùng không thể đăng nhập
+- Ấn phẩm của người dùng vẫn hiển thị (nếu ĐÃ XUẤT BẢN)
+- Dấu vết kiểm toán được bảo lưu
 
-**Related**: FR-ADM-003, US-ADM-003
-
----
-
-### UC-M6-004: Sync with LDAP
-**Priority**: P1  
-**Actor**: SuperAdmin  
-**Description**: Đồng bộ users từ LDAP/AD
-
-**Features**:
-- One-time sync (all users)
-- Incremental sync (new users only)
-- Manual trigger hoặc scheduled (nightly)
-
-**Mapping**:
-- LDAP username → UFPMS username
-- LDAP OU → Department/Faculty
-- LDAP groups → Roles (P2)
-
-**Related**: FR-ADM-004, US-ADM-004
+**Liên quan**: FR-ADM-003, US-ADM-003
 
 ---
 
-## 📋 Use Cases - Role Management
+### UC-M6-004: Đồng bộ với LDAP
+**Độ ưu tiên**: P1  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Đồng bộ người dùng từ LDAP/AD
 
-### UC-M6-005: Assign Role
-**Priority**: P0  
-**Actor**: SuperAdmin  
-**Description**: Gán role cho user
+**Tính năng**:
+- Đồng bộ một lần (tất cả người dùng)
+- Đồng bộ gia tăng (chỉ người dùng mới)
+- Kích hoạt thủ công hoặc theo lịch (hàng đêm)
 
-**Available Roles**:
-1. **Researcher** (default)
-2. **Faculty Reviewer**
-3. **University Reviewer**
-4. **SuperAdmin**
+**Ánh xạ**:
+- Tên đăng nhập LDAP → Tên đăng nhập UFPMS
+- LDAP OU → Khoa/Bộ môn
+- Nhóm LDAP → Vai trò (P2)
 
-**Business Rules**:
-- 1 user có thể có multiple roles
-- Ví dụ: Researcher + Faculty Reviewer
-- Ít nhất 1 active SuperAdmin
-
-**Related**: FR-ADM-005, US-ADM-005
+**Liên quan**: FR-ADM-004, US-ADM-004
 
 ---
 
-### UC-M6-006: Manage Permissions
-**Priority**: P1  
-**Actor**: SuperAdmin  
-**Description**: Fine-grained permission management
+## 📋 Ca Sử dụng - Quản lý Vai trò
 
-**Permission Groups**:
-- Publications: Create, Read, Update, Delete
-- Approval: Review, Approve, Reject
-- Reports: View, Generate, Export
-- Admin: User management, System config
+### UC-M6-005: Gán Vai trò
+**Độ ưu tiên**: P0  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Gán vai trò cho người dùng
 
-**Use Case**: Custom roles ngoài 4 roles mặc định (P2 feature)
+**Vai trò Có sẵn**:
+1. **Nhà nghiên cứu** (mặc định)
+2. **Người đánh giá Khoa**
+3. **Người đánh giá Trường**
+4. **Quản trị viên Cấp cao**
 
-**Related**: FR-ADM-006
+**Quy tắc Nghiệp vụ**:
+- 1 người dùng có thể có nhiều vai trò
+- Ví dụ: Nhà nghiên cứu + Người đánh giá Khoa
+- Ít nhất 1 Quản trị viên Cấp cao đang hoạt động
+
+**Liên quan**: FR-ADM-005, US-ADM-005
 
 ---
 
-## 📋 Use Cases - System Configuration
+### UC-M6-006: Quản lý Quyền hạn
+**Độ ưu tiên**: P1  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Quản lý quyền hạn chi tiết
 
-### UC-M6-007: Configure System
-**Priority**: P0  
-**Actor**: SuperAdmin  
-**Description**: Configure system settings
+**Nhóm Quyền**:
+- Ấn phẩm: Thêm, Xem, Sửa, Xóa
+- Phê duyệt: Xem xét, Phê duyệt, Từ chối
+- Báo cáo: Xem, Tạo, Xuất
+- Quản trị: Quản lý người dùng, Cấu hình hệ thống
 
-**Settings Categories**:
+**Ca sử dụng**: Vai trò tùy chỉnh ngoài 4 vai trò mặc định (tính năng P2)
 
-**1. Email Configuration**
-- SMTP server, port
-- Sender email
-- Notification templates
+**Liên quan**: FR-ADM-006
 
-**2. LDAP/AD Configuration**
-- Server URL
+---
+
+## 📋 Ca Sử dụng - Cấu hình Hệ thống
+
+### UC-M6-007: Cấu hình Hệ thống
+**Độ ưu tiên**: P0  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Cấu hình cài đặt hệ thống
+
+**Danh mục Cài đặt**:
+
+**1. Cấu hình Email**
+- Máy chủ SMTP, cổng
+- Email người gửi
+- Mẫu thông báo
+
+**2. Cấu hình LDAP/AD**
+- URL máy chủ
 - Base DN
-- Bind credentials
+- Thông tin xác thực Bind
 
-**3. Workflow Configuration**
-- Approval SLA targets
-- Auto-assignment rules (P2)
+**3. Cấu hình Quy trình**
+- Mục tiêu SLA phê duyệt
+- Quy tắc tự động gán (P2)
 
-**4. File Storage**
-- Max file size
-- Allowed file types
-- Storage path
+**4. Lưu trữ Tệp**
+- Kích thước tệp tối đa
+- Loại tệp cho phép
+- Đường dẫn lưu trữ
 
-**Related**: FR-ADM-007, US-ADM-007
+**Liên quan**: FR-ADM-007, US-ADM-007
 
 ---
 
-### UC-M6-008: Manage Departments
-**Priority**: P0  
-**Actor**: SuperAdmin  
-**Description**: Quản lý departments và faculties
+### UC-M6-008: Quản lý Khoa/Bộ môn
+**Độ ưu tiên**: P0  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Quản lý các khoa và bộ môn
 
-**Features**:
-- Create/Edit/Delete departments
-- Assign department to faculty
-- Assign faculty dean (Faculty Reviewer)
+**Tính năng**:
+- Thêm/Sửa/Xóa bộ môn
+- Gán bộ môn vào khoa
+- Gán trưởng khoa (Người đánh giá Khoa)
 
-**Hierarchy**:
+**Phân cấp**:
 ```
-University
-  ├─ Faculty 1
-  │   ├─ Department A
-  │   └─ Department B
-  └─ Faculty 2
-      └─ Department C
+Trường Đại học
+  ├─ Khoa 1
+  │   ├─ Bộ môn A
+  │   └─ Bộ môn B
+  └─ Khoa 2
+      └─ Bộ môn C
 ```
 
-**Related**: FR-ADM-008
+**Liên quan**: FR-ADM-008
 
 ---
 
-## 📋 Use Cases - Audit & Logs
+## 📋 Ca Sử dụng - Kiểm toán & Nhật ký
 
-### UC-M6-009: View Audit Logs
-**Priority**: P0  
-**Actor**: SuperAdmin  
-**Description**: Xem system audit trail
+### UC-M6-009: Xem Nhật ký Kiểm toán
+**Độ ưu tiên**: P0  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Xem dấu vết kiểm toán hệ thống
 
-**Logged Events**:
-- User login/logout
-- Publication CRUD operations
-- State transitions (approval workflow)
-- User management actions
-- System config changes
+**Sự kiện được Ghi lại**:
+- Đăng nhập/đăng xuất người dùng
+- Thao tác CRUD ấn phẩm
+- Chuyển đổi trạng thái (quy trình phê duyệt)
+- Hành động quản lý người dùng
+- Thay đổi cấu hình hệ thống
 
-**Log Details**:
-- Timestamp
-- User (who)
-- Action (what)
-- Entity (which publication/user)
-- Old value → New value (for edits)
-- IP address
+**Chi tiết Nhật ký**:
+- Thời gian
+- Người dùng (ai)
+- Hành động (làm gì)
+- Đối tượng (ấn phẩm/người dùng nào)
+- Giá trị cũ → Giá trị mới (đối với chỉnh sửa)
+- Địa chỉ IP
 
-**Filters**:
-- Date range
-- User
-- Action type
-- Entity type
+**Bộ lọc**:
+- Khoảng thời gian
+- Người dùng
+- Loại hành động
+- Loại đối tượng
 
-**Related**: FR-ADM-009, US-ADM-009
-
----
-
-### UC-M6-010: Generate Audit Report
-**Priority**: P1  
-**Actor**: SuperAdmin  
-**Description**: Tạo audit report
-
-**Use Cases**:
-- Security audit
-- Compliance reporting
-- Investigation
-
-**Report Types**:
-- User activity report
-- Publication change history
-- System access log
-
-**Export**: PDF, Excel
-
-**Related**: FR-ADM-010, US-ADM-010
+**Liên quan**: FR-ADM-009, US-ADM-009
 
 ---
 
-## 📊 Statistics
+### UC-M6-010: Tạo Báo cáo Kiểm toán
+**Độ ưu tiên**: P1  
+**Tác nhân**: Quản trị viên Cấp cao  
+**Mô tả**: Tạo báo cáo kiểm toán
 
-| Priority | Use Cases | % |
+**Ca sử dụng**:
+- Kiểm toán bảo mật
+- Báo cáo tuân thủ
+- Điều tra
+
+**Loại Báo cáo**:
+- Báo cáo hoạt động người dùng
+- Lịch sử thay đổi ấn phẩm
+- Nhật ký truy cập hệ thống
+
+**Xuất**: PDF, Excel
+
+**Liên quan**: FR-ADM-010, US-ADM-010
+
+---
+
+## 📊 Thống kê
+
+| Độ ưu tiên | Ca Sử dụng | % |
 |----------|-----------|---|
-| P0 - Must Have | 8 | 80% |
-| P1 - Should Have | 2 | 20% |
+| P0 - Phải Có | 8 | 80% |
+| P1 - Nên Có | 2 | 20% |
 
 ---
 
-## 🔐 Default Roles & Permissions
+## 🔐 Vai trò Mặc định & Quyền hạn
 
-### Role: Researcher
-**Permissions**:
-- Publications: CRUD (own only, DRAFT state only)
-- Approval: Submit, Track status
-- Reports: View own statistics
-- Profile: Edit own
-
----
-
-### Role: Faculty Reviewer
-**Inherits**: Researcher permissions  
-**Additional**:
-- Approval: Review, Approve, Reject, Request Revision (own faculty)
-- Reports: View faculty statistics
+### Vai trò: Nhà nghiên cứu
+**Quyền hạn**:
+- Ấn phẩm: CRUD (chỉ của mình, chỉ trạng thái NHÁP)
+- Phê duyệt: Gửi, Theo dõi trạng thái
+- Báo cáo: Xem thống kê của mình
+- Hồ sơ: Sửa của mình
 
 ---
 
-### Role: University Reviewer
-**Inherits**: Researcher permissions  
-**Additional**:
-- Approval: Final approval (university-wide)
-- Reports: View university statistics
+### Vai trò: Người đánh giá Khoa
+**Kế thừa**: Quyền hạn Nhà nghiên cứu  
+**Bổ sung**:
+- Phê duyệt: Xem xét, Phê duyệt, Từ chối, Yêu cầu Chỉnh sửa (khoa của mình)
+- Báo cáo: Xem thống kê khoa
 
 ---
 
-### Role: SuperAdmin
-**Permissions**: ALL
-- User management
-- System configuration
-- Audit logs
-- Override any publication
-- Delete any data
+### Vai trò: Người đánh giá Trường
+**Kế thừa**: Quyền hạn Nhà nghiên cứu  
+**Bổ sung**:
+- Phê duyệt: Phê duyệt cuối cùng (toàn trường)
+- Báo cáo: Xem thống kê toàn trường
 
 ---
 
-## 🔗 Traceability
-
-### Functional Requirements
-- FR-ADM-001 to FR-ADM-010 (10 FRs)
-
-### User Stories
-**SuperAdmin**: US-ADM-001 to US-ADM-010
-
----
-
-## 📚 Related Documentation
-
-- **Use Cases**: [05_Use_Cases/Medium_Level/module_06_admin_management.md](../../05_Use_Cases/Medium_Level/module_06_admin_management.md)
-- **Requirements**: [03_Requirements/Functional/module_admin.md](../../03_Requirements/Functional/module_admin.md)
-- **System Spec**: [01_System_Specification/stakeholders.md](../../01_System_Specification/stakeholders.md#roles)
+### Vai trò: Quản trị viên Cấp cao
+**Quyền hạn**: TẤT CẢ
+- Quản lý người dùng
+- Cấu hình hệ thống
+- Nhật ký kiểm toán
+- Ghi đè bất kỳ ấn phẩm nào
+- Xóa bất kỳ dữ liệu nào
 
 ---
 
-**Created**: 10/02/2026  
-**Version**: 1.0
+## 🔗 Truy xuất nguồn gốc
+
+### Yêu cầu Chức năng
+- FR-ADM-001 đến FR-ADM-010 (10 FRs)
+
+### Câu chuyện Người dùng
+**Quản trị viên Cấp cao**: US-ADM-001 đến US-ADM-010
+
+---
+
+## 📚 Tài liệu Liên quan
+
+- **Ca Sử dụng**: [05_Use_Cases/Medium_Level/module_06_admin_management.md](../../05_Use_Cases/Medium_Level/module_06_admin_management.md)
+- **Yêu cầu**: [03_Requirements/Functional/module_admin.md](../../03_Requirements/Functional/module_admin.md)
+- **Đặc tả Hệ thống**: [01_System_Specification/stakeholders.md](../../01_System_Specification/stakeholders.md#roles)
+
+---
+
+**Ngày tạo**: 10/02/2026  
+**Phiên bản**: 1.0

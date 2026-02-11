@@ -1,47 +1,47 @@
-# External System Integrations
+# Tích Hợp Hệ Thống Bên Ngoài
 
-> 📊 **Scope**: UFPMS integrations với external systems  
-> 🔌 **Systems**: 5 external systems  
-> 📅 **Created**: 11/02/2026
-
----
-
-## 🔌 External Systems Overview
-
-| System | Purpose | Priority | Protocol | Status |
-|--------|---------|----------|----------|--------|
-| LDAP/AD Server | Authentication | P0 | LDAP | Required |
-| Email Server | Notifications | P0 | SMTP | Required |
-| HR System | User sync | P1 | REST/LDAP | Optional |
-| DOI Resolver | Metadata fetch| P2 | HTTPS | Optional |
-| ORCID API | Import pubs | P2 | OAuth 2.0 | Optional |
+> 📊 **Phạm vi**: Tích hợp UFPMS với các hệ thống bên ngoài  
+> 🔌 **Hệ thống**: 5 hệ thống bên ngoài  
+> 📅 **Ngày tạo**: 11/02/2026
 
 ---
 
-## 1. LDAP/AD Server (P0)
+## 🔌 Tổng Quan Hệ Thống Bên Ngoài
 
-### Purpose
-User authentication - KHÔNG lưu password trong database
+| Hệ thống | Mục đích | Ưu tiên | Giao thức | Trạng thái |
+|----------|----------|----------|-----------|------------|
+| Máy chủ LDAP/AD | Xác thực | P0 | LDAP | Bắt buộc |
+| Máy chủ Email | Thông báo | P0 | SMTP | Bắt buộc |
+| Hệ thống Nhân sự (HR) | Đồng bộ người dùng | P1 | REST/LDAP | Tùy chọn |
+| Trình phân giải DOI | Lấy siêu dữ liệu | P2 | HTTPS | Tùy chọn |
+| API ORCID | Nhập ấn phẩm | P2 | OAuth 2.0 | Tùy chọn |
 
-### Integration Flow
+---
+
+## 1. Máy chủ LDAP/AD (P0)
+
+### Mục đích
+Xác thực người dùng - KHÔNG lưu mật khẩu trong cơ sở dữ liệu
+
+### Luồng Tích Hợp
 
 ```mermaid
 sequenceDiagram
-    User->>UFPMS: Login (username, password)
-    UFPMS->>LDAP: LDAP Bind (username, password)
+    User->>UFPMS: Đăng nhập (tên người dùng, mật khẩu)
+    UFPMS->>LDAP: Ràng buộc LDAP (tên người dùng, mật khẩu)
     
-    alt Valid credentials
-        LDAP-->>UFPMS: Authenticated + attributes
-        UFPMS->>UFPMS: Create/update user in DB
-        UFPMS->>UFPMS: Generate JWT token
-        UFPMS-->>User: Token + user info
-    else Invalid credentials
-        LDAP-->>UFPMS: Authentication failed
-        UFPMS-->>User: 401 Unauthorized
+    alt Thông tin xác thực hợp lệ
+        LDAP-->>UFPMS: Đã xác thực + thuộc tính
+        UFPMS->>UFPMS: Tạo/cập nhật người dùng trong CSDL
+        UFPMS->>UFPMS: Tạo mã thông báo JWT
+        UFPMS-->>User: Mã thông báo + thông tin người dùng
+    else Thông tin xác thực không hợp lệ
+        LDAP-->>UFPMS: Xác thực thất bại
+        UFPMS-->>User: 401 Không được phép
     end
 ```
 
-### Configuration
+### Cấu hình
 ```properties
 # application.properties
 ldap.url=ldap://ldap.university.edu.vn:389
@@ -51,46 +51,46 @@ ldap.bind.username=cn=admin,dc=university,dc=edu,dc=vn
 ldap.bind.password=${LDAP_PASSWORD}
 ```
 
-### Data Flow
+### Luồng Dữ Liệu
 
-**OUT** (UFPMS → LDAP):
-- Username
-- Password
+**RA** (UFPMS → LDAP):
+- Tên người dùng
+- Mật khẩu
 
-**IN** (LDAP → UFPMS):
-- Full name
+**VÀO** (LDAP → UFPMS):
+- Họ và tên
 - Email
-- Department
-- Employee ID
+- Phòng ban
+- Mã nhân viên
 
-### Error Handling
-- **LDAP unavailable**: Show error "Authentication service unavailable"
-- **Invalid credentials**: Show "Invalid username or password"
-- **Timeout**: Retry 3 times, then fail
+### Xử Lý Lỗi
+- **LDAP không khả dụng**: Hiển thị lỗi "Dịch vụ xác thực không khả dụng"
+- **Thông tin xác thực không hợp lệ**: Hiển thị "Tên người dùng hoặc mật khẩu không hợp lệ"
+- **Hết thời gian**: Thử lại 3 lần, sau đó báo lỗi
 
-### Security
-- Use LDAPS (LDAP over SSL) in production
-- Never log passwords
-- Encrypt bind password in config
+### Bảo Mật
+- Sử dụng LDAPS (LDAP qua SSL) trong môi trường sản xuất
+- Không bao giờ ghi nhật ký mật khẩu
+- Mã hóa mật khẩu ràng buộc trong cấu hình
 
 ---
 
-## 2. Email Server (P0)
+## 2. Máy chủ Email (P0)
 
-### Purpose
-Send notification emails cho workflow events
+### Mục đích
+Gửi email thông báo cho các sự kiện quy trình làm việc
 
-### Integration Flow
+### Luồng Tích Hợp
 
 ```mermaid
 flowchart LR
-    Event[Workflow Event] --> Queue[Email Queue P1]
-    Queue --> EmailService[Email Service]
-    EmailService --> SMTP[SMTP Server]
-    SMTP --> Recipient[User Email]
+    Event[Sự kiện Quy trình] --> Queue[Hàng đợi Email P1]
+    Queue --> EmailService[Dịch vụ Email]
+    EmailService --> SMTP[Máy chủ SMTP]
+    SMTP --> Recipient[Email Người dùng]
 ```
 
-### Configuration
+### Cấu hình
 ```properties
 # application.properties
 mail.smtp.host=smtp.university.edu.vn
@@ -102,76 +102,76 @@ mail.password=${SMTP_PASSWORD}
 mail.from=no-reply@ufpms.university.edu.vn
 ```
 
-### Email Events
+### Các Sự Kiện Email
 
-| Event | Recipient | Template |
-|-------|-----------|----------|
-| Publication submitted | Faculty Reviewers | submit_notification.html |
-| Review approved | Researcher (owner) | approval_notification.html |
-| Revision requested | Researcher | revision_request.html |
-| Publication rejected | Researcher | rejection_notification.html |
-| Final published | Researcher + Co-authors | published_notification.html |
+| Sự kiện | Người nhận | Mẫu |
+|---------|------------|-----|
+| Ấn phẩm đã gửi | Người đánh giá cấp Khoa | submit_notification.html |
+| Đánh giá đã phê duyệt | Nhà nghiên cứu (chủ sở hữu) | approval_notification.html |
+| Yêu cầu chỉnh sửa | Nhà nghiên cứu | revision_request.html |
+| Ấn phẩm bị từ chối | Nhà nghiên cứu | rejection_notification.html |
+| Xuất bản cuối cùng | Nhà nghiên cứu + Đồng tác giả | published_notification.html |
 
-### Sample Email Template
+### Mẫu Email Ví Dụ
 ```html
 <!-- submit_notification.html -->
-Subject: New publication for review - {title}
+Chủ đề: Ấn phẩm mới cần đánh giá - {title}
 
-Dear {reviewer_name},
+Thân gửi {reviewer_name},
 
-A new publication has been submitted for your review:
+Một ấn phẩm mới đã được gửi để bạn xem xét:
 
-Title: {title}
-Authors: {authors}
-Submitted by: {researcher_name}
-Date: {submitted_date}
+Tiêu đề: {title}
+Tác giả: {authors}
+Người gửi: {researcher_name}
+Ngày: {submitted_date}
 
-Please review at: {review_url}
+Vui lòng xem xét tại: {review_url}
 
-Best regards,
+Trân trọng,
 UFPMS
 ```
 
-### Error Handling
-- **SMTP unavailable**: Queue email, retry later
-- **Invalid email address**: Log error, skip recipient
-- **Send failed**: Retry 3 times, then log failure
+### Xử Lý Lỗi
+- **SMTP không khả dụng**: Xếp hàng email, thử lại sau
+- **Địa chỉ email không hợp lệ**: Ghi nhật ký lỗi, bỏ qua người nhận
+- **Gửi thất bại**: Thử lại 3 lần, sau đó ghi nhật ký thất bại
 
-### Features (P1)
-- Email queue (async sending)
-- Batch notifications
-- HTML templates với variables
-- Unsubscribe link (for non-critical emails)
+### Tính Năng (P1)
+- Hàng đợi email (gửi không đồng bộ)
+- Thông báo hàng loạt
+- Mẫu HTML với các biến
+- Liên kết hủy đăng ký (cho các email không quan trọng)
 
 ---
 
-## 3. HR System (P1)
+## 3. Hệ Thống Nhân Sự (HR) (P1)
 
-### Purpose
-Sync user data từ HR system (nightly batch job)
+### Mục đích
+Đồng bộ dữ liệu người dùng từ hệ thống HR (công việc hàng đêm)
 
-### Integration Flow
+### Luồng Tích Hợp
 
 ```mermaid
 flowchart TD
-    Cron[Cron Job<br/>Daily 2 AM] --> Fetch[Fetch users from HR API]
-    Fetch --> Compare[Compare với UFPMS users table]
+    Cron[Công việc định kỳ<br/>Hàng ngày 2 giờ sáng] --> Fetch[Lấy người dùng từ HR API]
+    Fetch --> Compare[So sánh với người dùng UFPMS]
     
-    Compare --> NewUsers{New users?}
-    NewUsers -->|Yes| Insert[INSERT new users]
+    Compare --> NewUsers{Người dùng mới?}
+    NewUsers -->|Có| Insert[CHÈN người dùng mới]
     
-    Compare --> UpdatedUsers{Updated users?}
-    UpdatedUsers -->|Yes| Update[UPDATE existing users]
+    Compare --> UpdatedUsers{Người dùng cập nhật?}
+    UpdatedUsers -->|Có| Update[CẬP NHẬT người dùng hiện có]
     
-    Compare --> LeftUsers{Left users?}
-    LeftUsers -->|Yes| Deactivate[Set is_active = FALSE]
+    Compare --> LeftUsers{Người dùng rời đi?}
+    LeftUsers -->|Có| Deactivate[Đặt is_active = FALSE]
     
-    Insert --> Log[Log sync results]
+    Insert --> Log[Ghi nhật ký kết quả đồng bộ]
     Update --> Log
     Deactivate --> Log
 ```
 
-### API Endpoint
+### Điểm Cuối API
 ```
 GET https://hr.university.edu.vn/api/v1/employees
 
@@ -191,46 +191,46 @@ Response:
 ]
 ```
 
-### Sync Logic
+### Logic Đồng Bộ
 ```sql
--- New users: INSERT
+-- Người dùng mới: CHÈN
 INSERT INTO users (username, name, email, department_id)
 VALUES (...) WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = ?);
 
--- Updated users: UPDATE
+-- Người dùng cập nhật: CẬP NHẬT
 UPDATE users SET name = ?, email = ?, department_id = ? WHERE username = ?;
 
--- Left users: DEACTIVATE
-UPDATE users SET is_active = FALSE WHERE username NOT IN (HR user list);
+-- Người dùng rời đi: VÔ HIỆU HÓA
+UPDATE users SET is_active = FALSE WHERE username NOT IN (danh sách người dùng HR);
 ```
 
-### Configuration
+### Cấu hình
 ```properties
 hr.api.url=https://hr.university.edu.vn/api/v1
 hr.api.key=${HR_API_KEY}
-hr.sync.cron=0 0 2 * * ?  # Daily at 2 AM
+hr.sync.cron=0 0 2 * * ?  # Hàng ngày lúc 2 giờ sáng
 ```
 
 ---
 
-## 4. DOI Resolver (P2)
+## 4. Trình Phân Giải DOI (P2)
 
-### Purpose
-Auto-fetch publication metadata khi researcher nhập DOI
+### Mục đích
+Tự động lấy siêu dữ liệu ấn phẩm khi nhà nghiên cứu nhập DOI
 
-### Integration Flow
+### Luồng Tích Hợp
 
 ```mermaid
 sequenceDiagram
-    Researcher->>UI: Enter DOI
-    UI->>UFPMS: Fetch metadata
+    Researcher->>UI: Nhập DOI
+    UI->>UFPMS: Lấy siêu dữ liệu
     UFPMS->>DOI_Resolver: GET /{doi}
-    DOI_Resolver-->>UFPMS: Metadata JSON
-    UFPMS-->>UI: Auto-fill form
-    UI-->>Researcher: Form filled
+    DOI_Resolver-->>UFPMS: JSON siêu dữ liệu
+    UFPMS-->>UI: Tự động điền biểu mẫu
+    UI-->>Researcher: Biểu mẫu đã điền
 ```
 
-### API Endpoint
+### Điểm Cuối API
 ```
 GET https://doi.org/{doi}
 
@@ -248,37 +248,37 @@ Response:
 }
 ```
 
-### Benefits
-- Giảm manual data entry
-- Đảm bảo accuracy (từ authoritative source)
-- Faster publication creation
+### Lợi Ích
+- Giảm nhập liệu thủ công
+- Đảm bảo độ chính xác (từ nguồn chính thống)
+- Tạo ấn phẩm nhanh hơn
 
 ---
 
-## 5. ORCID API (P2)
+## 5. API ORCID (P2)
 
-### Purpose
-Import researcher's publications từ ORCID profile
+### Mục đích
+Nhập các ấn phẩm của nhà nghiên cứu từ hồ sơ ORCID
 
-### Integration Flow
+### Luồng Tích Hợp
 
 ```mermaid
 sequenceDiagram
-    Researcher->>UFPMS: Click "Import from ORCID"
-    UFPMS->>ORCID: Redirect to OAuth
-    ORCID-->>Researcher: Login + Authorize
-    Researcher->>ORCID: Grant permission
-    ORCID-->>UFPMS: Authorization code
-    UFPMS->>ORCID: Exchange code for token
-    ORCID-->>UFPMS: Access token
+    Researcher->>UFPMS: Nhấn "Nhập từ ORCID"
+    UFPMS->>ORCID: Chuyển hướng đến OAuth
+    ORCID-->>Researcher: Đăng nhập + Cấp quyền
+    Researcher->>ORCID: Cho phép
+    ORCID-->>UFPMS: Mã ủy quyền
+    UFPMS->>ORCID: Đổi mã lấy mã thông báo
+    ORCID-->>UFPMS: Mã thông báo truy cập
     UFPMS->>ORCID: GET /works
-    ORCID-->>UFPMS: List of publications
-    UFPMS-->>Researcher: Select publications to import
-    Researcher->>UFPMS: Confirm selection
-    UFPMS->>UFPMS: Create publications in DB
+    ORCID-->>UFPMS: Danh sách ấn phẩm
+    UFPMS-->>Researcher: Chọn ấn phẩm để nhập
+    Researcher->>UFPMS: Xác nhận lựa chọn
+    UFPMS->>UFPMS: Tạo ấn phẩm trong CSDL
 ```
 
-### OAuth 2.0 Configuration
+### Cấu Hình OAuth 2.0
 ```properties
 orcid.client.id=${ORCID_CLIENT_ID}
 orcid.client.secret=${ORCID_CLIENT_SECRET}
@@ -286,7 +286,7 @@ orcid.redirect.uri=https://ufpms.university.edu.vn/orcid/callback
 orcid.scope=/read-limited
 ```
 
-### API Endpoint
+### Điểm Cuối API
 ```
 GET https://pub.orcid.org/v3.0/{orcid-id}/works
 
@@ -308,51 +308,51 @@ Response:
 }
 ```
 
-### Benefits
-- Bulk import (multiple publications at once)
-- Verified data (from ORCID)
-- Saves time for researchers
+### Lợi Ích
+- Nhập hàng loạt (nhiều ấn phẩm cùng lúc)
+- Dữ liệu đã xác minh (từ ORCID)
+- Tiết kiệm thời gian cho nhà nghiên cứu
 
 ---
 
-## 🔒 Security Considerations
+## 🔒 Cân Nhắc Bảo Mật
 
-### API Keys
-- Store trong environment variables (NOT hardcoded)
-- Rotate keys periodically (every 90 days)
-- Use different keys for dev/staging/production
+### Khóa API
+- Lưu trong biến môi trường (KHÔNG viết cứng)
+- Xoay vòng khóa định kỳ (mỗi 90 ngày)
+- Sử dụng khóa khác nhau cho dev/staging/production
 
-### HTTPS Only
-- All external API calls over HTTPS
-- Validate SSL certificates
+### Chỉ HTTPS
+- Tất cả các cuộc gọi API bên ngoài qua HTTPS
+- Xác thực chứng chỉ SSL
 
-### Rate Limiting
-- Respect external API rate limits
-- Implement exponential backoff on failures
+### Giới Hạn Tốc Độ
+- Tuân thủ giới hạn tốc độ API bên ngoài
+- Thực hiện thoái lui theo cấp số nhân khi thất bại
 
-### Error Logging
-- Log all integration errors
-- Do NOT log sensitive data (passwords, tokens)
-- Monitor integration health
-
----
-
-## 📊 Monitoring (P1)
-
-### Metrics to Track
-- LDAP authentication success rate
-- Email delivery rate
-- HR sync job completion
-- DOI resolver response time
-- ORCID import success rate
-
-### Alerts
-- LDAP unavailable > 5 minutes
-- Email queue > 100 messages
-- HR sync job failed
-- External API errors > 10% rate
+### Ghi Nhật Ký Lỗi
+- Ghi nhật ký tất cả các lỗi tích hợp
+- KHÔNG ghi nhật ký dữ liệu nhạy cảm (mật khẩu, mã thông báo)
+- Giám sát sức khỏe tích hợp
 
 ---
 
-**Related**: system_context.md, NFR-Security  
-**Created**: 11/02/2026
+## 📊 Giám Sát (P1)
+
+### Các Chỉ Số Cần Theo Dõi
+- Tỷ lệ thành công xác thực LDAP
+- Tỷ lệ gửi email
+- Hoàn thành công việc đồng bộ HR
+- Thời gian phản hồi trình phân giải DOI
+- Tỷ lệ thành công nhập ORCID
+
+### Cảnh Báo
+- LDAP không khả dụng > 5 phút
+- Hàng đợi email > 100 tin nhắn
+- Công việc đồng bộ HR thất bại
+- Lỗi API bên ngoài > tỷ lệ 10%
+
+---
+
+**Liên quan**: system_context.md, NFR-Security  
+**Ngày tạo**: 11/02/2026
