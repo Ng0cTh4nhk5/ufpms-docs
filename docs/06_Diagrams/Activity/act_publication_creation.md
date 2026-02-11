@@ -10,9 +10,9 @@
 
 ```mermaid
 flowchart TD
-    Start([Nhà nghiên cứu nhấn<br/>"Tạo Ấn phẩm"]) --> LoadForm[Tải biểu mẫu tạo mới]
+    Start([Nhà nghiên cứu nhấn Tạo Ấn phẩm]) --> LoadForm[Tải biểu mẫu tạo mới]
     
-    LoadForm --> GetMetadata[Lấy tùy chọn siêu dữ liệu<br/>từ cơ sở dữ liệu]
+    LoadForm --> GetMetadata[Lấy tùy chọn siêu dữ liệu từ cơ sở dữ liệu]
     GetMetadata --> DisplayForm[Hiển thị biểu mẫu trống]
     
     DisplayForm --> FillBasic{Điền thông tin cơ bản?}
@@ -25,7 +25,7 @@ flowchart TD
     
     EnterDOI --> FillAuthors{Thêm tác giả?}
     
-    FillAuthors -->|Có| AddAuthor[Thêm tác giả<br/>tên, thứ tự, đơn vị]
+    FillAuthors -->|Có| AddAuthor[Thêm tác giả: tên, thứ tự, đơn vị]
     AddAuthor --> MoreAuthors{Thêm tác giả khác?}
     MoreAuthors -->|Có| AddAuthor
     MoreAuthors -->|Không| FillAbstract
@@ -48,19 +48,19 @@ flowchart TD
     
     UploadPDF -->|Không| Decision{Hành động?}
     
-    Decision -->|Lưu nháp| ValidateDraft{Các trường bắt buộc<br/>đã điền?}
+    Decision -->|Lưu nháp| ValidateDraft{Các trường bắt buộc đã điền?}
     
     ValidateDraft -->|Không: Thiếu tiêu đề| ShowError2[Hiển thị lỗi xác thực]
     ShowError2 --> EnterTitle
     
-    ValidateDraft -->|Có| CheckDuplicate[Kiểm tra trùng lặp DOI<br/>nếu được cung cấp]
+    ValidateDraft -->|Có| CheckDuplicate[Kiểm tra trùng lặp DOI nếu được cung cấp]
     
-    CheckDuplicate -->|Tìm thấy trùng lặp| ShowError3[Hiển thị lỗi:<br/>"DOI đã tồn tại"]
+    CheckDuplicate -->|Tìm thấy trùng lặp| ShowError3[Hiển thị lỗi: DOI đã tồn tại]
     ShowError3 --> EnterDOI
     
-    CheckDuplicate -->|Không trùng lặp| SaveDraft[Lưu vào cơ sở dữ liệu<br/>Trạng thái: DRAFT (Nháp)]
+    CheckDuplicate -->|Không trùng lặp| SaveDraft[Lưu vào cơ sở dữ liệu - Trạng thái: DRAFT]
     SaveDraft --> Success1[Hiển thị thông báo thành công]
-    Success1 --> End1([Chuyển hướng đến<br/>Ấn phẩm của tôi])
+    Success1 --> End1([Chuyển hướng đến Ấn phẩm của tôi])
     
     Decision -->|Hủy| Confirm{Xác nhận hủy?}
     Confirm -->|Có| End2([Quay lại bảng điều khiển])

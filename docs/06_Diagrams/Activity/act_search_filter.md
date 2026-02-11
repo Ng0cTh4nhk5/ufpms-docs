@@ -10,10 +10,10 @@
 
 ```mermaid
 flowchart TD
-    Start([Người dùng mở<br/>Trang Tìm kiếm]) --> LoadPage[Tải trang tìm kiếm]
+    Start([Người dùng mở Trang Tìm kiếm]) --> LoadPage[Tải trang tìm kiếm]
     
-    LoadPage --> FetchFilters[Lấy tùy chọn bộ lọc<br/>từ cơ sở dữ liệu]
-    FetchFilters --> DisplaySearch[Hiển thị biểu mẫu tìm kiếm<br/>+ kết quả trống]
+    LoadPage --> FetchFilters[Lấy tùy chọn bộ lọc từ cơ sở dữ liệu]
+    FetchFilters --> DisplaySearch[Hiển thị biểu mẫu tìm kiếm + kết quả trống]
     
     DisplaySearch --> UserAction{Hành động người dùng?}
     
@@ -30,30 +30,30 @@ flowchart TD
     
     ApplyFilters -->|Nhấn Tìm kiếm| BuildQuery[Xây dựng truy vấn tìm kiếm]
     
-    BuildQuery --> CheckAuth{Người dùng<br/>đã xác thực?}
+    BuildQuery --> CheckAuth{Người dùng đã xác thực?}
     
-    CheckAuth -->|Không: Công khai| AddPublicFilter[Thêm bộ lọc:<br/>trạng thái = PUBLISHED]
+    CheckAuth -->|Không: Công khai| AddPublicFilter[Thêm bộ lọc: trạng thái = PUBLISHED]
     AddPublicFilter --> ExecuteSearch
     
-    CheckAuth -->|Có: Nhà nghiên cứu| AddResearcherFilter[Thêm bộ lọc:<br/>PUBLISHED HOẶC<br/>chủ sở hữu = userId]
+    CheckAuth -->|Có: Nhà nghiên cứu| AddResearcherFilter[Thêm bộ lọc: PUBLISHED HOẶC chủ sở hữu = userId]
     AddResearcherFilter --> ExecuteSearch
     
-    ExecuteSearch[Thực hiện<br/>tìm kiếm toàn văn] --> GetResults[Lấy từ cơ sở dữ liệu]
+    ExecuteSearch[Thực hiện tìm kiếm toàn văn] --> GetResults[Lấy từ cơ sở dữ liệu]
     
     GetResults --> CheckResults{Tìm thấy kết quả?}
     
-    CheckResults -->|Không có kết quả| ShowEmpty[Hiển thị:<br/>"Không tìm thấy ấn phẩm"<br/>+ gợi ý]
+    CheckResults -->|Không có kết quả| ShowEmpty[Hiển thị: Không tìm thấy ấn phẩm + gợi ý]
     ShowEmpty --> UserAction
     
-    CheckResults -->|Có kết quả| SortResults[Sắp xếp theo mức độ liên quan<br/>sau đó năm giảm dần]
+    CheckResults -->|Có kết quả| SortResults[Sắp xếp theo mức độ liên quan sau đó năm giảm dần]
     
-    SortResults --> Paginate[Áp dụng phân trang<br/>20 mỗi trang]
+    SortResults --> Paginate[Áp dụng phân trang 20 mỗi trang]
     
     Paginate --> DisplayResults[Hiển thị danh sách kết quả]
     
     DisplayResults --> UserNext{Hành động người dùng?}
     
-    UserNext -->|Nhấn vào ấn phẩm| ViewDetail[Chuyển hướng đến<br/>trang chi tiết ấn phẩm]
+    UserNext -->|Nhấn vào ấn phẩm| ViewDetail[Chuyển hướng đến trang chi tiết ấn phẩm]
     ViewDetail --> End1([Kết thúc])
     
     UserNext -->|Đổi trang| ChangePage[Đi đến trang N]
@@ -61,7 +61,7 @@ flowchart TD
     
     UserNext -->|Sửa đổi bộ lọc| UserAction
     
-    UserNext -->|Xuất kết quả| ExportCSV[Xuất ra CSV<br/>tính năng P2]
+    UserNext -->|Xuất kết quả| ExportCSV[Xuất ra CSV tính năng P2]
     ExportCSV --> End2([Tải xuống tệp])
     
     style Start fill:#e3f2fd

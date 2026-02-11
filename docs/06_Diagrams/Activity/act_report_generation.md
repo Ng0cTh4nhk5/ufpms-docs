@@ -10,21 +10,21 @@
 
 ```mermaid
 flowchart TD
-    Start([Người dùng nhấn<br/>"Tạo Báo cáo"]) --> SelectType{Loại báo cáo?}
+    Start([Người dùng nhấn Tạo Báo cáo]) --> SelectType{Loại báo cáo?}
     
-    SelectType -->|Báo cáo Khoa| SetScopeFac[Phạm vi:<br/>Chỉ Khoa hiện tại]
+    SelectType -->|Báo cáo Khoa| SetScopeFac[Phạm vi: Chỉ Khoa hiện tại]
     SetScopeFac --> SelectPeriod
     
     SelectType -->|Báo cáo Trường| CheckRole{Vai trò?}
     CheckRole -->|Không phải ĐG Trường/Admin| ShowError[Hiển thị: Từ chối truy cập]
     ShowError --> End1([Kết thúc])
     
-    CheckRole -->|Được phép| SetScopeUni[Phạm vi:<br/>Tất cả các Khoa]
+    CheckRole -->|Được phép| SetScopeUni[Phạm vi: Tất cả các Khoa]
     SetScopeUni --> SelectPeriod
     
     SelectPeriod[Chọn khoảng thời gian] --> PeriodOptions{Loại thời gian?}
     
-    PeriodOptions -->|Theo Năm| SelectYear[Chọn năm:<br/>2020-hiện tại]
+    PeriodOptions -->|Theo Năm| SelectYear[Chọn năm: 2020-hiện tại]
     SelectYear --> SelectMetrics
     
     PeriodOptions -->|Theo Khoảng Ngày| SelectStart[Chọn ngày bắt đầu]
@@ -34,7 +34,7 @@ flowchart TD
     ValidateRange -->|Kết thúc < Bắt đầu| ShowError2[Hiển thị: Khoảng không hợp lệ]
     ShowError2 --> SelectStart
     
-    ValidateRange -->|> 5 năm| ShowWarning[Hiển thị: Khoảng lớn,<br/>có thể chậm]
+    ValidateRange -->|> 5 năm| ShowWarning[Hiển thị: Khoảng lớn, có thể chậm]
     ShowWarning --> SelectMetrics
     
     ValidateRange -->|Hợp lệ| SelectMetrics
@@ -60,16 +60,16 @@ flowchart TD
     ClickGenerate --> ShowLoading[Hiển thị biểu tượng tải]
     
     ShowLoading --> QueryDB[Truy vấn cơ sở dữ liệu]
-    QueryDB --> FilterData[Lọc theo:<br/>- Phạm vi<br/>- Thời gian<br/>- Trạng thái = PUBLISHED]
+    QueryDB --> FilterData[Lọc theo: Phạm vi, Thời gian, Trạng thái = PUBLISHED]
     
-    FilterData --> AggregateData[Tổng hợp dữ liệu:<br/>- Đếm theo loại<br/>- Đếm theo năm<br/>- Tác giả hàng đầu]
+    FilterData --> AggregateData[Tổng hợp dữ liệu: Đếm theo loại, năm, tác giả]
     
     AggregateData --> CheckData{Tìm thấy dữ liệu?}
     
-    CheckData -->|Không có dữ liệu| ShowEmpty[Hiển thị:<br/>"Không có ấn phẩm<br/>trong giai đoạn này"]
+    CheckData -->|Không có dữ liệu| ShowEmpty[Hiển thị: Không có ấn phẩm trong giai đoạn này]
     ShowEmpty --> End2([Kết thúc])
     
-    CheckData -->|Có dữ liệu| GenerateCharts[Tạo biểu đồ:<br/>- Biểu đồ cột theo loại<br/>- Biểu đồ đường theo năm<br/>- Biểu đồ tròn theo khoa]
+    CheckData -->|Có dữ liệu| GenerateCharts[Tạo biểu đồ: Cột, Đường, Tròn]
     
     GenerateCharts --> FormatOutput{Loại đầu ra?}
     
@@ -77,17 +77,17 @@ flowchart TD
     RenderHTML --> DisplayReport[Hiển thị trên trang]
     DisplayReport --> UserAction{Hành động người dùng?}
     
-    UserAction -->|Lưu| SaveReport[Lưu cấu hình báo cáo<br/>cho tương lai P1]
+    UserAction -->|Lưu| SaveReport[Lưu cấu hình báo cáo cho tương lai]
     SaveReport --> End3([Kết thúc])
     
     UserAction -->|Xuất ngay| SelectExport
     UserAction -->|Đóng| End3
     
-    FormatOutput -->|PDF| GeneratePDF[Tạo PDF<br/>với biểu đồ + bảng]
+    FormatOutput -->|PDF| GeneratePDF[Tạo PDF với biểu đồ + bảng]
     GeneratePDF --> DownloadPDF[Kích hoạt tải xuống]
     DownloadPDF --> End4([Đã tải xuống])
     
-    FormatOutput -->|Excel| GenerateExcel[Tạo Excel<br/>với dữ liệu + pivot]
+    FormatOutput -->|Excel| GenerateExcel[Tạo Excel với dữ liệu + pivot]
     GenerateExcel --> DownloadExcel[Kích hoạt tải xuống]
     DownloadExcel --> End5([Đã tải xuống])
     

@@ -12,7 +12,7 @@
 flowchart TD
     Start([Bắt đầu: Tạo Ấn phẩm]) --> Draft[Trạng thái: DRAFT (Nháp)]
     
-    Draft --> EditLoop{Tiếp tục<br/>chỉnh sửa?}
+    Draft --> EditLoop{Tiếp tục chỉnh sửa?}
     EditLoop -->|Có| Edit[Chỉnh sửa Ấn phẩm]
     Edit --> Draft
     EditLoop -->|Không| Submit[Gửi đi Đánh giá]
@@ -20,7 +20,7 @@ flowchart TD
     Submit --> Submitted[Trạng thái: SUBMITTED (Đã gửi)]
     Submitted --> FacReview[Trạng thái: FACULTY_REVIEWING (Khoa đang duyệt)]
     
-    FacReview --> FacDecision{Quyết định<br/>của Khoa?}
+    FacReview --> FacDecision{Quyết định của Khoa?}
     
     FacDecision -->|Phê duyệt| FacApproved[Trạng thái: FACULTY_APPROVED (Khoa đã duyệt)]
     FacDecision -->|Yêu cầu Chỉnh sửa| Revision[Trạng thái: REVISION_REQUIRED (Cần chỉnh sửa)]
@@ -31,7 +31,7 @@ flowchart TD
     
     FacApproved --> UniReview[Trạng thái: UNIVERSITY_REVIEWING (Trường đang duyệt)]
     
-    UniReview --> UniDecision{Quyết định<br/>của Trường?}
+    UniReview --> UniDecision{Quyết định của Trường?}
     
     UniDecision -->|Phê duyệt| Published[Trạng thái: PUBLISHED (Đã xuất bản)]
     UniDecision -->|Gửi lại| FacReview
