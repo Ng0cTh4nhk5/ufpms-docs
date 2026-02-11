@@ -10,6 +10,8 @@
 
 ## 1. Giới Thiệu & Phạm Vi (Introduction & Scope)
 
+> 📚 **Tài liệu chi tiết**: [System Clarification](../02_System_Clarification/), [Problem Statement](../02_System_Clarification/Business_Context/problem_statement.md)
+
 ### 1.1. Lý Do Xây Dựng Hệ Thống
 
 **Bối cảnh nghiệp vụ:**
@@ -75,6 +77,8 @@ Tại các trường đại học Việt Nam, việc quản lý công trình ngh
 | **Thời gian phê duyệt** | Không có (ad-hoc) | 6-14 ngày | Có SLA |
 
 ### 1.5. Ngữ Cảnh Tổng Quát: Quản Lý Công Trình NCKH tại Việt Nam
+
+> 📚 **Tài liệu chi tiết**: [Problem Context](../00_Problem_Context/README.md), [Research Output Catalog](../00_Problem_Context/research_output_catalog.md), [Legal Framework](../00_Problem_Context/legal_framework.md)
 
 #### **1.5.1. Bức Tranh Toàn Cảnh**
 
@@ -215,11 +219,15 @@ Dù chỉ là **1 module nhỏ** (bài báo khoa học), UFPMS vẫn mang lại 
 
 ## 2. Đặc Tả Yêu Cầu (Specifications)
 
+> 📚 **Tài liệu chi tiết**: [Requirements](../03_Requirements/README.md), [User Stories](../04_User_Stories/README.md)
+
 ### 2.1. Yêu Cầu Chức Năng Chính (Functional Requirements)
 
 Hệ thống bao gồm **65 yêu cầu chức năng** được tổ chức thành 6 modules:
 
 #### **Module 1: Publication Management** (15 FRs)
+
+> 📄 **Chi tiết**: [module_publication_management.md](../03_Requirements/Functional/module_publication_management.md)
 
 **Mục đích**: Quản lý vòng đời của bài báo khoa học
 
@@ -280,6 +288,8 @@ Hệ thống bao gồm **65 yêu cầu chức năng** được tổ chức thàn
 ---
 
 #### **Module 2: Approval Workflow** (20 FRs) - **Core of the System**
+
+> 📄 **Chi tiết**: [module_approval_workflow.md](../03_Requirements/Functional/module_approval_workflow.md)
 
 **Mục đích**: Quy trình phê duyệt 2 cấp với audit trail đầy đủ
 
@@ -392,6 +402,8 @@ stateDiagram-v2
 
 #### **Module 3: Search & Browse** (7 FRs)
 
+> 📄 **Chi tiết**: [module_search.md](../03_Requirements/Functional/module_search.md)
+
 **Mục đích**: Tìm kiếm và truy cập công trình đã công bố
 
 - **FR-SRC-001**: Tìm kiếm toàn văn (Full-text search)
@@ -422,6 +434,8 @@ stateDiagram-v2
 
 #### **Module 4: Researcher Profile** (6 FRs)
 
+> 📄 **Chi tiết**: [module_profile.md](../03_Requirements/Functional/module_profile.md)
+
 **Mục đích**: Portfolio công khai cho giảng viên
 
 - **FR-PRF-001**: Trang profile công khai với slug URL (`/profile/{username}`)
@@ -438,6 +452,8 @@ stateDiagram-v2
 ---
 
 #### **Module 5: Reporting & Analytics** (7 FRs)
+
+> 📄 **Chi tiết**: [module_reporting.md](../03_Requirements/Functional/module_reporting.md)
 
 **Mục đích**: Báo cáo và thống kê cho lãnh đạo
 
@@ -459,6 +475,8 @@ stateDiagram-v2
 ---
 
 #### **Module 6: Admin & User Management** (10 FRs)
+
+> 📄 **Chi tiết**: [module_admin.md](../03_Requirements/Functional/module_admin.md)
 
 **Mục đích**: Quản trị hệ thống
 
@@ -492,6 +510,8 @@ stateDiagram-v2
 ---
 
 ### 2.2. Yêu Cầu Phi Chức Năng (Non-Functional Requirements)
+
+> 📚 **Tài liệu chi tiết**: [Performance](../03_Requirements/Non_Functional/performance.md), [Security](../03_Requirements/Non_Functional/security.md), [Usability](../03_Requirements/Non_Functional/usability.md), [Scalability](../03_Requirements/Non_Functional/scalability.md)
 
 #### **2.2.1. Hiệu Năng (Performance)**
 
@@ -567,7 +587,11 @@ stateDiagram-v2
 
 ## 3. Thiết Kế Hệ Thống (System Design)
 
+> 📚 **Tài liệu chi tiết**: [Use Cases](../05_Use_Cases/README.md), [Diagrams](../06_Diagrams/README.md)
+
 ### 3.1. Kiến Trúc Tổng Thể (High-Level Architecture)
+
+> 📄 **Sơ đồ chi tiết**: [System Context](../06_Diagrams/Context/system_context.md)
 
 ```mermaid
 C4Context
@@ -650,6 +674,8 @@ C4Context
 ---
 
 ### 3.3. Mô Hình Dữ Liệu (Data Model)
+
+> 📄 **Sơ đồ chi tiết**: [Complete ERD](../06_Diagrams/ER_Diagrams/complete_erd.md), [Entity Specifications](../06_Diagrams/ER_Diagrams/entity_specifications.md)
 
 #### **Entity Relationship Diagram (ERD)**
 
@@ -828,6 +854,8 @@ CREATE TABLE review_history (
 
 ### 3.4. Workflow State Machine
 
+> 📄 **Sơ đồ chi tiết**: [Approval Workflow Activity](../06_Diagrams/Activity/act_approval_workflow.md), [Sequence Diagrams](../06_Diagrams/Sequence/)
+
 **State Transition Matrix:**
 
 | Current State | Event | Next State | Condition | Actor |
@@ -909,6 +937,8 @@ GET    /admin/audit-logs            - System audit logs
 ---
 
 ## 4. Lộ Trình & Rủi Ro (Roadmap & Risks)
+
+> 📚 **Tài liệu liên quan**: [System Specification](../01_System_Specification/README.md), [Technology Stack](../01_System_Specification/technology_stack.md)
 
 ### 4.1. Lộ Trình Phát Triển
 
