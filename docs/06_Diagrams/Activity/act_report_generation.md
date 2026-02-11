@@ -10,86 +10,86 @@
 
 ```mermaid
 flowchart TD
-    Start([Người dùng nhấn Tạo Báo cáo]) --> SelectType{Loại báo cáo?}
+    Start(["Người dùng nhấn Tạo Báo cáo"]) --> SelectType{"Loại báo cáo?"}
     
-    SelectType -->|Báo cáo Khoa| SetScopeFac[Phạm vi: Chỉ Khoa hiện tại]
+    SelectType -->|"Báo cáo Khoa"| SetScopeFac["Phạm vi: Chỉ Khoa hiện tại"]
     SetScopeFac --> SelectPeriod
     
-    SelectType -->|Báo cáo Trường| CheckRole{Vai trò?}
-    CheckRole -->|Không phải ĐG Trường/Admin| ShowError[Hiển thị: Từ chối truy cập]
-    ShowError --> End1([Kết thúc])
+    SelectType -->|"Báo cáo Trường"| CheckRole{"Vai trò?"}
+    CheckRole -->|"Không phải ĐG Trường/Admin"| ShowError["Hiển thị: Từ chối truy cập"]
+    ShowError --> End1(["Kết thúc"])
     
-    CheckRole -->|Được phép| SetScopeUni[Phạm vi: Tất cả các Khoa]
+    CheckRole -->|"Được phép"| SetScopeUni["Phạm vi: Tất cả các Khoa"]
     SetScopeUni --> SelectPeriod
     
-    SelectPeriod[Chọn khoảng thời gian] --> PeriodOptions{Loại thời gian?}
+    SelectPeriod["Chọn khoảng thời gian"] --> PeriodOptions{"Loại thời gian?"}
     
-    PeriodOptions -->|Theo Năm| SelectYear[Chọn năm: 2020-hiện tại]
+    PeriodOptions -->|"Theo Năm"| SelectYear["Chọn năm: 2020-hiện tại"]
     SelectYear --> SelectMetrics
     
-    PeriodOptions -->|Theo Khoảng Ngày| SelectStart[Chọn ngày bắt đầu]
-    SelectStart --> SelectEnd[Chọn ngày kết thúc]
-    SelectEnd --> ValidateRange{Khoảng hợp lệ?}
+    PeriodOptions -->|"Theo Khoảng Ngày"| SelectStart["Chọn ngày bắt đầu"]
+    SelectStart --> SelectEnd["Chọn ngày kết thúc"]
+    SelectEnd --> ValidateRange{"Khoảng hợp lệ?"}
     
-    ValidateRange -->|Kết thúc < Bắt đầu| ShowError2[Hiển thị: Khoảng không hợp lệ]
+    ValidateRange -->|"Kết thúc < Bắt đầu"| ShowError2["Hiển thị: Khoảng không hợp lệ"]
     ShowError2 --> SelectStart
     
-    ValidateRange -->|> 5 năm| ShowWarning[Hiển thị: Khoảng lớn, có thể chậm]
+    ValidateRange -->|"> 5 năm"| ShowWarning["Hiển thị: Khoảng lớn, có thể chậm"]
     ShowWarning --> SelectMetrics
     
-    ValidateRange -->|Hợp lệ| SelectMetrics
+    ValidateRange -->|"Hợp lệ"| SelectMetrics
     
-    SelectMetrics[Chọn chỉ số] --> MetricOptions{Bao gồm?}
+    SelectMetrics["Chọn chỉ số"] --> MetricOptions{"Bao gồm?"}
     
-    MetricOptions --> CheckTotal[☑ Tổng số ấn phẩm]
-    CheckTotal --> CheckByType[☑ Phân loại theo loại]
-    CheckByType --> CheckByFaculty[☑ Theo Khoa P1]
-    CheckByFaculty --> CheckTopAuthors[☑ Tác giác hàng đầu]
+    MetricOptions --> CheckTotal["☑ Tổng số ấn phẩm"]
+    CheckTotal --> CheckByType["☑ Phân loại theo loại"]
+    CheckByType --> CheckByFaculty["☑ Theo Khoa P1"]
+    CheckByFaculty --> CheckTopAuthors["☑ Tác giác hàng đầu"]
     CheckTopAuthors --> SelectFormat
     
-    SelectFormat{Định dạng đầu ra?}
+    SelectFormat{"Định dạng đầu ra?"}
     
-    SelectFormat -->|Xem trên màn hình| ClickGenerate[Nhấn "Tạo"]
-    SelectFormat -->|Xuất| SelectExport{Định dạng xuất?}
+    SelectFormat -->|"Xem trên màn hình"| ClickGenerate["Nhấn Tạo"]
+    SelectFormat -->|"Xuất"| SelectExport{"Định dạng xuất?"}
     
-    SelectExport -->|PDF| SetFormatPDF[Định dạng: PDF]
-    SelectExport -->|Excel| SetFormatExcel[Định dạng: Excel]
+    SelectExport -->|"PDF"| SetFormatPDF["Định dạng: PDF"]
+    SelectExport -->|"Excel"| SetFormatExcel["Định dạng: Excel"]
     SetFormatPDF --> ClickGenerate
     SetFormatExcel --> ClickGenerate
     
-    ClickGenerate --> ShowLoading[Hiển thị biểu tượng tải]
+    ClickGenerate --> ShowLoading["Hiển thị biểu tượng tải"]
     
-    ShowLoading --> QueryDB[Truy vấn cơ sở dữ liệu]
-    QueryDB --> FilterData[Lọc theo: Phạm vi, Thời gian, Trạng thái = PUBLISHED]
+    ShowLoading --> QueryDB["Truy vấn cơ sở dữ liệu"]
+    QueryDB --> FilterData["Lọc theo: Phạm vi, Thời gian, Trạng thái = PUBLISHED"]
     
-    FilterData --> AggregateData[Tổng hợp dữ liệu: Đếm theo loại, năm, tác giả]
+    FilterData --> AggregateData["Tổng hợp dữ liệu: Đếm theo loại, năm, tác giả"]
     
-    AggregateData --> CheckData{Tìm thấy dữ liệu?}
+    AggregateData --> CheckData{"Tìm thấy dữ liệu?"}
     
-    CheckData -->|Không có dữ liệu| ShowEmpty[Hiển thị: Không có ấn phẩm trong giai đoạn này]
-    ShowEmpty --> End2([Kết thúc])
+    CheckData -->|"Không có dữ liệu"| ShowEmpty["Hiển thị: Không có ấn phẩm trong giai đoạn này"]
+    ShowEmpty --> End2(["Kết thúc"])
     
-    CheckData -->|Có dữ liệu| GenerateCharts[Tạo biểu đồ: Cột, Đường, Tròn]
+    CheckData -->|"Có dữ liệu"| GenerateCharts["Tạo biểu đồ: Cột, Đường, Tròn"]
     
-    GenerateCharts --> FormatOutput{Loại đầu ra?}
+    GenerateCharts --> FormatOutput{"Loại đầu ra?"}
     
-    FormatOutput -->|Màn hình| RenderHTML[Kết xuất báo cáo HTML]
-    RenderHTML --> DisplayReport[Hiển thị trên trang]
-    DisplayReport --> UserAction{Hành động người dùng?}
+    FormatOutput -->|"Màn hình"| RenderHTML["Kết xuất báo cáo HTML"]
+    RenderHTML --> DisplayReport["Hiển thị trên trang"]
+    DisplayReport --> UserAction{"Hành động người dùng?"}
     
-    UserAction -->|Lưu| SaveReport[Lưu cấu hình báo cáo cho tương lai]
-    SaveReport --> End3([Kết thúc])
+    UserAction -->|"Lưu"| SaveReport["Lưu cấu hình báo cáo cho tương lai"]
+    SaveReport --> End3(["Kết thúc"])
     
-    UserAction -->|Xuất ngay| SelectExport
-    UserAction -->|Đóng| End3
+    UserAction -->|"Xuất ngay"| SelectExport
+    UserAction -->|"Đóng"| End3
     
-    FormatOutput -->|PDF| GeneratePDF[Tạo PDF với biểu đồ + bảng]
-    GeneratePDF --> DownloadPDF[Kích hoạt tải xuống]
-    DownloadPDF --> End4([Đã tải xuống])
+    FormatOutput -->|"PDF"| GeneratePDF["Tạo PDF với biểu đồ + bảng"]
+    GeneratePDF --> DownloadPDF["Kích hoạt tải xuống"]
+    DownloadPDF --> End4(["Đã tải xuống"])
     
-    FormatOutput -->|Excel| GenerateExcel[Tạo Excel với dữ liệu + pivot]
-    GenerateExcel --> DownloadExcel[Kích hoạt tải xuống]
-    DownloadExcel --> End5([Đã tải xuống])
+    FormatOutput -->|"Excel"| GenerateExcel["Tạo Excel với dữ liệu + pivot"]
+    GenerateExcel --> DownloadExcel["Kích hoạt tải xuống"]
+    DownloadExcel --> End5(["Đã tải xuống"])
     
     style Start fill:#e3f2fd
     style End1 fill:#ffcdd2

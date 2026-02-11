@@ -10,59 +10,59 @@
 
 ```mermaid
 flowchart TD
-    Start([Người dùng mở Trang Tìm kiếm]) --> LoadPage[Tải trang tìm kiếm]
+    Start(["Người dùng mở Trang Tìm kiếm"]) --> LoadPage["Tải trang tìm kiếm"]
     
-    LoadPage --> FetchFilters[Lấy tùy chọn bộ lọc từ cơ sở dữ liệu]
-    FetchFilters --> DisplaySearch[Hiển thị biểu mẫu tìm kiếm + kết quả trống]
+    LoadPage --> FetchFilters["Lấy tùy chọn bộ lọc từ cơ sở dữ liệu"]
+    FetchFilters --> DisplaySearch["Hiển thị biểu mẫu tìm kiếm + kết quả trống"]
     
-    DisplaySearch --> UserAction{Hành động người dùng?}
+    DisplaySearch --> UserAction{"Hành động người dùng?"}
     
-    UserAction -->|Nhập từ khóa| EnterQuery[Gõ từ khóa tìm kiếm]
-    EnterQuery --> CheckQuery{Độ dài truy vấn?}
-    CheckQuery -->|< 3 ký tự| ShowHint[Hiển thị: "Tối thiểu 3 ký tự"]
+    UserAction -->|"Nhập từ khóa"| EnterQuery["Gõ từ khóa tìm kiếm"]
+    EnterQuery --> CheckQuery{"Độ dài truy vấn?"}
+    CheckQuery -->|"< 3 ký tự"| ShowHint["Hiển thị: Tối thiểu 3 ký tự"]
     ShowHint --> EnterQuery
-    CheckQuery -->|>= 3 ký tự| ApplyFilters
+    CheckQuery -->|">= 3 ký tự"| ApplyFilters
     
-    UserAction -->|Chọn bộ lọc| SelectYear[Chọn khoảng năm]
-    SelectYear --> SelectType[Chọn loại ấn phẩm]
-    SelectType --> SelectFaculty[Chọn khoa (tùy chọn)]
-    SelectFaculty --> ApplyFilters{Áp dụng tìm kiếm?}
+    UserAction -->|"Chọn bộ lọc"| SelectYear["Chọn khoảng năm"]
+    SelectYear --> SelectType["Chọn loại ấn phẩm"]
+    SelectType --> SelectFaculty["Chọn khoa (tùy chọn)"]
+    SelectFaculty --> ApplyFilters{"Áp dụng tìm kiếm?"}
     
-    ApplyFilters -->|Nhấn Tìm kiếm| BuildQuery[Xây dựng truy vấn tìm kiếm]
+    ApplyFilters -->|"Nhấn Tìm kiếm"| BuildQuery["Xây dựng truy vấn tìm kiếm"]
     
-    BuildQuery --> CheckAuth{Người dùng đã xác thực?}
+    BuildQuery --> CheckAuth{"Người dùng đã xác thực?"}
     
-    CheckAuth -->|Không: Công khai| AddPublicFilter[Thêm bộ lọc: trạng thái = PUBLISHED]
+    CheckAuth -->|"Không: Công khai"| AddPublicFilter["Thêm bộ lọc: trạng thái = PUBLISHED"]
     AddPublicFilter --> ExecuteSearch
     
-    CheckAuth -->|Có: Nhà nghiên cứu| AddResearcherFilter[Thêm bộ lọc: PUBLISHED HOẶC chủ sở hữu = userId]
+    CheckAuth -->|"Có: Nhà nghiên cứu"| AddResearcherFilter["Thêm bộ lọc: PUBLISHED HOẶC chủ sở hữu = userId"]
     AddResearcherFilter --> ExecuteSearch
     
-    ExecuteSearch[Thực hiện tìm kiếm toàn văn] --> GetResults[Lấy từ cơ sở dữ liệu]
+    ExecuteSearch["Thực hiện tìm kiếm toàn văn"] --> GetResults["Lấy từ cơ sở dữ liệu"]
     
-    GetResults --> CheckResults{Tìm thấy kết quả?}
+    GetResults --> CheckResults{"Tìm thấy kết quả?"}
     
-    CheckResults -->|Không có kết quả| ShowEmpty[Hiển thị: Không tìm thấy ấn phẩm + gợi ý]
+    CheckResults -->|"Không có kết quả"| ShowEmpty["Hiển thị: Không tìm thấy ấn phẩm + gợi ý"]
     ShowEmpty --> UserAction
     
-    CheckResults -->|Có kết quả| SortResults[Sắp xếp theo mức độ liên quan sau đó năm giảm dần]
+    CheckResults -->|"Có kết quả"| SortResults["Sắp xếp theo mức độ liên quan sau đó năm giảm dần"]
     
-    SortResults --> Paginate[Áp dụng phân trang 20 mỗi trang]
+    SortResults --> Paginate["Áp dụng phân trang 20 mỗi trang"]
     
-    Paginate --> DisplayResults[Hiển thị danh sách kết quả]
+    Paginate --> DisplayResults["Hiển thị danh sách kết quả"]
     
-    DisplayResults --> UserNext{Hành động người dùng?}
+    DisplayResults --> UserNext{"Hành động người dùng?"}
     
-    UserNext -->|Nhấn vào ấn phẩm| ViewDetail[Chuyển hướng đến trang chi tiết ấn phẩm]
-    ViewDetail --> End1([Kết thúc])
+    UserNext -->|"Nhấn vào ấn phẩm"| ViewDetail["Chuyển hướng đến trang chi tiết ấn phẩm"]
+    ViewDetail --> End1(["Kết thúc"])
     
-    UserNext -->|Đổi trang| ChangePage[Đi đến trang N]
+    UserNext -->|"Đổi trang"| ChangePage["Đi đến trang N"]
     ChangePage --> Paginate
     
-    UserNext -->|Sửa đổi bộ lọc| UserAction
+    UserNext -->|"Sửa đổi bộ lọc"| UserAction
     
-    UserNext -->|Xuất kết quả| ExportCSV[Xuất ra CSV tính năng P2]
-    ExportCSV --> End2([Tải xuống tệp])
+    UserNext -->|"Xuất kết quả"| ExportCSV["Xuất ra CSV tính năng P2"]
+    ExportCSV --> End2(["Tải xuống tệp"])
     
     style Start fill:#e3f2fd
     style End1 fill:#c8e6c9

@@ -10,34 +10,34 @@
 
 ```mermaid
 flowchart TD
-    Start([Bắt đầu: Tạo Ấn phẩm]) --> Draft[Trạng thái: DRAFT (Nháp)]
+    Start(["Bắt đầu: Tạo Ấn phẩm"]) --> Draft["Trạng thái: DRAFT (Nháp)"]
     
-    Draft --> EditLoop{Tiếp tục chỉnh sửa?}
-    EditLoop -->|Có| Edit[Chỉnh sửa Ấn phẩm]
+    Draft --> EditLoop{"Tiếp tục chỉnh sửa?"}
+    EditLoop -->|"Có"| Edit["Chỉnh sửa Ấn phẩm"]
     Edit --> Draft
-    EditLoop -->|Không| Submit[Gửi đi Đánh giá]
+    EditLoop -->|"Không"| Submit["Gửi đi Đánh giá"]
     
-    Submit --> Submitted[Trạng thái: SUBMITTED (Đã gửi)]
-    Submitted --> FacReview[Trạng thái: FACULTY_REVIEWING (Khoa đang duyệt)]
+    Submit --> Submitted["Trạng thái: SUBMITTED (Đã gửi)"]
+    Submitted --> FacReview["Trạng thái: FACULTY_REVIEWING (Khoa đang duyệt)"]
     
-    FacReview --> FacDecision{Quyết định của Khoa?}
+    FacReview --> FacDecision{"Quyết định của Khoa?"}
     
-    FacDecision -->|Phê duyệt| FacApproved[Trạng thái: FACULTY_APPROVED (Khoa đã duyệt)]
-    FacDecision -->|Yêu cầu Chỉnh sửa| Revision[Trạng thái: REVISION_REQUIRED (Cần chỉnh sửa)]
-    FacDecision -->|Từ chối| Rejected[Trạng thái: REJECTED (Bị từ chối)]
+    FacDecision -->|"Phê duyệt"| FacApproved["Trạng thái: FACULTY_APPROVED (Khoa đã duyệt)"]
+    FacDecision -->|"Yêu cầu Chỉnh sửa"| Revision["Trạng thái: REVISION_REQUIRED (Cần chỉnh sửa)"]
+    FacDecision -->|"Từ chối"| Rejected["Trạng thái: REJECTED (Bị từ chối)"]
     
-    Revision --> ResearcherFix[Nhà nghiên cứu sửa lỗi]
+    Revision --> ResearcherFix["Nhà nghiên cứu sửa lỗi"]
     ResearcherFix --> Draft
     
-    FacApproved --> UniReview[Trạng thái: UNIVERSITY_REVIEWING (Trường đang duyệt)]
+    FacApproved --> UniReview["Trạng thái: UNIVERSITY_REVIEWING (Trường đang duyệt)"]
     
-    UniReview --> UniDecision{Quyết định của Trường?}
+    UniReview --> UniDecision{"Quyết định của Trường?"}
     
-    UniDecision -->|Phê duyệt| Published[Trạng thái: PUBLISHED (Đã xuất bản)]
-    UniDecision -->|Gửi lại| FacReview
+    UniDecision -->|"Phê duyệt"| Published["Trạng thái: PUBLISHED (Đã xuất bản)"]
+    UniDecision -->|"Gửi lại"| FacReview
     
-    Published --> End([Kết thúc: Công khai])
-    Rejected --> End2([Kết thúc: Bị từ chối])
+    Published --> End(["Kết thúc: Công khai"])
+    Rejected --> End2(["Kết thúc: Bị từ chối"])
     
     style Draft fill:#fff9c4
     style Submitted fill:#ffcc80

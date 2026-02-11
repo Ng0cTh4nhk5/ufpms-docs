@@ -10,61 +10,61 @@
 
 ```mermaid
 flowchart TD
-    Start([Nhà nghiên cứu nhấn Tạo Ấn phẩm]) --> LoadForm[Tải biểu mẫu tạo mới]
+    Start(["Nhà nghiên cứu nhấn Tạo Ấn phẩm"]) --> LoadForm["Tải biểu mẫu tạo mới"]
     
-    LoadForm --> GetMetadata[Lấy tùy chọn siêu dữ liệu từ cơ sở dữ liệu]
-    GetMetadata --> DisplayForm[Hiển thị biểu mẫu trống]
+    LoadForm --> GetMetadata["Lấy tùy chọn siêu dữ liệu từ cơ sở dữ liệu"]
+    GetMetadata --> DisplayForm["Hiển thị biểu mẫu trống"]
     
-    DisplayForm --> FillBasic{Điền thông tin cơ bản?}
+    DisplayForm --> FillBasic{"Điền thông tin cơ bản?"}
     
-    FillBasic -->|Nhập dữ liệu| EnterTitle[Nhập tiêu đề]
-    EnterTitle --> EnterJournal[Nhập tạp chí/hội nghị]
-    EnterJournal --> EnterYear[Nhập năm]
-    EnterYear --> SelectType[Chọn loại ấn phẩm]
-    SelectType --> EnterDOI[Nhập DOI (tùy chọn)]
+    FillBasic -->|"Nhập dữ liệu"| EnterTitle["Nhập tiêu đề"]
+    EnterTitle --> EnterJournal["Nhập tạp chí/hội nghị"]
+    EnterJournal --> EnterYear["Nhập năm"]
+    EnterYear --> SelectType["Chọn loại ấn phẩm"]
+    SelectType --> EnterDOI["Nhập DOI (tùy chọn)"]
     
-    EnterDOI --> FillAuthors{Thêm tác giả?}
+    EnterDOI --> FillAuthors{"Thêm tác giả?"}
     
-    FillAuthors -->|Có| AddAuthor[Thêm tác giả: tên, thứ tự, đơn vị]
-    AddAuthor --> MoreAuthors{Thêm tác giả khác?}
-    MoreAuthors -->|Có| AddAuthor
-    MoreAuthors -->|Không| FillAbstract
+    FillAuthors -->|"Có"| AddAuthor["Thêm tác giả: tên, thứ tự, đơn vị"]
+    AddAuthor --> MoreAuthors{"Thêm tác giả khác?"}
+    MoreAuthors -->|"Có"| AddAuthor
+    MoreAuthors -->|"Không"| FillAbstract
     
-    FillAuthors -->|Bỏ qua| FillAbstract[Nhập tóm tắt (tùy chọn)]
+    FillAuthors -->|"Bỏ qua"| FillAbstract["Nhập tóm tắt (tùy chọn)"]
     
-    FillAbstract --> FillKeywords[Nhập từ khóa (tùy chọn)]
+    FillAbstract --> FillKeywords["Nhập từ khóa (tùy chọn)"]
     
-    FillKeywords --> UploadPDF{Tải lên PDF?}
+    FillKeywords --> UploadPDF{"Tải lên PDF?"}
     
-    UploadPDF -->|Có| SelectFile[Chọn tệp PDF]
-    SelectFile --> ValidateFile{Tệp hợp lệ?}
+    UploadPDF -->|"Có"| SelectFile["Chọn tệp PDF"]
+    SelectFile --> ValidateFile{"Tệp hợp lệ?"}
     
-    ValidateFile -->|Không: >10MB hoặc không phải PDF| ShowError1[Hiển thị thông báo lỗi]
+    ValidateFile -->|"Không: >10MB hoặc không phải PDF"| ShowError1["Hiển thị thông báo lỗi"]
     ShowError1 --> SelectFile
     
-    ValidateFile -->|Có| UploadFile[Tải lên máy chủ]
-    UploadFile --> SavePath[Lưu đường dẫn tệp]
+    ValidateFile -->|"Có"| UploadFile["Tải lên máy chủ"]
+    UploadFile --> SavePath["Lưu đường dẫn tệp"]
     SavePath --> Decision
     
-    UploadPDF -->|Không| Decision{Hành động?}
+    UploadPDF -->|"Không"| Decision{"Hành động?"}
     
-    Decision -->|Lưu nháp| ValidateDraft{Các trường bắt buộc đã điền?}
+    Decision -->|"Lưu nháp"| ValidateDraft{"Các trường bắt buộc đã điền?"}
     
-    ValidateDraft -->|Không: Thiếu tiêu đề| ShowError2[Hiển thị lỗi xác thực]
+    ValidateDraft -->|"Không: Thiếu tiêu đề"| ShowError2["Hiển thị lỗi xác thực"]
     ShowError2 --> EnterTitle
     
-    ValidateDraft -->|Có| CheckDuplicate[Kiểm tra trùng lặp DOI nếu được cung cấp]
+    ValidateDraft -->|"Có"| CheckDuplicate["Kiểm tra trùng lặp DOI nếu được cung cấp"]
     
-    CheckDuplicate -->|Tìm thấy trùng lặp| ShowError3[Hiển thị lỗi: DOI đã tồn tại]
+    CheckDuplicate -->|"Tìm thấy trùng lặp"| ShowError3["Hiển thị lỗi: DOI đã tồn tại"]
     ShowError3 --> EnterDOI
     
-    CheckDuplicate -->|Không trùng lặp| SaveDraft[Lưu vào cơ sở dữ liệu - Trạng thái: DRAFT]
-    SaveDraft --> Success1[Hiển thị thông báo thành công]
-    Success1 --> End1([Chuyển hướng đến Ấn phẩm của tôi])
+    CheckDuplicate -->|"Không trùng lặp"| SaveDraft["Lưu vào cơ sở dữ liệu - Trạng thái: DRAFT"]
+    SaveDraft --> Success1["Hiển thị thông báo thành công"]
+    Success1 --> End1(["Chuyển hướng đến Ấn phẩm của tôi"])
     
-    Decision -->|Hủy| Confirm{Xác nhận hủy?}
-    Confirm -->|Có| End2([Quay lại bảng điều khiển])
-    Confirm -->|Không| DisplayForm
+    Decision -->|"Hủy"| Confirm{"Xác nhận hủy?"}
+    Confirm -->|"Có"| End2(["Quay lại bảng điều khiển"])
+    Confirm -->|"Không"| DisplayForm
     
     style Start fill:#e3f2fd
     style End1 fill:#c8e6c9
