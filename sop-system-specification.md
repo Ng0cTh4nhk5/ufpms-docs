@@ -36,8 +36,6 @@ description: SOP cho Liệt kê - Phân tích Đặc tả & Thiết kế Hệ th
 [08] Tài Liệu Cuối Cùng
 ```
 
-**Thời gian ước tính**: 4-6 tuần (cho đồ án quy mô trung bình)
-
 **Đầu vào**: Ý tưởng/yêu cầu nghiệp vụ ban đầu
 
 **Đầu ra**: Bộ tài liệu hoàn chỉnh sẵn sàng cho thiết kế kỹ thuật và phát triển
@@ -100,8 +98,6 @@ PHẠM VI ĐỒ ÁN:
 - [x] `README.md` - Tổng quan folder
 - [x] Tài liệu phân tích bối cảnh (3-4 files)
 - [x] Biểu đồ minh họa quan hệ toàn cảnh ↔ đồ án
-
-**Thời gian**: 2-3 ngày
 
 ---
 
@@ -195,8 +191,6 @@ Module [X]: [Tên Module]
 - [x] README tổng hợp
 - [x] Biểu đồ mối quan hệ giữa các tài liệu
 
-**Thời gian**: 3-4 ngày
-
 ---
 
 ## 🎯 BƯỚC 02: Làm Rõ Hệ Thống (System Clarification)
@@ -268,8 +262,6 @@ docs/02_System_Clarification/
 - [x] 3 nhóm tài liệu (Business, User, Context)
 - [x] Biểu đồ quy trình (Mermaid/PlantUML)
 - [x] User personas
-
-**Thời gian**: 4-5 ngày
 
 ---
 
@@ -379,8 +371,6 @@ AND (VÀ) [kết quả bổ sung]
 - [x] Business rules document
 - [x] Traceability map (User Needs → FRs)
 
-**Thời gian**: 5-7 ngày
-
 ---
 
 ## 🎯 BƯỚC 04: User Stories
@@ -448,8 +438,6 @@ AND [kết quả bổ sung]
 - [x] Tài liệu theo Role (4-6 files)
 - [x] Tài liệu theo Priority (3 files)
 - [x] Traceability matrix
-
-**Thời gian**: 3-4 ngày
 
 ---
 
@@ -550,8 +538,6 @@ docs/05_Use_Cases/
 - [x] 3-7 Use Case Diagrams
 - [x] Traceability: UC ↔ User Story ↔ FR
 
-**Thời gian**: 6-8 ngày
-
 ---
 
 ## 🎯 BƯỚC 06: Biểu Đồ Thiết Kế (Design Diagrams)
@@ -637,8 +623,6 @@ docs/06_Diagrams/
 - [x] 3-5 Data Flow Diagrams
 - [x] 1-3 ERD Diagrams
 
-**Thời gian**: 7-10 ngày
-
 ---
 
 ## 🎯 BƯỚC 07: Review & Approval
@@ -692,8 +676,6 @@ docs/07_Review_Approval/
 - [x] Review checklist (completed)
 - [x] Feedback document
 - [x] Approval log (ai approve khi nào)
-
-**Thời gian**: 3-5 ngày
 
 ---
 
