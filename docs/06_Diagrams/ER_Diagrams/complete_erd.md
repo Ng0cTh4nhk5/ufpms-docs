@@ -119,7 +119,7 @@ erDiagram
 
 ---
 
-## 📋 Các Thực Thể Cốt Lõi (10 bảng)
+## 📋 Các Thực Thể Cốt Lõi (11 bảng)
 
 ### 1. users
 **Mục đích**: Tất cả người dùng hệ thống  

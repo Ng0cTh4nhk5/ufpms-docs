@@ -8,9 +8,9 @@
 
 ## Tổng Quan
 
-**Total Stories**: 28  
-**P0 (Must Have)**: 18  
-**P1 (Should Have)**: 7  
+**Total Stories**: 29  
+**P0 (Must Have)**: 20  
+**P1 (Should Have)**: 6  
 **P2 (Nice to Have)**: 3
 
 ---
@@ -132,7 +132,7 @@ THEN I see my publications list with: (THÌ tôi thấy danh sách bài báo v�
 ---
 
 ### US-RES-006: Thêm Đồng Tác Giả
-**Priority**: 🟡 P1 - Should Have  
+**Priority**: 🔴 P0 - Must Have  
 **Related FR**: FR-PUB-007
 
 **User Story**:
@@ -543,6 +543,36 @@ AND font size is based on frequency (VÀ kích thước chữ dựa trên tần 
 
 ---
 
+### US-RES-024: Xem Dashboard Giờ Làm
+**Priority**: � P0 - Must Have  
+**Related FR**: FR-PUB-016
+
+**User Story**:
+```
+As a researcher (Là một giảng viên),
+I want to view my work hours dashboard showing total hours for the year and per-publication breakdown (Tôi muốn xem dashboard giờ làm hiển thị tổng giờ trong năm và chi tiết từng bài báo),
+So that I can track my accumulated work hours and prepare reports (Để tôi có thể theo dõi giờ làm tích lũy và chuẩn bị báo cáo).
+```
+
+**Acceptance Criteria**:
+```
+GIVEN I have at least 1 PUBLISHED publication with work hours assigned (KHI tôi có ít nhất 1 bài báo ĐÃ CÔNG BỐ được ghi nhận giờ làm)
+WHEN I access "Work Hour Dashboard" (VÀ tôi truy cập "Dashboard Giờ Làm")
+THEN I see: (THÌ tôi thấy:)
+  - Summary: "Năm 2026: [X] giờ" (default to current year) (Tóm tắt: Tổng giờ năm hiện tại)
+  - Year filter dropdown (2020-2026) (Bộ lọc năm)
+  - Table with columns: (Bảng với các cột:)
+    * Publication Title (Tiêu đề bài báo)
+    * Journal Type (Q1/Q2/Q3/Q4/Conference) (Loại tạp chí)
+    * Work Hours (Số giờ)
+    * Approval Date (Ngày phê duyệt)
+  - "Export to Excel" button (Nút xuất Excel)
+AND the list is sorted by approval date (newest first) (VÀ danh sách sắp xếp theo ngày duyệt, mới nhất trước)
+AND I can filter by year to see previous years (VÀ tôi có thể lọc theo năm để xem các năm trước)
+```
+
+---
+
 ## Traceability Matrix
 
 | Story ID | Title | Priority | FR ID | Module |
@@ -552,7 +582,7 @@ AND font size is based on frequency (VÀ kích thước chữ dựa trên tần 
 | US-RES-003 | Sửa Bài Báo Nháp | P0 | FR-PUB-004 | 1 |
 | US-RES-004 | Xóa Bài Báo Nháp | P0 | FR-PUB-005 | 1 |
 | US-RES-005 | Xem Danh Sách Bài Báo | P0 | FR-PUB-006 | 1 |
-| US-RES-006 | Thêm Đồng Tác Giả | P1 | FR-PUB-007 | 1 |
+| US-RES-006 | Thêm Đồng Tác Giả | P0 | FR-PUB-007 | 1 |
 | US-RES-007 | Gắn Tags/Keywords | P1 | FR-PUB-008 | 1 |
 | US-RES-008 | Xem Chi Tiết Bài Báo | P0 | FR-PUB-010 | 1 |
 | US-RES-009 | Download File PDF | P0 | FR-PUB-011 | 1 |
@@ -570,6 +600,7 @@ AND font size is based on frequency (VÀ kích thước chữ dựa trên tần 
 | US-RES-021 | Import từ ORCID | P2 | FR-PUB-015 | 1 |
 | US-RES-022 | Xem Biểu Đồ Năng Suất | P2 | FR-PRO-004 | 4 |
 | US-RES-023 | Xem Word Cloud Lĩnh Vực | P2 | FR-PRO-005 | 4 |
+| US-RES-024 | Xem Dashboard Giờ Làm | P0 | FR-PUB-016 | 1 |
 
 ---
 

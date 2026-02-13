@@ -88,12 +88,12 @@ Tôi muốn [tính năng],
 
 | Role | Tổng số Stories | P0 | P1 | P2 |
 |------|--------------|----|----|-----|
-| **Giảng viên (Researcher)** | 28 | 18 | 7 | 3 |
+| **Giảng viên (Researcher)** | 29 | 20 | 5 | 3 |
 | **Cán bộ Khoa (Faculty Reviewer)** | 9 | 6 | 2 | 1 |
 | **Cán bộ Trường (University Reviewer)** | 10 | 6 | 3 | 1 |
 | **Quản trị viên (SuperAdmin)** | 10 | 8 | 2 | 0 |
 | **Khách (Public Visitor)** | 8 | 2 | 4 | 2 |
-| **TỔNG** | **65** | **40** | **18** | **7** |
+| **TỔNG** | **66** | **42** | **16** | **7** |
 
 ---
 

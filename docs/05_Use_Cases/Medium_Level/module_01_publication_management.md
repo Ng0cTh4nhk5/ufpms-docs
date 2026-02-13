@@ -308,6 +308,46 @@ Xác thực định dạng DOI và ISSN trong thời gian thực.
 
 ---
 
+## UC-M1-010: Xem Dashboard Giờ Làm (View Work Hours Dashboard)
+
+**ID**: UC-M1-010  
+**Độ Ưu Tiên**: 🟡 P1  
+**Tác Nhân**: Researcher  
+**User Stories Liên Quan**: US-RES-024  
+**Yêu Cầu Chức Năng Liên Quan**: FR-PUB-016
+
+### Mục Tiêu
+Researcher xem dashboard giờ làm với tổng số giờ trong năm và chi tiết từng bài báo.
+
+### Điều Kiện Tiên Quyết
+- Researcher đã đăng nhập
+- Có ít nhất 1 bài báo PUBLISHED với giờ làm được ghi nhận
+
+### Luồng Chính
+1. Researcher điều hướng đến "Dashboard Giờ Làm"
+2. Hệ thống truy vấn các bài báo:
+   - Trạng thái = PUBLISHED
+   - created_by = researcher hiện tại
+   - Có work_hour_conversions
+3. Hệ thống hiển thị:
+   - Tóm tắt: "Năm 2026: [X] giờ" (mặc định: năm hiện tại)
+   - Bộ lọc năm (dropdown: 2020-2026)
+   - Bảng với cột: Tiêu đề, Loại Tạp chí, Số Giờ, Ngày Phê Duyệt
+   - Nút "Xuất Excel"
+4. Researcher có thể lọc theo năm
+5. Researcher có thể xuất báo cáo Excel
+
+### Điều Kiện Hậu Quyết
+**Thành Công**: Dashboard hiển thị đầy đủ thông tin giờ làm
+
+### Quy Tắc Nghiệp Vụ
+- Chỉ tính bài báo PUBLISHED
+- Sắp xếp theo ngày phê duyệt (mới nhất trước)
+- Tổng giờ được cache để tối ưu hiệu suất
+- Excel export bao gồm: Tiêu đề, Năm, Loại, Số Giờ, Ngày Duyệt
+
+---
+
 **Tài liệu liên quan**:
 - [Use Case Cấp Cao UC-HL-001](../High_Level/uc_hl_01_manage_publications.md)
 - [User Stories - Researcher](../../04_User_Stories/By_Role/researcher_stories.md)

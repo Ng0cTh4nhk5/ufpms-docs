@@ -14,10 +14,11 @@
 - Dữ liệu được cập nhật liên tục, thời gian thực
 - Báo cáo tự động trong vài phút
 
-✅ **Quy trình phê duyệt 2 cấp chính thức**
-- Khoa xét duyệt → Trường phê duyệt
+✅ **Quy trình phê duyệt 2 cấp chính thức** (sử dụng **tài khoản phê duyệt theo đơn vị**)
+- **Trưởng đơn vị đăng nhập vào tài khoản Khoa** → Xét duyệt cấp Khoa
+- **Cán bộ Phòng QLKH đăng nhập vào tài khoản Trường** → Phê duyệt cấp Trường + **Tính giờ làm**
 - State machine với 9 trạng thái rõ ràng
-- Audit trail đầy đủ
+- Audit trail đầy đủ (ghi lại tài khoản, IP, thời gian)
 
 ✅ **Dual-Mode: Private + Public**
 - **Private Mode**: Workflow nội bộ (nộp, xét duyệt)
@@ -62,33 +63,44 @@
 
 ### 2.2. Giai Đoạn 2: Xét Duyệt Cấp Khoa
 
-**Người thực hiện**: Cán bộ Khoa (Faculty Reviewer)
+**Người thực hiện**: Trưởng đơn vị/Người được ủy quyền (sử dụng **tài khoản phê duyệt của Khoa**)
 
 **Công cụ**: Dashboard "Chờ xét duyệt cấp Khoa"
+
+**Cơ chế mới**: Mỗi Khoa/Viện có **một tài khoản phê duyệt chung**
+- Trưởng Khoa/Phó Khoa đăng nhập vào tài khoản này để duyệt bài
+- Khi thay đổi nhân sự: Người cũ chuyển giao → Người mới đổi mật khẩu
+- Hệ thống ghi lại tài khoản nào truy cập, IP, thời gian
 
 **Quy trình**:
 
 ```
 1. Nhận email thông báo có công trình mới
    ↓
-2. Đăng nhập → Vào dashboard "Chờ xét duyệt"
+2. **Đăng nhập vào tài khoản phê duyệt của Khoa**
+   - Username: dept_cs_approval (ví dụ cho Khoa CNTT)
+   - Hệ thống ghi lại: ai đăng nhập, IP, thời gian
    ↓
-3. Xem danh sách công trình của Khoa mình
+3. Vào dashboard "Chờ xét duyệt"
+   ↓
+4. Xem danh sách công trình của Khoa mình
    - Trạng thái: SUBMITTED hoặc FACULTY_REVIEWING
    ↓
-4. Mở chi tiết công trình:
+5. Mở chi tiết công trình:
    - Xem metadata
    - Tải PDF về đọc
    - Kiểm tra DOI, ISSN
    ↓
-5. Quyết định:
+6. Quyết định:
    ├─ APPROVE → Trạng thái: FACULTY_APPROVED
    ├─ REVISION → Trạng thái: REVISION_REQUIRED (yêu cầu sửa)
    └─ REJECT → Trạng thái: FACULTY_REJECTED
    ↓
-6. Nhập nhận xét (bắt buộc nếu Revision/Reject)
+7. Nhập nhận xét (bắt buộc nếu Revision/Reject)
    ↓
-7. Hệ thống gửi email thông báo cho giảng viên
+8. Hệ thống:
+   - Lưu audit log: Tài khoản Khoa XX, thời gian, quyết định
+   - Gửi email thông báo cho giảng viên
 ```
 
 **Thời gian ước tính**: 10-15 phút/công trình
@@ -98,6 +110,7 @@
 - ✅ Lọc, sắp xếp theo thời gian nộp, loại tạp chí
 - ✅ Duyệt hàng loạt nếu cần
 - ✅ Lịch sử xét duyệt được lưu tự động
+- ✅ **Chuyển giao tài khoản dễ dàng**: Chỉ cần đổi mật khẩu khi thay nhân sự
 
 ---
 
@@ -123,11 +136,15 @@
 
 ---
 
-### 2.4. Giai Đoạn 4: Phê Duyệt Cấp Trường
+### 2.4. Giai Đoạn 4: Phê Duyệt Cấp Trường + Tính Giờ Làm
 
-**Người thực hiện**: Cán bộ Trường (University Reviewer, Phòng QLKH)
+**Người thực hiện**: Cán bộ Phòng QLKH (sử dụng **tài khoản phê duyệt cấp Trường**)
 
 **Công cụ**: Dashboard "Chờ phê duyệt cấp Trường"
+
+**Cơ chế mới**: Trường có **một tài khoản phê duyệt duy nhất**
+- Cán bộ Phòng QLKH (hoặc người được ủy quyền) đăng nhập để duyệt
+- Khi thay đổi nhân sự: Chuyển giao tài khoản, đổi mật khẩu
 
 **Quy trình**:
 
@@ -135,23 +152,42 @@
 1. Tự động nhận các công trình đã được Khoa duyệt
    - Trạng thái: FACULTY_APPROVED
    ↓
-2. Đăng nhập → Dashboard "Chờ phê duyệt Trường"
+2. **Đăng nhập vào tài khoản phê duyệt cấp Trường**
+   - Username: university_approval
+   - Hệ thống ghi lại: ai đăng nhập, IP, thời gian
    ↓
-3. Xem chi tiết công trình:
+3. Dashboard "Chờ phê duyệt Trường"
+   ↓
+4. Xem chi tiết công trình:
    - Metadata
    - Nhận xét của Cán bộ Khoa
    - File PDF
    ↓
-4. Quyết định cuối cùng:
+5. Quyết định cuối cùng:
    ├─ APPROVE → Trạng thái: UNIVERSITY_APPROVED = PUBLISHED
    └─ REJECT → Trạng thái: UNIVERSITY_REJECTED
    ↓
-5. Nhập nhận xét (bắt buộc nếu Reject)
+6. Nhập nhận xét (bắt buộc nếu Reject)
    ↓
-6. Hệ thống gửi email thông báo cho giảng viên
+7. **Nếu APPROVE → Người duyệt nhập giờ làm**:
+   - Nhập số giờ làm/giờ dạy cho bài báo này (thủ công)
+   - Hệ thống lưu vào bảng work_hour_conversions
+   - Cập nhật tổng giờ làm trong năm của giảng viên
+   - Thông báo cho giảng viên qua email
+   ↓
+8. Công bố công khai:
+   - Xuất hiện trong module Tìm kiếm
+   - Xuất hiện trong Profile giảng viên
+   - Được tính trong báo cáo thống kê
 ```
 
 **Thời gian ước tính**: 5-10 phút/công trình (đã được Khoa lọc sơ bộ)
+
+**Lợi ích mới**:
+- ✅ **Nhập giờ làm ngay khi phê duyệt** - Tập trung, không quên
+- ✅ Giảng viên thấy ngay giờ làm đã được ghi nhận  
+- ✅ Dashboard theo dõi tổng giờ làm trong năm
+- ✅ Linh hoạt theo chính sách của nhà trường
 
 ---
 
@@ -328,6 +364,12 @@ sequenceDiagram
 - Biết rõ trạng thái xét duyệt
 - Nhận phản hồi kịp thời
 
+✅ **Xem giờ làm đã chuyển đổi qua Dashboard**
+- Dashboard hiển thị tổng giờ làm trong năm hiện tại
+- Chi tiết giờ làm từng bài báo đã được duyệt
+- Theo dõi tiến độ KPI
+- Xuất báo cáo giờ làm cá nhân
+
 ---
 
 ### 6.2. Cán Bộ Khoa
@@ -355,6 +397,10 @@ sequenceDiagram
 ✅ **Kiểm soát chất lượng**
 - Công trình đã được Khoa xét duyệt sơ bộ
 - Thống kê chính xác, không trùng lặp
+
+✅ **Tính giờ làm tự động**
+- Không cần nhập thủ công
+- Chính xác theo quy định
 
 ✅ **Dashboard quản trị**
 - Theo dõi toàn trường

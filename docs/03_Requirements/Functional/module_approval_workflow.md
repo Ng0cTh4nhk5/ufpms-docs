@@ -217,25 +217,32 @@ THEN hiển thị:
 
 ---
 
-### FR-APR-012: Phê Duyệt Cuối (Publish)
+### FR-APR-012: Phê Duyệt Cuối + Nhập Giờ Làm (Publish)
 **Độ ưu tiên**: 🔴 P0 - Phải Có
 
-**Mô tả**: CB Trường phê duyệt và công bố
+**Mô tả**: CB Trường phê duyệt, nhập giờ làm và công bố
 
 **Tiêu chí chấp nhận**:
 ```
 GIVEN công trình UNIVERSITY_REVIEWING
 WHEN nhấn "Duyệt & Xuất bản"
-THEN
+THEN hiển thị form:
+  - Nhập số giờ làm/giờ dạy (bắt buộc, kiểu số, > 0)
+  - Trường ghi chú (tùy chọn)
+AND khi xác nhận:
   - Trạng thái: → PUBLISHED
-  - Gửi email cho GV: "Đã công bố"
+  - Lưu giờ làm vào bảng work_hour_conversions
+  - Cập nhật tổng giờ làm năm của giảng viên
+  - Gửi email cho GV: "Đã công bố - Ghi nhận [X] giờ"
   - **Công trình xuất hiện công khai** (Phân hệ 3, 4)
   - Lưu nhật ký kiểm toán
 ```
 
 **Quy tắc nghiệp vụ**:
 - PUBLISHED = cuối cùng, không thể hoàn tác
+- Giờ làm phải > 0 và <= 200 (validate hợp lý)
 - Tự động hiển thị trên hồ sơ và tìm kiếm
+- Dashboard giảng viên cập nhật ngay lập tức
 
 ---
 

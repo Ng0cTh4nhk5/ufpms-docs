@@ -63,6 +63,7 @@ Tài liệu này định nghĩa rõ ràng **phạm vi IN/OUT** của module qu�
 - ✅ Xóa bài báo (Delete - soft delete)
 - ✅ Upload/Download file PDF
 - ✅ Liên kết đồng tác giả (trong cùng trường)
+- ✅ **Chuyển đổi giờ làm/giờ dạy** (tự động khi bài báo được phê duyệt PUBLISHED)
 
 ---
 
@@ -127,10 +128,10 @@ Tài liệu này định nghĩa rõ ràng **phạm vi IN/OUT** của module qu�
 
 | Vai trò | Quyền hạn |
 |---------|-----------|
-| **SuperAdmin** | - Quản trị hệ thống<br>- Cấu hình, quản lý người dùng<br>- Xem toàn bộ báo cáo |
-| **Researcher** (Giảng viên) | - Tạo/sửa/nộp công trình<br>- Xem phản hồi xét duyệt<br>- Chỉnh sửa theo yêu cầu<br>- Xem profile của mình |
-| **Faculty Reviewer** (CB Khoa) | - Xét duyệt công trình cấp Khoa<br>- Phê duyệt/Yêu cầu bổ sung/Từ chối<br>- Nhập nhận xét |
-| **University Reviewer** (CB Trường) | - Phê duyệt cuối cấp Trường<br>- Approve/Reject<br>- Xem ý kiến cấp Khoa |
+| **SuperAdmin** | - Quản trị hệ thống<br>- Cấu hình, quản lý người dùng<br>- **Quản lý tài khoản phê duyệt** (tạo, reset mật khẩu)<br>- Xem toàn bộ báo cáo |
+| **Researcher** (Giảng viên) | - Tạo/sửa/nộp công trình<br>- Xem phản hồi xét duyệt<br>- Chỉnh sửa theo yêu cầu<br>- **Xem giờ làm đã chuyển đổi**<br>- Xem profile của mình |
+| **Tài khoản Phê duyệt Khoa** | - **Đăng nhập vào tài khoản chung của Khoa**<br>- Xét duyệt công trình cấp Khoa<br>- Phê duyệt/Yêu cầu bổ sung/Từ chối<br>- Nhập nhận xét<br>- **Chuyển giao tài khoản khi thay đổi nhân sự** |
+| **Tài khoản Phê duyệt Trường** | - **Đăng nhập vào tài khoản chung cấp Trường**<br>- Phê duyệt cuối cấp Trường<br>- **Tự động tính giờ làm khi phê duyệt**<br>- Approve/Reject<br>- Xem ý kiến cấp Khoa |
 | **Viewer** (Công chúng) | - Tìm kiếm, xem công trình ĐÃ CÔNG BỐ<br>- Xem profile giảng viên<br>- Tải file PDF (nếu công khai) |
 
 ✅ **Xác thực:**
@@ -145,9 +146,9 @@ Tài liệu này định nghĩa rõ ràng **phạm vi IN/OUT** của module qu�
 - DRAFT → SUBMITTED → FACULTY_REVIEWING → FACULTY_APPROVED → UNIVERSITY_REVIEWING → PUBLISHED
 - Hỗ trợ REVISION_REQUIRED (yêu cầu bổ sung), REJECTED (từ chối)
 
-✅ **Workflow 2 cấp:**
-- **Cấp 1 - Khoa**: Xét duyệt sơ bộ, yêu cầu chỉnh sửa, từ chối
-- **Cấp 2 - Trường**: Phê duyệt chính thức để công bố
+✅ **Workflow 2 cấp** (sử dụng **tài khoản phê duyệt theo đơn vị**):
+- **Cấp 1 - Khoa**: Trưởng đơn vị đăng nhập vào **tài khoản phê duyệt của Khoa** để xét duyệt, yêu cầu chỉnh sửa, hoặc từ chối
+- **Cấp 2 - Trường**: Cán bộ Phòng QLKH đăng nhập vào **tài khoản phê duyệt cấp Trường** để phê duyệt chính thức và **nhập thủ công số giờ làm/giờ dạy**
 
 ✅ **Feedback và Revision:**
 - CB Khoa/Trường nhập nhận xét, phản hồi
@@ -156,13 +157,14 @@ Tài liệu này định nghĩa rõ ràng **phạm vi IN/OUT** của module qu�
 
 ✅ **Lịch sử xét duyệt (Audit Trail):**
 - Lưu người duyệt, thời gian, nhận xét
+- **Ghi lại tài khoản nào được sử dụng, IP, thời gian đăng nhập**
 - Theo dõi mọi thay đổi trạng thái
 - Không thể xóa/sửa lịch sử
 
 ✅ **Dashboard theo vai trò:**
-- **Giảng viên**: Danh sách công trình của mình + trạng thái hiện tại
-- **CB Khoa**: Danh sách công trình chờ duyệt cấp Khoa (của Khoa mình)
-- **CB Trường**: Danh sách công trình đã Khoa duyệt, chờ Trường phê duyệt
+- **Giảng viên**: Danh sách công trình của mình + trạng thái hiện tại + **giờ làm đã tính**
+- **Tài khoản Khoa**: Danh sách công trình chờ duyệt cấp Khoa (của Khoa mình)
+- **Tài khoản Trường**: Danh sách công trình đã Khoa duyệt, chờ Trường phê duyệt
 
 ✅ **Notification System:**
 - Email/In-app notification khi có phản hồi

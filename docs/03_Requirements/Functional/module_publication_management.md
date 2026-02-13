@@ -335,6 +335,41 @@ THEN
 
 ---
 
+### FR-PUB-016: Dashboard Giờ Làm cho Giảng Viên
+**Độ ưu tiên**: 🟡 P1 - Nên Có
+
+**Mô tả**:  
+Giảng viên có thể xem tổng số giờ làm trong năm và chi tiết giờ làm từ từng bài báo đã được phê duyệt.
+
+**User Story**: US-RES-016
+
+**Tiêu chí chấp nhận**:
+```
+GIVEN giảng viên đã có bài báo được phê duyệt (PUBLISHED)
+WHEN vào trang "Dashboard Giờ Làm"
+THEN hiển thị:
+  - Tổng giờ làm trong năm hiện tại (ví dụ: "Năm 2026: 120 giờ")
+  - Danh sách các bài báo đã được duyệt
+  - Mỗi bài báo hiển thị:
+    * Tiêu đề bài báo
+    * Loại tạp chí (Q1/Q2/Q3/Q4/Conference)
+    * Số giờ được ghi nhận
+    * Ngày phê duyệt
+  - Nút "Xuất báo cáo Excel"
+```
+
+**Quy tắc nghiệp vụ**:
+- Chỉ tính các bài báo có trạng thái PUBLISHED
+- Số giờ được nhập thủ công bởi University Reviewer khi phê duyệt
+- Dashboard cập nhật ngay khi bài báo được phê duyệt
+
+**Ghi chú kỹ thuật**:
+- Lọc theo năm (mặc định: năm hiện tại)
+- Sắp xếp theo ngày phê duyệt (mới nhất trước)
+- Cache tổng giờ để tối ưu performance
+
+---
+
 ## 3. Mô hình Dữ liệu (Thực thể Bài báo)
 
 ```typescript

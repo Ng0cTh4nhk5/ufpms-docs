@@ -8,7 +8,7 @@
 
 ## Tổng Quan
 
-**Tổng số User Story P1**: 18  
+**Tổng số User Story P1**: 16  
 
 ---
 
@@ -16,7 +16,7 @@
 
 | Vai trò | Số lượng P1 Stories |
 |------|-----------|
-| Giảng viên (Researcher) | 7 |
+| Giảng viên (Researcher) | 5 |
 | Cán bộ Duyệt Khoa (Faculty Reviewer) | 2 |
 | Cán bộ Duyệt Trường (University Reviewer) | 3 |
 | Quản trị viên (SuperAdmin) | 2 |

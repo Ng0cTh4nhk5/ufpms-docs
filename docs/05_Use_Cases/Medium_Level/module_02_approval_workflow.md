@@ -146,23 +146,29 @@
 
 ## Hành Động Của University Reviewer (Người Duyệt Cấp Trường)
 
-### UC-M2-008: Trường Xét Duyệt - Phê Duyệt & Xuất Bản (Approve & Publish)
+### UC-M2-008: Trường Xét Duyệt - Phê Duyệt & Xuất Bản + Nhập Giờ Làm
 **ID**: UC-M2-008 | **Độ Ưu Tiên**: 🔴 P0 | **Tác Nhân**: University Reviewer  
 **Liên Quan**: US-UNR-003, FR-APR-012
 
-**Mục Tiêu**: Phê duyệt cuối cùng và công khai ra công chúng  
+**Mục Tiêu**: Phê duyệt cuối cùng, nhập giờ làm và công khai ra công chúng  
 **Điều Kiện Tiên Quyết**: Trạng thái = UNIVERSITY_REVIEWING  
 **Luồng Chính**:
 1. Reviewer xem bài báo và các bình luận của Khoa
 2. Reviewer nhấn "Phê Duyệt & Xuất Bản"
-3. Hệ thống đổi trạng thái: UNIVERSITY_REVIEWING → PUBLISHED
-4. Hệ thống làm cho bài báo hiển thị trong tìm kiếm công khai
-5. Hệ thống hiển thị trên hồ sơ công khai của Researcher
-6. Hệ thống gửi email cho Researcher: "Đã Xuất Bản!"
-7. Hệ thống ghi nhật ký kiểm toán
+3. Hệ thống hiển thị form:
+   - Nhập số giờ làm/giờ dạy (bắt buộc, số, > 0, <= 200)
+   - Ghi chú (tùy chọn)
+4. Reviewer nhập số giờ và nhấn "Xác Nhận"
+5. Hệ thống đổi trạng thái: UNIVERSITY_REVIEWING → PUBLISHED
+6. Hệ thống lưu giờ làm vào bảng work_hour_conversions
+7. Hệ thống cập nhật tổng giờ làm năm của Researcher
+8. Hệ thống làm cho bài báo hiển thị trong tìm kiếm công khai
+9. Hệ thống hiển thị trên hồ sơ công khai của Researcher
+10. Hệ thống gửi email cho Researcher: "Đã Xuất Bản - Ghi nhận [X] giờ!"
+11. Hệ thống ghi nhật ký kiểm toán
 
-**Điều Kiện Hậu Quyết**: Trạng thái = PUBLISHED, hiển thị công khai  
-**Quy Tắc Nghiệp Vụ**: BR-APR-002, BR-SEA-001
+**Điều Kiện Hậu Quyết**: Trạng thái = PUBLISHED, hiển thị công khai, giờ làm đã được lưu  
+**Quy Tắc Nghiệp Vụ**: BR-APR-002, BR-SEA-001, BR-WRK-001 (work hour validation)
 
 ---
 

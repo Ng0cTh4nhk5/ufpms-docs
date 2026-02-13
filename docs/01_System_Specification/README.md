@@ -22,6 +22,15 @@ Folder `01_System_Specification` chứa **đặc tả chi tiết** cho module qu
 
 ## 📑 Danh Sách Tài Liệu
 
+### 🆕 0. [glossary.md](./glossary.md)
+**Bảng thuật ngữ** (MỚI thêm - Khắc phục terminology inconsistency)
+- Phân biệt: **Tài khoản** (Account) vs **Vai trò** (Role) vs **Quyền hạn** (Permission)
+- Giải thích cơ chế **Account-Based Approval** (Phê duyệt theo tài khoản chung)
+- Định nghĩa các thuật ngữ nghiệp vụ: Publication, Workflow, State, Reporting
+- **Rất khuyến khích đọc trước** để tránh nhầm lẫn khi đọc tài liệu khác
+
+---
+
 ### 1. [system_overview.md](./system_overview.md)
 **Tổng quan hệ thống**
 - Tên hệ thống: University Faculty Publication Management System (UFPMS)

@@ -91,6 +91,7 @@ Xây dựng **module phần mềm quản lý bài báo khoa học** giúp:
 - ✅ Phân loại theo: Q1/Q2/Q3/Q4 (Scopus), Impact Factor
 - ✅ Gắn tag từ khóa, lĩnh vực nghiên cứu
 - ✅ Liên kết đồng tác giả (giảng viên khác trong trường)
+- ✅ **Chuyển đổi giờ làm/giờ dạy** (sau khi bài báo được phê duyệt)
 
 **Module 2: Tìm kiếm & Tra cứu**
 - ✅ Tìm theo tiêu đề, tác giả, từ khóa
@@ -110,30 +111,44 @@ Xây dựng **module phần mềm quản lý bài báo khoa học** giúp:
 - ✅ Xu hướng xuất bản theo năm
 - ✅ Top giảng viên có năng suất cao nhất
 
-**Module 5: Quản lý Người dùng**
-- ✅ Phân quyền: SuperAdmin, Giảng viên, Cán bộ Khoa, Cán bộ Trường, Viewer
+**Module 5: Quản lý Người dùng & Tài khoản**
+- ✅ Phân quyền: SuperAdmin, Giảng viên, Viewer
+- ✅ **Quản lý tài khoản phê duyệt theo đơn vị** (Khoa/Phòng ban/Trường)
 - ✅ Xác thực qua LDAP/AD (Single Sign-On)
 - ✅ Quản lý đơn vị (Khoa/Viện/Bộ môn)
+- ✅ Chuyển giao tài khoản khi thay đổi nhân sự
 
 **Module 6: Quy Trình Phê Duyệt (Approval Workflow)** 🆕
 - ✅ **Nộp công trình xét duyệt**: Giảng viên chuyển từ Draft → Submitted
-- ✅ **Xét duyệt cấp Khoa**:
+- ✅ **Xét duyệt cấp Khoa** (sử dụng **tài khoản phê duyệt của Khoa**):
+  - Trưởng đơn vị đăng nhập vào tài khoản phê duyệt của Khoa
   - Xem danh sách công trình chờ duyệt của Khoa mình
   - Phê duyệt (Approve) / Yêu cầu bổ sung (Revision) / Từ chối (Reject)
   - Nhập nhận xét, phản hồi
-- ✅ **Phê duyệt cấp Trường**:
+- ✅ **Phê duyệt cấp Trường** (sử dụng **tài khoản phê duyệt của Trường**):
+  - Cán bộ Phòng QLKH đăng nhập vào tài khoản phê duyệt cấp Trường
   - Xem công trình đã được Khoa duyệt
   - Phê duyệt cuối cùng hoặc từ chối
-- ✅ **Lịch sử xét duyệt**:
+  - **Nhập thủ công số giờ làm/giờ dạy cho bài báo này**
+- ✅ **Lịch sử xét duyệt & Audit Trail**:
   - Lưu người duyệt, thời gian, nhận xét
-  - Audit trail đầy đủ
+  - **Ghi lại tài khoản nào được sử dụng, IP, thời gian đăng nhập**
+  - Audit trail đầy đủ đảm bảo trách nhiệm giải trình
 - ✅ **Thông báo (Notification)**:
   - Email/In-app khi có phản hồi
   - Thông báo chuyển trạng thái
 - ✅ **Dashboard theo vai trò**:
-  - Giảng viên: Xem trạng thái công trình của mình
-  - CB Khoa: Danh sách chờ duyệt cấp Khoa
-  - CB Trường: Danh sách chờ duyệt cấp Trường
+  - Giảng viên: 
+    * Xem trạng thái công trình của mình 
+    * **Tổng giờ làm trong năm hiện tại**
+    * **Chi tiết giờ làm từ từng bài báo** (bài nào được bao nhiêu giờ)
+    * Xuất báo cáo giờ làm cá nhân
+  - Tài khoản Khoa: Danh sách chờ duyệt cấp Khoa
+  - Tài khoản Trường: Danh sách chờ duyệt cấp Trường + **Nhập giờ làm khi duyệt**
+- ✅ **Quản lý tài khoản phê duyệt** (Admin):
+  - Tạo tài khoản phê duyệt cho đơn vị mới
+  - Reset mật khẩu khi thay đổi nhân sự
+  - Xem lịch sử truy cập tài khoản
 
 > 💡 **Lưu ý**: CHỈ công trình đã được **cấp Trường phê duyệt** mới xuất hiện trong Module 2, 3, 4 (tìm kiếm, profile, báo cáo công khai).
 
@@ -143,10 +158,10 @@ Xây dựng **module phần mềm quản lý bài báo khoa học** giúp:
 
 | Vai trò | Quyền hạn | Số lượng ước tính |
 |---------|-----------|-------------------|
-| **SuperAdmin** | Quản trị hệ thống, cấu hình, quản lý người dùng | 2-5 người |
-| **Giảng viên** (Researcher) | Tạo/sửa/nộp công trình; Xem phản hồi; Chỉnh sửa theo yêu cầu | 300-500 người |
-| **Cán bộ Khoa** (Faculty Reviewer) | Xét duyệt công trình cấp Khoa (Approve/Revision/Reject) | 10-20 người |
-| **Cán bộ Trường** (University Reviewer) | Phê duyệt cuối cùng cấp Trường (Approve/Reject) | 2-5 người |
+| **SuperAdmin** | Quản trị hệ thống, cấu hình, quản lý tài khoản phê duyệt | 2-5 người |
+| **Giảng viên** (Researcher) | Tạo/sửa/nộp công trình; Xem phản hồi; Xem giờ làm đã tính | 300-500 người |
+| **Tài khoản Phê duyệt Khoa** | Xét duyệt công trình cấp Khoa (Approve/Revision/Reject) | 10-15 tài khoản (dùng chung bởi Trưởng/Phó khoa) |
+| **Tài khoản Phê duyệt Trường** | Phê duyệt cuối cùng + Tính giờ làm (Approve/Reject) | 1 tài khoản (dùng chung bởi CB Phòng QLKH) |
 | **Viewer** (Sinh viên, công chúng) | Xem công trình đã công bố, tìm kiếm | Không giới hạn |
 
 ---
@@ -246,6 +261,7 @@ DRAFT → SUBMITTED → FACULTY_REVIEWING → [REVISION_REQUIRED hoặc FACULTY_
 >   - Module 3: Profile giảng viên (phần công khai)
 >   - Module 4: Báo cáo thống kê công khai
 > - Các trạng thái khác CHỈ hiển thị trong **Dashboard nội bộ** (Module 6)
+> - **Khi chuyển sang PUBLISHED, hệ thống tự động tính giờ làm/giờ dạy** dựa trên loại bài báo
 
 ---
 
@@ -255,9 +271,9 @@ DRAFT → SUBMITTED → FACULTY_REVIEWING → [REVISION_REQUIRED hoặc FACULTY_
 
 | Vai trò | Mô tả | Mong đợi chính |
 |---------|-------|----------------|
-| **Giảng viên** | Người tạo ra bài báo | Dễ nhập, nộp duyệt đơn giản, nhận phản hồi kịp thời, có profile đẹp |
-| **Cán bộ Khoa** | Xét duyệt công trình cấp Khoa | Dashboard rõ ràng, dễ duyệt hàng loạt, nhập nhận xét nhanh |
-| **Cán bộ Trường** (Phòng QLKH) | Phê duyệt cuối toàn trường | Xem ý kiến Khoa, lọc theo đơn vị, quyết định nhanh |
+| **Giảng viên** | Người tạo ra bài báo | Dễ nhập, nộp duyệt đơn giản, nhận phản hồi kịp thời, có profile đẹp, **dashboard xem chi tiết giờ làm từng bài** |
+| **Trưởng Đơn vị (sử dụng TK phê duyệt Khoa)** | Xét duyệt công trình cấp Khoa | Dashboard rõ ràng, dễ duyệt hàng loạt, nhập nhận xét nhanh, **chuyển giao tài khoản an toàn** |
+| **Cán bộ Trường (sử dụng TK phê duyệt Trường)** | Phê duyệt cuối toàn trường | Xem ý kiến Khoa, lọc theo đơn vị, quyết định nhanh, **nhập giờ làm khi duyệt** |
 | **Lãnh đạo trường** | Ra quyết định chiến lược | Dashboard tổng quan, thống kê năng suất, insight xu hướng |
 | **Sinh viên/NCS** | Tìm người hướng dẫn | Tìm kiếm dễ dàng, thông tin đầy đủ về công trình đã công bố |
 

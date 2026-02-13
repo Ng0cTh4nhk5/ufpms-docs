@@ -8,15 +8,15 @@
 
 ## Tổng Quan
 
-**Tổng số User Story P0**: 40  
+**Tổng số User Story P0**: 42  
 
 ---
 
 ## Phân Bổ Theo Vai Trò
 
 | Vai trò | Số lượng P0 Stories |
-|------|-----------|
-| Giảng viên (Researcher) | 18 |
+|------|-----------| 
+| Giảng viên (Researcher) | 20 |
 | Cán bộ Duyệt Khoa (Faculty Reviewer) | 6 |
 | Cán bộ Duyệt Trường (University Reviewer) | 6 |
 | Quản trị viên (SuperAdmin) | 8 |
@@ -24,7 +24,7 @@
 
 ---
 
-## Giảng viên (Researcher) (18 Stories)
+## Giảng viên (Researcher) (20 Stories)
 
 ### Quản lý Bài báo (Publication Management)
 - **US-RES-001**: Tạo Bài Báo Mới (FR-PUB-001)
@@ -32,15 +32,17 @@
 - **US-RES-003**: Sửa Bài Báo Nháp (FR-PUB-004)
 - **US-RES-004**: Xóa Bài Báo Nháp (FR-PUB-005)
 - **US-RES-005**: Xem Danh Sách Bài Báo (FR-PUB-006)
+- **US-RES-006**: Thêm Đồng Tác Giả (FR-PUB-007) 🆕
 - **US-RES-008**: Xem Chi Tiết Bài Báo (FR-PUB-010)
 - **US-RES-009**: Download File PDF (FR-PUB-011)
+- **US-RES-024**: Xem Dashboard Giờ Làm (FR-PUB-016) 🆕
 
 ### Quy trình Xét duyệt (Approval Workflow)
 - **US-RES-010**: Nộp Xét Duyệt (FR-APR-001)
 - **US-RES-011**: Xem Trạng Thái Xét Duyệt (FR-APR-002)
 - **US-RES-012**: Chỉnh Sửa Theo Yêu Cầu (FR-APR-003)
 
-**Total**: 10 P0 stories
+**Total**: 12 P0 stories
 
 ---
 
