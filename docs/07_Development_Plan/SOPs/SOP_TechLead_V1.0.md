@@ -152,12 +152,12 @@ Dẫn dắt team về mặt kỹ thuật, đảm bảo kiến trúc hệ thống
 
 - [ ] **Indexing Strategy**
   ```
-Indexes cần thiết:
-  - publications(status) - filter by status thường xuyên
-  - publications(created_by) - query publications của user
-  - publications(year) - filter by year
-  - publication_authors(publication_id) - JOIN frequently
-  - users(username), users(email) - login lookup
+  Indexes cần thiết:
+    - publications(status) - filter by status thường xuyên
+    - publications(created_by) - query publications của user
+    - publications(year) - filter by year
+    - publication_authors(publication_id) - JOIN frequently
+    - users(username), users(email) - login lookup
   ```
 
 ---
