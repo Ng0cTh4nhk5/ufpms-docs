@@ -124,7 +124,8 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   - Packages: lowercase (vn.edu.ufpms.controller)
   
   ### Package Structure
-  
+
+  ```plaintext
   src/main/java/vn/edu/ufpms/
   ├── controller/      # REST endpoints
   ├── service/         # Business logic
@@ -134,6 +135,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   ├── config/          # Configuration classes
   ├── security/        # Security configs
   └── exception/       # Custom exceptions
+  ``
   
   ### Code Review Checklist
   - [ ] No hardcoded values
@@ -152,7 +154,8 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   - Constants: UPPER_SNAKE_CASE
   
   ### Folder Structure
-  
+
+  ```plaintext
   src/
   ├── components/      # Reusable components
   ├── pages/           # Page components
@@ -162,6 +165,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   ├── types/           # TypeScript types
   ├── utils/           # Helper functions
   └── assets/          # Images, fonts
+  ``
   
   ### Code Review Checklist
   - [ ] TypeScript types defined
@@ -247,7 +251,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   
   ## Branch Strategy (GitFlow Lite)
   
-  ```
+  ```plaintext
   main (production)
     ↑
   develop (staging)
@@ -255,7 +259,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   feature/US-RES-001-create-publication
   feature/US-RES-002-upload-pdf
   bugfix/BUG-001-validation-error
-  ```
+  ``
   
   ## Workflow
   
@@ -264,19 +268,19 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
      git checkout develop
      git pull origin develop
      git checkout -b feature/US-RES-001-create-publication
-     ```
+     ``
   
   2. **Make changes & commit**
      ```bash
      git add .
      git commit -m "feat: implement create publication API"
-     ```
+     ``
   
   3. **Push & create PR**
      ```bash
      git push origin feature/US-RES-001-create-publication
      # Create PR on GitHub: feature/* → develop
-     ```
+     ``
   
   4. **Code review → Merge → Delete branch**
   
@@ -293,12 +297,12 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   - `chore`: Chores (chore: update dependencies)
   
   Examples:
-  ```
+  ```plaintext
   feat: implement JWT authentication
   fix: resolve file upload size validation
   docs: add API documentation for publications
   test: add integration tests for publication controller
-  ```
+  ``
   ```
 
 ---
