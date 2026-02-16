@@ -63,20 +63,20 @@ graph LR
 #### Frontend Team (Figma Design)
 **Screens** (6 màn hình):
 1. Login page
-2. Researcher Dashboard (overview + statistics)
+2. Researcher Dashboard (tổng quan + thống kê)
 3. Publication List (với filters)
 4. Create Publication form
 5. Edit Publication form
 6. Publication Detail view
 
 **Components**:
-- Design system basics (colors, typography, spacing)
-- Core components (Button, Input, Table, Card, Modal)
+- Thiết kế hệ thống cơ bản (màu sắc, typography, spacing)
+- Các components cốt lõi (Button, Input, Table, Card, Modal)
 
-#### Backend Team (API Design Review)
-- Review database schema
-- Review API endpoints
-- Prepare development environment
+#### Backend Team (Xem xét Thiết kế API)
+- Xem xét database schema
+- Xem xét API endpoints
+- Chuẩn bị môi trường phát triển
 
 ### 💻 Phase 2: Development
 
@@ -179,10 +179,10 @@ graph LR
 
 #### Frontend (Figma)
 **Screens** (4 màn hình):
-1. Faculty Reviewer Dashboard
-2. Review Detail page (with PDF viewer)
-3. Review action form (Approve/Request Changes/Reject)
-4. Review history page
+1. Trang Dashboard Cán bộ Khoa
+2. Trang Chi tiết Xét duyệt (với trình xem PDF)
+3. Form thao tác xét duyệt (Phê duyệt/Yêu cầu Bổ sung/Từ chối)
+4. Trang lịch sử xét duyệt
 
 ### 💻 Phase 2: Development
 
@@ -261,11 +261,11 @@ graph LR
 
 #### Frontend (Figma)
 **Screens** (5 màn hình):
-1. User Management (CRUD table)
-2. User Detail & Role Assignment
-3. Department Management
-4. Faculty Management
-5. Audit Logs viewer
+1. Quản lý Người dùng (bảng CRUD)
+2. Chi tiết Người dùng & Gán Vai trò
+3. Quản lý Đơn vị
+4. Quản lý Khoa
+5. Trình xem Nhật ký Audit
 
 ### 💻 Phase 2: Development
 
@@ -409,26 +409,26 @@ Mỗi version được coi là hoàn thành khi:
 
 ---
 
-## 📋 Advantages of This Approach
+## 📋 Ưu Điểm của Phương Pháp Này
 
-**1. Risk Mitigation**
+**1. Giảm thiểu Rủi ro**
 - Phát hiện vấn đề sớm trong V1.0
-- Điều chỉnh approach cho các version sau
+- Điều chỉnh cách tiếp cận cho các version sau
 
-**2. Early Feedback**
+**2. Nhận Phản hồi Sớm**
 - Demo V1.0 cho stakeholders sớm
-- Nhận feedback và adjust
+- Nhận phản hồi và điều chỉnh
 
-**3. Team Morale**
-- Có deliverable sau mỗi 2-3 tuần
+**3. Tinh Thần Đội Nhóm**
+- Có sản phẩm sau mỗi 2-3 tuần
 - Team thấy tiến độ rõ ràng
 
-**4. Flexible Scope**
-- Có thể skip/postpone versions nếu cần
+**4. Phạm vi Linh hoạt**
+- Có thể bỏ qua/hoãn lại các versions nếu cần
 - Ví dụ: V5.0 (Admin) có thể làm sau
 
-**5. Better Quality**
-- Focus vào scope nhỏ → quality cao hơn
+**5. Chất lượng Tốt hơn**
+- Tập trung vào phạm vi nhỏ → chất lượng cao hơn
 - Refactor dễ dàng giữa các versions
 
 ---
