@@ -124,7 +124,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   - Packages: lowercase (vn.edu.ufpms.controller)
   
   ### Package Structure
-  ```
+  
   src/main/java/vn/edu/ufpms/
   ├── controller/      # REST endpoints
   ├── service/         # Business logic
@@ -134,7 +134,6 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   ├── config/          # Configuration classes
   ├── security/        # Security configs
   └── exception/       # Custom exceptions
-  ```
   
   ### Code Review Checklist
   - [ ] No hardcoded values
