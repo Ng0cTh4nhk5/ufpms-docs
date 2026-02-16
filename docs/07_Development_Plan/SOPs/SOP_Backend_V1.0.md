@@ -37,7 +37,7 @@ Phát triển backend APIs cho V1.0, đảm bảo APIs hoạt động đúng ch�
 
 ---
 
-## 📐 PHASE 1: DESIGN (Tuần 0-1)
+## 📐 PHASE 1: DESIGN
 
 ### 1. Thiết Lập Môi Trường
 
@@ -214,7 +214,7 @@ Phát triển backend APIs cho V1.0, đảm bảo APIs hoạt động đúng ch�
 
 ---
 
-## 💻 PHASE 2: DEVELOPMENT (Tuần 2-4)
+## 💻 PHASE 2: DEVELOPMENT
 
 ### 4. Module Xác Thực (Authentication)
 
@@ -617,7 +617,7 @@ Hàm: handleValidation(exception)
 
 ---
 
-## ✅ PHASE 3: VERIFICATION (Tuần 5)
+## ✅ PHASE 3: VERIFICATION
 
 ### 11. Integration Testing
 

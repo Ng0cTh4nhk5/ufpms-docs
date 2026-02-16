@@ -46,7 +46,7 @@ Thiết kế giao diện người dùng đẹp, dễ sử dụng, và consistent
 
 ---
 
-## 📐 PHASE 1: DESIGN (Tuần 0-1)
+## 📐 PHASE 1: DESIGN
 
 ### 1. Figma Setup
 
@@ -520,7 +520,7 @@ Thiết kế giao diện người dùng đẹp, dễ sử dụng, và consistent
 
 ---
 
-## 💻 PHASE 2: DEVELOPMENT (Tuần 2-4)
+## 💻 PHASE 2: DEVELOPMENT
 
 ### 8. Design Handoff
 
@@ -607,7 +607,7 @@ Thiết kế giao diện người dùng đẹp, dễ sử dụng, và consistent
 
 ---
 
-## ✅ PHASE 3: VERIFICATION (Tuần 5-6)
+## ✅ PHASE 3: VERIFICATION
 
 ### 10. UI/UX Testing
 

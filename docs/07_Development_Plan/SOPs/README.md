@@ -26,7 +26,7 @@ Bộ SOPs này cung cấp hướng dẫn đầy đủ cho 7 vai trò chính tron
 
 Mỗi SOP được tổ chức theo 3 phases tương ứng với quy trình phát triển:
 
-### 📐 Phase 1: DESIGN (Tuần 0-1)
+### 📐 Phase 1: DESIGN
 - **PM**: Tổ chức kickoff, review designs, sign-off
 - **BA**: Phân tích user stories, viết test scenarios
 - **UI/UX**: Tạo design system, thiết kế 6 screens, prototype
@@ -35,7 +35,7 @@ Mỗi SOP được tổ chức theo 3 phases tương ứng với quy trình phá
 - **QA**: Create test plan, viết test cases (~55 cases)
 - **Tech Lead**: Design architecture, finalize tech stack, setup CI/CD
 
-### 💻 Phase 2: DEVELOPMENT (Tuần 2-4)
+### 💻 Phase 2: DEVELOPMENT
 - **PM**: Daily standups, monitor progress, review implementations
 - **BA**: Answer dev questions, clarify requirements
 - **UI/UX**: Support frontend với design handoff, design QA
@@ -44,7 +44,7 @@ Mỗi SOP được tổ chức theo 3 phases tương ứng với quy trình phá
 - **QA**: API testing (Postman), continuous UI testing, log bugs
 - **Tech Lead**: Code reviews, technical guidance, performance optimization
 
-### ✅ Phase 3: VERIFICATION (Tuần 5-6)
+### ✅ Phase 3: VERIFICATION
 - **PM**: UAT testing, demo preparation, stakeholder demo, release sign-off
 - **BA**: Support UAT, sign-off acceptance criteria
 - **UI/UX**: Final design QA, polish, documentation

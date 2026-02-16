@@ -37,7 +37,7 @@ Lãnh đạo và điều phối toàn bộ phát triển V1.0, đảm bảo proj
 
 ---
 
-## 📐 PHASE 1: DESIGN (Tuần 0-1)
+## 📐 PHASE 1: DESIGN
 
 ### 1. Kickoff Project
 
@@ -55,9 +55,9 @@ Lãnh đạo và điều phối toàn bộ phát triển V1.0, đảm bảo proj
      - Success criteria
   
   2. Review timeline (10 phút)
-     - Week 0-1: Design
-     - Week 2-4: Development
-     - Week 5-6: Verification
+     - Phase 1: Design
+     - Phase 2: Development
+     - Phase 3: Verification
      - Target launch date
   
   3. Roles & Responsibilities (10 phút)
@@ -70,9 +70,9 @@ Lãnh đạo và điều phối toàn bộ phát triển V1.0, đảm bảo proj
   
   4. Communication Plan (10 phút)
      - Daily standups: 9:00 AM, 15 minutes
-     - Design review: End of Week 1
+     - Design review: End of Design phase
      - Code review: Ongoing
-     - Demo: End of Week 6
+     - Demo: End of Verification phase
   
   5. Q&A (15 phút)
   
@@ -145,7 +145,7 @@ Lãnh đạo và điều phối toàn bộ phát triển V1.0, đảm bảo proj
   Output: Architecture doc, tech decisions documented
   ```
 
-- [ ] **Design Review Meeting (End of Week 1)**
+- [ ] **Design Review Meeting (End of Design Phase)**
 
   ```
   Thành viên: Toàn team + Stakeholders (optional)
@@ -168,7 +168,7 @@ Lãnh đạo và điều phối toàn bộ phát triển V1.0, đảm bảo proj
 
 ---
 
-## 💻 PHASE 2: DEVELOPMENT (Tuần 2-4)
+## 💻 PHASE 2: DEVELOPMENT
 
 ### 3. Sprint Management
 
@@ -293,7 +293,7 @@ Lãnh đạo và điều phối toàn bộ phát triển V1.0, đảm bảo proj
 
 ---
 
-## ✅ PHASE 3: VERIFICATION (Tuần 5-6)
+## ✅ PHASE 3: VERIFICATION
 
 ### 7. Test Planning
 

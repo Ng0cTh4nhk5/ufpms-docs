@@ -37,7 +37,7 @@ Phát triển giao diện người dùng (UI) cho V1.0 theo designs từ UI/UX t
 
 ---
 
-## 📐 PHASE 1: DESIGN (Tuần 0-1)
+## 📐 PHASE 1: DESIGN
 
 ### 1. Thiết Lập Môi Trường Phát Triển
 
@@ -142,7 +142,7 @@ Phát triển giao diện người dùng (UI) cho V1.0 theo designs từ UI/UX t
 
 ---
 
-## 💻 PHASE 2: DEVELOPMENT (Tuần 2-4)
+## 💻 PHASE 2: DEVELOPMENT
 
 ### 3. Thiết Lập Foundation
 
@@ -602,7 +602,7 @@ Phát triển giao diện người dùng (UI) cho V1.0 theo designs từ UI/UX t
 
 ---
 
-## ✅ PHASE 3: VERIFICATION (Tuần 5)
+## ✅ PHASE 3: VERIFICATION
 
 ### 10. Component Testing
 

@@ -32,7 +32,7 @@
 
 ---
 
-## 📐 PHASE 1: DESIGN (Tuần 0-1)
+## 📐 PHASE 1: DESIGN
 
 ### 1. Phân Tích Chi Tiết User Stories
 
@@ -422,7 +422,7 @@
 
 ---
 
-## 💻 PHASE 2: DEVELOPMENT (Tuần 2-4)
+## 💻 PHASE 2: DEVELOPMENT
 
 ### 6. Hỗ Trợ Development Team
 
@@ -461,7 +461,7 @@
 
 ---
 
-## ✅ PHASE 3: VERIFICATION (Tuần 5-6)
+## ✅ PHASE 3: VERIFICATION
 
 ### 7. Support QA Testing
 

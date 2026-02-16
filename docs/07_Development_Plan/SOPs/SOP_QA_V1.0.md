@@ -37,7 +37,7 @@
 
 ---
 
-## 📐 PHASE 1: DESIGN (Tuần 1)
+## 📐 PHASE 1: DESIGN
 
 ### 1. Review Requirements
 
@@ -193,7 +193,7 @@
 
 ---
 
-## 💻 PHASE 2: DEVELOPMENT (Tuần 2-4)
+## 💻 PHASE 2: DEVELOPMENT
 
 ### 4. API Testing (Backend)
 
@@ -341,7 +341,7 @@
 
 ---
 
-## ✅ PHASE 3: VERIFICATION (Tuần 5)
+## ✅ PHASE 3: VERIFICATION
 
 ### 7. Regression Testing
 

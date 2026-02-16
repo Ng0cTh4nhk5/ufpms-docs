@@ -37,7 +37,7 @@ Dẫn dắt team về mặt kỹ thuật, đảm bảo kiến trúc hệ thống
 
 ---
 
-## 📐 PHASE 1: DESIGN (Tuần 0-1)
+## 📐 PHASE 1: DESIGN
 
 ### 1. Thiết Kế Kiến Trúc High-Level
 
@@ -348,7 +348,7 @@ Indexes cần thiết:
 
 ---
 
-## 💻 PHASE 2: DEVELOPMENT (Tuần 2-4)
+## 💻 PHASE 2: DEVELOPMENT
 
 ### 6. Setup CI/CD Pipeline
 
@@ -484,7 +484,7 @@ Indexes cần thiết:
 
 ---
 
-## ✅ PHASE 3: VERIFICATION (Tuần 5)
+## ✅ PHASE 3: VERIFICATION
 
 ### 10. Pre-Release Checklist
 
@@ -540,9 +540,7 @@ Indexes cần thiết:
   Pre-Deployment:
   - Merge develop → main
   - Tag release: v1.0.0
-  - Backup production database (nếu upgra
-
-de)
+  - Backup production database (nếu upgrade)
   
   Deployment Steps:
   - Deploy backend (Spring Boot JAR)
@@ -571,7 +569,7 @@ de)
 
 ### 12. Post-Release Monitoring
 
-- [ ] **Week 1 Post-Release**
+- [ ] **Giai Đoạn Đầu Post-Release**
   ```
   Actions:
   - Monitor application logs daily
