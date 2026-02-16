@@ -152,7 +152,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   - Constants: UPPER_SNAKE_CASE
   
   ### Folder Structure
-  ```
+  
   src/
   ├── components/      # Reusable components
   ├── pages/           # Page components
@@ -162,7 +162,6 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   ├── types/           # TypeScript types
   ├── utils/           # Helper functions
   └── assets/          # Images, fonts
-  ```
   
   ### Code Review Checklist
   - [ ] TypeScript types defined
