@@ -125,7 +125,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   
   ### Package Structure
 
-  ```plaintext
+  ``plaintext
   src/main/java/vn/edu/ufpms/
   ├── controller/      # REST endpoints
   ├── service/         # Business logic
@@ -135,7 +135,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   ├── config/          # Configuration classes
   ├── security/        # Security configs
   └── exception/       # Custom exceptions
-  ```
+  ``
   
   ### Code Review Checklist
   - [ ] No hardcoded values
@@ -155,7 +155,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   
   ### Folder Structure
 
-  ```plaintext
+  ``plaintext
   src/
   ├── components/      # Reusable components
   ├── pages/           # Page components
@@ -174,7 +174,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   - [ ] Tests included (coverage > 70%)
   - [ ] Accessibility attributes (aria-label, alt)
   - [ ] Error boundaries
-  ```
+  ``
 
 - [ ] **2.3 Setup CI/CD Skeleton**
   
@@ -251,7 +251,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   
   ## Branch Strategy (GitFlow Lite)
   
-  ```plaintext
+  ``plaintext
   main (production)
     ↑
   develop (staging)
@@ -297,7 +297,7 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
   - `chore`: Chores (chore: update dependencies)
   
   Examples:
-  ```plaintext
+  ``plaintext
   feat: implement JWT authentication
   fix: resolve file upload size validation
   docs: add API documentation for publications
