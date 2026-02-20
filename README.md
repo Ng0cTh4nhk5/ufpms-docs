@@ -154,7 +154,7 @@ DoAnCuoiKy/
 │   │       ├── SOP_UIUX_V1.0.md             # UI/UX Designer
 │   │       └── SOP_QA_V1.0.md               # QA Engineer
 │   │
-│   ├── 07_Review_Approval/          # XÁC THỰC & PHÊ DUYỆT
+│   ├── 08_Review_Approval/          # XÁC THỰC & PHÊ DUYỆT
 │   │   ├── Feedback/
 │   │   │   ├── stakeholder_feedback.md
 │   │   │   ├── dev_team_feedback.md
@@ -163,7 +163,7 @@ DoAnCuoiKy/
 │   │       ├── revision_history.md
 │   │       └── approval_records.md
 │   │
-│   ├── 08_Final_Documents/          # 🔄 TÀI LIỆU CUỐI CÙNG (ĐANG TIẾN HÀNH)
+│   ├── 09_Final_Documents/          # 🔄 TÀI LIỆU CUỐI CÙNG (ĐANG TIẾN HÀNH)
 │   │   ├── EXECUTIVE_SUMMARY.md             # ✅ Báo cáo Executive Summary
 │   │   ├── SDD_Software_Design_Document.md  # ✅ Tài liệu thiết kế phần mềm
 │   │   ├── SRS/                             # ⏳ Software Requirements Spec
@@ -198,8 +198,8 @@ DoAnCuoiKy/
 | **05_Use_Cases** | ✅ **100%** | 80 use cases (6 high-level, 54 medium, 20 detailed) |
 | **06_Diagrams** | ✅ **100%** | 25 diagrams (Use Case, Sequence, Activity, ER, Context, DFD) |
 | **07_Development_Plan** | ✅ **100%** | Incremental plan, Team workflow, Initial setup, 8 SOPs |
-| **07_Review_Approval** | ⏳ **0%** | Chưa bắt đầu |
-| **08_Final_Documents** | 🔄 **20%** | Executive Summary, SDD hoàn thành, SRS/Traceability đang tiến hành |
+| **08_Review_Approval** | ⏳ **0%** | Chưa bắt đầu |
+| **09_Final_Documents** | 🔄 **20%** | Executive Summary, SDD hoàn thành, SRS/Traceability đang tiến hành |
 
 **Tổng tiến độ**: ~92% 🚀 (8/10 folders hoàn thành, 1 đang tiến hành)
 
@@ -224,9 +224,9 @@ DoAnCuoiKy/
     ↓
 07. Development Plan (✅ Hoàn tất - Incremental plan + Team workflow + 8 SOPs)
     ↓
-07. Review & Approval (⏳ Tiếp theo)
+08. Review & Approval (⏳ Tiếp theo)
     ↓
-08. Final Documents/SRS (🔄 Đang tiến hành - SDD hoàn thành)
+09. Final Documents/SRS (🔄 Đang tiến hành - SDD hoàn thành)
 ```
 
 ---
@@ -342,15 +342,13 @@ git push origin main
 - [x] Chi tiết hóa `05_Use_Cases` (80 use cases)
 - [x] Vẽ `06_Diagrams` (25 diagrams: Use Case, Sequence, Activity, ER, Context, DFD)
 - [x] Lập `07_Development_Plan` (Incremental plan + Team workflow + Initial setup + 8 SOPs)
-- [x] Tạo `SDD_Software_Design_Document.md` trong `08_Final_Documents`
+- [x] Tạo `SDD_Software_Design_Document.md` trong `09_Final_Documents`
 
-### 🔄 Đang Tiến Hành
-
-- [ ] `08_Final_Documents` - SRS document & Traceability Matrix
+- [ ] `09_Final_Documents` - SRS document & Traceability Matrix
 
 ### ⏳ Tiếp Theo
 
-- [ ] `07_Review_Approval` - Stakeholder feedback & revisions
+- [ ] `08_Review_Approval` - Stakeholder feedback & revisions
 - [ ] Validation & testing planning
 
 
@@ -405,7 +403,7 @@ git push origin main
 **Status**: 🚀 Gần hoàn thành (92% - Documentation & Planning Phase)
 
 **Changelog**:
-- v4.0 (18/02/2026): ✅ Hoàn thành 07_Development_Plan (Incremental plan, Team workflow, 8 SOPs); ✅ SDD trong 08_Final_Documents
+- v4.0 (18/02/2026): ✅ Hoàn thành 07_Development_Plan (Incremental plan, Team workflow, 8 SOPs); ✅ SDD trong 09_Final_Documents
 - v3.1 (11/02/2026): ✅ Hoàn thành 02_System_Clarification (Problem statement, As-Is/To-Be process, User analysis)
 - v3.0 (11/02/2026): ✅ Hoàn thành Requirements, User Stories, Use Cases, và Diagrams (25 files)
 - v2.0 (10/02/2026): Tích hợp Approval Workflow + Technology Stack finalized

@@ -632,7 +632,7 @@ docs/06_Diagrams/
 
 ### Thư Mục
 ```
-docs/07_Review_Approval/
+docs/08_Review_Approval/
 ├── README.md
 ├── review_checklist.md
 ├── stakeholder_feedback.md
@@ -686,7 +686,7 @@ Tổng hợp và xuất bản tài liệu hoàn chỉnh.
 
 ### Thư Mục
 ```
-docs/08_Final_Documents/
+docs/09_Final_Documents/
 ├── README.md
 ├── executive_summary.md (2-3 trang)
 ├── complete_specification.pdf (compile tất cả)
