@@ -4,7 +4,7 @@
 
 **Tên dự án**: University Faculty Publication Management System (UFPMS)  
 **Phạm vi**: Module quản lý bài báo khoa học cho giảng viên trường Đại học  
-**Phiên bản tài liệu**: v2.0
+**Phiên bản tài liệu**: v4.0
 
 Dự án này xây dựng hệ thống quản lý tập trung các công trình nghiên cứu khoa học của giảng viên, bao gồm:
 - **Quy trình phê duyệt 2 cấp** (Khoa → Trường)
@@ -139,6 +139,21 @@ DoAnCuoiKy/
 │   │       ├── dfd_level_1.md
 │   │       └── dfd_level_2_approval.md
 │   │
+│   ├── 07_Development_Plan/         # ✅ KẾ HOẠCH PHÁT TRIỂN (HOÀN TẤT)
+│   │   ├── incremental_development_plan.md  # MVP → v1.0 → v1.1 plan
+│   │   ├── initial_setup_guide.md           # Hướng dẫn setup môi trường
+│   │   ├── team_workflow_v1.0.md            # Quy trình làm việc nhóm
+│   │   └── SOPs/                            # 8 SOPs
+│   │       ├── README.md
+│   │       ├── sop-system-specification.md  # SOP phân tích đặc tả
+│   │       ├── SOP_PM_V1.0.md               # Project Manager
+│   │       ├── SOP_BA_V1.0.md               # Business Analyst
+│   │       ├── SOP_TechLead_V1.0.md         # Tech Lead
+│   │       ├── SOP_Backend_V1.0.md          # Backend Developer
+│   │       ├── SOP_Frontend_V1.0.md         # Frontend Developer
+│   │       ├── SOP_UIUX_V1.0.md             # UI/UX Designer
+│   │       └── SOP_QA_V1.0.md               # QA Engineer
+│   │
 │   ├── 07_Review_Approval/          # XÁC THỰC & PHÊ DUYỆT
 │   │   ├── Feedback/
 │   │   │   ├── stakeholder_feedback.md
@@ -148,16 +163,16 @@ DoAnCuoiKy/
 │   │       ├── revision_history.md
 │   │       └── approval_records.md
 │   │
-│   ├── 08_Final_Documents/          # TÀI LIỆU CUỐI CÙNG
-│   │   ├── SRS/
-│   │   │   └── srs_document.md
-│   │   ├── UseCase_Specs/
-│   │   │   └── use_case_specification.md
-│   │   └── Traceability/
-│   │       └── traceability_matrix.xlsx
+│   ├── 08_Final_Documents/          # 🔄 TÀI LIỆU CUỐI CÙNG (ĐANG TIẾN HÀNH)
+│   │   ├── EXECUTIVE_SUMMARY.md             # ✅ Báo cáo Executive Summary
+│   │   ├── SDD_Software_Design_Document.md  # ✅ Tài liệu thiết kế phần mềm
+│   │   ├── SRS/                             # ⏳ Software Requirements Spec
+│   │   ├── UseCase_Specs/                   # ⏳ Use Case Specification
+│   │   └── Traceability/                    # ⏳ Traceability Matrix
 │   │
-│   └── temp/                         # 🆕 TÀI LIỆU TẠM, PHÁc THẢO
+│   └── temp/                         # TÀI LIỆU TẠM, PHÁC THẢO
 │       ├── phacthao.md
+│       ├── presentation_script.md
 │       ├── review_01_system_specification.md
 │       ├── research_keywords.md
 │       └── ... (các file tạm khác)
@@ -182,10 +197,11 @@ DoAnCuoiKy/
 | **04_User_Stories** | ✅ **100%** | 65 stories by Role + Priority |
 | **05_Use_Cases** | ✅ **100%** | 80 use cases (6 high-level, 54 medium, 20 detailed) |
 | **06_Diagrams** | ✅ **100%** | 25 diagrams (Use Case, Sequence, Activity, ER, Context, DFD) |
+| **07_Development_Plan** | ✅ **100%** | Incremental plan, Team workflow, Initial setup, 8 SOPs |
 | **07_Review_Approval** | ⏳ **0%** | Chưa bắt đầu |
-| **08_Final_Documents** | ⏳ **0%** | Chưa bắt đầu |
+| **08_Final_Documents** | 🔄 **20%** | Executive Summary, SDD hoàn thành, SRS/Traceability đang tiến hành |
 
-**Tổng tiến độ**: ~88% 🚀 (8/9 folders hoàn thành)
+**Tổng tiến độ**: ~92% 🚀 (8/10 folders hoàn thành, 1 đang tiến hành)
 
 ---
 
@@ -206,9 +222,11 @@ DoAnCuoiKy/
     ↓
 06. Diagrams (✅ Hoàn tất - 25 diagrams)
     ↓
+07. Development Plan (✅ Hoàn tất - Incremental plan + Team workflow + 8 SOPs)
+    ↓
 07. Review & Approval (⏳ Tiếp theo)
     ↓
-08. Final Documents/SRS (⏳ Cuối cùng)
+08. Final Documents/SRS (🔄 Đang tiến hành - SDD hoàn thành)
 ```
 
 ---
@@ -323,11 +341,16 @@ git push origin main
 - [x] Tạo `04_User_Stories` cho 5 roles (65 stories)
 - [x] Chi tiết hóa `05_Use_Cases` (80 use cases)
 - [x] Vẽ `06_Diagrams` (25 diagrams: Use Case, Sequence, Activity, ER, Context, DFD)
+- [x] Lập `07_Development_Plan` (Incremental plan + Team workflow + Initial setup + 8 SOPs)
+- [x] Tạo `SDD_Software_Design_Document.md` trong `08_Final_Documents`
+
+### 🔄 Đang Tiến Hành
+
+- [ ] `08_Final_Documents` - SRS document & Traceability Matrix
 
 ### ⏳ Tiếp Theo
 
 - [ ] `07_Review_Approval` - Stakeholder feedback & revisions
-- [ ] `08_Final_Documents` - SRS document & Traceability Matrix
 - [ ] Validation & testing planning
 
 
@@ -377,11 +400,12 @@ git push origin main
 
 ## 📄 License \u0026 Version
 
-**Version**: v3.1  
-**Last Updated**: 11/02/2026 00:25  
-**Status**: 🚀 Gần hoàn thành (88% - Documentation Phase)
+**Version**: v4.0  
+**Last Updated**: 18/02/2026  
+**Status**: 🚀 Gần hoàn thành (92% - Documentation & Planning Phase)
 
 **Changelog**:
+- v4.0 (18/02/2026): ✅ Hoàn thành 07_Development_Plan (Incremental plan, Team workflow, 8 SOPs); ✅ SDD trong 08_Final_Documents
 - v3.1 (11/02/2026): ✅ Hoàn thành 02_System_Clarification (Problem statement, As-Is/To-Be process, User analysis)
 - v3.0 (11/02/2026): ✅ Hoàn thành Requirements, User Stories, Use Cases, và Diagrams (25 files)
 - v2.0 (10/02/2026): Tích hợp Approval Workflow + Technology Stack finalized

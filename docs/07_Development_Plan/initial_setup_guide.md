@@ -95,18 +95,158 @@ ufpms-docs/             ← Repository 3: Documentation (Optional)
 
 ### Checklist Setup (2 giờ)
 
-- [ ] **2.1 Setup Branch Protection Rules**
+- [ ] **2.1 Setup GitHub Repository Rules**
+
+  > ⚠️ Làm cho **cả 2 repos**: `ufpms-backend` và `ufpms-frontend`
+
+  #### Bước 1: Tạo nhánh `develop` trước khi setup rules
+
+  ```bash
+  # Clone repo về local (ví dụ backend)
+  git clone <ufpms-backend-url>
+  cd ufpms-backend
+
+  # Tạo file README nếu repo trống
+  echo "# UFPMS Backend" > README.md
+  git add README.md
+  git commit -m "chore: initial commit"
+  git push origin main
+
+  # Tạo nhánh develop
+  git checkout -b develop
+  git push -u origin develop
   ```
-  Cho cả backend và frontend repos:
-  
-  GitHub Settings → Branches → Add rule:
-  - Branch name pattern: main
-  - ✅ Require pull request reviews (1 approval)
-  - ✅ Require status checks to pass
-  - ✅ Include administrators (uncheck nếu cần emergency fix)
-  
-  Repeat cho "develop" branch
+
+  #### Bước 2: Vào Settings của repo trên GitHub
+
   ```
+  Trên GitHub.com:
+  1. Mở repo (ví dụ: github.com/your-org/ufpms-backend)
+  2. Click tab "Settings" (góc trên bên phải)
+  3. Trong sidebar bên trái → Click "Branches"
+     (hoặc vào: Settings → Code and automation → Branches)
+  ```
+
+  #### Bước 3: Tạo Rule cho nhánh `main`
+
+  ```
+  Click "Add branch ruleset" (hoặc "Add rule" tùy phiên bản GitHub)
+
+  ── GENERAL ──────────────────────────────────────────
+  Ruleset Name: Protect main branch
+  Enforcement status: Active
+
+  ── TARGET BRANCHES ──────────────────────────────────
+  Click "Add target" → "Include by pattern"
+  Pattern: main
+
+  ── RULES (tick vào các ô sau) ───────────────────────
+
+  ✅ Restrict deletions
+     → Ngăn xóa nhánh main
+
+  ✅ Require linear history
+     → Bắt buộc dùng squash/rebase, không merge commit lộn xộn
+
+  ✅ Require a pull request before merging
+     → Expand thêm:
+        Required approvals: 1
+        ✅ Dismiss stale pull request approvals when new commits are pushed
+        ✅ Require review from Code Owners (nếu có CODEOWNERS file)
+
+  ✅ Require status checks to pass
+     → Expand thêm:
+        ✅ Require branches to be up to date before merging
+        Add checks (sau khi CI/CD setup):
+        - "build" (GitHub Actions job name)
+        - "test"
+
+  ✅ Block force pushes
+     → Ngăn force push lên main
+
+  ── CLICK "Create" để lưu ────────────────────────────
+  ```
+
+  #### Bước 4: Tạo Rule cho nhánh `develop`
+
+  ```
+  Click "Add branch ruleset" lần nữa
+
+  ── GENERAL ──────────────────────────────────────────
+  Ruleset Name: Protect develop branch
+  Enforcement status: Active
+
+  ── TARGET BRANCHES ──────────────────────────────────
+  Click "Add target" → "Include by pattern"
+  Pattern: develop
+
+  ── RULES ────────────────────────────────────────────
+
+  ✅ Restrict deletions
+
+  ✅ Require a pull request before merging
+     → Required approvals: 1
+     → ✅ Dismiss stale pull request approvals when new commits are pushed
+
+  ✅ Require status checks to pass
+     → ✅ Require branches to be up to date before merging
+     → Add checks: "build", "test"
+
+  ✅ Block force pushes
+
+  ── CLICK "Create" để lưu ────────────────────────────
+  ```
+
+  > 💡 **Lưu ý**: Nhánh `develop` có rule nhẹ hơn `main` (không cần linear history) để dev dễ làm việc hơn.
+
+  #### Bước 5: Kiểm tra Rules đã hoạt động
+
+  ```bash
+  # Thử push thẳng lên main (phải bị từ chối)
+  git checkout main
+  echo "test" >> README.md
+  git add . && git commit -m "test: direct push"
+  git push origin main
+  # Expected: ERROR - "Push rejected. Branch rules require a pull request."
+
+  # Đúng cách: tạo PR từ develop → main
+  git checkout develop
+  git push origin develop
+  # Sau đó tạo PR trên GitHub UI
+  ```
+
+  #### Bước 6: Setup CODEOWNERS (Optional nhưng recommended)
+
+  Tạo file `.github/CODEOWNERS` trong repo:
+
+  ```
+  # Mọi file đều cần Tech Lead review
+  * @tech-lead-github-username
+
+  # Backend: chỉ Backend Dev có thể review src/
+  /src/ @backend-dev-github-username @tech-lead-github-username
+
+  # Frontend: chỉ Frontend Dev có thể review src/
+  /src/ @frontend-dev-github-username @tech-lead-github-username
+  ```
+
+  ```bash
+  mkdir -p .github
+  # Tạo file CODEOWNERS
+  git add .github/CODEOWNERS
+  git commit -m "chore: add CODEOWNERS file"
+  git push origin develop
+  ```
+
+  #### Tóm Tắt Rules Đã Setup
+
+  | Rule | `main` | `develop` |
+  |------|--------|-----------|
+  | Require PR | ✅ (1 approval) | ✅ (1 approval) |
+  | Block force push | ✅ | ✅ |
+  | Restrict deletion | ✅ | ✅ |
+  | Status checks | ✅ | ✅ |
+  | Linear history | ✅ | ❌ |
 
 - [ ] **2.2 Tạo Coding Standards Document**
   
