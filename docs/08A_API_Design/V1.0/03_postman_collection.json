@@ -1,0 +1,484 @@
+{
+    "info": {
+        "name": "UFPMS Phase 1 APIs",
+        "description": "API collection for Phase 1 of University Faculty Publication Management System",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. Auth APIs",
+            "item": [
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/login",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "login"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/logout",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "logout"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Current User",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/me",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "me"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "2. Publications APIs",
+            "item": [
+                {
+                    "name": "Create Publication",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"Sample Publication Title\",\n  \"publicationType\": \"JOURNAL\",\n  \"year\": 2026\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Publications",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications?page=0&size=10&status=DRAFT",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "0"
+                                },
+                                {
+                                    "key": "size",
+                                    "value": "10"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "DRAFT"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Publication by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Publication",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"title\": \"Updated Sample Title\",\n  \"publicationType\": \"JOURNAL\",\n  \"year\": 2026\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Publication (DRAFT only)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "3. File APIs",
+            "item": [
+                {
+                    "name": "Upload PDF",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": ""
+                                }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications/1/upload-pdf",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications",
+                                "1",
+                                "upload-pdf"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Download PDF",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications/1/download-pdf",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications",
+                                "1",
+                                "download-pdf"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "4. Co-author APIs",
+            "item": [
+                {
+                    "name": "Get Co-authors",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications/1/authors",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications",
+                                "1",
+                                "authors"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Add Co-author",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"authorName\": \"Nguyen Van A\",\n  \"authorEmail\": \"nguyenvana@example.com\",\n  \"isCorresponding\": false,\n  \"authorOrder\": 2\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications/1/authors",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications",
+                                "1",
+                                "authors"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Co-author",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"authorName\": \"Nguyen Van A Updated\",\n  \"isCorresponding\": true,\n  \"authorOrder\": 2\n}"
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications/1/authors/2",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications",
+                                "1",
+                                "authors",
+                                "2"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Co-author",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/publications/1/authors/2",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "publications",
+                                "1",
+                                "authors",
+                                "2"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "5. Dashboard APIs",
+            "item": [
+                {
+                    "name": "Get Dashboard Stats",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/dashboard/stats",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "dashboard",
+                                "stats"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Work Hours Detail",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/dashboard/work-hours?year=2026",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "dashboard",
+                                "work-hours"
+                            ],
+                            "query": [
+                                {
+                                    "key": "year",
+                                    "value": "2026"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8080"
+        },
+        {
+            "key": "token",
+            "value": "your_jwt_token_here"
+        }
+    ]
+}

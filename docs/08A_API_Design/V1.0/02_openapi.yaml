@@ -1,0 +1,495 @@
+openapi: 3.0.3
+info:
+  title: UFPMS API
+  version: 1.0.0
+  description: API specifications for University Faculty Publication Management System (UFPMS) Phase 1.
+servers:
+  - url: /api
+    description: Base URL for all endpoints
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+    LoginResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        tokenType:
+          type: string
+          example: Bearer
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        email:
+          type: string
+        fullName:
+          type: string
+        role:
+          type: string
+    CreatePublicationRequest:
+      type: object
+      required:
+        - title
+        - publicationType
+        - year
+      properties:
+        title:
+          type: string
+          maxLength: 500
+        publicationType:
+          type: string
+          enum: [JOURNAL, CONFERENCE, BOOK_CHAPTER, OTHER]
+        year:
+          type: integer
+          minimum: 1900
+        journalName:
+          type: string
+        conferenceName:
+          type: string
+        volume:
+          type: string
+        issue:
+          type: string
+        pages:
+          type: string
+        doi:
+          type: string
+          pattern: '^10\.\d{4,}/.*$'
+        abstractText:
+          type: string
+        keywords:
+          type: string
+    PublicationResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        publicationType:
+          type: string
+        year:
+          type: integer
+        status:
+          type: string
+          enum: [DRAFT, SUBMITTED, REVISION_REQUIRED, APPROVED, PUBLISHED]
+        journalName:
+          type: string
+        conferenceName:
+          type: string
+        volume:
+          type: string
+        issue:
+          type: string
+        pages:
+          type: string
+        doi:
+          type: string
+        abstractText:
+          type: string
+        keywords:
+          type: string
+        pdfFilename:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              issue:
+                type: string
+    AuthorRequest:
+      type: object
+      required:
+        - authorName
+      properties:
+        userId:
+          type: integer
+          format: int64
+          description: Internal user ID, null if external
+        authorName:
+          type: string
+        authorEmail:
+          type: string
+        isCorresponding:
+          type: boolean
+          default: false
+        authorOrder:
+          type: integer
+    DashboardStatsResponse:
+      type: object
+      properties:
+        totalPublications:
+          type: integer
+        publishedCount:
+          type: integer
+        draftCount:
+          type: integer
+        workHoursYearToDate:
+          type: integer
+    WorkHoursResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          title:
+            type: string
+          publicationType:
+            type: string
+          workHours:
+            type: integer
+          approvalDate:
+            type: string
+            format: date-time
+
+security:
+  - bearerAuth: []
+
+paths:
+  /auth/login:
+    post:
+      summary: Login user
+      tags: [Auth APIs]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Bad credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/logout:
+    post:
+      summary: Logout user
+      tags: [Auth APIs]
+      responses:
+        '200':
+          description: Successfully logged out
+
+  /auth/me:
+    get:
+      summary: Get current logged-in user info
+      tags: [Auth APIs]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          description: Unauthorized
+
+  /publications:
+    post:
+      summary: Create a new publication
+      tags: [Publications APIs]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePublicationRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicationResponse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Get list of publications for the current user
+      tags: [Publications APIs]
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: year
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: OK (Paginated list)
+
+  /publications/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: Get publication details
+      tags: [Publications APIs]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicationResponse'
+        '403':
+          description: Forbidden (Not owner/reviewer/co-author)
+        '404':
+          description: Not Found
+    put:
+      summary: Update a drafted publication
+      tags: [Publications APIs]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePublicationRequest'
+      responses:
+        '200':
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicationResponse'
+        '400':
+          description: Validation error
+        '403':
+          description: Forbidden - Not owner or publication not in DRAFT/REVISION_REQUIRED status
+    delete:
+      summary: Soft delete a publication
+      tags: [Publications APIs]
+      responses:
+        '204':
+          description: No Content (Deleted)
+        '403':
+          description: Forbidden - Only owner can delete DRAFT publications
+
+  /publications/{id}/upload-pdf:
+    post:
+      summary: Upload PDF for a publication
+      tags: [File APIs]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDF file (max 20MB)
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request (Invalid file type or size)
+
+  /publications/{id}/download-pdf:
+    get:
+      summary: Download PDF of a publication
+      tags: [File APIs]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK (PDF file content)
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Not Found (No PDF file)
+
+  /publications/{id}/authors:
+    get:
+      summary: Get all co-authors of a publication
+      tags: [Co-author APIs]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthorRequest'
+    post:
+      summary: Add a co-author
+      tags: [Co-author APIs]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorRequest'
+      responses:
+        '201':
+          description: Created
+    put:
+      summary: Update authors sequence or details
+      tags: [Co-author APIs]
+      # Path could be /{id}/authors/{authorId} or just bulk update on /{id}/authors
+      # Note: User image shows `PUT /api/publications/{id}/authors/{authorId}`
+      responses:
+        '200':
+          description: Updated
+
+  /publications/{id}/authors/{authorId}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: authorId
+        in: path
+        required: true
+        schema:
+          type: integer
+    put:
+      summary: Update a co-author
+      tags: [Co-author APIs]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorRequest'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Remove a co-author
+      tags: [Co-author APIs]
+      responses:
+        '204':
+          description: Deleted
+
+  /dashboard/stats:
+    get:
+      summary: Get overview stats for user Dashboard
+      tags: [Dashboard APIs]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardStatsResponse'
+
+  /dashboard/work-hours:
+    get:
+      summary: Get details of work hours grouped by valid publications
+      tags: [Dashboard APIs]
+      parameters:
+        - name: year
+          in: query
+          schema:
+            type: integer
+          description: Filter by year (default current year)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkHoursResponse'
